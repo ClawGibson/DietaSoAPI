@@ -47,5 +47,5 @@ mongoose
   });
 
 app.listen(PORT || 4000, () => {
-  console.log(`Server running at ${PORT || 4000}`);
+  console.log(`Server running at ${process.env.port || 4000}`);
 });
