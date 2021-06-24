@@ -52,7 +52,7 @@
    ```
 4. Run
    ```sh
-   npm start
+   yarn dev
    ```
 
 <!-- CONTRIBUTING -->
