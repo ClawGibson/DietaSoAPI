@@ -11,14 +11,27 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const logroInd = await Logros.findById(req.params.id);
+  let logroInd;
 
-  !logroInd
-    ? res.status(500).json({
-        success: false,
-        message: 'No se encontró el logro que buscaba',
-      })
-    : res.send(logroInd);
+  try {
+    if (req.body.logroRequerido) {
+      logroInd = await Logros.find({
+        logroRequerido: req.body.logroRequerido,
+      }).populate('logroRequerido');
+    } else {
+      logroInd = await Logros.findById(req.params.id);
+    }
+  } catch (e) {
+    console.log('Ocurrió un error inesperado: ', e);
+  }
+
+  if (!logroInd)
+    return res.status(500).json({
+      success: false,
+      message: 'No se encontró el logro que buscaba',
+    });
+
+  res.send(logroInd);
 });
 
 router.post('/', async (req, res) => {
@@ -30,13 +43,14 @@ router.post('/', async (req, res) => {
         .status(500)
         .json({ succes: false, message: 'El nombre de este logro ya existe' });
 
-    const logroExiste = await Logros.find({ logro: req.body.logroRequerido });
+    if (req.body.logroRequerido) {
+      const logroExiste = await Logros.find({ logro: req.body.logroRequerido });
 
-    logroExiste.length > 0
-      ? null
-      : res
+      if (logroExiste.length > 0)
+        return res
           .status(500)
           .json({ succes: false, message: 'Este logro no existe' });
+    }
   } catch (err) {
     console.log(err);
   }
