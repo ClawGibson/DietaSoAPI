@@ -112,18 +112,55 @@ router.put('/:id', async (req, res) => {
     listaLogros = await LogrosDeUsuario.find({
       usuario: req.params.id,
     });
-    console.log('ListaLogros antes: ', listaLogros);
-    listaLogros.map((item) => item.logro.push(logro));
-    console.log('ListaLogros después:', listaLogros);
+    listaLogros[0].logro.push(logro);
   } catch (err) {
     console.log('Error al actualizar los logros del usuario', err);
   }
 
-  listaLogros = await listaLogros.save();
+  try {
+    listaLogros = await listaLogros[0].save();
+    res.send(listaLogros);
+  } catch (err) {
+    console.log('Error al guardar - ', err);
+  }
+});
 
-  !listaLogros
-    ? res.status(400).send('No se pudo actualizar el logro al usuario')
-    : res.send(listaLogros);
+router.put('/delete/:id', async (req, res) => {
+  let logroExiste;
+
+  try {
+    logroExiste = await Logros.findById(req.body.logro);
+
+    if (!logroExiste)
+      return res
+        .status(500)
+        .json({ succes: false, message: 'Este logro no existe' });
+  } catch (err) {
+    console.log('Ocurrió un error al buscar el logro', err);
+  }
+
+  const { logro } = req.body;
+
+  let listaLogros;
+
+  try {
+    listaLogros = await LogrosDeUsuario.find({
+      usuario: req.params.id,
+    });
+
+    listaLogros[0].logro = listaLogros[0].logro.filter(
+      (index) => index != logro
+    );
+  } catch (err) {
+    console.log('Error al actualizar los logros del usuario', err);
+  }
+
+  try {
+    listaLogros = await listaLogros[0].save();
+    res.send(listaLogros);
+  } catch (err) {
+    console.log('Error al guardar - ', err);
+  }
 });
 
 module.exports = router;
