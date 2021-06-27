@@ -1,33 +1,38 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const registroDieteticoSchema = new Schema({
-  idUsuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
-  agua: { type: Number, required: false },
-  ejercicio: [
-    {
-      duracion: { type: Number, required: false },
-      intensidad: { type: Number, required: false },
-    },
-  ],
-  alimentos: [
-    {
-      idAlimento: {
-        type: Schema.Types.ObjectId,
-        ref: "Alimentos",
-        required: false,
+const registroDieteticoSchema = new Schema(
+  {
+    idUsuario: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
+    agua: { type: Number, required: false },
+    ejercicio: [
+      {
+        duracion: { type: Number, required: false },
+        intensidad: { type: Number, required: false },
       },
-      cantidad: { type: String, required: false },
-      tipo: { type: String, required: false },
-    },
-  ],
-});
+    ],
+    alimentos: [
+      {
+        idAlimento: {
+          type: Schema.Types.ObjectId,
+          ref: 'Alimentos',
+          required: false,
+        },
+        cantidad: { type: String, required: false },
+        tipo: { type: String, required: false }, // Desayuno, comida, cena, colación.
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-registroDieteticoSchema.virtual("id").get(() => {
+registroDieteticoSchema.virtual('id').get(() => {
   return this._id.toHexString();
 });
 
-registroDieteticoSchema.set("toJSON", {
+registroDieteticoSchema.set('toJSON', {
   virtuals: true,
 });
 
-module.exports = model("RegistroDietetico", registroDieteticoSchema);
+module.exports = model('RegistroDietetico', registroDieteticoSchema);

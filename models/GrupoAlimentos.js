@@ -1,15 +1,20 @@
 const { Schema, model } = require('mongoose');
 
-const grupoAlimentosSchema = new Schema({
-    grupoDeAlimento: { type: String, required: true }
-});
+const grupoAlimentosSchema = new Schema(
+  {
+    grupoDeAlimento: { type: String, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 grupoAlimentosSchema.virtual('id').get(function () {
-    return this._id.toHexString();
+  return this._id.toHexString();
 });
 
 grupoAlimentosSchema.set('toJSON', {
-    virtuals: true
+  virtuals: true,
 });
 
 module.exports = model('grupoAlimentos', grupoAlimentosSchema);
