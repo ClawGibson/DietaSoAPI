@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const usuariosSchema = new mongoose.Schema({
+const usuariosSchema = new Schema(
+  {
     logros: { type: String, required: false },
     nombre: { type: String, required: true },
     foto: { type: String, required: false },
@@ -12,14 +13,14 @@ const usuariosSchema = new mongoose.Schema({
     altura: { type: Number, required: true },
     actividadFisica: { type: String, required: true },
     historiaClinica: {
-        antecedentesPatologicos: [String],
-        antecedentesHeredoFamiliares: [String],
-        medicamentos: [String]
+      antecedentesPatologicos: [String],
+      antecedentesHeredoFamiliares: [String],
+      medicamentos: [String],
     },
     nivelSocioeconomico: {
-        ingresos: { type: String, required: false },
-        educacion: { type: String, required: false },
-        ocupacion: { type: String, required: false }
+      ingresos: { type: String, required: false },
+      educacion: { type: String, required: false },
+      ocupacion: { type: String, required: false },
     },
     comidaFavorita: [String],
     comidaNoFavorita: [String],
@@ -36,24 +37,25 @@ const usuariosSchema = new mongoose.Schema({
     colacion1Ayer: [String],
     comidaAyer: [String],
     colacion2Ayer: [String],
-    cenaAyer: [String]
-}, {
-    timestamps: true
-});
+    cenaAyer: [String],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 usuariosSchema.method('toJSON', function () {
-    const { __v, ...object } = this.toObject();
-    const { _id: id, ...result } = object;
-    return { ...result, id };
+  const { __v, ...object } = this.toObject();
+  const { _id: id, ...result } = object;
+  return { ...result, id };
 });
 
 usuariosSchema.virtual('id').get(function () {
-    return this._id.toHexString();
+  return this._id.toHexString();
 });
 
 usuariosSchema.set('toJSON', {
-    virtuals: true
+  virtuals: true,
 });
 
-exports.Usuarios = mongoose.model('Usuarios', usuariosSchema);
-exports.usuariosSchema = usuariosSchema;
+module.exports = model('Usuarios', usuariosSchema);
