@@ -11,6 +11,7 @@ const usuariosRoute = require('./routes/usuarios.routes');
 const menusBaseRoute = require('./routes/menusBase.routes');
 const logros = require('./routes/logros.routes');
 const logrosDeUsuario = require('./routes/logrosDeUsuario.routes');
+const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -31,6 +32,7 @@ app.use(`${API_URL}/usuarios`, usuariosRoute);
 app.use(`${API_URL}/menusBase`, menusBaseRoute);
 app.use(`${API_URL}/logros`, logros);
 app.use(`${API_URL}/logrosDeUsuario`, logrosDeUsuario);
+app.use(`${API_URL}/puntosDeUsuario`, puntosDeUsuario);
 
 mongoose
   .connect(MONGODB, {
