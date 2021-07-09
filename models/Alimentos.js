@@ -1,27 +1,35 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const alimentosSchema = new Schema({
+const alimentosSchema = new Schema(
+  {
     nombreAlimento: { type: String, required: true },
     imagen: { type: String, required: false },
     grupoExportable: { type: String, required: false },
     subGrupoExportable: { type: String, required: false },
     clasificacionExportable: { type: String, required: false },
     grupoAlimento: { type: String, required: true },
-    mensaje: [{
+    mensaje: [
+      {
         nutricional: { type: String, required: false },
-        ambiental: { type: String, required: false }
-    }],
-    icono: [{
+        ambiental: { type: String, required: false },
+      },
+    ],
+    icono: [
+      {
         iconoNutricional: { type: String, required: false },
-        iconoAmbiental: { type: String, required: false }
-    }],
+        iconoAmbiental: { type: String, required: false },
+      },
+    ],
     opcionesPreparacion: { type: String, required: false },
-    cantidadAlimento: [{
+    cantidadAlimento: [
+      {
         cantidadSugerida: { Number, required: false },
         unidad: { type: String, required: false },
-        pesoNeto: { type: String, required: false }
-    }],
-    caloriasMacronutrientes: [{
+        pesoNeto: { type: String, required: false },
+      },
+    ],
+    caloriasMacronutrientes: [
+      {
         energia: { type: String, required: false },
         proteina: { type: String, required: false },
         lipidos: { type: String, required: false },
@@ -36,9 +44,11 @@ const alimentosSchema = new Schema({
         fibra: { type: String, required: false },
         fibraInsoluble: { type: String, required: false },
         azucar: { type: String, required: false },
-        etanol: { type: String, required: false }
-    }],
-    vitaminas: [{
+        etanol: { type: String, required: false },
+      },
+    ],
+    vitaminas: [
+      {
         tiamina: { type: String, required: false },
         riboflavin: { type: String, required: false },
         niacina: { type: String, required: false },
@@ -51,9 +61,11 @@ const alimentosSchema = new Schema({
         vitaminaA: { type: String, required: false },
         vitaminaD: { type: String, required: false },
         vitaminaK: { type: String, required: false },
-        vitaminaE: { type: String, required: false }
-    }],
-    minerales: [{
+        vitaminaE: { type: String, required: false },
+      },
+    ],
+    minerales: [
+      {
         calcio: { type: String, required: false },
         fosforo: { type: String, required: false },
         hierro: { type: String, required: false },
@@ -63,13 +75,17 @@ const alimentosSchema = new Schema({
         sodio: { type: String, required: false },
         potasio: { type: String, required: false },
         zing: { type: String, required: false },
-        selenio: { type: String, required: false }
-    }],
-    aspectoGlucemico: [{
+        selenio: { type: String, required: false },
+      },
+    ],
+    aspectoGlucemico: [
+      {
         indiceGlicemico: { type: String, required: false },
-        cargaGlicemica: { type: String, required: false }
-    }],
-    aspectoMedioambiental: [{
+        cargaGlicemica: { type: String, required: false },
+      },
+    ],
+    aspectoMedioambiental: [
+      {
         factorDeCorreccionParaHuellaHidricaYEGEI: { Number, required: false },
         tipo: { type: String, required: false },
         lugar: { type: String, required: false },
@@ -81,19 +97,23 @@ const alimentosSchema = new Schema({
         aguaParaCoccion: { type: String, required: false },
         lugarEGEI: { type: String, required: false },
         citaEGEI: { type: String, required: false },
-        EGEI: { type: String, required: false },
+        huellaCarbono: { type: String, required: false }, // EGEI.
         huellaEcologica: { type: String, required: false },
         usoDeSuelo: { type: String, required: false },
         nitrogeno: { type: String, required: false },
         fosforo: { type: String, required: false },
-        puntajeEcologico: { Number, required: false }
-    }],
-    aspectoEconomico: [{
+        puntajeEcologico: { Number, required: false },
+      },
+    ],
+    aspectoEconomico: [
+      {
         precio: { Number, required: false },
         lugarDeCompra: { type: String, required: false },
-        lugarDeVenta: { type: String, required: false }
-    }],
-    componentesBioactivos: [{
+        lugarDeVenta: { type: String, required: false },
+      },
+    ],
+    componentesBioactivos: [
+      {
         fitoquimicos: { type: String, required: false },
         polifenoles: { type: String, required: false },
         antocianinas: { type: String, required: false },
@@ -107,9 +127,11 @@ const alimentosSchema = new Schema({
         luteina: { type: String, required: false },
         alicina: { type: String, required: false },
         cafeina: { type: String, required: false },
-        UFC: { type: String, required: false }
-    }],
-    aditivosAlimentarios: [{
+        UFC: { type: String, required: false },
+      },
+    ],
+    aditivosAlimentarios: [
+      {
         benzoatoDeSodio: { type: String, required: false },
         polisorbato: { type: String, required: false },
         azulBrillanteFCFoE133: { type: String, required: false },
@@ -125,22 +147,28 @@ const alimentosSchema = new Schema({
         acesulfameK: { type: String, required: false },
         carboxymethylcellulose: { type: String, required: false },
         dioxidoDeTitanio: { type: String, required: false },
-        monolauratoDeGlicerol: { type: String, required: false }
-    }],
-    atributosAdicionales: [{
+        monolauratoDeGlicerol: { type: String, required: false },
+      },
+    ],
+    atributosAdicionales: [
+      {
         atributoAdicional: { type: String, required: false },
-    }],
-    marca: { type: String, required: false }
-}, {
-    timestamps: true
-});
+      },
+    ],
+    marca: { type: String, required: false },
+    puntos: { type: Number, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 alimentosSchema.virtual('id').get(function () {
-    return this._id.toHexString();
+  return this._id.toHexString();
 });
 
 alimentosSchema.set('toJSON', {
-    virtuals: true
+  virtuals: true,
 });
 
 module.exports = model('Alimentos', alimentosSchema);
