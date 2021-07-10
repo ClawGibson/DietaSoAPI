@@ -4,7 +4,7 @@ const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { buscarUsuario } = require("../constants/index");
+const buscarUsuario = require("../constants/index");
 
 router.get("/:id", async (req, res) => {
   buscarUsuario(req.params.id);
