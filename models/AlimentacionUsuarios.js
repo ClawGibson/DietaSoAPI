@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const AlimentacionUsuariosSchema = new mongoose.Schema(
   {
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     comidaFavorita: [String],
     comidaNoFavorita: [String],
     alergiasAlimentarias: [String],

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const historialClinicoSchema = new mongoose.Schema(
   {
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     historiaClinica: {
       antecedentesPatologicos: [String],
       antecedentesHeredoFamiliares: [String],

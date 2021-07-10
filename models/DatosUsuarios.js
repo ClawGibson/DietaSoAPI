@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const datosUsuariosSchema = new mongoose.Schema(
   {
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     peso: [Number],
     altura: { type: Number, required: true },
     actividadFisica: {

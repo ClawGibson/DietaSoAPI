@@ -24,28 +24,24 @@ router.post("/:id", async (req, res) => {
   buscarUsuario(req.params.id);
 
   let informacion;
-  try {
-    informacion = new InformacionUsuarios({
-      usuario: req.body.usuario,
-      nombre: req.body.nombre,
-      apellidoPaterno: req.body.apellidos,
-      apellidoMaterno: req.body.apellidos,
-      foto: req.body.foto,
-      email: req.body.email,
-      fechaDeNacimiento: req.body.fechaDeNacimiento,
-      genero: req.body.genero,
-      celular: req.body.celular,
-      paisDeNacimiento: req.body.paisDeNacimiento,
-      estadoDeNacimiento: req.body.estadoDeNacimiento,
-      ciudadDeResidencia: req.body.ciudadDeResidencia,
-      tiempoViviendoAhi: req.body.tiempoViviendoAhi,
-    });
-  } catch (err) {
-    console.log("Ocurrió un error al insertar los puntos :c", err);
-  }
+  informacion = new InformacionUsuarios({
+    usuario: req.body.usuario,
+    nombre: req.body.nombre,
+    apellidoPaterno: req.body.apellidos,
+    apellidoMaterno: req.body.apellidos,
+    foto: req.body.foto,
+    email: req.body.email,
+    fechaDeNacimiento: req.body.fechaDeNacimiento,
+    genero: req.body.genero,
+    celular: req.body.celular,
+    paisDeNacimiento: req.body.paisDeNacimiento,
+    estadoDeNacimiento: req.body.estadoDeNacimiento,
+    ciudadDeResidencia: req.body.ciudadDeResidencia,
+    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
+  });
 
   try {
-    const informacionGuardada = await puntos.save();
+    const informacionGuardada = await indormacion.save();
 
     if (!informacionGuardada)
       return res.status(400).send("No se pudo agregar el puntaje al usuario");

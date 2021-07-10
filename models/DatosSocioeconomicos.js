@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const datosSocioeconomicosSchema = new mongoose.Schema(
   {
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     nivelSocioeconomico: {
       ingresosMes: { type: String, required: false },
       educacion: { type: String, required: false },
