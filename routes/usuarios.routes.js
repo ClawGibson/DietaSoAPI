@@ -5,7 +5,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 router.get("/", async (req, res) => {
-  const listaUsuarios = await Usuarios.find().select("-contrasena");
+  try {
+    const listaUsuarios = await Usuarios.find().select("-contrasena");
+  } catch (error) {
+    console.log(error);
+  }
 
   if (!listaUsuarios) return res.status(500).json({ success: false });
 
