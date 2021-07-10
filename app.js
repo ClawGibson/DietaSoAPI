@@ -1,26 +1,27 @@
-require('dotenv/config');
-const express = require('express');
+require("dotenv/config");
+const express = require("express");
 const app = express();
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-const grupoAlimentosRoute = require('./routes/grupoAlimentos.routes');
-const alimentosRoute = require('./routes/alimentos.routes');
-const subGrupoAlimentosRoute = require('./routes/subGrupoAlimentos.routes');
-const recetasRoute = require('./routes/recetas.routes');
-const usuariosRoute = require('./routes/usuarios.routes');
-const menusBaseRoute = require('./routes/menusBase.routes');
-const logros = require('./routes/logros.routes');
-const logrosDeUsuario = require('./routes/logrosDeUsuario.routes');
-const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
-const equivalencias = require('./routes/Import/equivalences.routes');
-const authJwt = require('./helpers/jwt');
-const errorHandler = require('./helpers/error-handler');
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+const grupoAlimentosRoute = require("./routes/grupoAlimentos.routes");
+const alimentosRoute = require("./routes/alimentos.routes");
+const subGrupoAlimentosRoute = require("./routes/subGrupoAlimentos.routes");
+const recetasRoute = require("./routes/recetas.routes");
+const usuariosRoute = require("./routes/usuarios.routes");
+const menusBaseRoute = require("./routes/menusBase.routes");
+const logros = require("./routes/logros.routes");
+const logrosDeUsuario = require("./routes/logrosDeUsuario.routes");
+const puntosDeUsuario = require("./routes/puntosDeUsuario.routes");
+const equivalencias = require("./routes/Import/equivalences.routes");
+const authJwt = require("./helpers/jwt");
+const errorHandler = require("./helpers/error-handler");
+const informacionUsuarios = require("./routes/InformacionUsuarios.routes");
 
 const { API_URL, PORT, MONGODB, DBNAME } = process.env;
 
 // middlewares
 app.use(express.json());
-app.use(morgan('tiny'));
+app.use(morgan("tiny"));
 app.use(authJwt());
 app.use(errorHandler);
 
@@ -35,6 +36,7 @@ app.use(`${API_URL}/logros`, logros);
 app.use(`${API_URL}/logrosDeUsuario`, logrosDeUsuario);
 app.use(`${API_URL}/puntosDeUsuario`, puntosDeUsuario);
 app.use(`${API_URL}/equivalencias`, equivalencias);
+app.use(`${API_URL}informacionUsuarios`, informacionUsuarios);
 
 mongoose
   .connect(MONGODB, {
