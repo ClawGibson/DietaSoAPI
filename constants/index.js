@@ -1,6 +1,6 @@
 const Usuarios = require('../models/Usuarios');
 
-export const buscarUsuario = async (id) => {
+const buscarUsuario = async (id) => {
   try {
     const existeUsuario = await Usuarios.findById(id);
 
@@ -12,3 +12,5 @@ export const buscarUsuario = async (id) => {
     console.log('Ocurrió un error al buscar el usuario - ', err);
   }
 };
+
+module.exports = buscarUsuario;
