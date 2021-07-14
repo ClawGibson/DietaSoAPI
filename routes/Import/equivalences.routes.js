@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
 
   try {
     const excelData = excelToJson({
-      sourceFile: 'C:/Users/g666p/Documents/Equivalencias test v1.xlsx',
+      sourceFile: req.body.sourceFile,
       sheets: [
         {
           name: 'Hoja1',
