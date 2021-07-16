@@ -6,10 +6,15 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   let resultsFromExcel;
-  console.log('Body:', req?.body);
+  console.log(
+    'Body:',
+    req?.body,
+    ' - selectedFile.name: ',
+    req?.body.selectedFile.name
+  );
   try {
     const excelData = excelToJson({
-      sourceFile: fs.readFileSync(req.body.name),
+      sourceFile: fs.readFileSync(req.body.selectedFile.name),
       sheets: [
         {
           name: 'Hoja1',
