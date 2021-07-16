@@ -1,4 +1,5 @@
 const excelToJson = require('convert-excel-to-json');
+const fs = require('fs');
 const Equivalencias = require('../../models/Equivalencias');
 const express = require('express');
 const router = express.Router();
@@ -8,7 +9,7 @@ router.post('/', async (req, res) => {
   console.log('Body:', req?.body);
   try {
     const excelData = excelToJson({
-      sourceFile: req.body.name,
+      sourceFile: fs.readFileSync(req.body.name),
       sheets: [
         {
           name: 'Hoja1',
