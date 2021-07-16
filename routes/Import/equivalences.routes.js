@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   let resultsFromExcel;
-
+  console.log('Body:', req?.body);
   try {
     const excelData = excelToJson({
       sourceFile: req.body.sourceFile,
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
         },
       ],
     });
-
+    console.log('ExcelData:', excelData);
     resultsFromExcel = [];
     Object.values(excelData).map((item) =>
       Object.values(item).map((index) => resultsFromExcel.push(index))
