@@ -5,10 +5,10 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   let resultsFromExcel;
-
+  console.log('Body:', req?.body);
   try {
     const excelData = excelToJson({
-      sourceFile: 'C:/Users/g666p/Documents/Equivalencias test v1.xlsx',
+      sourceFile: req.body.sourceFile,
       sheets: [
         {
           name: 'Hoja1',
@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
         },
       ],
     });
-
+    console.log('ExcelData:', excelData);
     resultsFromExcel = [];
     Object.values(excelData).map((item) =>
       Object.values(item).map((index) => resultsFromExcel.push(index))

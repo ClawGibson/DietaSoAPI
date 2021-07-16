@@ -1,6 +1,7 @@
 require('dotenv/config');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const grupoAlimentosRoute = require('./routes/grupoAlimentos.routes');
@@ -20,6 +21,7 @@ const errorHandler = require('./helpers/error-handler');
 const { API_URL, PORT, MONGODB, DBNAME } = process.env;
 
 // middlewares
+app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(authJwt());
