@@ -1,5 +1,5 @@
 const Usuarios = require("../models/Usuarios");
-const InformacionUsuarios = require("../models/InformacionUsuarios");
+const DatosUsuarios = require("../models/DatosUsuarios");
 const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
@@ -7,16 +7,14 @@ const mongoose = require("mongoose");
 //const buscarUsuario = require('../constants/index');
 
 router.get("/", async (req, res) => {
-  const listaIUsuarios = await InformacionUsuarios.find({});
+  const listaDatos = await DatosUsuarios.find();
 
-  if (listaIUsuarios.length <= 0)
+  if (listaDatos.length <= 0 || !listaDatos)
     return res.status(500).json({
-      holi: listaIUsuarios.length,
-      holi2: !listaIUsuarios,
       success: false,
-      message: "No se encontro ninguna informacion de usuarios",
+      message: "No se encontraron logros de usuario",
     });
-  res.send(listaIUsuarios);
+  res.send(listaDatos);
 });
 
 router.get("/:id", async (req, res) => {
@@ -34,11 +32,11 @@ router.get("/:id", async (req, res) => {
   };
 
   try {
-    const nombre = await InformacionUsuarios.find({
+    const peso = await DatosUsuarios.find({
       usuario: req.params.id,
-    }).select("nombre");
+    }).select("peso");
 
-    res.send(nombre);
+    res.send(peso);
   } catch (err) {
     console.log("Ocurrió un error al obtener los puntos - ", err);
   }
@@ -58,25 +56,16 @@ router.post("/:id", async (req, res) => {
     }
   };
 
-  let informacion;
-  informacion = new InformacionUsuarios({
+  let datos;
+  datos = new DatosUsuarios({
     usuario: req.body.usuario,
-    nombre: req.body.nombre,
-    apellidoPaterno: req.body.apellidoPaterno,
-    apellidoMaterno: req.body.apellidoMaterno,
-    foto: req.body.foto,
-    email: req.body.email,
-    fechaDeNacimiento: req.body.fechaDeNacimiento,
-    genero: req.body.genero,
-    celular: req.body.celular,
-    paisDeNacimiento: req.body.paisDeNacimiento,
-    estadoDeNacimiento: req.body.estadoDeNacimiento,
-    ciudadDeResidencia: req.body.ciudadDeResidencia,
-    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
+    peso: req.body.peso,
+    altura: req.body.altura,
+    actividadFisica: req.body.actividadFisica,
   });
 
   try {
-    const informacionGuardada = await informacion.save();
+    const informacionGuardada = await datos.save();
 
     if (!informacionGuardada)
       return res.status(400).send("No se pudo agregar el puntaje al usuario");
@@ -91,24 +80,12 @@ router.put("/:id", async (req, res) => {
 
   let editarInformacion;
   try {
-    editarInformacion = await InformacionUsuarios.findOneAndUpdate(
-      req.params.id,
-      {
-        usuario: req.body.usuario,
-        nombre: req.body.nombre,
-        apellidoPaterno: req.body.apellidoPaterno,
-        apellidoMaterno: req.body.apellidosMaterno,
-        foto: req.body.foto,
-        email: req.body.email,
-        fechaDeNacimiento: req.body.fechaDeNacimiento,
-        genero: req.body.genero,
-        celular: req.body.celular,
-        paisDeNacimiento: req.body.paisDeNacimiento,
-        estadoDeNacimiento: req.body.estadoDeNacimiento,
-        ciudadDeResidencia: req.body.ciudadDeResidencia,
-        tiempoViviendoAhi: req.body.tiempoViviendoAhi,
-      }
-    );
+    editarInformacion = await DatosUsuarios.findOneAndUpdate(req.params.id, {
+      usuario: req.body.usuario,
+      peso: req.body.peso,
+      altura: req.body.altura,
+      actividadFisica: req.body.actividadFisica,
+    });
 
     editarInformacion = await editarInformacion.save();
 
