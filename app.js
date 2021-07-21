@@ -1,6 +1,7 @@
 require('dotenv/config');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const grupoAlimentosRoute = require('./routes/grupoAlimentos.routes');
@@ -12,13 +13,15 @@ const menusBaseRoute = require('./routes/menusBase.routes');
 const logros = require('./routes/logros.routes');
 const logrosDeUsuario = require('./routes/logrosDeUsuario.routes');
 const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
-const uploadFiles = require('./routes/upload-files.routes');
+const equivalencias = require('./routes/Import/equivalences.routes');
+const informacionUsuarios = require('./routes/InformacionUsuarios.routes');
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
 const { API_URL, PORT, MONGODB, DBNAME } = process.env;
 
 // middlewares
+app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(authJwt());
@@ -34,6 +37,8 @@ app.use(`${API_URL}/menusBase`, menusBaseRoute);
 app.use(`${API_URL}/logros`, logros);
 app.use(`${API_URL}/logrosDeUsuario`, logrosDeUsuario);
 app.use(`${API_URL}/puntosDeUsuario`, puntosDeUsuario);
+app.use(`${API_URL}/equivalencias`, equivalencias);
+app.use(`${API_URL}/informacionUsuarios`, informacionUsuarios);
 
 mongoose
   .connect(MONGODB, {

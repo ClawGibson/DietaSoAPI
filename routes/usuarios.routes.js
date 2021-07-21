@@ -1,4 +1,4 @@
-const Usuarios = require('../models/Usuarios');
+const { Usuarios } = require('../models/Usuarios');
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -6,14 +6,13 @@ const jwt = require('jsonwebtoken');
 
 router.get('/', async (req, res) => {
   let listaUsuarios;
-
   try {
     listaUsuarios = await Usuarios.find().select('-contrasena');
-
-    if (!listaUsuarios) return res.status(500).json({ success: false });
-  } catch (err) {
-    console.log('Ocurrió un error al buscar los usuarios', err);
+  } catch (error) {
+    console.log(error);
   }
+
+  if (!listaUsuarios) return res.status(500).json({ success: false });
 
   res.send(listaUsuarios);
 });
@@ -32,13 +31,20 @@ router.post('/', async (req, res) => {
   let crearUsuario = new Usuarios({
     logros: req.body.logros,
     nombre: req.body.nombre,
+    apellidoPaterno: req.body.apellidos,
+    apellidoMaterno: req.body.apellidos,
     foto: req.body.foto,
     email: req.body.email,
     fechaDeNacimiento: req.body.fechaDeNacimiento,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
     genero: req.body.genero,
+    celular: req.body.celular,
     peso: req.body.peso,
     altura: req.body.altura,
+    paisDeNacimiento: req.body.paisDeNacimiento,
+    estadoDeNacimiento: req.body.estadoDeNacimiento,
+    ciudadDeResidencia: req.body.ciudadDeResidencia,
+    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
     actividadFisica: req.body.actividadFisica,
     historiaClinica: req.body.historiaClinica,
     nivelSocioeconomico: req.body.nivelSocioeconomico,
@@ -95,13 +101,20 @@ router.post('/register', async (req, res) => {
   let registrarUsuario = new Usuarios({
     logros: req.body.logros,
     nombre: req.body.nombre,
+    apellidoPaterno: req.body.apellidos,
+    apellidoMaterno: req.body.apellidos,
     foto: req.body.foto,
     email: req.body.email,
     fechaDeNacimiento: req.body.fechaDeNacimiento,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
     genero: req.body.genero,
+    celular: req.body.celular,
     peso: req.body.peso,
     altura: req.body.altura,
+    paisDeNacimiento: req.body.paisDeNacimiento,
+    estadoDeNacimiento: req.body.estadoDeNacimiento,
+    ciudadDeResidencia: req.body.ciudadDeResidencia,
+    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
     actividadFisica: req.body.actividadFisica,
     historiaClinica: req.body.historiaClinica,
     nivelSocioeconomico: req.body.nivelSocioeconomico,
@@ -135,13 +148,20 @@ router.put('/:id', async (req, res) => {
   let editarUsuario = await Usuarios.findOneAndUpdate(req.params.id, {
     logros: req.body.logros,
     nombre: req.body.nombre,
+    apellidoPaterno: req.body.apellidos,
+    apellidoMaterno: req.body.apellidos,
     foto: req.body.foto,
     email: req.body.email,
     fechaDeNacimiento: req.body.fechaDeNacimiento,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
     genero: req.body.genero,
+    celular: req.body.celular,
     peso: req.body.peso,
     altura: req.body.altura,
+    paisDeNacimiento: req.body.paisDeNacimiento,
+    estadoDeNacimiento: req.body.estadoDeNacimiento,
+    ciudadDeResidencia: req.body.ciudadDeResidencia,
+    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
     actividadFisica: req.body.actividadFisica,
     historiaClinica: req.body.historiaClinica,
     nivelSocioeconomico: req.body.nivelSocioeconomico,

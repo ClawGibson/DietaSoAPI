@@ -3,19 +3,7 @@ const PuntosDeUsuario = require('../models/PuntosDeUsuario');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-
-const buscarUsuario = async (id) => {
-  try {
-    const existeUsuario = await Usuarios.findById(id);
-
-    if (!existeUsuario)
-      return res
-        .status(500)
-        .json({ success: false, message: 'El usuario no existe.' });
-  } catch (err) {
-    console.log('Ocurrió un error al buscar el usuario - ', err);
-  }
-};
+const { buscarUsuario } = require('../constants/index');
 
 router.get('/:id', async (req, res) => {
   buscarUsuario(req.params.id);
