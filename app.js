@@ -12,6 +12,7 @@ const menusBaseRoute = require('./routes/menusBase.routes');
 const logros = require('./routes/logros.routes');
 const logrosDeUsuario = require('./routes/logrosDeUsuario.routes');
 const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
+const uploadFiles = require('./routes/upload-files.routes');
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
