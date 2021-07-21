@@ -1,14 +1,20 @@
 const excelToJson = require('convert-excel-to-json');
+const fs = require('fs');
 const Equivalencias = require('../../models/Equivalencias');
 const express = require('express');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
   let resultsFromExcel;
-
+  console.log(
+    'Body:',
+    req?.body,
+    ' - selectedFile.name: ',
+    req?.body.selectedFile.name
+  );
   try {
     const excelData = excelToJson({
-      sourceFile: 'C:/Users/g666p/Documents/Equivalencias test v1.xlsx',
+      sourceFile: fs.readFileSync(req.body.selectedFile.name),
       sheets: [
         {
           name: 'Hoja1',
@@ -24,7 +30,7 @@ router.post('/', async (req, res) => {
         },
       ],
     });
-
+    console.log('ExcelData:', excelData);
     resultsFromExcel = [];
     Object.values(excelData).map((item) =>
       Object.values(item).map((index) => resultsFromExcel.push(index))
