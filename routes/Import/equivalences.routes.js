@@ -13,16 +13,23 @@ router.post('/', async (req, res) => {
 
 		try {
 			nuevaEquivalencia = await nuevaEquivalencia.save();
+
+			if (!nuevaEquivalencia) {
+				return res.status(500).send('Error al guardar la nueva equivalencia');
+			}
+
+			return res.status(200).send('Datos guardados exitosamente! :D');
 		} catch (err) {
-			console.log('Ocurrió un error al querer guardar los datos', err);
+			return res
+				.status(500)
+				.send('Ocurrió un error al querer guardar los datos', err);
 		}
 
 		if (!nuevaEquivalencia)
 			return res.status(400).send('No se pudo crear la equivalencia :c');
 	} catch (err) {
-		console.log('Ocurrió un error al intentar cargar los datos de Excel.', err);
+		return res.status(500).send('Error inesperado - ', err);
 	}
-	return res.status(200).send('Datos guardados exitosamente! :D');
 });
 
 module.exports = router;
