@@ -1,5 +1,3 @@
-const excelToJson = require('convert-excel-to-json');
-const fs = require('fs');
 const Equivalencias = require('../../models/Equivalencias');
 const express = require('express');
 const router = express.Router();
