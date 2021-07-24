@@ -3,14 +3,14 @@ const { Schema, model } = require("mongoose");
 const datosUsuariosSchema = new Schema(
   {
     usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
-    peso: [Number],
-    altura: { type: Number, required: true },
     actividadFisica: {
       tipoDeActividad: { type: String, required: false },
       intensidad: { type: String, required: false },
       vecesXsemana: { type: String, required: false },
-      minXdia: { type: Number, required: false },
+      minXdia: { type: String, required: false },
     },
+    peso: [Number],
+    altura: { type: Number, required: false },
   },
   {
     timestamps: true,

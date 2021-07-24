@@ -7,18 +7,51 @@ const mongoose = require("mongoose");
 //const buscarUsuario = require('../constants/index');
 
 router.get("/", async (req, res) => {
-  const listaIUsuarios = await InformacionUsuarios.find({});
+  const listaIUsuarios = await InformacionUsuarios.find();
 
   if (listaIUsuarios.length <= 0)
     return res.status(500).json({
-      holi: listaIUsuarios.length,
-      holi2: !listaIUsuarios,
       success: false,
       message: "No se encontro ninguna informacion de usuarios",
     });
   res.send(listaIUsuarios);
 });
 
+router.get("/:id", async (req, res) => {
+  const buscarUsuario = async (id) => {
+    try {
+      const existeUsuario = await Usuarios.findById(id);
+
+      if (!existeUsuario)
+        return res
+          .status(500)
+          .json({ success: false, message: "El usuario no existe." });
+    } catch (err) {
+      console.log("Ocurrió un error al buscar el usuario - ", err);
+    }
+  };
+
+  try {
+    const listaInfoUsuarios = await InformacionUsuarios.find({
+      usuario: req.params.id,
+    })
+      .populate("usuario", { id: 1 })
+      .select(
+        "nombre apellidoPaterno apellidoMaterno foto fechaDeNacimiento genero celular paisDeNacimiento estadoDeNacimiento ciudadDeResidencia tiempoViviendoAhi"
+      );
+
+    if (!listaInfoUsuarios.length > 0)
+      return res.status(500).json({
+        success: true,
+        message: "El usuario no tiene logros todavía",
+      });
+
+    res.send(listaInfoUsuarios);
+  } catch (err) {
+    console.log("Error al obtener los logros del usuario", err);
+  }
+});
+/*
 router.get("/:id", async (req, res) => {
   const buscarUsuario = async (id) => {
     try {
@@ -43,6 +76,7 @@ router.get("/:id", async (req, res) => {
     console.log("Ocurrió un error al obtener los puntos - ", err);
   }
 });
+*/
 
 router.post("/:id", async (req, res) => {
   const buscarUsuario = async (id) => {

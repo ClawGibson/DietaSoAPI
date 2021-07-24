@@ -34,7 +34,7 @@ router.get("/:id", async (req, res) => {
   try {
     const peso = await DatosUsuarios.find({
       usuario: req.params.id,
-    }).select("peso");
+    }).select("peso altura actividadFisica");
 
     res.send(peso);
   } catch (err) {
@@ -48,6 +48,42 @@ router.post("/:id", async (req, res) => {
       const existeUsuario = await Usuarios.findById(id);
 
       if (existeUsuario)
+        return res.status(500).json({
+          success: false,
+          message: "El usuario ya existe.",
+          holi: existeUsuario,
+        });
+    } catch (err) {
+      console.log("Ocurrió un error al buscar el usuario - ", err);
+    }
+    console.log(existeUsuario);
+  };
+
+  let datos;
+  datos = new DatosUsuarios({
+    usuario: req.body.usuario,
+    actividadFisica: req.body.actividadFisica,
+    peso: req.body.peso,
+    altura: req.body.altura,
+  });
+
+  try {
+    const datosGuardados = await datos.save();
+
+    if (!datosGuardados)
+      return res.status(400).send("No se pudo agregar el puntaje al usuario");
+    res.send(datosGuardados);
+  } catch (err) {
+    console.log("Ocurrió un error al guardar el puntaje del usuario - ", err);
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  const buscarUsuario = async (id) => {
+    try {
+      const existeUsuario = await Usuarios.findById(id);
+
+      if (existeUsuario)
         return res
           .status(500)
           .json({ success: false, message: "El usuario ya existe." });
@@ -55,28 +91,6 @@ router.post("/:id", async (req, res) => {
       console.log("Ocurrió un error al buscar el usuario - ", err);
     }
   };
-
-  let datos;
-  datos = new DatosUsuarios({
-    usuario: req.body.usuario,
-    peso: req.body.peso,
-    altura: req.body.altura,
-    actividadFisica: req.body.actividadFisica,
-  });
-
-  try {
-    const informacionGuardada = await datos.save();
-
-    if (!informacionGuardada)
-      return res.status(400).send("No se pudo agregar el puntaje al usuario");
-    res.send(informacionGuardada);
-  } catch (err) {
-    console.log("Ocurrió un error al guardar el puntaje del usuario - ", err);
-  }
-});
-
-router.put("/:id", async (req, res) => {
-  buscarUsuario(req.params.id);
 
   let editarInformacion;
   try {
