@@ -16,6 +16,8 @@ const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
 const equivalencias = require('./routes/Import/equivalences.routes');
 const informacionUsuarios = require('./routes/InformacionUsuarios.routes');
 const estadisticasIMC = require('./routes/Estadisticas/estadisticas.IMC.routes');
+const estadisticasNiveles = require('./routes/Estadisticas/estadisticas.niveles.routes');
+const estadisticasPresion = require('./routes/Estadisticas/estadisticasPresion.routes');
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -41,6 +43,8 @@ app.use(`${API_URL}/puntosDeUsuario`, puntosDeUsuario);
 app.use(`${API_URL}/equivalencias`, equivalencias);
 app.use(`${API_URL}/informacionUsuarios`, informacionUsuarios);
 app.use(`${API_URL}/estadisticasIMC`, estadisticasIMC);
+app.use(`${API_URL}/estadisticasNiveles`, estadisticasNiveles);
+app.use(`${API_URL}/estadisticasPresion`, estadisticasPresion);
 
 mongoose
   .connect(MONGODB, {
