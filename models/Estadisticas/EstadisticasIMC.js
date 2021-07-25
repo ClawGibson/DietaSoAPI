@@ -7,6 +7,7 @@ const estadisticasIMCSchema = new Schema(
     IMC: { type: Number, default: 0 },
     porcentajeGrasaCorporal: { type: Number, default: 0 },
     porcentajeMasaMuscular: { type: Number, default: 0 },
+    actividadFisica: { type: String, default: 'Ninguna' },
   },
   {
     timestamps: true,

@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const estadisticasHuellaSchema = new Schema(
   {
-    usuario: { type: Schema.Types.ObjectId, ref: 'Usuario' },
+    usuario: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
     huellaHidricaTotal: { type: Number, default: 0 },
     huellaCarbonoTotal: { type: Number, default: 0 },
     puntajeEcologicoSostenible: { type: Number, default: 0 },
