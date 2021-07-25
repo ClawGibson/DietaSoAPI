@@ -12,7 +12,10 @@ router.get('/', async (req, res) => {
     console.log(error);
   }
 
-  if (!listaUsuarios) return res.status(500).json({ success: false });
+  if (!listaUsuarios)
+    return res
+      .status(500)
+      .json({ success: false, message: 'No se encontraron usuarios' });
 
   res.send(listaUsuarios);
 });
