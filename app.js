@@ -15,6 +15,7 @@ const logrosDeUsuario = require('./routes/logrosDeUsuario.routes');
 const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
 const equivalencias = require('./routes/Import/equivalences.routes');
 const informacionUsuarios = require('./routes/InformacionUsuarios.routes');
+const estadisticasIMC = require('./routes/Estadisticas/estadisticas.IMC.routes');
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -39,6 +40,7 @@ app.use(`${API_URL}/logrosDeUsuario`, logrosDeUsuario);
 app.use(`${API_URL}/puntosDeUsuario`, puntosDeUsuario);
 app.use(`${API_URL}/equivalencias`, equivalencias);
 app.use(`${API_URL}/informacionUsuarios`, informacionUsuarios);
+app.use(`${API_URL}/estadisticasIMC`, estadisticasIMC);
 
 mongoose
   .connect(MONGODB, {
