@@ -2,7 +2,11 @@ const { Schema, model } = require('mongoose');
 
 const estadisticasNivelesSchema = new Schema(
   {
-    usuario: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
+    usuario: {
+      type: Schema.Types.ObjectId,
+      ref: 'Usuarios',
+      required: true,
+    },
     glucosa: { type: Number, required: true },
     trigliceridos: { type: Number, required: true },
     colesterolTotal: { type: Number, required: true },

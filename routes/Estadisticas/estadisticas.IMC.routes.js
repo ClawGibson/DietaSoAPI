@@ -21,8 +21,10 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const response = await EstadisticasIMC.findById(req.params.id);
-
+    const response = await EstadisticasIMC.findById(req.params.id).populate(
+      'usuario',
+      { nombre: 1, email: 1 }
+    );
     if (!response)
       return res
         .status(500)
