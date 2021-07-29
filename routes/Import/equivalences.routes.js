@@ -32,4 +32,16 @@ router.post('/', async (req, res) => {
 	}
 });
 
+router.get('/', async (req, res) => {
+	try {
+		const listaEquivalencias = await Equivalencias.find();
+		if (!listaEquivalencias) {
+			return res.status(500).send('Error al obtener la lista de equivalencias');
+		}
+		return res.status(200).send(listaEquivalencias);
+	} catch (err) {
+		return res.status(500).send('Error inesperado - ', err);
+	}
+});
+
 module.exports = router;
