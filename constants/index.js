@@ -1,4 +1,4 @@
-const Usuarios = require('../models/Usuarios');
+const { Usuarios } = require('../models/Usuarios');
 
 const buscarUsuario = async (id) => {
   try {
