@@ -13,7 +13,11 @@ const buscarUsuario = async (id) => {
 
     return existeUsuario
   } catch (err) {
-    console.log('Ocurrió un error al buscar el usuario - ', err);
+    return res.status(500).json({
+      success: false,
+      message: 'Ocurrió un error al buscar el usuario.',
+      err,
+    });
   }
 
 };
