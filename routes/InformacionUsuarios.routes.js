@@ -4,7 +4,7 @@ const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-//const buscarUsuario = require('../constants/index');
+const buscarUsuario = require("../constants/index");
 
 router.get("/", async (req, res) => {
   const listaIUsuarios = await InformacionUsuarios.find();
@@ -79,18 +79,7 @@ router.get("/:id", async (req, res) => {
 */
 
 router.post("/:id", async (req, res) => {
-  const buscarUsuario = async (id) => {
-    try {
-      const existeUsuario = await Usuarios.findById(id);
-
-      if (existeUsuario)
-        return res
-          .status(500)
-          .json({ success: false, message: "El usuario ya existe." });
-    } catch (err) {
-      console.log("Ocurrió un error al buscar el usuario - ", err);
-    }
-  };
+  buscarUsuario(req.params.id);
 
   let informacion;
   informacion = new InformacionUsuarios({
