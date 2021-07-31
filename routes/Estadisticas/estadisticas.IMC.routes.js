@@ -61,4 +61,34 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.patch('/:id', async (req, res) => {
+  const { porcentajeGrasaCorporal } = req.body;
+
+  try {
+    let findById = await EstadisticasIMC.find({ usuario: req.params.id });
+
+    if (!findById.length > 0)
+      return res.status(404).send({
+        success: false,
+        message: 'No se encontraron datos',
+      });
+
+    findById[0].porcentajeGrasaCorporal = porcentajeGrasaCorporal;
+
+    findById = await findById[0].save();
+
+    if (!findById)
+      return res.status(500).send({
+        success: false,
+        message: 'Error al querer guardar la estadistica IMC',
+      });
+
+    return res.status(200).send(findById);
+  } catch (e) {
+    return res
+      .status(500)
+      .send('Error inesperado al actualizar la estadistica IMC - ', e);
+  }
+});
+
 module.exports = router;
