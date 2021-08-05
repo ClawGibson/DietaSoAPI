@@ -1,4 +1,4 @@
-const { Usuarios } = require('../models/Usuarios');
+const Usuarios = require("../models/Usuarios");
 
 const buscarUsuario = async (id) => {
 
@@ -9,15 +9,9 @@ const buscarUsuario = async (id) => {
     if (!existeUsuario)
       return res
         .status(500)
-        .json({ success: false, message: 'El usuario no existe.' });
-
-    return existeUsuario
+        .json({ success: false, message: "El usuario no existe." });
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: 'Ocurrió un error al buscar el usuario.',
-      err,
-    });
+    console.log("Ocurrió un error al buscar el usuario - ", err);
   }
 
 };
