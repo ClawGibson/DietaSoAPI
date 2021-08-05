@@ -1,26 +1,31 @@
 require("dotenv/config");
 const express = require("express");
 const app = express();
-const cors = require("cors");
-const morgan = require("morgan");
-const mongoose = require("mongoose");
-const grupoAlimentosRoute = require("./routes/grupoAlimentos.routes");
-const alimentosRoute = require("./routes/alimentos.routes");
-const subGrupoAlimentosRoute = require("./routes/subGrupoAlimentos.routes");
-const recetasRoute = require("./routes/recetas.routes");
-const usuariosRoute = require("./routes/usuarios.routes");
-const menusBaseRoute = require("./routes/menusBase.routes");
-const logros = require("./routes/logros.routes");
-const logrosDeUsuario = require("./routes/logrosDeUsuario.routes");
-const puntosDeUsuario = require("./routes/puntosDeUsuario.routes");
-const equivalencias = require("./routes/Import/equivalences.routes");
-const informacionUsuarios = require("./routes/InformacionUsuarios.routes");
-const datosUsuarios = require("./routes/datosUsuarios.routes");
-const historialClinico = require("./routes/historialClinico.routes");
-const datosSocioeconomicos = require("./routes/datosSocioeconomicos.routes");
-const alimentacionUsuarios = require("./routes/alimentacionUsuarios.routes");
-const authJwt = require("./helpers/jwt");
-const errorHandler = require("./helpers/error-handler");
+
+
+const cors = require('cors');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const grupoAlimentosRoute = require('./routes/grupoAlimentos.routes');
+const alimentosRoute = require('./routes/alimentos.routes');
+const subGrupoAlimentosRoute = require('./routes/subGrupoAlimentos.routes');
+const recetasRoute = require('./routes/recetas.routes');
+const usuariosRoute = require('./routes/usuarios.routes');
+const menusBaseRoute = require('./routes/menusBase.routes');
+const logros = require('./routes/logros.routes');
+const logrosDeUsuario = require('./routes/logrosDeUsuario.routes');
+const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
+const equivalencias = require('./routes/Import/equivalences.routes');
+const informacionUsuarios = require('./routes/InformacionUsuarios.routes');
+const estadisticasIMC = require('./routes/Estadisticas/estadisticas.IMC.routes');
+const estadisticasNiveles = require('./routes/Estadisticas/estadisticas.niveles.routes');
+const estadisticasPresion = require('./routes/Estadisticas/estadisticasPresion.routes');
+const datosUsuarios = require('./routes/datosUsuarios.routes');
+const historialClinico = require('./routes/historialClinico.routes');
+const datosSocioeconomicos = require('./routes/datosSocioeconomicos.routes');
+const alimentacionUsuarios = require('./routes/alimentacionUsuarios.routes');
+const authJwt = require('./helpers/jwt');
+const errorHandler = require('./helpers/error-handler');
 
 const { API_URL, PORT, MONGODB, DBNAME } = process.env;
 
@@ -47,6 +52,10 @@ app.use(`${API_URL}/datosUsuarios`, datosUsuarios);
 app.use(`${API_URL}/historialClinico`, historialClinico);
 app.use(`${API_URL}/datosSocioeconomicos`, datosSocioeconomicos);
 app.use(`${API_URL}/alimentacionUsuarios`, alimentacionUsuarios);
+app.use(`${API_URL}/estadisticasIMC`, estadisticasIMC);
+app.use(`${API_URL}/estadisticasNiveles`, estadisticasNiveles);
+app.use(`${API_URL}/estadisticasPresion`, estadisticasPresion);
+
 
 mongoose
   .connect(MONGODB, {

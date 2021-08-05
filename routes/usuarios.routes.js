@@ -4,6 +4,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const buscarUsuario = require('../constants');
+
 router.get('/', async (req, res) => {
   let listaUsuarios;
   try {
@@ -12,19 +14,31 @@ router.get('/', async (req, res) => {
     console.log(error);
   }
 
-  if (!listaUsuarios) return res.status(500).json({ success: false });
+  if (!listaUsuarios)
+    return res
+      .status(500)
+      .json({ success: false, message: 'No se encontraron usuarios' });
 
   res.send(listaUsuarios);
 });
 
 router.get('/:id', async (req, res) => {
-  const usuario = await Usuarios.findById(req.params.id).select('-contrasena');
+
+  
+
+  const usuario = await buscarUsuario(req.params.id);
+  // constantes.buscarUsuario(req.params.id);
+
+
+  // const usuario = await Usuarios.findById(req.params.id).select('-contrasena');
 
   if (!usuario)
     return res
       .status(500)
       .json({ success: false, message: 'Usuario no encontrado' });
   res.send(usuario);
+
+
 });
 
 router.post('/', async (req, res) => {
