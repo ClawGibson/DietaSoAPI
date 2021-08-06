@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const historialClinicoSchema = new mongoose.Schema(
+const historialClinicoSchema = new Schema(
   {
     usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     historiaClinica: {
@@ -15,12 +15,6 @@ const historialClinicoSchema = new mongoose.Schema(
   }
 );
 
-historialClinicoSchema.method("toJSON", function () {
-  const { __v, ...object } = this.toObject();
-  const { _id: id, ...result } = object;
-  return { ...result, id };
-});
-
 historialClinicoSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
@@ -29,8 +23,4 @@ historialClinicoSchema.set("toJSON", {
   virtuals: true,
 });
 
-exports.HistorialClinico = mongoose.model(
-  "HistorialClinico",
-  historialClinicoSchema
-);
-exports.historialClinicoSchema = historialClinicoSchema;
+module.exports = model("HistorialClinico", historialClinicoSchema);
