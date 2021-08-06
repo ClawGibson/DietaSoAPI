@@ -89,6 +89,7 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+
   const usuario = await Usuarios.findOne({ email: req.body.email });
   const SECRET = process.env.SECRET;
 
@@ -109,45 +110,52 @@ router.post('/login', async (req, res) => {
   } else {
     res.status(400).send('Contraseña incorrecta');
   }
+
+
 });
 
 router.post('/register', async (req, res) => {
+
+
+  const { contrasena, ...usuario} = req.body;
+
   let registrarUsuario = new Usuarios({
-    logros: req.body.logros,
-    nombre: req.body.nombre,
-    apellidoPaterno: req.body.apellidos,
-    apellidoMaterno: req.body.apellidos,
-    foto: req.body.foto,
-    email: req.body.email,
-    fechaDeNacimiento: req.body.fechaDeNacimiento,
+    ...usuario,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-    genero: req.body.genero,
-    celular: req.body.celular,
-    peso: req.body.peso,
-    altura: req.body.altura,
-    paisDeNacimiento: req.body.paisDeNacimiento,
-    estadoDeNacimiento: req.body.estadoDeNacimiento,
-    ciudadDeResidencia: req.body.ciudadDeResidencia,
-    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
-    actividadFisica: req.body.actividadFisica,
-    historiaClinica: req.body.historiaClinica,
-    nivelSocioeconomico: req.body.nivelSocioeconomico,
-    comidaFavorita: req.body.comidaFavorita,
-    comidaNoFavorita: req.body.comidaNoFavorita,
-    alergiasAlimentarias: req.body.alergiasAlimentarias,
-    meta: req.body.meta,
-    tipoDeUsuario: req.body.tipoDeUsuario,
-    extras: req.body.extras,
-    desayuno: req.body.desayuno,
-    colacion1: req.body.colacion1,
-    comida: req.body.comida,
-    colacion2: req.body.colacion2,
-    cena: req.body.cena,
-    desayunoAyer: req.body.desayunoAyer,
-    colacion1Ayer: req.body.colacion1Ayer,
-    comidaAyer: req.body.comidaAyer,
-    colacion2Ayer: req.body.colacion2Ayer,
-    cenaAyer: req.body.cenaAyer,
+    // logros: req.body.logros,
+    // nombre: req.body.nombre,
+    // apellidoPaterno: req.body.apellidos,
+    // apellidoMaterno: req.body.apellidos,
+    // foto: req.body.foto,
+    // email: req.body.email,
+    // fechaDeNacimiento: req.body.fechaDeNacimiento,
+    // genero: req.body.genero,
+    // celular: req.body.celular,
+    // peso: req.body.peso,
+    // altura: req.body.altura,
+    // paisDeNacimiento: req.body.paisDeNacimiento,
+    // estadoDeNacimiento: req.body.estadoDeNacimiento,
+    // ciudadDeResidencia: req.body.ciudadDeResidencia,
+    // tiempoViviendoAhi: req.body.tiempoViviendoAhi,
+    // actividadFisica: req.body.actividadFisica,
+    // historiaClinica: req.body.historiaClinica,
+    // nivelSocioeconomico: req.body.nivelSocioeconomico,
+    // comidaFavorita: req.body.comidaFavorita,
+    // comidaNoFavorita: req.body.comidaNoFavorita,
+    // alergiasAlimentarias: req.body.alergiasAlimentarias,
+    // meta: req.body.meta,
+    // tipoDeUsuario: req.body.tipoDeUsuario,
+    // extras: req.body.extras,
+    // desayuno: req.body.desayuno,
+    // colacion1: req.body.colacion1,
+    // comida: req.body.comida,
+    // colacion2: req.body.colacion2,
+    // cena: req.body.cena,
+    // desayunoAyer: req.body.desayunoAyer,
+    // colacion1Ayer: req.body.colacion1Ayer,
+    // comidaAyer: req.body.comidaAyer,
+    // colacion2Ayer: req.body.colacion2Ayer,
+    // cenaAyer: req.body.cenaAyer,
   });
 
   registrarUsuario = await registrarUsuario.save();
