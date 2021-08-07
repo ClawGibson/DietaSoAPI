@@ -1,8 +1,8 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const informacionUsuariosSchema = new Schema(
   {
-    usuario: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     nombre: { type: String, required: true },
     apellidoPaterno: { type: String, required: true },
     apellidoMaterno: { type: String, required: true },
@@ -10,7 +10,6 @@ const informacionUsuariosSchema = new Schema(
     fechaDeNacimiento: { type: String, required: true },
     genero: { type: String, required: true },
     celular: { type: String, required: false },
-    //edad: [Number],
     paisDeNacimiento: { type: String, required: false },
     estadoDeNacimiento: { type: String, required: false },
     ciudadDeResidencia: { type: String, required: false },
@@ -21,12 +20,12 @@ const informacionUsuariosSchema = new Schema(
   }
 );
 
-informacionUsuariosSchema.virtual('id').get(function () {
+informacionUsuariosSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
 
-informacionUsuariosSchema.set('toJSON', {
+informacionUsuariosSchema.set("toJSON", {
   virtuals: true,
 });
 
-module.exports = model('InformacionUsuarios', informacionUsuariosSchema);
+module.exports = model("InformacionUsuarios", informacionUsuariosSchema);

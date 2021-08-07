@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const AlimentacionUsuariosSchema = new mongoose.Schema(
+const alimentacionUsuariosSchema = new Schema(
   {
     usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     comidaFavorita: [String],
@@ -29,12 +29,6 @@ const AlimentacionUsuariosSchema = new mongoose.Schema(
   }
 );
 
-alimentacionUsuariosSchema.method("toJSON", function () {
-  const { __v, ...object } = this.toObject();
-  const { _id: id, ...result } = object;
-  return { ...result, id };
-});
-
 alimentacionUsuariosSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
@@ -43,8 +37,4 @@ alimentacionUsuariosSchema.set("toJSON", {
   virtuals: true,
 });
 
-exports.AlimentacionUsuarios = mongoose.model(
-  "AlimentacionUsuarios",
-  alimentacionusuariosSchema
-);
-exports.alimentacionUsuariosSchema = alimentacionusuariosSchema;
+module.exports = model("AlimentacionUsuarios", alimentacionUsuariosSchema);
