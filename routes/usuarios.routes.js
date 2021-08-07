@@ -4,6 +4,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const buscarUsuario = require('../constants');
+
 router.get('/', async (req, res) => {
   let listaUsuarios;
   try {
@@ -21,52 +23,33 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const usuario = await Usuarios.findById(req.params.id).select('-contrasena');
+
+  
+
+  const usuario = await buscarUsuario(req.params.id);
+  // constantes.buscarUsuario(req.params.id);
+
+
+  // const usuario = await Usuarios.findById(req.params.id).select('-contrasena');
 
   if (!usuario)
     return res
       .status(500)
       .json({ success: false, message: 'Usuario no encontrado' });
   res.send(usuario);
+
+
 });
 
 router.post('/', async (req, res) => {
   let crearUsuario = new Usuarios({
     logros: req.body.logros,
-    nombre: req.body.nombre,
-    apellidoPaterno: req.body.apellidos,
-    apellidoMaterno: req.body.apellidos,
-    foto: req.body.foto,
+
     email: req.body.email,
-    fechaDeNacimiento: req.body.fechaDeNacimiento,
+
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-    genero: req.body.genero,
-    celular: req.body.celular,
-    peso: req.body.peso,
-    altura: req.body.altura,
-    paisDeNacimiento: req.body.paisDeNacimiento,
-    estadoDeNacimiento: req.body.estadoDeNacimiento,
-    ciudadDeResidencia: req.body.ciudadDeResidencia,
-    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
-    actividadFisica: req.body.actividadFisica,
-    historiaClinica: req.body.historiaClinica,
-    nivelSocioeconomico: req.body.nivelSocioeconomico,
-    comidaFavorita: req.body.comidaFavorita,
-    comidaNoFavorita: req.body.comidaNoFavorita,
-    alergiasAlimentarias: req.body.alergiasAlimentarias,
-    meta: req.body.meta,
+
     tipoDeUsuario: req.body.tipoDeUsuario,
-    extras: req.body.extras,
-    desayuno: req.body.desayuno,
-    colacion1: req.body.colacion1,
-    comida: req.body.comida,
-    colacion2: req.body.colacion2,
-    cena: req.body.cena,
-    desayunoAyer: req.body.desayunoAyer,
-    colacion1Ayer: req.body.colacion1Ayer,
-    comidaAyer: req.body.comidaAyer,
-    colacion2Ayer: req.body.colacion2Ayer,
-    cenaAyer: req.body.cenaAyer,
   });
 
   crearUsuario = await crearUsuario.save();
@@ -101,89 +84,45 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-  let registrarUsuario = new Usuarios({
-    logros: req.body.logros,
-    nombre: req.body.nombre,
-    apellidoPaterno: req.body.apellidos,
-    apellidoMaterno: req.body.apellidos,
-    foto: req.body.foto,
-    email: req.body.email,
-    fechaDeNacimiento: req.body.fechaDeNacimiento,
-    contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-    genero: req.body.genero,
-    celular: req.body.celular,
-    peso: req.body.peso,
-    altura: req.body.altura,
-    paisDeNacimiento: req.body.paisDeNacimiento,
-    estadoDeNacimiento: req.body.estadoDeNacimiento,
-    ciudadDeResidencia: req.body.ciudadDeResidencia,
-    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
-    actividadFisica: req.body.actividadFisica,
-    historiaClinica: req.body.historiaClinica,
-    nivelSocioeconomico: req.body.nivelSocioeconomico,
-    comidaFavorita: req.body.comidaFavorita,
-    comidaNoFavorita: req.body.comidaNoFavorita,
-    alergiasAlimentarias: req.body.alergiasAlimentarias,
-    meta: req.body.meta,
-    tipoDeUsuario: req.body.tipoDeUsuario,
-    extras: req.body.extras,
-    desayuno: req.body.desayuno,
-    colacion1: req.body.colacion1,
-    comida: req.body.comida,
-    colacion2: req.body.colacion2,
-    cena: req.body.cena,
-    desayunoAyer: req.body.desayunoAyer,
-    colacion1Ayer: req.body.colacion1Ayer,
-    comidaAyer: req.body.comidaAyer,
-    colacion2Ayer: req.body.colacion2Ayer,
-    cenaAyer: req.body.cenaAyer,
-  });
+  const usuario = await Usuarios.findOne({ email: req.body.email });
+  try {
+    if (usuario)
+      return res
+        .status(500)
+        .json({ success: false, message: 'Usuario ya creado' });
+  } catch (err) {
+    console.log('Ocurrió un error al buscar el usuario - ', err);
+  }
+  try {
+    let registrarUsuario = new Usuarios({
+      logros: req.body.logros,
 
-  registrarUsuario = await registrarUsuario.save();
+      email: req.body.email,
 
-  if (!registrarUsuario)
-    return res.status(400).send('No se pudo crear el usuario :c');
+      contrasena: bcrypt.hashSync(req.body.contrasena, 10),
 
-  res.send(registrarUsuario);
+      tipoDeUsuario: req.body.tipoDeUsuario,
+    });
+
+    registrarUsuario = await registrarUsuario.save();
+
+    if (!registrarUsuario)
+      return res.status(400).send('No se pudo agregar al usuario');
+    res.send(registrarUsuario);
+  } catch (err) {
+    console.log('Ocurrió un error al guardar usuario - ', err);
+  }
 });
 
 router.put('/:id', async (req, res) => {
   let editarUsuario = await Usuarios.findOneAndUpdate(req.params.id, {
     logros: req.body.logros,
-    nombre: req.body.nombre,
-    apellidoPaterno: req.body.apellidos,
-    apellidoMaterno: req.body.apellidos,
-    foto: req.body.foto,
+
     email: req.body.email,
-    fechaDeNacimiento: req.body.fechaDeNacimiento,
+
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-    genero: req.body.genero,
-    celular: req.body.celular,
-    peso: req.body.peso,
-    altura: req.body.altura,
-    paisDeNacimiento: req.body.paisDeNacimiento,
-    estadoDeNacimiento: req.body.estadoDeNacimiento,
-    ciudadDeResidencia: req.body.ciudadDeResidencia,
-    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
-    actividadFisica: req.body.actividadFisica,
-    historiaClinica: req.body.historiaClinica,
-    nivelSocioeconomico: req.body.nivelSocioeconomico,
-    comidaFavorita: req.body.comidaFavorita,
-    comidaNoFavorita: req.body.comidaNoFavorita,
-    alergiasAlimentarias: req.body.alergiasAlimentarias,
-    meta: req.body.meta,
+
     tipoDeUsuario: req.body.tipoDeUsuario,
-    extras: req.body.extras,
-    desayuno: req.body.desayuno,
-    colacion1: req.body.colacion1,
-    comida: req.body.comida,
-    colacion2: req.body.colacion2,
-    cena: req.body.cena,
-    desayunoAyer: req.body.desayunoAyer,
-    colacion1Ayer: req.body.colacion1Ayer,
-    comidaAyer: req.body.comidaAyer,
-    colacion2Ayer: req.body.colacion2Ayer,
-    cenaAyer: req.body.cenaAyer,
   });
 
   editarUsuario = await editarUsuario.save();

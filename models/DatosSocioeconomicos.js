@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const datosSocioeconomicosSchema = new mongoose.Schema(
+const datosSocioeconomicosSchema = new Schema(
   {
     usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     nivelSocioeconomico: {
@@ -20,12 +20,6 @@ const datosSocioeconomicosSchema = new mongoose.Schema(
   }
 );
 
-datosSocioeconomicosSchema.method("toJSON", function () {
-  const { __v, ...object } = this.toObject();
-  const { _id: id, ...result } = object;
-  return { ...result, id };
-});
-
 datosSocioeconomicosSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });
@@ -34,8 +28,4 @@ datosSocioeconomicosSchema.set("toJSON", {
   virtuals: true,
 });
 
-exports.DatosSocioeconomicos = mongoose.model(
-  "DatosSocioeconomicos",
-  datosSocioeconomicosSchema
-);
-exports.datosSocioeconomicosSchema = datosSocioeconomicosSchema;
+module.exports = model("DatosSocioeconomicos", datosSocioeconomicosSchema);
