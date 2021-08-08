@@ -19,14 +19,18 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/detalles', async (req, res) => {
-    const { grupoAlimento } = req.query;
-    const grupoDeAlimento = await GrupoAlimentos.find({
-        grupoAlimento: grupoAlimento,
-    });
+    try {
+        const { grupoAlimento } = req.query;
+        const grupoDeAlimento = await GrupoAlimentos.find({
+            grupoAlimento: grupoAlimento,
+        });
 
-    if (!grupoDeAlimento) return res.status(500).json({ success: false });
+        if (!grupoDeAlimento) return res.status(500).json({ success: false });
 
-    res.send(grupoDeAlimento);
+        res.send(grupoDeAlimento);
+    } catch (error) {
+        return res.status(500).send({ success: false, error: error.message });
+    }
 });
 
 router.post('/', async (req, res) => {
