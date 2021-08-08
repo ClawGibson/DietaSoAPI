@@ -23,13 +23,14 @@ router.get('/detalles', async (req, res) => {
     try {
         const { grupoAlimento } = req.query;
 
-        const grupoDeAlimento = await Equivalencias.find({
+        const equivaleniasPorGrupo = await Equivalencias.find({
             grupoAlimento: grupoAlimento,
         });
 
-        if (!grupoDeAlimento) return res.status(500).json({ success: false });
+        if (!equivaleniasPorGrupo)
+            return res.status(500).json({ success: false });
 
-        res.send(grupoDeAlimento);
+        res.send(equivaleniasPorGrupo);
     } catch (error) {
         return res.status(500).send({ success: false, error: error.message });
     }
