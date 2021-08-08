@@ -1,3 +1,4 @@
+const Equivalencias = require('../models/Equivalencias');
 const GrupoAlimentos = require('../models/GrupoAlimentos');
 const express = require('express');
 const router = express.Router();
@@ -21,7 +22,8 @@ router.get('/', async (req, res) => {
 router.get('/detalles', async (req, res) => {
     try {
         const { grupoAlimento } = req.query;
-        const grupoDeAlimento = await GrupoAlimentos.find({
+
+        const grupoDeAlimento = await Equivalencias.find({
             grupoAlimento: grupoAlimento,
         });
 
