@@ -43,22 +43,28 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/:id", async (req, res) => {
-  const buscarUsuario = async (id) => {
-    try {
-      const existeUsuario = await Usuarios.findById(id);
-
-      if (existeUsuario)
-        return res
-          .status(500)
-          .json({ success: false, message: "El usuario ya existe." });
-    } catch (err) {
-      console.log("Ocurrió un error al buscar el usuario - ", err);
+  const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
+  try {
+    if (usuarioCreado) {
+      const infoUsuario = await AlimentacionUsuarios.findOne({
+        usuario: req.params.id,
+      });
+      try {
+        if (infoUsuario)
+          return res.status(500).json({
+            success: false,
+            message: "Informacion de Usuario ya creado",
+          });
+      } catch (err) {
+        console.log("Ocurrió un error al buscar el usuario - ", err);
+      }
     }
-  };
-
-  let aUsuarios;
-  aUsuarios = new AlimentacionUsuarios({
-    usuario: req.body.usuario,
+    console.log("si existe el usuario");
+  } catch (err) {
+    console.log("Ocurrió un error al buscar el usuario - ", err);
+  }
+  let aUsuarios = new AlimentacionUsuarios({
+    usuario: req.params.id,
     comidaFavorita: req.body.comidaFavorita,
     comidaNoFavorita: req.body.comidaNoFavorita,
     alergiasAlimentarias: req.body.alergiasAlimentarias,
@@ -82,16 +88,16 @@ router.post("/:id", async (req, res) => {
   });
 
   try {
-    const informacionGuardada = await aUsuarios.save();
+    aUsuarios = await aUsuarios.save();
 
-    if (!informacionGuardada)
+    if (!aUsuarios)
       return res
         .status(400)
-        .send("No se pudo agregar el historial clinico del usuario");
-    res.send(informacionGuardada);
+        .send("No se pudo agregar alimentacion de usuarios");
+    res.send(aUsuarios);
   } catch (err) {
     console.log(
-      "Ocurrió un error al guardar el historial clinico del usuario - ",
+      "Ocurrió un error al guardar los datos de alimentacion de usuarios - ",
       err
     );
   }

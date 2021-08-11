@@ -79,11 +79,28 @@ router.get("/:id", async (req, res) => {
 */
 
 router.post("/:id", async (req, res) => {
-  buscarUsuario(req.params.id);
+  const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
+  try {
+    if (usuarioCreado) {
+      const infoUsuario = await InformacionUsuarios.findOne({
+        usuario: req.params.id,
+      });
+      try {
+        if (infoUsuario)
+          return res.status(500).json({
+            success: false,
+            message: "Informacion de Usuario ya creado",
+          });
+      } catch (err) {
+        console.log("Ocurrió un error al buscar el usuario - ", err);
+      }
+    } else console.log("El usuario no existe");
+  } catch (err) {
+    console.log("Ocurrió un error al buscar el usuario - ", err);
+  }
 
-  let informacion;
-  informacion = new InformacionUsuarios({
-    usuario: req.body.usuario,
+  let informacion = new InformacionUsuarios({
+    usuario: req.query.usuario,
     nombre: req.body.nombre,
     apellidoPaterno: req.body.apellidoPaterno,
     apellidoMaterno: req.body.apellidoMaterno,
@@ -99,13 +116,15 @@ router.post("/:id", async (req, res) => {
   });
 
   try {
-    const informacionGuardada = await informacion.save();
+    informacion = await informacion.save();
 
-    if (!informacionGuardada)
-      return res.status(400).send("No se pudo agregar el puntaje al usuario");
-    res.send(informacionGuardada);
+    if (!informacion)
+      return res
+        .status(400)
+        .send("No se pudo agregar la informacion al usuario");
+    res.send(informacion);
   } catch (err) {
-    console.log("Ocurrió un error al guardar el puntaje del usuario - ", err);
+    console.log("Ocurrió un error al guardar informacion de usuario - ", err);
   }
 });
 
@@ -138,11 +157,62 @@ router.put("/:id", async (req, res) => {
     if (!editarInformacion)
       return res
         .status(500)
-        .json({ success: false, message: "No se pudo guardar - ", err });
+        .json({
+          success: false,
+          message: "No se pudo guardar informacion - ",
+          err,
+        });
     res.send(editarInformacion);
   } catch (err) {
-    console.log("Ocurrió un error al actualizar los puntos - ", err);
+    console.log(
+      "Ocurrió un error al actualizar informacion de usuario - ",
+      err
+    );
   }
 });
 
+router.patch("/actualizarInfo", async (req, res) => {
+  try {
+    let findInfo = await InformacionUsuarios.find({
+      usuario: req.query.usuario,
+      nombre: req.body.nombre,
+      apellidoPaterno: req.body.apellidoPaterno,
+      apellidoMaterno: req.body.apellidoMaterno,
+      foto: req.body.foto,
+      email: req.body.email,
+      fechaDeNacimiento: req.body.fechaDeNacimiento,
+      genero: req.body.genero,
+      celular: req.body.celular,
+      paisDeNacimiento: req.body.paisDeNacimiento,
+      estadoDeNacimiento: req.body.estadoDeNacimiento,
+      ciudadDeResidencia: req.body.ciudadDeResidencia,
+      tiempoViviendoAhi: req.body.tiempoViviendoAhi,
+    });
+
+    if (!findInfo)
+      return res.status(404).send({
+        success: false,
+        message: "No se encontro informacion",
+      });
+    const actualStatus = findInfo[0].status;
+
+    findInfo[0].status = !actualStatus;
+
+    findInfo = findInfo[0].save();
+
+    if (!findInfo)
+      return res.status(500).send({
+        success: false,
+        message: "Ocurrio un error en la actualizacion de los daros",
+      });
+
+    res.status(200).send({ success: true, message: "Informacion actualizada" });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Ha ocurrido un erro mientras se actualizaba la informacion",
+      error: error.message,
+    });
+  }
+});
 module.exports = router;

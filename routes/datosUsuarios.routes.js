@@ -43,36 +43,40 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/:id", async (req, res) => {
-  const buscarUsuario = async (id) => {
-    try {
-      const existeUsuario = await Usuarios.findById(id);
-
-      if (existeUsuario)
-        return res.status(500).json({
-          success: false,
-          message: "El usuario ya existe.",
-          holi: existeUsuario,
-        });
-    } catch (err) {
-      console.log("Ocurrió un error al buscar el usuario - ", err);
+  const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
+  try {
+    if (usuarioCreado) {
+      const infoUsuario = await DatosUsuarios.findOne({
+        usuario: req.params.id,
+      });
+      try {
+        if (infoUsuario)
+          return res.status(500).json({
+            success: false,
+            message: "Datos de Usuario ya registrados",
+          });
+      } catch (err) {
+        console.log("Ocurrió un error al buscar el usuario - ", err);
+      }
     }
-    console.log(existeUsuario);
-  };
+    console.log("si existe el usuario");
+  } catch (err) {
+    console.log("Ocurrió un error al buscar el usuario - ", err);
+  }
 
-  let datos;
-  datos = new DatosUsuarios({
-    usuario: req.body.usuario,
+  let datos = new DatosUsuarios({
+    usuario: req.params.id,
     actividadFisica: req.body.actividadFisica,
     peso: req.body.peso,
     altura: req.body.altura,
   });
 
   try {
-    const datosGuardados = await datos.save();
+    datos = await datos.save();
 
-    if (!datosGuardados)
+    if (!datos)
       return res.status(400).send("No se pudo agregar el puntaje al usuario");
-    res.send(datosGuardados);
+    res.send(datos);
   } catch (err) {
     console.log("Ocurrió un error al guardar el puntaje del usuario - ", err);
   }

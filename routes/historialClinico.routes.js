@@ -43,38 +43,40 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/:id", async (req, res) => {
-  const buscarUsuario = async (id) => {
-    try {
-      const existeUsuario = await Usuarios.findById(id);
-
-      if (existeUsuario)
-        return res
-          .status(500)
-          .json({ success: false, message: "El usuario ya existe." });
-    } catch (err) {
-      console.log("Ocurrió un error al buscar el usuario - ", err);
+  const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
+  try {
+    if (usuarioCreado) {
+      const infoUsuario = await HistorialClinico.findOne({
+        usuario: req.params.id,
+      });
+      try {
+        if (infoUsuario)
+          return res.status(500).json({
+            success: false,
+            message: "Informacion de Usuario ya creado",
+          });
+      } catch (err) {
+        console.log("Ocurrió un error al buscar el usuario - ", err);
+      }
     }
-  };
+    console.log("si existe el usuario");
+  } catch (err) {
+    console.log("Ocurrió un error al buscar el usuario - ", err);
+  }
 
-  let informacionCli;
-  informacionCli = new HistorialClinico({
-    usuario: req.body.usuario,
+  let informacionCli = new HistorialClinico({
+    usuario: req.params.id,
     historiaClinica: req.body.historiaClinica,
   });
 
   try {
-    const informacionGuardada = await informacionCli.save();
+    informacionCli = await informacionCli.save();
 
-    if (!informacionGuardada)
-      return res
-        .status(400)
-        .send("No se pudo agregar el historial clinico del usuario");
-    res.send(informacionGuardada);
+    if (!informacionCli)
+      return res.status(400).send("No se pudo agregar historial clinico");
+    res.send(informacionCli);
   } catch (err) {
-    console.log(
-      "Ocurrió un error al guardar el historial clinico del usuario - ",
-      err
-    );
+    console.log("Ocurrió un error al guardar el historial clinico - ", err);
   }
 });
 

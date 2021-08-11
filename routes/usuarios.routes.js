@@ -42,11 +42,8 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   let crearUsuario = new Usuarios({
-    usuario: req.body.usuario,
-    logros: req.body.logros,
     email: req.body.email,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-    tipoDeUsuario: req.body.tipoDeUsuario,
   });
 
   crearUsuario = await crearUsuario.save();
@@ -92,11 +89,8 @@ router.post("/register", async (req, res) => {
   }
 
   let registrarUsuario = new Usuarios({
-    usuario: req.body.usuario,
-    logros: req.body.logros,
     email: req.body.email,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-    tipoDeUsuario: req.body.tipoDeUsuario,
   });
 
   try {
@@ -122,10 +116,8 @@ router.post("/register", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   let editarUsuario = await Usuarios.findOneAndUpdate(req.params.id, {
-    logros: req.body.logros,
     email: req.body.email,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-    tipoDeUsuario: req.body.tipoDeUsuario,
   });
 
   editarUsuario = await editarUsuario.save();
