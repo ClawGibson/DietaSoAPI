@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 
-  
+
 
   const usuario = await buscarUsuario(req.params.id);
   // constantes.buscarUsuario(req.params.id);
@@ -95,7 +95,6 @@ router.post('/register', async (req, res) => {
   }
   try {
     let registrarUsuario = new Usuarios({
-      logros: req.body.logros,
 
       email: req.body.email,
 

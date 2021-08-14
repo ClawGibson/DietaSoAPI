@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const usuariosSchema = new mongoose.Schema(
   {
     usuario: { type: String, required: true },
-    nombre: { type: String, required: true },
     logros: { type: String, required: false },
     email: { type: String, required: true },
     contrasena: { type: String, required: true },

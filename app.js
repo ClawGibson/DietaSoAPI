@@ -24,6 +24,9 @@ const datosUsuarios = require('./routes/datosUsuarios.routes');
 const historialClinico = require('./routes/historialClinico.routes');
 const datosSocioeconomicos = require('./routes/datosSocioeconomicos.routes');
 const alimentacionUsuarios = require('./routes/alimentacionUsuarios.routes');
+
+const metas = require("./routes/Metas/metas.routes");
+
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -55,6 +58,8 @@ app.use(`${API_URL}/alimentacionUsuarios`, alimentacionUsuarios);
 app.use(`${API_URL}/estadisticasIMC`, estadisticasIMC);
 app.use(`${API_URL}/estadisticasNiveles`, estadisticasNiveles);
 app.use(`${API_URL}/estadisticasPresion`, estadisticasPresion);
+
+app.use(`${API_URL}/metas`, metas);
 
 
 mongoose
