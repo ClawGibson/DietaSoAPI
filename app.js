@@ -1,7 +1,8 @@
-require("dotenv/config");
-const express = require("express");
-const app = express();
+/** @format */
 
+require('dotenv/config');
+const express = require('express');
+const app = express();
 
 const cors = require('cors');
 const morgan = require('morgan');
@@ -24,6 +25,7 @@ const datosUsuarios = require('./routes/datosUsuarios.routes');
 const historialClinico = require('./routes/historialClinico.routes');
 const datosSocioeconomicos = require('./routes/datosSocioeconomicos.routes');
 const alimentacionUsuarios = require('./routes/alimentacionUsuarios.routes');
+const registroDietetico = require('./routes/RegistroDietetico/registroDietetico.routes');
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -32,7 +34,7 @@ const { API_URL, PORT, MONGODB, DBNAME } = process.env;
 // middlewares
 app.use(cors());
 app.use(express.json());
-app.use(morgan("tiny"));
+app.use(morgan('tiny'));
 app.use(authJwt());
 app.use(errorHandler);
 
@@ -55,22 +57,22 @@ app.use(`${API_URL}/alimentacionUsuarios`, alimentacionUsuarios);
 app.use(`${API_URL}/estadisticasIMC`, estadisticasIMC);
 app.use(`${API_URL}/estadisticasNiveles`, estadisticasNiveles);
 app.use(`${API_URL}/estadisticasPresion`, estadisticasPresion);
-
+app.use(`${API_URL}/registroDietetico`, registroDietetico);
 
 mongoose
-  .connect(MONGODB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: DBNAME,
-    useFindAndModify: false,
-  })
-  .then(() => {
-    console.log(`Succefully connected to database ${DBNAME}`);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+    .connect(MONGODB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: DBNAME,
+        useFindAndModify: false,
+    })
+    .then(() => {
+        console.log(`Succefully connected to database ${DBNAME}`);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 
 app.listen(PORT || 4000, () => {
-  console.log(`Server running at ${process.env.port || 4000}`);
+    console.log(`Server running at ${process.env.port || 4000}`);
 });
