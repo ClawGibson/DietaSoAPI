@@ -4,7 +4,6 @@ const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-//const buscarUsuario = require('../constants/index');
 
 router.get("/", async (req, res) => {
   const listaDSUsuarios = await DatosSocioeconomicos.find();
@@ -12,7 +11,8 @@ router.get("/", async (req, res) => {
   if (listaDSUsuarios.length <= 0)
     return res.status(500).json({
       success: false,
-      message: "No se encontro ninguna informacion de usuarios",
+      message:
+        "No se encontro ninguna informacion de datos socioeconomicos de los usuarios",
     });
   res.send(listaDSUsuarios);
 });
@@ -36,9 +36,18 @@ router.get("/:id", async (req, res) => {
       usuario: req.params.id,
     }).select("nivelSocioeconomico");
 
+    if (!nivelSocioeconomico.length > 0)
+      return res.status(500).json({
+        success: true,
+        message: "El usuario no tiene datos socioeconomicos todavia",
+      });
+
     res.send(nivelSocioeconomico);
   } catch (err) {
-    console.log("Ocurrió un error al obtener los puntos - ", err);
+    console.log(
+      "Ocurrió un error al obtener los datos socioeconomicos - ",
+      err
+    );
   }
 });
 
@@ -53,13 +62,12 @@ router.post("/:id", async (req, res) => {
         if (infoUsuario)
           return res.status(500).json({
             success: false,
-            message: "Informacion de Usuario ya creado",
+            message: "Datos socioeconomicos de Usuario ya registrados",
           });
       } catch (err) {
         console.log("Ocurrió un error al buscar el usuario - ", err);
       }
-    }
-    console.log("si existe el usuario");
+    } else console.log("El usuario no existe");
   } catch (err) {
     console.log("Ocurrió un error al buscar el usuario - ", err);
   }
@@ -85,28 +93,38 @@ router.post("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  buscarUsuario(req.params.id);
+router.patch("/:id", async (req, res) => {
+  const existeUsuario = await Usuarios.findById(req.params.id);
+
+  if (!existeUsuario)
+    return res
+      .status(500)
+      .json({ success: false, message: "El usuario no existe." });
 
   let editarInformacionS;
   try {
     editarInformacionS = await DatosSocioeconomicos.findOneAndUpdate(
       req.params.id,
       {
-        usuario: req.body.usuario,
         nivelSocioeconomico: req.body.nivelSocioeconomico,
       }
     );
 
-    editarInformacionS = await editarInformacionS.save();
-
-    if (!editarInformacionS)
-      return res
-        .status(500)
-        .json({ success: false, message: "No se pudo guardar - ", err });
-    res.send(editarInformacionS);
+    editarInformacionS = editarInformacionS
+      .save()
+      .then((response) => res.status(200).json({ message: "ok" }))
+      .catch((err) =>
+        res.status(500).json({
+          success: false,
+          message: "No se pudo guardar - ",
+          err,
+        })
+      );
   } catch (err) {
-    console.log("Ocurrió un error al actualizar el historial clinico - ", err);
+    console.log(
+      "Ocurrió un error al actualizar los datos socioeconomicos- ",
+      err
+    );
   }
 });
 

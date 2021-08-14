@@ -4,7 +4,6 @@ const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-//const buscarUsuario = require('../constants/index');
 
 router.get("/", async (req, res) => {
   const listaHMUsuarios = await HistorialClinico.find();
@@ -12,7 +11,7 @@ router.get("/", async (req, res) => {
   if (listaHMUsuarios.length <= 0)
     return res.status(500).json({
       success: false,
-      message: "No se encontro ninguna informacion de usuarios",
+      message: "No se encontro ningun historial clinico de usuarios",
     });
   res.send(listaHMUsuarios);
 });
@@ -36,9 +35,15 @@ router.get("/:id", async (req, res) => {
       usuario: req.params.id,
     }).select("historiaClinica");
 
+    if (!historiaClinica.length > 0)
+      return res.status(500).json({
+        success: true,
+        message: "El usuario no tiene historial clinico registrado",
+      });
+
     res.send(historiaClinica);
   } catch (err) {
-    console.log("Ocurrió un error al obtener los puntos - ", err);
+    console.log("Ocurrió un error al obtener el historial clinico - ", err);
   }
 });
 
@@ -53,13 +58,12 @@ router.post("/:id", async (req, res) => {
         if (infoUsuario)
           return res.status(500).json({
             success: false,
-            message: "Informacion de Usuario ya creado",
+            message: "Historial clinico de Usuario ya creado",
           });
       } catch (err) {
         console.log("Ocurrió un error al buscar el usuario - ", err);
       }
-    }
-    console.log("si existe el usuario");
+    } else console.log("El usuario no existe");
   } catch (err) {
     console.log("Ocurrió un error al buscar el usuario - ", err);
   }
@@ -80,26 +84,33 @@ router.post("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  buscarUsuario(req.params.id);
+router.patch("/:id", async (req, res) => {
+  const existeUsuario = await Usuarios.findById(req.params.id);
+
+  if (!existeUsuario)
+    return res
+      .status(500)
+      .json({ success: false, message: "El usuario no existe." });
 
   let editarInformacionCli;
   try {
     editarInformacionCli = await HistorialClinico.findOneAndUpdate(
       req.params.id,
       {
-        usuario: req.body.usuario,
         historiaClinica: req.body.historiaClinica,
       }
     );
 
-    editarInformacionCli = await editarInformacionCli.save();
-
-    if (!editarInformacionCli)
-      return res
-        .status(500)
-        .json({ success: false, message: "No se pudo guardar - ", err });
-    res.send(editarInformacionCli);
+    editarInformacionCli = editarInformacionCli
+      .save()
+      .then((response) => res.status(200).json({ message: "ok" }))
+      .catch((err) =>
+        res.status(500).json({
+          success: false,
+          message: "No se pudo guardar - ",
+          err,
+        })
+      );
   } catch (err) {
     console.log("Ocurrió un error al actualizar el historial clinico - ", err);
   }
