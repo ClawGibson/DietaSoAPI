@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require("mongoose");
 
-const usuariosSchema = new mongoose.Schema(
+const usuariosSchema = new Schema(
   {
-    usuario: { type: String, required: true },
-    logros: { type: String, required: false },
+    usuario: { type: String, required: false },
+    //nombre: { type: String, required: true },
     email: { type: String, required: true },
     contrasena: { type: String, required: true },
     esAdmin: { type: Boolean, default: false },
@@ -13,19 +13,13 @@ const usuariosSchema = new mongoose.Schema(
   }
 );
 
-usuariosSchema.method('toJSON', function () {
-  const { __v, ...object } = this.toObject();
-  const { _id: id, ...result } = object;
-  return { ...result, id };
+usuariosSchema.virtual("id").get(function () {
+  return this._id.toHexStr
+  ing();
 });
 
-usuariosSchema.virtual('id').get(function () {
-  return this._id.toHexString();
-});
-
-usuariosSchema.set('toJSON', {
+usuariosSchema.set("toJSON", {
   virtuals: true,
 });
 
-exports.Usuarios = mongoose.model('Usuarios', usuariosSchema);
-exports.usuariosSchema = usuariosSchema;
+module.exports = model("Usuarios", usuariosSchema);
