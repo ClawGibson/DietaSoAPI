@@ -1,40 +1,36 @@
-/** @format */
-
-require('dotenv/config');
-const express = require('express');
+require("dotenv/config");
+const express = require("express");
 const app = express();
-
-const cors = require('cors');
-const morgan = require('morgan');
-const mongoose = require('mongoose');
-const grupoAlimentosRoute = require('./routes/grupoAlimentos.routes');
-const alimentosRoute = require('./routes/alimentos.routes');
-const subGrupoAlimentosRoute = require('./routes/subGrupoAlimentos.routes');
-const recetasRoute = require('./routes/recetas.routes');
-const usuariosRoute = require('./routes/usuarios.routes');
-const menusBaseRoute = require('./routes/menusBase.routes');
-const logros = require('./routes/logros.routes');
-const logrosDeUsuario = require('./routes/logrosDeUsuario.routes');
-const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
-const equivalencias = require('./routes/Import/equivalences.routes');
-const informacionUsuarios = require('./routes/InformacionUsuarios.routes');
-const estadisticasIMC = require('./routes/Estadisticas/estadisticas.IMC.routes');
-const estadisticasNiveles = require('./routes/Estadisticas/estadisticas.niveles.routes');
-const estadisticasPresion = require('./routes/Estadisticas/estadisticasPresion.routes');
-const datosUsuarios = require('./routes/datosUsuarios.routes');
-const historialClinico = require('./routes/historialClinico.routes');
-const datosSocioeconomicos = require('./routes/datosSocioeconomicos.routes');
-const alimentacionUsuarios = require('./routes/alimentacionUsuarios.routes');
-const registroDietetico = require('./routes/RegistroDietetico/registroDietetico.routes');
-const authJwt = require('./helpers/jwt');
-const errorHandler = require('./helpers/error-handler');
+const cors = require("cors");
+const morgan = require("morgan");
+const mongoose = require("mongoose");
+const grupoAlimentosRoute = require("./routes/grupoAlimentos.routes");
+const alimentosRoute = require("./routes/alimentos.routes");
+const subGrupoAlimentosRoute = require("./routes/subGrupoAlimentos.routes");
+const recetasRoute = require("./routes/recetas.routes");
+const usuariosRoute = require("./routes/usuarios.routes");
+const menusBaseRoute = require("./routes/menusBase.routes");
+const logros = require("./routes/logros.routes");
+const logrosDeUsuario = require("./routes/logrosDeUsuario.routes");
+const puntosDeUsuario = require("./routes/puntosDeUsuario.routes");
+const equivalencias = require("./routes/Import/equivalences.routes");
+const informacionUsuarios = require("./routes/informacionUsuarios.routes");
+const datosUsuarios = require("./routes/datosUsuarios.routes");
+const historialClinico = require("./routes/historialClinico.routes");
+const datosSocioeconomicos = require("./routes/datosSocioeconomicos.routes");
+const alimentacionUsuarios = require("./routes/alimentacionUsuarios.routes");
+const estadisticasIMC = require("./routes/Estadisticas/estadisticas.IMC.routes");
+const estadisticasNiveles = require("./routes/Estadisticas/estadisticas.niveles.routes");
+const estadisticasPresion = require("./routes/Estadisticas/estadisticasPresion.routes");
+const authJwt = require("./helpers/jwt");
+const errorHandler = require("./helpers/error-handler");
 
 const { API_URL, PORT, MONGODB, DBNAME } = process.env;
 
 // middlewares
 app.use(cors());
 app.use(express.json());
-app.use(morgan('tiny'));
+app.use(morgan("tiny"));
 app.use(authJwt());
 app.use(errorHandler);
 
@@ -57,22 +53,21 @@ app.use(`${API_URL}/alimentacionUsuarios`, alimentacionUsuarios);
 app.use(`${API_URL}/estadisticasIMC`, estadisticasIMC);
 app.use(`${API_URL}/estadisticasNiveles`, estadisticasNiveles);
 app.use(`${API_URL}/estadisticasPresion`, estadisticasPresion);
-app.use(`${API_URL}/registroDietetico`, registroDietetico);
 
 mongoose
-    .connect(MONGODB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        dbName: DBNAME,
-        useFindAndModify: false,
-    })
-    .then(() => {
-        console.log(`Succefully connected to database ${DBNAME}`);
-    })
-    .catch((err) => {
-        console.log(err);
-    });
+  .connect(MONGODB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: DBNAME,
+    useFindAndModify: false,
+  })
+  .then(() => {
+    console.log(`Succefully connected to database ${DBNAME}`);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 app.listen(PORT || 4000, () => {
-    console.log(`Server running at ${process.env.port || 4000}`);
+  console.log(`Server running at ${process.env.port || 4000}`);
 });

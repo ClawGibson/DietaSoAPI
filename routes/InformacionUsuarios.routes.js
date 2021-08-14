@@ -4,7 +4,7 @@ const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-//const buscarUsuario = require('../constants/index');
+const buscarUsuario = require("../constants/index");
 
 router.get("/", async (req, res) => {
   const listaIUsuarios = await InformacionUsuarios.find();
@@ -35,7 +35,7 @@ router.get("/:id", async (req, res) => {
     const listaInfoUsuarios = await InformacionUsuarios.find({
       usuario: req.params.id,
     })
-      .populate("usuario", { id: 1 })
+      //.populate("usuario", { id: 1 })
       .select(
         "nombre apellidoPaterno apellidoMaterno foto fechaDeNacimiento genero celular paisDeNacimiento estadoDeNacimiento ciudadDeResidencia tiempoViviendoAhi"
       );
@@ -43,58 +43,38 @@ router.get("/:id", async (req, res) => {
     if (!listaInfoUsuarios.length > 0)
       return res.status(500).json({
         success: true,
-        message: "El usuario no tiene logros todavía",
+        message: "El usuario no tiene informacion todavia",
       });
 
     res.send(listaInfoUsuarios);
   } catch (err) {
-    console.log("Error al obtener los logros del usuario", err);
+    console.log("Error al obtener la informacion del usuario", err);
   }
 });
-/*
-router.get("/:id", async (req, res) => {
-  const buscarUsuario = async (id) => {
-    try {
-      const existeUsuario = await Usuarios.findById(id);
-
-      if (!existeUsuario)
-        return res
-          .status(500)
-          .json({ success: false, message: "El usuario no existe." });
-    } catch (err) {
-      console.log("Ocurrió un error al buscar el usuario - ", err);
-    }
-  };
-
-  try {
-    const nombre = await InformacionUsuarios.find({
-      usuario: req.params.id,
-    }).select("nombre");
-
-    res.send(nombre);
-  } catch (err) {
-    console.log("Ocurrió un error al obtener los puntos - ", err);
-  }
-});
-*/
 
 router.post("/:id", async (req, res) => {
-  const buscarUsuario = async (id) => {
-    try {
-      const existeUsuario = await Usuarios.findById(id);
+  const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
+  try {
+    if (usuarioCreado) {
+      const infoUsuario = await InformacionUsuarios.findOne({
+        usuario: req.params.id,
+      });
+      try {
+        if (infoUsuario)
+          return res.status(500).json({
+            success: false,
+            message: "Informacion de Usuario ya registrada",
+          });
+      } catch (err) {
+        console.log("Ocurrió un error al buscar el usuario - ", err);
+      }
+    } else console.log("El usuario no existe");
+  } catch (err) {
+    console.log("Ocurrió un error al buscar el usuario - ", err);
+  }
 
-      if (existeUsuario)
-        return res
-          .status(500)
-          .json({ success: false, message: "El usuario ya existe." });
-    } catch (err) {
-      console.log("Ocurrió un error al buscar el usuario - ", err);
-    }
-  };
-
-  let informacion;
-  informacion = new InformacionUsuarios({
-    usuario: req.body.usuario,
+  let informacion = new InformacionUsuarios({
+    usuario: req.query.usuario,
     nombre: req.body.nombre,
     apellidoPaterno: req.body.apellidoPaterno,
     apellidoMaterno: req.body.apellidoMaterno,
@@ -110,28 +90,34 @@ router.post("/:id", async (req, res) => {
   });
 
   try {
-    const informacionGuardada = await informacion.save();
+    informacion = await informacion.save();
 
-    if (!informacionGuardada)
-      return res.status(400).send("No se pudo agregar el puntaje al usuario");
-    res.send(informacionGuardada);
+    if (!informacion)
+      return res
+        .status(400)
+        .send("No se pudo agregar la informacion al usuario");
+    res.send(informacion);
   } catch (err) {
-    console.log("Ocurrió un error al guardar el puntaje del usuario - ", err);
+    console.log("Ocurrió un error al guardar informacion de usuario - ", err);
   }
 });
 
-router.put("/:id", async (req, res) => {
-  buscarUsuario(req.params.id);
+router.patch("/:id", async (req, res) => {
+  const existeUsuario = await Usuarios.findById(req.params.id);
+
+  if (!existeUsuario)
+    return res
+      .status(500)
+      .json({ success: false, message: "El usuario no existe." });
 
   let editarInformacion;
   try {
     editarInformacion = await InformacionUsuarios.findOneAndUpdate(
       req.params.id,
       {
-        usuario: req.body.usuario,
         nombre: req.body.nombre,
         apellidoPaterno: req.body.apellidoPaterno,
-        apellidoMaterno: req.body.apellidosMaterno,
+        apellidoMaterno: req.body.apellidoMaterno,
         foto: req.body.foto,
         email: req.body.email,
         fechaDeNacimiento: req.body.fechaDeNacimiento,
@@ -144,15 +130,18 @@ router.put("/:id", async (req, res) => {
       }
     );
 
-    editarInformacion = await editarInformacion.save();
-
-    if (!editarInformacion)
-      return res
-        .status(500)
-        .json({ success: false, message: "No se pudo guardar - ", err });
-    res.send(editarInformacion);
+    editarInformacion = editarInformacion
+      .save()
+      .then((response) => res.status(200).json({ message: "ok" }))
+      .catch((err) =>
+        res.status(500).json({
+          success: false,
+          message: "No se pudo guardar - ",
+          err,
+        })
+      );
   } catch (err) {
-    console.log("Ocurrió un error al actualizar los puntos - ", err);
+    console.log("Ocurrió un error al actualizar la informacion - ", err);
   }
 });
 
