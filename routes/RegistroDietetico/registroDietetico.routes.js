@@ -6,6 +6,8 @@ const Usuarios = require('../../models/Usuarios');
 const express = require('express');
 const router = express.Router();
 
+const { buscarUsuario } = require('../../constants/index');
+
 const buscarRegistroDietetico = async (id) => {
     try {
         const buscarRegistroDietetico = await RegistroDietetico.find({
@@ -41,9 +43,9 @@ router.get('/', async (req, res) => {
 
 router.get('/details', async (req, res) => {
     try {
-        const buscarUsuario = await Usuarios.findById(req.query.usuario);
+        const usuario = await buscarUsuario(req.query.usuario);
 
-        if (!buscarUsuario)
+        if (!usuario)
             return res
                 .status(404)
                 .send({ Error: 'No se encontró el usuario proporcionado' });
