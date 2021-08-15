@@ -6,25 +6,29 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const grupoAlimentosRoute = require('./routes/grupoAlimentos.routes');
-const alimentosRoute = require('./routes/alimentos.routes');
-const subGrupoAlimentosRoute = require('./routes/subGrupoAlimentos.routes');
-const recetasRoute = require('./routes/recetas.routes');
-const usuariosRoute = require('./routes/usuarios.routes');
-const menusBaseRoute = require('./routes/menusBase.routes');
-const logros = require('./routes/logros.routes');
-const logrosDeUsuario = require('./routes/logrosDeUsuario.routes');
-const puntosDeUsuario = require('./routes/puntosDeUsuario.routes');
-const equivalencias = require('./routes/Import/equivalences.routes');
-const informacionUsuarios = require('./routes/informacionUsuarios.routes');
-const datosUsuarios = require('./routes/datosUsuarios.routes');
-const historialClinico = require('./routes/historialClinico.routes');
-const datosSocioeconomicos = require('./routes/datosSocioeconomicos.routes');
-const alimentacionUsuarios = require('./routes/alimentacionUsuarios.routes');
-const estadisticasIMC = require('./routes/Estadisticas/estadisticas.IMC.routes');
-const estadisticasNiveles = require('./routes/Estadisticas/estadisticas.niveles.routes');
-const estadisticasPresion = require('./routes/Estadisticas/estadisticasPresion.routes');
-const registroDietetico = require('./routes/RegistroDietetico/registroDietetico.routes');
+
+const {
+    grupoAlimentosRoute,
+    alimentosRoute,
+    subGrupoAlimentosRoute,
+    recetasRoute,
+    usuariosRoute,
+    menusBaseRoute,
+    logrosRoute,
+    logrosDeUsuarioRoute,
+    puntosDeUsuarioRoute,
+    equivalenciasRoute,
+    informacionUsuariosRoute,
+    datosUsuarioRoute,
+    historialClinicoRoute,
+    datosSocioeconomicosRoute,
+    alimentacionUsuariosRoute,
+    estadisticasIMCRoute,
+    estadisticasNivelesRoute,
+    estadisticasPresionRoute,
+    registroDieteticoRoute,
+} = require('./routes/index');
+
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -44,19 +48,19 @@ app.use(`${API_URL}/subGrupoAlimentos`, subGrupoAlimentosRoute);
 app.use(`${API_URL}/recetas`, recetasRoute);
 app.use(`${API_URL}/usuarios`, usuariosRoute);
 app.use(`${API_URL}/menusBase`, menusBaseRoute);
-app.use(`${API_URL}/logros`, logros);
-app.use(`${API_URL}/logrosDeUsuario`, logrosDeUsuario);
-app.use(`${API_URL}/puntosDeUsuario`, puntosDeUsuario);
-app.use(`${API_URL}/equivalencias`, equivalencias);
-app.use(`${API_URL}/informacionUsuarios`, informacionUsuarios);
-app.use(`${API_URL}/datosUsuarios`, datosUsuarios);
-app.use(`${API_URL}/historialClinico`, historialClinico);
-app.use(`${API_URL}/datosSocioeconomicos`, datosSocioeconomicos);
-app.use(`${API_URL}/alimentacionUsuarios`, alimentacionUsuarios);
-app.use(`${API_URL}/estadisticasIMC`, estadisticasIMC);
-app.use(`${API_URL}/estadisticasNiveles`, estadisticasNiveles);
-app.use(`${API_URL}/estadisticasPresion`, estadisticasPresion);
-app.use(`${API_URL}/registroDietetico`, registroDietetico);
+app.use(`${API_URL}/logros`, logrosRoute);
+app.use(`${API_URL}/logrosDeUsuario`, logrosDeUsuarioRoute);
+app.use(`${API_URL}/puntosDeUsuario`, puntosDeUsuarioRoute);
+app.use(`${API_URL}/equivalencias`, equivalenciasRoute);
+app.use(`${API_URL}/informacionUsuarios`, informacionUsuariosRoute);
+app.use(`${API_URL}/datosUsuarios`, datosUsuarioRoute);
+app.use(`${API_URL}/historialClinico`, historialClinicoRoute);
+app.use(`${API_URL}/datosSocioeconomicos`, datosSocioeconomicosRoute);
+app.use(`${API_URL}/alimentacionUsuarios`, alimentacionUsuariosRoute);
+app.use(`${API_URL}/estadisticasIMC`, estadisticasIMCRoute);
+app.use(`${API_URL}/estadisticasNiveles`, estadisticasNivelesRoute);
+app.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
+app.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
 
 mongoose
     .connect(MONGODB, {
