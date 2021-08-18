@@ -92,7 +92,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/agregarAlimento', async (req, res) => {
+router.patch('/modificarRegistro', async (req, res) => {
     try {
         const usuario = await buscarUsuario(req.query.usuario);
 
@@ -101,25 +101,23 @@ router.patch('/agregarAlimento', async (req, res) => {
                 .status(404)
                 .send({ Error: 'No se encontró el usuario proporcionado' });
 
-        req.body.alimentos.map(async (alimento) => {
-            const existeAlimento = await buscarAlimento(alimento.idAlimento);
+        const existeAlimento = await buscarAlimento(req.body.idAlimento);
 
-            if (!existeAlimento)
-                return res.status(404).send({
-                    Error: 'No se encontró el alimento proporcionado',
-                });
-        });
+        if (!existeAlimento)
+            return res.status(404).send({
+                Error: 'No se encontró el alimento proporcionado',
+            });
 
         let registro = await buscarRegistroDietetico(req.query.usuario);
 
         const registroAModificar = registro[0].alimentos.filter(
-            (alimento) => alimento.idAlimento.toString() == req.body.alimento
+            (alimento) => alimento.idAlimento.toString() === req.body.idAlimento
         );
-        console.log('A modificar: ', registroAModificar);
+
         if (registroAModificar.length > 0) {
             const index = registro[0].alimentos.indexOf(registroAModificar[0]);
-
-            registro[0].alimentos[index] = {
+            console.log('index: ', index);
+            registroAModificar[0].alimentos = {
                 idAlimento: registro[0].alimentos[index].idAlimento,
                 cantidad: req.body.cantidad,
                 tipo: req.body.tipo,
@@ -127,6 +125,8 @@ router.patch('/agregarAlimento', async (req, res) => {
                 lugar: req.body.lugar,
                 menuPreparacion: req.body.menuPreparacion,
             };
+
+            registro[0].alimentos[index] = registroAModificar[0].alimentos;
 
             registro = registro[0].save();
 
@@ -136,10 +136,10 @@ router.patch('/agregarAlimento', async (req, res) => {
                     .json({ error: 'Error al guardar el registro' });
             res.status(200).send('Actualizado');
         } else {
-            registro[0].alimentos = registro[0].alimentos = [
+            registro[0].alimentos = [
                 ...registro[0].alimentos,
                 {
-                    idAlimento: req.body.alimento,
+                    idAlimento: req.body.idAlimento,
                     cantidad: req.body.cantidad,
                     tipo: req.body.tipo, // Desayuno, comida, cena, colación1, colación2
                     fecha: req.body.fecha,
@@ -163,7 +163,7 @@ router.patch('/agregarAlimento', async (req, res) => {
     }
 });
 
-router.patch('/modificarAlimento', async (req, res) => {
+router.patch('/eliminarAlimentoDeRegistro', async (req, res) => {
     try {
         let registro = await buscarRegistroDietetico(req.query.usuario);
     } catch (error) {
