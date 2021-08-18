@@ -22,6 +22,8 @@ const alimentacionUsuarios = require("./routes/alimentacionUsuarios.routes");
 const estadisticasIMC = require("./routes/Estadisticas/estadisticas.IMC.routes");
 const estadisticasNiveles = require("./routes/Estadisticas/estadisticas.niveles.routes");
 const estadisticasPresion = require("./routes/Estadisticas/estadisticasPresion.routes");
+const metas = require("./routes/Metas/metas.routes");
+
 const authJwt = require("./helpers/jwt");
 const errorHandler = require("./helpers/error-handler");
 
@@ -53,6 +55,8 @@ app.use(`${API_URL}/alimentacionUsuarios`, alimentacionUsuarios);
 app.use(`${API_URL}/estadisticasIMC`, estadisticasIMC);
 app.use(`${API_URL}/estadisticasNiveles`, estadisticasNiveles);
 app.use(`${API_URL}/estadisticasPresion`, estadisticasPresion);
+
+app.use(`${API_URL}/metas`, metas)
 
 mongoose
   .connect(MONGODB, {
