@@ -25,4 +25,18 @@ router.post("/", async (req, res) => {
 })
 
 
+router.get("/", async (req, res) => {
+    try {
+        const respuesta = await Metas.find();
+        if (!respuesta)
+            return res
+                .status(500)
+                .send("No se encontraron metas");
+
+        res.send(respuesta);
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+});
+
 module.exports = router;
