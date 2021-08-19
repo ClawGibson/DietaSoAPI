@@ -27,7 +27,6 @@ const buscarUsuario = async (userId, res = response) => {
 
 const buscarAlimento = async (alimentoId, res = response) => {
     try {
-        console.log('id: ', alimentoId);
         const alimento = await Alimentos.findById(
             mongoose.Types.ObjectId(alimentoId)
         );

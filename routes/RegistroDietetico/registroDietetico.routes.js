@@ -116,7 +116,7 @@ router.patch('/modificarRegistro', async (req, res) => {
 
         if (registroAModificar.length > 0) {
             const index = registro[0].alimentos.indexOf(registroAModificar[0]);
-            console.log('index: ', index);
+
             registroAModificar[0].alimentos = {
                 idAlimento: registro[0].alimentos[index].idAlimento,
                 cantidad: req.body.cantidad,
@@ -147,7 +147,7 @@ router.patch('/modificarRegistro', async (req, res) => {
                     menuPreparacion: req.body.menuPreparacion,
                 },
             ];
-            console.log('Registro: ', registro);
+
             registro = registro[0].save();
 
             if (!registro)
@@ -165,7 +165,33 @@ router.patch('/modificarRegistro', async (req, res) => {
 
 router.patch('/eliminarAlimentoDeRegistro', async (req, res) => {
     try {
+        const usuario = await buscarUsuario(req.query.usuario);
+
+        if (!usuario)
+            return res
+                .status(404)
+                .send({ Error: 'No se encontró el usuario proporcionado' });
+
+        const existeAlimento = await buscarAlimento(req.body.idAlimento);
+
+        if (!existeAlimento)
+            return res.status(404).send({
+                Error: 'No se encontró el alimento proporcionado',
+            });
+
         let registro = await buscarRegistroDietetico(req.query.usuario);
+
+        registro[0].alimentos = registro[0].alimentos.filter(
+            (alimento) => alimento.idAlimento.toString() !== req.body.idAlimento
+        );
+
+        registro = registro[0].save();
+
+        if (!registro)
+            return res
+                .status(500)
+                .json({ error: 'Error al eliminar el alimento del registro' });
+        res.status(200).send('Alimento eliminado exitosamente');
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
