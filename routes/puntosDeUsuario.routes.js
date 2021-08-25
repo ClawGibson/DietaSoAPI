@@ -1,25 +1,25 @@
-const Usuarios = require('../models/Usuarios');
-const PuntosDeUsuario = require('../models/PuntosDeUsuario');
-const express = require('express');
+const Usuarios = require("../models/Usuarios");
+const PuntosDeUsuario = require("../models/PuntosDeUsuario");
+const express = require("express");
 const router = express.Router();
-const mongoose = require('mongoose');
-const { buscarUsuario } = require('../constants/index');
+const mongoose = require("mongoose");
+const buscarUsuario = require("../constants/index");
 
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   buscarUsuario(req.params.id);
 
   try {
     const puntos = await PuntosDeUsuario.find({
       usuario: req.params.id,
-    }).select('puntos');
+    }).select("puntos");
 
     res.send(puntos);
   } catch (err) {
-    console.log('Ocurrió un error al obtener los puntos - ', err);
+    console.log("Ocurrió un error al obtener los puntos - ", err);
   }
 });
 
-router.post('/:id', async (req, res) => {
+router.post("/:id", async (req, res) => {
   buscarUsuario(req.params.id);
 
   let puntos;
@@ -29,21 +29,21 @@ router.post('/:id', async (req, res) => {
       puntos: req.body.puntos,
     });
   } catch (err) {
-    console.log('Ocurrió un error al insertar los puntos :c', err);
+    console.log("Ocurrió un error al insertar los puntos :c", err);
   }
 
   try {
     const puntosGuardados = await puntos.save();
 
     if (!puntosGuardados)
-      return res.status(400).send('No se pudo agregar el puntaje al usuario');
+      return res.status(400).send("No se pudo agregar el puntaje al usuario");
     res.send(puntosGuardados);
   } catch (err) {
-    console.log('Ocurrió un error al guardar el puntaje del usuario - ', err);
+    console.log("Ocurrió un error al guardar el puntaje del usuario - ", err);
   }
 });
 
-router.put('/:id', async (req, res) => {
+router.put("/:id", async (req, res) => {
   buscarUsuario(req.params.id);
 
   let nuevo;
@@ -57,10 +57,10 @@ router.put('/:id', async (req, res) => {
     if (!nuevo)
       return res
         .status(500)
-        .json({ success: false, message: 'No se pudo guardar - ', err });
+        .json({ success: false, message: "No se pudo guardar - ", err });
     res.send(nuevo);
   } catch (err) {
-    console.log('Ocurrió un error al actualizar los puntos - ', err);
+    console.log("Ocurrió un error al actualizar los puntos - ", err);
   }
 });
 
