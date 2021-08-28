@@ -13,6 +13,12 @@ const usuariosSchema = new Schema(
   }
 );
 
+usuariosSchema.method("toJSON", function () {
+  const { __v, ...object } = this.toObject();
+  const { _id: id, ...result } = object;
+  return { ...result, id };
+});
+
 usuariosSchema.virtual("id").get(function () {
   return this._id.toHexString();
 });

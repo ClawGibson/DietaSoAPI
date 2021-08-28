@@ -26,6 +26,7 @@ router.get("/:id", async (req, res) => {
         return res
           .status(500)
           .json({ success: false, message: "El usuario no existe." });
+      res.send(usuario);
     } catch (err) {
       console.log("Ocurrió un error al buscar el usuario - ", err);
     }
@@ -34,12 +35,10 @@ router.get("/:id", async (req, res) => {
   try {
     const listaInfoUsuarios = await InformacionUsuarios.find({
       usuario: req.params.id,
-    })
-      //.populate("usuario", { id: 1 })
-      .select(
-        "nombre apellidoPaterno apellidoMaterno foto fechaDeNacimiento genero celular paisDeNacimiento estadoDeNacimiento ciudadDeResidencia tiempoViviendoAhi"
-      );
-
+    }).select(
+      "nombre apellidoPaterno apellidoMaterno foto fechaDeNacimiento genero celular paisDeNacimiento estadoDeNacimiento ciudadDeResidencia tiempoViviendoAhi"
+    );
+    console.log(listaInfoUsuarios);
     if (!listaInfoUsuarios.length > 0)
       return res.status(500).json({
         success: true,
@@ -56,25 +55,28 @@ router.post("/:id", async (req, res) => {
   const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
   try {
     if (usuarioCreado) {
+      console.log("si existe ese usuario");
       const infoUsuario = await InformacionUsuarios.findOne({
         usuario: req.params.id,
       });
       try {
-        if (infoUsuario)
+        if (infoUsuario) {
+          console.log("si existe ese usuario");
           return res.status(500).json({
             success: false,
             message: "Informacion de Usuario ya registrada",
           });
+        } else console.log("no existe usuario");
       } catch (err) {
         console.log("Ocurrió un error al buscar el usuario - ", err);
       }
-    } else console.log("El usuario no existe");
+    } else console.log("El usuario no existe", usuarioCreado);
   } catch (err) {
     console.log("Ocurrió un error al buscar el usuario - ", err);
   }
 
   let informacion = new InformacionUsuarios({
-    usuario: req.query.usuario,
+    usuario: req.params.id,
     nombre: req.body.nombre,
     apellidoPaterno: req.body.apellidoPaterno,
     apellidoMaterno: req.body.apellidoMaterno,

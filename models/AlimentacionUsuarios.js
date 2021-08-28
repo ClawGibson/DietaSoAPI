@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const alimentacionUsuariosSchema = new Schema(
   {
-    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: false },
     comidaFavorita: [String],
     comidaNoFavorita: [String],
     alergiasAlimentarias: [String],

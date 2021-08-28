@@ -163,4 +163,111 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+router.post("/comidaFav/:id", async (req, res) => {
+  const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
+  try {
+    if (usuarioCreado) {
+      const comidaFav = await AlimentacionUsuarios.findOne({
+        usuario: req.params.id,
+        comidaFavorita: req.body.comidaFavorita,
+      });
+      //console.log(usuarioCreado);
+      try {
+        //console.log(comidaFav);
+        if (comidaFav)
+          return res.status(500).json({
+            success: false,
+            message: "Esa comida ya esta registrada",
+          });
+      } catch (err) {
+        console.log("Ocurrió un error al buscar el usuario - ", err);
+      }
+    } else console.log("El usuario no existe");
+  } catch (err) {
+    console.log("Ocurrió un error al buscar el usuario - ", err);
+  }
+
+  var nuevaComidaFav = { comidaFavorita: req.body.comidaFavorita };
+  //console.log(nuevaComidaFav.comidaFavorita);
+  AlimentacionUsuarios.findOneAndUpdate(
+    { usuario: req.params.id },
+    { $push: { comidaFavorita: nuevaComidaFav.comidaFavorita } },
+    function (error, success) {
+      if (error) {
+        console.log(error);
+        return res
+          .status(500)
+          .json({ success: false, message: "Comida ya esta registrada" });
+      } else {
+        //console.log(success);
+        res.send("ok");
+      }
+    }
+  );
+});
+
+router.get("/comidaFav/:id", async (req, res) => {
+  try {
+    const comidaFavorita = await AlimentacionUsuarios.find({
+      usuario: req.params.id,
+    }).select("comidaFavorita");
+
+    if (!comidaFavorita.length > 0)
+      return res.status(500).json({
+        success: true,
+        message: "El usuario no tiene informacion de su alimentacion",
+      });
+
+    res.send(comidaFavorita);
+  } catch (err) {
+    console.log(
+      "Ocurrió un error al obtener la informacion de alimentacion - ",
+      err
+    );
+  }
+});
+
+router.delete("/comidaFav/:id", async (req, res) => {
+  const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
+  try {
+    if (usuarioCreado) {
+      const comidaFav = await AlimentacionUsuarios.findOne({
+        usuario: req.params.id,
+        comidaFavorita: req.body.comidaFavorita,
+      });
+      //console.log(usuarioCreado);
+      try {
+        //console.log(comidaFav);
+        if (!comidaFav)
+          return res.status(500).json({
+            success: false,
+            message: "Esa comida no existe",
+          });
+      } catch (err) {
+        console.log("Ocurrió un error al buscar el usuario - ", err);
+      }
+    } else console.log("El usuario no existe");
+  } catch (err) {
+    console.log("Ocurrió un error al buscar el usuario - ", err);
+  }
+
+  var nuevaComidaFav = { comidaFavorita: req.body.comidaFavorita };
+  //console.log(nuevaComidaFav.comidaFavorita);
+  AlimentacionUsuarios.findOneAndUpdate(
+    { usuario: req.params.id },
+    { $pull: { comidaFavorita: nuevaComidaFav.comidaFavorita } },
+    function (error, success) {
+      if (error) {
+        console.log(error);
+        return res
+          .status(500)
+          .json({ success: false, message: "error al eliminar la comida" });
+      } else {
+        //console.log(success);
+        res.send("ok");
+      }
+    }
+  );
+});
+
 module.exports = router;

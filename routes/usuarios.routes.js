@@ -21,21 +21,22 @@ router.get("/", async (req, res) => {
   res.send(listaUsuarios);
 });
 
-router.get("/:id", async (req, res) => {
-  //const usuario = await buscarUsuario(req.params.id);
-  //constantes.buscarUsuario(req.params.id);
+router.get("/:usuario", async (req, res) => {
+  //console.log("entro endpoint");
   try {
-    const usuario = await Usuarios.findById(req.params.id).select(
+    const usuario = await Usuarios.find(req.query.usuario).select(
       "-contrasena"
     );
-
+    console.log("entro try", usuario);
     if (!usuario)
       return res
         .status(500)
         .json({ success: false, message: "Usuario no encontrado" });
+    res.send(usuario);
   } catch (err) {
     console.log("Error al buscar el usuario - ", err);
   }
+
   //res.send(usuario);
 });
 
@@ -114,7 +115,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  let editarUsuario = await Usuarios.findOneAndUpdate(req.params.id, {
+  let editarUsuario = await Usuarios.findOneAndUpdate(req.query.id, {
     email: req.body.email,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
   });
@@ -124,6 +125,6 @@ router.put("/:id", async (req, res) => {
   if (!editarUsuario)
     return res.status(400).send("No se pudo editar el usuario :c");
 
-  res.send(editarUsuario);
+  res.send("datos actualizados");
 });
 module.exports = router;
