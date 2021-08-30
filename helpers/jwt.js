@@ -9,7 +9,9 @@ function authJwt() {
     }).unless({
         path: [
             `${process.env.API_URL}/usuarios/login`,
-            `${process.env.API_URL}/usuarios/register`
+            `${process.env.API_URL}/usuarios/register`,
+            `${process.env.API_URL}/docs`,
+            '/docs'
         ]
     })
 }

@@ -34,12 +34,24 @@ const errorHandler = require('./helpers/error-handler');
 
 const { API_URL, PORT, MONGODB, DBNAME } = process.env;
 
+//Docuemntation
+const swaggerUi = require('swagger-ui-express'),
+      swaggerDocument = require('./swagger.json');
+
+app.use(
+    '/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument)
+);
+
+
 // middlewares
 app.use(cors());
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(authJwt());
 app.use(errorHandler);
+
 
 // routes
 app.use(`${API_URL}/alimentos`, alimentosRoute);
@@ -61,6 +73,7 @@ app.use(`${API_URL}/estadisticasIMC`, estadisticasIMCRoute);
 app.use(`${API_URL}/estadisticasNiveles`, estadisticasNivelesRoute);
 app.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
 app.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
+
 
 mongoose
     .connect(MONGODB, {
