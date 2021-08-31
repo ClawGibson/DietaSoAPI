@@ -51,7 +51,13 @@ router.get('/detalles', async (req, res) => {
 
         const registrosDeUsuario = await RegistroDietetico.find({
             usuario: mongoose.Types.ObjectId(req.query.usuario),
-        }).limit(10);
+        })
+            .limit(10)
+            .populate({
+                path: 'alimentos usuario',
+                select: 'nombre',
+                populate: { path: 'idAlimento', select: 'nombreAlimento' },
+            });
 
         if (!registrosDeUsuario)
             return res.status(404).send({

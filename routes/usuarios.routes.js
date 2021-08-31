@@ -75,7 +75,11 @@ router.post('/login', async (req, res) => {
             SECRET,
             { expiresIn: '1y' }
         );
-        res.status(200).send({ usuario: usuario.email, token: token });
+        res.status(200).send({
+            usuario: usuario.email,
+            token: token,
+            admin: usuario.esAdmin,
+        });
     } else {
         res.status(400).send('Contraseña incorrecta');
     }
