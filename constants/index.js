@@ -1,6 +1,7 @@
 /** @format */
 
 const Usuarios = require('../models/Usuarios');
+const Alimentos = require('../models/Alimentos');
 const { response } = require('express');
 const mongoose = require('mongoose');
 
@@ -14,6 +15,7 @@ const buscarUsuario = async (userId, res = response) => {
             return res
                 .status(400)
                 .json({ success: false, message: 'El usuario no existe.' });
+
         return existeUsuario;
     } catch (err) {
         return res.status(500).json({
@@ -23,4 +25,22 @@ const buscarUsuario = async (userId, res = response) => {
     }
 };
 
-module.exports = { buscarUsuario };
+const buscarAlimento = async (alimentoId, res = response) => {
+    try {
+        const alimento = await Alimentos.findById(
+            mongoose.Types.ObjectId(alimentoId)
+        );
+
+        if (!alimento)
+            return res.status(404).send({
+                Error: 'No se encontró el alimento proporcionado',
+            });
+        return alimento;
+    } catch (error) {
+        return res.status(500).json({
+            error: `Error al buscar el alimento - ${error}`,
+        });
+    }
+};
+
+module.exports = { buscarUsuario, buscarAlimento };

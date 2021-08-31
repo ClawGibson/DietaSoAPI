@@ -1,12 +1,11 @@
 /** @format */
 
-const Alimentos = require('../../models/Alimentos');
 const RegistroDietetico = require('../../models/RegistroDietetico');
-const Usuarios = require('../../models/Usuarios');
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-const { buscarUsuario } = require('../../constants/index');
+const { buscarUsuario, buscarAlimento } = require('../../constants/index');
 
 const buscarRegistroDietetico = async (id) => {
     try {
@@ -41,7 +40,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/details', async (req, res) => {
+router.get('/detalles', async (req, res) => {
     try {
         const usuario = await buscarUsuario(req.query.usuario);
 
@@ -50,9 +49,15 @@ router.get('/details', async (req, res) => {
                 .status(404)
                 .send({ Error: 'No se encontró el usuario proporcionado' });
 
-        const registrosDeUsuario = await RegistroDietetico.findById(
-            req.query.usuario
-        );
+        const registrosDeUsuario = await RegistroDietetico.find({
+            usuario: mongoose.Types.ObjectId(req.query.usuario),
+        })
+            .limit(10)
+            .populate({
+                path: 'alimentos usuario',
+                select: 'nombre',
+                populate: { path: 'idAlimento', select: 'nombreAlimento' },
+            });
 
         if (!registrosDeUsuario)
             return res.status(404).send({
@@ -67,19 +72,12 @@ router.get('/details', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const buscarUsuario = await Usuarios.find({ id: req.body.usuario });
+        const usuario = await buscarUsuario(req.query.usuario);
 
-        if (!buscarUsuario)
+        if (!usuario)
             return res
                 .status(404)
                 .send({ Error: 'No se encontró el usuario proporcionado' });
-
-        const buscarAlimento = await Alimentos.find({ _id: req.body.alimento });
-
-        if (!buscarAlimento)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el alimento proporcionado' });
 
         let nuevoRegistroDietetico = new RegistroDietetico({
             usuario: req.body.usuario,
@@ -100,32 +98,32 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.patch('/agregarAlimento/', async (req, res) => {
+router.patch('/modificarRegistro', async (req, res) => {
     try {
-        const buscarUsuario = await Usuarios.findById(req.query.usuario);
+        const usuario = await buscarUsuario(req.query.usuario);
 
-        if (!buscarUsuario)
+        if (!usuario)
             return res
                 .status(404)
                 .send({ Error: 'No se encontró el usuario proporcionado' });
 
-        const buscarAlimento = await Alimentos.findById(req.body.alimento);
+        const existeAlimento = await buscarAlimento(req.body.idAlimento);
 
-        if (!buscarAlimento)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el alimento proporcionado' });
+        if (!existeAlimento)
+            return res.status(404).send({
+                Error: 'No se encontró el alimento proporcionado',
+            });
 
         let registro = await buscarRegistroDietetico(req.query.usuario);
 
         const registroAModificar = registro[0].alimentos.filter(
-            (alimento) => alimento.idAlimento.toString() == req.body.alimento
+            (alimento) => alimento.idAlimento.toString() === req.body.idAlimento
         );
 
         if (registroAModificar.length > 0) {
             const index = registro[0].alimentos.indexOf(registroAModificar[0]);
 
-            registro[0].alimentos[index] = {
+            registroAModificar[0].alimentos = {
                 idAlimento: registro[0].alimentos[index].idAlimento,
                 cantidad: req.body.cantidad,
                 tipo: req.body.tipo,
@@ -133,6 +131,8 @@ router.patch('/agregarAlimento/', async (req, res) => {
                 lugar: req.body.lugar,
                 menuPreparacion: req.body.menuPreparacion,
             };
+
+            registro[0].alimentos[index] = registroAModificar[0].alimentos;
 
             registro = registro[0].save();
 
@@ -142,10 +142,10 @@ router.patch('/agregarAlimento/', async (req, res) => {
                     .json({ error: 'Error al guardar el registro' });
             res.status(200).send('Actualizado');
         } else {
-            registro[0].alimentos = registro[0].alimentos = [
+            registro[0].alimentos = [
                 ...registro[0].alimentos,
                 {
-                    idAlimento: req.body.alimento,
+                    idAlimento: req.body.idAlimento,
                     cantidad: req.body.cantidad,
                     tipo: req.body.tipo, // Desayuno, comida, cena, colación1, colación2
                     fecha: req.body.fecha,
@@ -163,13 +163,41 @@ router.patch('/agregarAlimento/', async (req, res) => {
             res.status(200).send('Registro creado');
         }
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res
+            .status(500)
+            .json({ message: 'Algo salió mal', error: error.message });
     }
 });
 
-router.patch('modificarAlimento', async (req, res) => {
+router.patch('/eliminarAlimentoDeRegistro', async (req, res) => {
     try {
+        const usuario = await buscarUsuario(req.query.usuario);
+
+        if (!usuario)
+            return res
+                .status(404)
+                .send({ Error: 'No se encontró el usuario proporcionado' });
+
+        const existeAlimento = await buscarAlimento(req.body.idAlimento);
+
+        if (!existeAlimento)
+            return res.status(404).send({
+                Error: 'No se encontró el alimento proporcionado',
+            });
+
         let registro = await buscarRegistroDietetico(req.query.usuario);
+
+        registro[0].alimentos = registro[0].alimentos.filter(
+            (alimento) => alimento.idAlimento.toString() !== req.body.idAlimento
+        );
+
+        registro = registro[0].save();
+
+        if (!registro)
+            return res
+                .status(500)
+                .json({ error: 'Error al eliminar el alimento del registro' });
+        res.status(200).send('Alimento eliminado exitosamente');
     } catch (error) {
         return res.status(500).json({ error: error.message });
     }
