@@ -226,7 +226,6 @@ const alimentosSchema = new Schema(
             },
         ],
         marca: { type: String, required: false, default: '' },
-        puntos: { type: Number, required: true },
     },
     {
         timestamps: true,
