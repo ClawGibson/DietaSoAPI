@@ -14,6 +14,12 @@ const alimentosSchema = new Schema(
             {
                 nutricional: { type: String, required: false, default: '' },
                 ambiental: { type: String, required: false, default: '' },
+                mensajeEconomia: { type: String, required: false, default: '' },
+                mensajeCulturaSociedad: {
+                    type: String,
+                    required: false,
+                    default: '',
+                },
             },
         ],
         icono: [
@@ -24,6 +30,12 @@ const alimentosSchema = new Schema(
                     default: '',
                 },
                 iconoAmbiental: { type: String, required: false, default: '' },
+                iconoEconomia: { type: String, required: false, default: '' },
+                iconoCulturaSociedad: {
+                    type: String,
+                    required: false,
+                    default: '',
+                },
             },
         ],
         opcionesPreparacion: { type: String, required: false, default: '' },
@@ -75,7 +87,7 @@ const alimentosSchema = new Schema(
                     required: false,
                     default: '',
                 },
-                pridoxina: { type: String, required: false, default: '' },
+                piridoxina: { type: String, required: false, default: '' },
                 biotina: { type: String, required: false, default: '' },
                 cobalmina: { type: String, required: false, default: '' },
                 acidoAscorbico: { type: String, required: false, default: '' },
@@ -96,7 +108,7 @@ const alimentosSchema = new Schema(
                 magnesio: { type: String, required: false, default: '' },
                 sodio: { type: String, required: false, default: '' },
                 potasio: { type: String, required: false, default: '' },
-                zing: { type: String, required: false, default: '' },
+                zinc: { type: String, required: false, default: '' },
                 selenio: { type: String, required: false, default: '' },
             },
         ],
@@ -141,6 +153,7 @@ const alimentosSchema = new Schema(
                 citaEGEI: { type: String, required: false, default: '' },
                 huellaCarbono: { type: String, required: false, default: '' }, // EGEI.
                 huellaEcologica: { type: String, required: false, default: '' },
+                energiaFosil: { type: String, required: false, default: '' },
                 usoDeSuelo: { type: String, required: false, default: '' },
                 nitrogeno: { type: String, required: false, default: '' },
                 fosforo: { type: String, required: false, default: '' },
