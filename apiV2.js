@@ -23,6 +23,7 @@ const {
     estadisticasNivelesRoute,
     estadisticasPresionRoute,
     registroDieteticoRoute,
+    importarAlimentosRoute,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -46,6 +47,7 @@ router.use(`${API_URL}/estadisticasIMC`, estadisticasIMCRoute);
 router.use(`${API_URL}/estadisticasNiveles`, estadisticasNivelesRoute);
 router.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
 router.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
+router.use(`${API_URL}/importarAlimentos`, importarAlimentosRoute);
 
 module.exports = {
     router,
