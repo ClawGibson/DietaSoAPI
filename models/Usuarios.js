@@ -5,7 +5,7 @@ const usuariosSchema = new Schema(
     usuario: { type: String, required: false },
     //nombre: { type: String, required: true },
     email: { type: String, required: true },
-    contrasena: { type: String, required: true },
+    contrasena: { type: String, required: false },
     esAdmin: { type: Boolean, default: false },
   },
   {

@@ -4,6 +4,25 @@ const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const { buscarUsuario } = require("../constants/index");
+
+const buscarUsuarioo = async (id) => {
+  try {
+    const buscarUsuarioo = await Usuarios.find({
+      usuario: id,
+    });
+
+    if (!buscarUsuarioo)
+      return res.status(404).send({
+        Error: "No se encontró el registro de informacion de usuario",
+      });
+    return buscarUsuarioo;
+  } catch (error) {
+    return res.status(500).json({
+      error: `Error al buscar informacion de usuario - ${error}`,
+    });
+  }
+};
 
 router.get("/", async (req, res) => {
   const listaDatos = await DatosUsuarios.find();
@@ -16,62 +35,78 @@ router.get("/", async (req, res) => {
   res.send(listaDatos);
 });
 
-router.get("/:id", async (req, res) => {
-  const usuarioCreado = await Usuarios.findOne({ usuario: req.query.usuario });
-  console.log("entro al end", usuarioCreado);
+router.get("/individual", async (req, res) => {
   try {
+    const usuarioCreado = await buscarUsuario(req.query.usuario);
+
     if (!usuarioCreado) {
       return res.status(500).json({
         success: false,
         message: "El usuario no existe",
       });
     } else console.log("El usuario existe");
-  } catch (err) {
-    console.log("Ocurrió un error al buscar el usuario - ", err);
-  }
 
-  try {
-    const datosDeUsuario = await DatosUsuarios.findOne({
-      usuario: req.query.usuario,
-    }).select("peso altura actividadFisica");
+    try {
+      const datosDeUsuario = await DatosUsuarios.findOne({
+        usuario: req.query.usuario,
+      }).select("peso altura actividadFisica");
+      console.log(datosDeUsuario);
+      if (!datosDeUsuario)
+        return res.status(500).json({
+          success: true,
+          message: "El usuario no tiene datos todavia",
+        });
 
-    if (!datosDeUsuario.length > 0)
+      res.send(datosDeUsuario);
+    } catch (err) {
       return res.status(500).json({
         success: true,
-        message: "El usuario no tiene datos todavia",
+        message: "Ocurrio un error al buscar los datos del usuario",
       });
-
-    res.send(datosDeUsuario);
+    }
   } catch (err) {
-    console.log("Ocurrió un error al obtener los datos- ", err);
+    return res.status(500).json({
+      success: true,
+      message: "Ocurrio un error al buscar al usuario",
+    });
   }
 });
 
-router.post("/:id", async (req, res) => {
-  const usuarioCreado = await Usuarios.findOne({ usuario: req.query.usuario });
-  console.log("entro al end", usuarioCreado);
+router.post("/individual", async (req, res) => {
+  //const usuarioCreado = await Usuarios.findOne({ usuario: req.query.usuario })
   try {
+    const usuarioCreado = await Usuarios.findById(req.query.usuario);
+    console.log(usuarioCreado);
     if (usuarioCreado) {
-      const infoUsuario = await DatosUsuarios.findOne({
-        usuario: req.query.usuario,
-      });
-      console.log("entro al try", infoUsuario);
       try {
-        if (infoUsuario)
-          return res.status(500).json({
+        const infoUsuario = await DatosUsuarios.findOne({
+          usuario: req.query.usuario,
+        });
+
+        if (infoUsuario) {
+          console.log("entro al if", infoUsuario);
+          return res.status(404).json({
             success: false,
             message: "Datos de Usuario ya registrados",
           });
+        } else console.log("no existe", infoUsuario);
       } catch (err) {
-        console.log("Ocurrió un error al buscar el usuario - ", err);
+        //console.log("Ocurrió un error al buscar el usuario - ", err);
+        return res.status(500).json({
+          success: false,
+          message: "Ocurrió un error al buscar datos del usuario",
+        });
       }
     } else console.log("El usuario no existe");
   } catch (err) {
-    console.log("Ocurrió un error al buscar el usuario - ", err);
+    return res.status(500).json({
+      success: false,
+      message: "Ocurrió un error al buscar el usuario",
+    });
   }
 
   let datos = new DatosUsuarios({
-    usuario: req.params.id,
+    usuario: req.query.usuario,
     actividadFisica: req.body.actividadFisica,
     peso: req.body.peso,
     altura: req.body.altura,
@@ -86,54 +121,79 @@ router.post("/:id", async (req, res) => {
         .send("No se pudieron agregar los datos del usuario");
     res.send(datos);
   } catch (err) {
-    console.log("Ocurrió un error al guardar los datos del usuario - ", err);
+    return res.status(500).json({
+      success: false,
+      message: "Ocurrió un error al guardar los datos del usuario",
+    });
   }
 });
 
-router.patch("/:id", async (req, res) => {
-  const existeUsuario = await Usuarios.findOne(req.query.usuario);
-
-  if (!existeUsuario)
-    return res
-      .status(500)
-      .json({ success: false, message: "El usuario no existe." });
-
-  let editarInformacion;
+router.patch("/individual", async (req, res) => {
+  //const existeUsuario = await Usuarios.findOne(req.query.usuario);
   try {
-    editarInformacion = await DatosUsuarios.findOneAndUpdate(req.params.id, {
-      //peso: req.body.peso,
-      altura: req.body.altura,
-      actividadFisica: req.body.actividadFisica,
-    });
+    const existeUsuario = await buscarUsuarioo(req.query.usuario);
+    let editarInformacion;
+    console.log(existeUsuario[0].usuario);
+    if (!existeUsuario[0]) {
+      return res
+        .status(500)
+        .json({ success: false, message: "Usuario No existe" });
+      //console.log("entra al if");
+    } else console.log("no entro al if", existeUsuario[0]);
 
-    console.log("si", editarInformacion.peso.length);
-
-    editarInformacion = editarInformacion
-      .save()
-      .then((response) => res.status(200).json({ message: "ok" }))
-      .catch((err) =>
-        res.status(500).json({
-          success: false,
-          message: "No se pudo guardar - ",
-          err,
-        })
+    try {
+      editarInformacion = await DatosUsuarios.findOneAndUpdate(
+        {
+          usuario: existeUsuario[0].usuario,
+        },
+        {
+          //peso: req.body.peso,,
+          altura: req.body.altura,
+          actividadFisica: req.body.actividadFisica,
+        }
       );
-  } catch (err) {
-    console.log("Ocurrió un error al actualizar los datos del usuario - ", err);
-  }
-  var pesoNuevo = { peso: req.body.peso };
-  console.log(pesoNuevo.peso);
-  DatosUsuarios.findOneAndUpdate(
-    { usuario: req.params.id },
-    { $push: { peso: pesoNuevo.peso } },
-    function (error, success) {
-      if (error) {
-        console.log(error);
-      } else {
-        //console.log(success);
-      }
+
+      console.log("si", editarInformacion);
+
+      editarInformacion = editarInformacion
+        .save()
+        .then((response) => res.status(200).json({ message: "ok" }))
+        .catch((err) =>
+          res.status(500).json({
+            success: false,
+            message: "No se pudo guardar - ",
+            err,
+          })
+        );
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: "Ocurrió un error al actualizar los datos del usuario - ",
+      });
     }
-  );
+    var pesoNuevo = { peso: req.body.peso };
+    //let existeUsuario1 = await DatosUsuarios.findOne(req.query.usuario);
+
+    console.log(pesoNuevo.peso);
+    console.log("nuebos", editarInformacion);
+    DatosUsuarios.findOneAndUpdate(
+      { usuario: req.query.usuario },
+      { $push: { peso: pesoNuevo.peso } },
+      function (error, success) {
+        if (error) {
+          console.log(error);
+        } else {
+          //console.log(success);
+        }
+      }
+    );
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "No se encontro usuario - ",
+      err,
+    });
+  }
 });
 
 module.exports = router;

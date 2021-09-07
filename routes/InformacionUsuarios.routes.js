@@ -4,79 +4,109 @@ const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const buscarUsuario = require("../constants/index");
+const { buscarUsuario } = require("../constants/index");
+
+const buscarUsuarioo = async (id) => {
+  try {
+    const buscarUsuarioo = await Usuarios.find({
+      usuario: id,
+    });
+
+    if (!buscarUsuarioo)
+      return res.status(404).send({
+        Error: "No se encontró el registro de información de usuario",
+      });
+    return buscarUsuarioo;
+  } catch (error) {
+    return res.status(500).json({
+      error: `Error al buscar información de usuario - ${error}`,
+    });
+  }
+};
 
 router.get("/", async (req, res) => {
-  const listaIUsuarios = await InformacionUsuarios.find();
+  try {
+    const listaIUsuarios = await InformacionUsuarios.find();
 
-  if (listaIUsuarios.length <= 0)
+    if (listaIUsuarios.length <= 0)
+      return res.status(500).json({
+        success: false,
+        message: "No se encontro ninguna información de usuarios",
+      });
+    res.send(listaIUsuarios);
+  } catch (err) {
     return res.status(500).json({
       success: false,
-      message: "No se encontro ninguna informacion de usuarios",
+      message: "Ocurrió un error al buscar la información de los usuarios",
     });
-  res.send(listaIUsuarios);
+  }
 });
 
-router.get("/:id", async (req, res) => {
-  const buscarUsuario = async (id) => {
-    try {
-      const existeUsuario = await Usuarios.findById(id);
-
-      if (!existeUsuario)
-        return res
-          .status(500)
-          .json({ success: false, message: "El usuario no existe." });
-      res.send(usuario);
-    } catch (err) {
-      console.log("Ocurrió un error al buscar el usuario - ", err);
-    }
-  };
-
+router.get("/individual", async (req, res) => {
   try {
+    const usuario = await buscarUsuario(req.query.usuario);
+    console.log(usuario);
+
+    if (!usuario)
+      return res
+        .status(404)
+        .send({ Error: "No se encontró el usuario proporcionado" });
+
     const listaInfoUsuarios = await InformacionUsuarios.find({
-      usuario: req.params.id,
-    }).select(
-      "nombre apellidoPaterno apellidoMaterno foto fechaDeNacimiento genero celular paisDeNacimiento estadoDeNacimiento ciudadDeResidencia tiempoViviendoAhi"
-    );
+      usuario: req.query.usuario,
+    });
     console.log(listaInfoUsuarios);
-    if (!listaInfoUsuarios.length > 0)
-      return res.status(500).json({
-        success: true,
-        message: "El usuario no tiene informacion todavia",
+    if (!listaInfoUsuarios)
+      return res.status(404).send({
+        message: "El usuario no tiene información",
       });
 
     res.send(listaInfoUsuarios);
   } catch (err) {
-    console.log("Error al obtener la informacion del usuario", err);
+    return res.status(500).json({
+      success: false,
+      message: "El usuario no existe",
+    });
   }
 });
 
-router.post("/:id", async (req, res) => {
-  const usuarioCreado = await Usuarios.findOne({ usuario: req.params.id });
+router.post("/individual", async (req, res) => {
   try {
+    const usuarioCreado = await Usuarios.findById(req.query.usuario);
     if (usuarioCreado) {
-      console.log("si existe ese usuario");
-      const infoUsuario = await InformacionUsuarios.findOne({
-        usuario: req.params.id,
-      });
+      //console.log("si existe ese usuario");
       try {
+        const infoUsuario = await InformacionUsuarios.findOne({
+          usuario: req.query.usuario,
+        });
+
         if (infoUsuario) {
-          console.log("si existe ese usuario");
           return res.status(500).json({
             success: false,
-            message: "Informacion de Usuario ya registrada",
+            message: "Información de Usuario ya registrada",
           });
         } else console.log("no existe usuario");
       } catch (err) {
-        console.log("Ocurrió un error al buscar el usuario - ", err);
+        return res.status(500).json({
+          success: false,
+          message: "Ocurrió un error al buscar la información el usuario",
+        });
       }
-    } else console.log("El usuario no existe", usuarioCreado);
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: "El usuario no existe",
+      });
+    }
   } catch (err) {
-    console.log("Ocurrió un error al buscar el usuario - ", err);
+    return res.status(500).json({
+      success: false,
+      message: "Ocurrió un error al buscar el usuario",
+    });
   }
 
   let informacion = new InformacionUsuarios({
-    usuario: req.params.id,
+    usuario: req.query.usuario,
     nombre: req.body.nombre,
     apellidoPaterno: req.body.apellidoPaterno,
     apellidoMaterno: req.body.apellidoMaterno,
@@ -97,53 +127,70 @@ router.post("/:id", async (req, res) => {
     if (!informacion)
       return res
         .status(400)
-        .send("No se pudo agregar la informacion al usuario");
+        .send("No se pudo agregar la información al usuario");
     res.send(informacion);
   } catch (err) {
-    console.log("Ocurrió un error al guardar informacion de usuario - ", err);
+    return res
+      .status(400)
+      .send("Ocurrió un error al guardar información de usuario");
   }
 });
 
-router.patch("/:id", async (req, res) => {
-  const existeUsuario = await Usuarios.findById(req.params.id);
-
-  if (!existeUsuario)
-    return res
-      .status(500)
-      .json({ success: false, message: "El usuario no existe." });
-
-  let editarInformacion;
+router.patch("/individual", async (req, res) => {
   try {
-    editarInformacion = await InformacionUsuarios.findOneAndUpdate(
-      req.params.id,
-      {
-        nombre: req.body.nombre,
-        apellidoPaterno: req.body.apellidoPaterno,
-        apellidoMaterno: req.body.apellidoMaterno,
-        foto: req.body.foto,
-        email: req.body.email,
-        fechaDeNacimiento: req.body.fechaDeNacimiento,
-        genero: req.body.genero,
-        celular: req.body.celular,
-        paisDeNacimiento: req.body.paisDeNacimiento,
-        estadoDeNacimiento: req.body.estadoDeNacimiento,
-        ciudadDeResidencia: req.body.ciudadDeResidencia,
-        tiempoViviendoAhi: req.body.tiempoViviendoAhi,
-      }
-    );
+    let usuarioEncontrado = await buscarUsuarioo(req.query.usuario);
+    //console.log(usuarioEncontrado[0].usuario);
+    if (!usuarioEncontrado[0]) {
+      return res
+        .status(500)
+        .json({ success: false, message: "El usuario no existe" });
+      //console.log("entra al if");
+    } //else console.log("no entro al if", usuarioEncontrado[0]);
 
-    editarInformacion = editarInformacion
-      .save()
-      .then((response) => res.status(200).json({ message: "ok" }))
-      .catch((err) =>
-        res.status(500).json({
-          success: false,
-          message: "No se pudo guardar - ",
-          err,
-        })
+    try {
+      let editarUsuario = await InformacionUsuarios.findOneAndUpdate(
+        { usuario: usuarioEncontrado[0].usuario },
+        {
+          nombre: req.body.nombre,
+          apellidoPaterno: req.body.apellidoPaterno,
+          apellidoMaterno: req.body.apellidoMaterno,
+          foto: req.body.foto,
+          email: req.body.email,
+          fechaDeNacimiento: req.body.fechaDeNacimiento,
+          genero: req.body.genero,
+          celular: req.body.celular,
+          paisDeNacimiento: req.body.paisDeNacimiento,
+          estadoDeNacimiento: req.body.estadoDeNacimiento,
+          ciudadDeResidencia: req.body.ciudadDeResidencia,
+          tiempoViviendoAhi: req.body.tiempoViviendoAhi,
+        }
       );
+
+      //console.log(editarUsuario);
+      editarUsuario = editarUsuario
+        .save()
+        .then((response) => res.status(200).json({ message: "ok" }))
+        .catch((err) =>
+          res.status(500).json({
+            success: false,
+            message: "No se pudo guardar la nueva información - ",
+            err,
+          })
+        );
+      //console.log(editarUsuario);
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: "Ocurrió un error al actualizar informacion de usuario- ",
+        err,
+      });
+    }
   } catch (err) {
-    console.log("Ocurrió un error al actualizar la informacion - ", err);
+    res.status(500).json({
+      success: false,
+      message: "Ocurrió un error al buscar al usuario - ",
+      err,
+    });
   }
 });
 
