@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const datosUsuariosSchema = new Schema(
   {
-    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: false },
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     actividadFisica: {
       tipoDeActividad: { type: String, required: false },
       intensidad: { type: String, required: false },

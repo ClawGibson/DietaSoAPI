@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const historialClinicoSchema = new Schema(
   {
-    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: false },
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     historiaClinica: {
       antecedentesPatologicos: [String],
       antecedentesHeredoFamiliares: [String],

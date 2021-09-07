@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const iBioquimicosSchema = new Schema(
   {
-    usuario: { type: String, required: false },
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     glucosaAyuno: { type: String, required: true },
     glucosaDespues: { type: String, required: true },
     trigliceridos: { type: String, required: false },

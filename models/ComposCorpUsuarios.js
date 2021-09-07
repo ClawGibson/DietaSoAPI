@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const cCUsuariosSchema = new Schema(
   {
-    usuario: { type: String, required: false },
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     porcentGrasa: { type: String, required: true },
     porcentMasa: { type: String, required: true },
     porcentAgua: { type: String, required: false },

@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const indicadoresCliSchema = new Schema(
   {
-    usuario: { type: String, required: false },
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     presionArterial: { type: String, required: true },
     acantosisNigricans: { type: String, required: false },
   },

@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const circunSchema = new Schema(
   {
-    usuario: { type: String, required: false },
+    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     cintura: { type: String, required: true },
     cadera: { type: String, required: false },
   },
