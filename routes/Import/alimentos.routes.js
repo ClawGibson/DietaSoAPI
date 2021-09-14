@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
+        console.log('Body:', ...req.body);
         let nuevoAlimento = new Alimentos({ ...req.body });
 
         try {
