@@ -1,15 +1,17 @@
 const { Schema, model } = require("mongoose");
 
 const recordatorioModel = new Schema({
-    usuario: {
-        type: Schema.Types.ObjectId, ref: "Usuarios", required: true,
-    },
+
+    usuario: [{
+        type: Schema.Types.ObjectId, ref: "Usuarios", required: true
+    }],
     metas: {
         type: Schema.Types.ObjectId, ref: "Metas", required: true,
     },
     titulo: {
         type: String,
-        required: true
+        unique: true,
+        required: true,
     },
     mensaje: {
         type: String,
@@ -19,23 +21,25 @@ const recordatorioModel = new Schema({
         type: String,
         required: true,
     },
-    dias: [
-        { lunes: { type: boolean, default: false } },
-        { martes: { type: boolean, default: false } },
-        { miercoles: { type: boolean, default: false } },
-        { jueves: { type: boolean, default: false } },
-        { viernes: { type: boolean, default: false } },
-        { sabado: { type: boolean, default: false } },
-        { domingo: { type: boolean, default: false } },
-    ],
-    horario: {
-        type: String,
-        required: true,
-    },
+    dias: [{
+        day: {
+            type: String,
+            required: true,
+        },
+        activo: {
+            type: Boolean,
+            default: false,
+        }
+    }],
+    // horario: {
+    //     type: String,
+    //     required: false, // Para prueba en false
+    // },
+
     global: {
-        type: boolean,
+        type: Boolean,
         default: false,
     },
 }, { timestamp: true });
 
-module.exports = model("RecordatoriosModelo", recordatorioModel);
+module.exports = model("Recordatorio", recordatorioModel);

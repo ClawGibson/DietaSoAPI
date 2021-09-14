@@ -27,7 +27,8 @@ const {
     estadisticasNivelesRoute,
     estadisticasPresionRoute,
     registroDieteticoRoute,
-    metas
+    metas,
+    recordatorios,
 } = require('./routes/index');
 
 const authJwt = require('./helpers/jwt');
@@ -63,6 +64,7 @@ app.use(`${API_URL}/estadisticasNiveles`, estadisticasNivelesRoute);
 app.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
 app.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
 app.use(`${API_URL}/metas`, metas);
+app.use(`${API_URL}/recordatorios`, recordatorios);
 
 mongoose
     .connect(MONGODB, {
