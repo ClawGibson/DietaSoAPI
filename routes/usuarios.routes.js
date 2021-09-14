@@ -60,7 +60,7 @@ router.post('/login', async (req, res) => {
     const SECRET = process.env.SECRET;
 
     if (!usuario) {
-        return res.status(400).send('Usuario no registrado :c');
+        return res.status(404).json('Usuario no registrado :c');
     }
 
     if (
@@ -81,7 +81,7 @@ router.post('/login', async (req, res) => {
             admin: usuario.esAdmin,
         });
     } else {
-        res.status(400).send('Contraseña incorrecta');
+        res.status(401).json('Contraseña incorrecta');
     }
 });
 

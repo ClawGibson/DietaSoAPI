@@ -9,8 +9,8 @@ const datosUsuariosSchema = new Schema(
       vecesXsemana: { type: String, required: false },
       minXdia: { type: String, required: false },
     },
-    peso: [Number],
-    altura: { type: Number, required: false },
+    peso: [{ type: Number, required: true }],
+    altura: { type: Number, required: true },
   },
   {
     timestamps: true,
