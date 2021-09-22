@@ -3,13 +3,13 @@ const { Schema, model } = require("mongoose");
 const cCUsuariosSchema = new Schema(
   {
     usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
-    porcentGrasa: { type: String, required: true },
-    porcentMasa: { type: String, required: true },
-    porcentAgua: { type: String, required: false },
-    densidadOsea: { type: String, required: false },
-    grasaVisceral: { type: String, required: true },
-    tasaMetabolica: { type: String, required: false },
-    edadMetabolica: { type: String, required: false },
+    porcentGrasa: { type: String, required: false, default: "" },
+    porcentMasa: { type: String, required: false, default: "" },
+    porcentAgua: { type: String, required: false, default: "" },
+    densidadOsea: { type: String, required: false, default: "" },
+    grasaVisceral: { type: String, required: false, default: "" },
+    tasaMetabolica: { type: String, required: false, default: "" },
+    edadMetabolica: { type: String, required: false, default: "" },
   },
   {
     timestamps: true,

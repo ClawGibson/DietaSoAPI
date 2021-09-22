@@ -1,6 +1,5 @@
 const Usuarios = require("../models/Usuarios");
-const DatosSocioeconomicos = require("../models/DatosSocioeconomicos");
-const PuntosDeUsuario = require("../models/PuntosDeUsuario");
+const ExposicionSolar = require("../../models/DatosExtrasUsuarios/ExposicionSolar");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
@@ -25,13 +24,13 @@ const buscarUsuarioo = async (id) => {
 };
 
 router.get("/", async (req, res) => {
-  const listaDSUsuarios = await DatosSocioeconomicos.find();
+  const listaDSUsuarios = await ExposicionSolar.find();
 
   if (listaDSUsuarios.length <= 0)
     return res.status(500).json({
       success: false,
       message:
-        "No se encontro ninguna informacion de datos socioeconomicos de los usuarios",
+        "No se encontro ninguna información de exposicion solar de los usuarios",
     });
   res.send(listaDSUsuarios);
 });
@@ -49,21 +48,21 @@ router.get("/individual", async (req, res) => {
     } else console.log("El usuario existe");
 
     try {
-      const datosDeUsuario = await DatosSocioeconomicos.findOne({
+      const datosDeUsuario = await ExposicionSolar.findOne({
         usuario: req.query.usuario,
-      }).select("nivelSocioeconomico");
+      });
       console.log(datosDeUsuario);
       if (!datosDeUsuario)
         return res.status(500).json({
           success: true,
-          message: "El usuario no tiene datos socioeconomicos todavia",
+          message: "El usuario no tiene datos de exposicion solar todavia",
         });
 
       res.send(datosDeUsuario);
     } catch (err) {
       return res.status(500).json({
         success: true,
-        message: "Ocurrio un error al guardar los datos socioeconomicos",
+        message: "Ocurrio un error al guardar los datos de exposicion solar",
       });
     }
   } catch (err) {
@@ -80,20 +79,20 @@ router.post("/individual", async (req, res) => {
       usuario: req.query.usuario,
     });
     if (usuarioCreado) {
-      const infoUsuario = await DatosSocioeconomicos.findOne({
+      const infoUsuario = await ExposicionSolar.findOne({
         usuario: req.query.usuario,
       });
       try {
         if (infoUsuario)
           return res.status(500).json({
             success: false,
-            message: "Datos socioeconomicos de Usuario ya registrados",
+            message: "Datos de exposicion solar de Usuario ya registrados",
           });
       } catch (err) {
         return res.status(500).json({
           success: false,
           message:
-            "Ocurrió un error al buscar los datos socioeconomicos del usuario",
+            "Ocurrió un error al buscar los datos de exposicion solar del usuario",
         });
       }
     } else console.log("El usuario no existe");
@@ -104,23 +103,26 @@ router.post("/individual", async (req, res) => {
     });
   }
 
-  let dSocioeconomicos = new DatosSocioeconomicos({
+  let dExposicionSolar = new ExposicionSolar({
     usuario: req.query.usuario,
-    nivelSocioeconomico: req.body.nivelSocioeconomico,
+    minutosAlSol: req.body.minutosAlSol,
+    cubresTuPiel: req.body.cubresTuPiel,
+    bloqueadorSolar: req.body.bloqueadorSolar,
+    diasXsemana: req.body.diasXsemana,
   });
 
   try {
-    dSocioeconomicos = await dSocioeconomicos.save();
+    dExposicionSolar = await dExposicionSolar.save();
 
-    if (!dSocioeconomicos)
+    if (!dExposicionSolar)
       return res
         .status(400)
-        .send("No se pudieron agregar datos socioeconomicos");
-    res.send(dSocioeconomicos);
+        .send("No se pudieron agregar datos de exposición solar");
+    res.send(dExposicionSolar);
   } catch (err) {
     return res.status(500).json({
       success: false,
-      message: "Ocurrió un error al guardar los datos socioeconomicos",
+      message: "Ocurrió un error al guardar los datos de exposición solar",
     });
   }
 });
@@ -135,10 +137,13 @@ router.patch("/individual", async (req, res) => {
         .json({ success: false, message: "El usuario no existe." });
 
     try {
-      editarInformacionS = await DatosSocioeconomicos.findOneAndUpdate(
+      editarInformacionS = await ExposicionSolar.findOneAndUpdate(
         { usuario: existeUsuario[0].usuario },
         {
-          nivelSocioeconomico: req.body.nivelSocioeconomico,
+          minutosAlSol: req.body.minutosAlSol,
+          cubresTuPiel: req.body.cubresTuPiel,
+          bloqueadorSolar: req.body.bloqueadorSolar,
+          diasXsemana: req.body.diasXsemana,
         }
       );
 
@@ -155,7 +160,8 @@ router.patch("/individual", async (req, res) => {
     } catch (err) {
       res.status(500).json({
         success: false,
-        message: "Ocurrió un error al actualizar los datos socioeconomicos-",
+        message:
+          " Ocurrió un error al actualizar los datos de exposición solar- ",
       });
     }
   } catch (err) {

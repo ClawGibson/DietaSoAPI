@@ -1,6 +1,5 @@
 const Usuarios = require("../models/Usuarios");
-const DatosSocioeconomicos = require("../models/DatosSocioeconomicos");
-const PuntosDeUsuario = require("../models/PuntosDeUsuario");
+const CircunferenciasUsuarios = require("../../models/DatosExtrasUsuarios/CircunferenciasUsuarios");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
@@ -25,13 +24,13 @@ const buscarUsuarioo = async (id) => {
 };
 
 router.get("/", async (req, res) => {
-  const listaDSUsuarios = await DatosSocioeconomicos.find();
+  const listaDSUsuarios = await CircunferenciasUsuarios.find();
 
   if (listaDSUsuarios.length <= 0)
     return res.status(500).json({
       success: false,
       message:
-        "No se encontro ninguna informacion de datos socioeconomicos de los usuarios",
+        "No se encontro ninguna información de circunferencias de los usuarios",
     });
   res.send(listaDSUsuarios);
 });
@@ -49,21 +48,21 @@ router.get("/individual", async (req, res) => {
     } else console.log("El usuario existe");
 
     try {
-      const datosDeUsuario = await DatosSocioeconomicos.findOne({
+      const datosDeUsuario = await CircunferenciasUsuarios.findOne({
         usuario: req.query.usuario,
-      }).select("nivelSocioeconomico");
+      });
       console.log(datosDeUsuario);
       if (!datosDeUsuario)
         return res.status(500).json({
           success: true,
-          message: "El usuario no tiene datos socioeconomicos todavia",
+          message: "El usuario no tiene datos de circunferencias todavia",
         });
 
       res.send(datosDeUsuario);
     } catch (err) {
       return res.status(500).json({
         success: true,
-        message: "Ocurrio un error al guardar los datos socioeconomicos",
+        message: "Ocurrio un error al guardar los datos de circunferencias",
       });
     }
   } catch (err) {
@@ -80,20 +79,20 @@ router.post("/individual", async (req, res) => {
       usuario: req.query.usuario,
     });
     if (usuarioCreado) {
-      const infoUsuario = await DatosSocioeconomicos.findOne({
+      const infoUsuario = await CircunferenciasUsuarios.findOne({
         usuario: req.query.usuario,
       });
       try {
         if (infoUsuario)
           return res.status(500).json({
             success: false,
-            message: "Datos socioeconomicos de Usuario ya registrados",
+            message: "Datos de circunferencias de Usuario ya registrados",
           });
       } catch (err) {
         return res.status(500).json({
           success: false,
           message:
-            "Ocurrió un error al buscar los datos socioeconomicos del usuario",
+            "Ocurrió un error al buscar los datos de circunferencias del usuario",
         });
       }
     } else console.log("El usuario no existe");
@@ -104,30 +103,31 @@ router.post("/individual", async (req, res) => {
     });
   }
 
-  let dSocioeconomicos = new DatosSocioeconomicos({
+  let dCircunferencias = new CircunferenciasUsuarios({
     usuario: req.query.usuario,
-    nivelSocioeconomico: req.body.nivelSocioeconomico,
+    cintura: req.body.cintura,
+    cadera: req.body.cadera,
   });
 
   try {
-    dSocioeconomicos = await dSocioeconomicos.save();
+    dCircunferencias = await dCircunferencias.save();
 
-    if (!dSocioeconomicos)
+    if (!dCircunferencias)
       return res
         .status(400)
-        .send("No se pudieron agregar datos socioeconomicos");
-    res.send(dSocioeconomicos);
+        .send("No se pudieron agregar datos de circunferencias");
+    res.send(dCircunferencias);
   } catch (err) {
     return res.status(500).json({
       success: false,
-      message: "Ocurrió un error al guardar los datos socioeconomicos",
+      message: "Ocurrió un error al guardar los datos de circunferencias",
     });
   }
 });
 
 router.patch("/individual", async (req, res) => {
   try {
-    const existeUsuario = await buscarUsuarioo(req.query.usuario);
+    const existeUsuario = await buscarUsuarioo(req.params.usuario);
     let editarInformacionS;
     if (!existeUsuario[0])
       return res
@@ -135,10 +135,11 @@ router.patch("/individual", async (req, res) => {
         .json({ success: false, message: "El usuario no existe." });
 
     try {
-      editarInformacionS = await DatosSocioeconomicos.findOneAndUpdate(
+      editarInformacionS = await CircunferenciasUsuarios.findOneAndUpdate(
         { usuario: existeUsuario[0].usuario },
         {
-          nivelSocioeconomico: req.body.nivelSocioeconomico,
+          cintura: req.body.cintura,
+          cadera: req.body.cadera,
         }
       );
 
@@ -155,7 +156,8 @@ router.patch("/individual", async (req, res) => {
     } catch (err) {
       res.status(500).json({
         success: false,
-        message: "Ocurrió un error al actualizar los datos socioeconomicos-",
+        message:
+          " Ocurrió un error al actualizar los datos de circunferencias- ",
       });
     }
   } catch (err) {
