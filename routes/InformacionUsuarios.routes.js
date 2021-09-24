@@ -6,24 +6,6 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const { buscarUsuario } = require("../constants/index");
 
-const buscarUsuarioo = async (id) => {
-  try {
-    const buscarUsuarioo = await Usuarios.find({
-      usuario: id,
-    });
-
-    if (!buscarUsuarioo)
-      return res.status(404).send({
-        Error: "No se encontró el registro de información de usuario",
-      });
-    return buscarUsuarioo;
-  } catch (error) {
-    return res.status(500).json({
-      error: `Error al buscar información de usuario - ${error}`,
-    });
-  }
-};
-
 router.get("/", async (req, res) => {
   try {
     const listaIUsuarios = await InformacionUsuarios.find();
@@ -45,7 +27,7 @@ router.get("/", async (req, res) => {
 router.get("/individual", async (req, res) => {
   try {
     const usuario = await buscarUsuario(req.query.usuario);
-    console.log(usuario);
+    //console.log(usuario);
 
     if (!usuario)
       return res
@@ -55,13 +37,13 @@ router.get("/individual", async (req, res) => {
     const listaInfoUsuarios = await InformacionUsuarios.find({
       usuario: req.query.usuario,
     });
-    console.log(listaInfoUsuarios);
+    //console.log(listaInfoUsuarios[0]);
     if (!listaInfoUsuarios)
       return res.status(404).send({
         message: "El usuario no tiene información",
       });
 
-    res.send(listaInfoUsuarios);
+    res.send(listaInfoUsuarios[0]);
   } catch (err) {
     return res.status(500).json({
       success: false,
@@ -138,9 +120,9 @@ router.post("/individual", async (req, res) => {
 
 router.patch("/individual", async (req, res) => {
   try {
-    let usuarioEncontrado = await buscarUsuarioo(req.query.usuario);
-    //console.log(usuarioEncontrado[0].usuario);
-    if (!usuarioEncontrado[0]) {
+    let usuarioEncontrado = await buscarUsuario(req.query.usuario);
+    console.log(usuarioEncontrado);
+    if (!usuarioEncontrado) {
       return res
         .status(500)
         .json({ success: false, message: "El usuario no existe" });
@@ -149,7 +131,7 @@ router.patch("/individual", async (req, res) => {
 
     try {
       let editarUsuario = await InformacionUsuarios.findOneAndUpdate(
-        { usuario: usuarioEncontrado[0].usuario },
+        { usuario: usuarioEncontrado.usuario },
         {
           nombre: req.body.nombre,
           apellidoPaterno: req.body.apellidoPaterno,

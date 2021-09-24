@@ -1,19 +1,18 @@
 const Usuarios = require("../models/Usuarios");
-const DatosSocioeconomicos = require("../models/DatosSocioeconomicos");
-const PuntosDeUsuario = require("../models/PuntosDeUsuario");
+const IndicadoresSueño = require("../../models/DatosExtrasUsuarios/IndicadoresSueño");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { buscarUsuario } = require("../constants/index");
+const { buscarUsuario } = require("../../constants/index");
 
 router.get("/", async (req, res) => {
-  const listaDSUsuarios = await DatosSocioeconomicos.find();
+  const listaDSUsuarios = await IndicadoresSueño.find();
 
   if (listaDSUsuarios.length <= 0)
     return res.status(500).json({
       success: false,
       message:
-        "No se encontro ninguna informacion de datos socioeconomicos de los usuarios",
+        "No se encontro ninguna información de indicadores de sueño de los usuarios",
     });
   res.send(listaDSUsuarios);
 });
@@ -31,21 +30,22 @@ router.get("/individual", async (req, res) => {
     } else console.log("El usuario existe");
 
     try {
-      const datosDeUsuario = await DatosSocioeconomicos.findOne({
+      const datosDeUsuario = await IndicadoresSueño.findOne({
         usuario: req.query.usuario,
-      }).select("nivelSocioeconomico");
+      });
       console.log(datosDeUsuario);
       if (!datosDeUsuario)
         return res.status(500).json({
           success: true,
-          message: "El usuario no tiene datos socioeconomicos todavia",
+          message: "El usuario no tiene datos de indicadores de sueño todavia",
         });
 
       res.send(datosDeUsuario);
     } catch (err) {
       return res.status(500).json({
         success: true,
-        message: "Ocurrio un error al guardar los datos socioeconomicos",
+        message:
+          "Ocurrio un error al guardar los datos de indicadores de sueño",
       });
     }
   } catch (err) {
@@ -62,20 +62,20 @@ router.post("/individual", async (req, res) => {
       usuario: req.query.usuario,
     });
     if (usuarioCreado) {
-      const infoUsuario = await DatosSocioeconomicos.findOne({
+      const infoUsuario = await IndicadoresSueño.findOne({
         usuario: req.query.usuario,
       });
       try {
         if (infoUsuario)
           return res.status(500).json({
             success: false,
-            message: "Datos socioeconomicos de Usuario ya registrados",
+            message: "Datos de indicadores de sueño de Usuario ya registrados",
           });
       } catch (err) {
         return res.status(500).json({
           success: false,
           message:
-            "Ocurrió un error al buscar los datos socioeconomicos del usuario",
+            "Ocurrió un error al buscar los datos de indicadores de sueño del usuario",
         });
       }
     } else console.log("El usuario no existe");
@@ -86,23 +86,26 @@ router.post("/individual", async (req, res) => {
     });
   }
 
-  let dSocioeconomicos = new DatosSocioeconomicos({
+  let dIndicadoresS = new IndicadoresSueño({
     usuario: req.query.usuario,
-    nivelSocioeconomico: req.body.nivelSocioeconomico,
+    horasDeSueño: req.body.horasDeSueño,
+    estadoDeDescanso: req.body.estadoDeDescanso,
+    despiertaPorLaNoche: req.body.despiertaPorLaNoche,
+    frecuencia: req.body.frecuencia,
   });
 
   try {
-    dSocioeconomicos = await dSocioeconomicos.save();
+    dIndicadoresS = await dIndicadoresS.save();
 
-    if (!dSocioeconomicos)
+    if (!dIndicadoresS)
       return res
         .status(400)
-        .send("No se pudieron agregar datos socioeconomicos");
-    res.send(dSocioeconomicos);
+        .send("No se pudieron agregar datos de indicadores de sueño");
+    res.send(dIndicadoresS);
   } catch (err) {
     return res.status(500).json({
       success: false,
-      message: "Ocurrió un error al guardar los datos socioeconomicos",
+      message: "Ocurrió un error al guardar los datos de indicadores de sueño",
     });
   }
 });
@@ -111,17 +114,19 @@ router.patch("/individual", async (req, res) => {
   try {
     const existeUsuario = await buscarUsuario(req.query.usuario);
     let editarInformacionS;
-    console.log(existeUsuario);
     if (!existeUsuario)
       return res
         .status(500)
         .json({ success: false, message: "El usuario no existe." });
 
     try {
-      editarInformacionS = await DatosSocioeconomicos.findOneAndUpdate(
+      editarInformacionS = await IndicadoresSueño.findOneAndUpdate(
         { usuario: existeUsuario.usuario },
         {
-          nivelSocioeconomico: req.body.nivelSocioeconomico,
+          horasDeSueño: req.body.horasDeSueño,
+          estadoDeDescanso: req.body.estadoDeDescanso,
+          despiertaPorLaNoche: req.body.despiertaPorLaNoche,
+          frecuencia: req.body.frecuencia,
         }
       );
 
@@ -138,7 +143,8 @@ router.patch("/individual", async (req, res) => {
     } catch (err) {
       res.status(500).json({
         success: false,
-        message: "Ocurrió un error al actualizar los datos socioeconomicos-",
+        message:
+          " Ocurrió un error al actualizar los datos de indicadores de sueño- ",
       });
     }
   } catch (err) {

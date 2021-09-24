@@ -4,6 +4,7 @@ const PuntosDeUsuario = require("../models/PuntosDeUsuario");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const { buscarUsuario } = require("../constants/index");
 
 router.get("/", async (req, res) => {
   const listaAUsuarios = await AlimentacionUsuarios.find();
@@ -124,9 +125,9 @@ router.post("/individual", async (req, res) => {
 
 router.patch("/individual", async (req, res) => {
   try {
-    const existeUsuario = await buscarUsuarioo(req.query.usuario);
+    const existeUsuario = await buscarUsuario(req.query.usuario);
 
-    if (!existeUsuario[0])
+    if (!existeUsuario)
       return res
         .status(500)
         .json({ success: false, message: "El usuario no existe." });
@@ -134,17 +135,14 @@ router.patch("/individual", async (req, res) => {
     let editarInformacionA;
     try {
       editarInformacionA = await AlimentacionUsuarios.findOneAndUpdate(
-        { usuario: usuarioEncontrado[0].usuario },
+        { usuario: existeUsuario.usuario },
         {
           comidaFavorita: req.body.comidaFavorita,
           comidaNoFavorita: req.body.comidaNoFavorita,
           alergiasAlimentarias: req.body.alergiasAlimentarias,
           lugarDeCompras: req.body.lugarDeCompras,
           quienCocina: req.body.quienCocina,
-          estatusDieta: {
-            sigueDieta: req.body.sigueDieta,
-            conNutriologo: req.body.conNutriologo,
-          },
+          estatusDieta: req.body.estatusDieta,
           extras: req.body.extras,
           desayuno: req.body.desayuno,
           colacion1: req.body.colacion1,
