@@ -6,24 +6,6 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const { buscarUsuario } = require("../constants/index");
 
-const buscarUsuarioo = async (id) => {
-  try {
-    const buscarUsuarioo = await Usuarios.find({
-      usuario: id,
-    });
-
-    if (!buscarUsuarioo)
-      return res.status(404).send({
-        Error: "No se encontró el registro de informacion de usuario",
-      });
-    return buscarUsuarioo;
-  } catch (error) {
-    return res.status(500).json({
-      error: `Error al buscar informacion de usuario - ${error}`,
-    });
-  }
-};
-
 router.get("/", async (req, res) => {
   const listaDatos = await DatosUsuarios.find();
 
@@ -131,20 +113,20 @@ router.post("/individual", async (req, res) => {
 router.patch("/individual", async (req, res) => {
   //const existeUsuario = await Usuarios.findOne(req.query.usuario);
   try {
-    const existeUsuario = await buscarUsuarioo(req.query.usuario);
+    const existeUsuario = await buscarUsuario(req.query.usuario);
     let editarInformacion;
-    console.log(existeUsuario[0].usuario);
-    if (!existeUsuario[0]) {
+    console.log(existeUsuario);
+    if (!existeUsuario) {
       return res
         .status(500)
         .json({ success: false, message: "Usuario No existe" });
       //console.log("entra al if");
-    } else console.log("no entro al if", existeUsuario[0]);
+    } //else console.log("no entro al if", existeUsuario);
 
     try {
       editarInformacion = await DatosUsuarios.findOneAndUpdate(
         {
-          usuario: existeUsuario[0].usuario,
+          usuario: existeUsuario.usuario,
         },
         {
           //peso: req.body.peso,,
@@ -153,7 +135,7 @@ router.patch("/individual", async (req, res) => {
         }
       );
 
-      console.log("si", editarInformacion);
+      //console.log("si", editarInformacion);
 
       editarInformacion = editarInformacion
         .save()
@@ -174,8 +156,8 @@ router.patch("/individual", async (req, res) => {
     var pesoNuevo = { peso: req.body.peso };
     //let existeUsuario1 = await DatosUsuarios.findOne(req.query.usuario);
 
-    console.log(pesoNuevo.peso);
-    console.log("nuebos", editarInformacion);
+    //console.log(pesoNuevo.peso);
+    //console.log("nuebos", editarInformacion);
     DatosUsuarios.findOneAndUpdate(
       { usuario: req.query.usuario },
       { $push: { peso: pesoNuevo.peso } },
