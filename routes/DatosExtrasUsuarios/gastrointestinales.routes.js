@@ -3,7 +3,7 @@ const Gastrointestinales = require("../../models/DatosExtrasUsuarios/Gastrointes
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { buscarUsuario } = require("../constants/index");
+const { buscarUsuario } = require("../../constants/index");
 
 const buscarUsuarioo = async (id) => {
   try {
@@ -129,16 +129,16 @@ router.post("/individual", async (req, res) => {
 
 router.patch("/individual", async (req, res) => {
   try {
-    const existeUsuario = await buscarUsuarioo(req.query.usuario);
+    const existeUsuario = await buscarUsuario(req.query.usuario);
     let editarInformacionS;
-    if (!existeUsuario[0])
+    if (!existeUsuario)
       return res
         .status(500)
         .json({ success: false, message: "El usuario no existe." });
 
     try {
       editarInformacionS = await Gastrointestinales.findOneAndUpdate(
-        { usuario: existeUsuario[0].usuario },
+        { usuario: existeUsuario.usuario },
         {
           inflamacionAbdominal: req.body.inflamacionAbdominal,
           diarrea: req.body.diarrea,

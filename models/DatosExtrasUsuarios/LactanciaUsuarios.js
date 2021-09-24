@@ -9,7 +9,7 @@ const lactanciaSchema = new Schema(
     },
     maternaExclusiva: { type: String, required: false },
     artificial: { type: String, required: false },
-    mixta: { type: Boolean, required: false },
+    mixta: { type: String, required: false },
     maternaContemplada: { type: String, required: false },
     mixtaContemplada: { type: String, required: false },
     artificialContemplada: { type: String, required: false },

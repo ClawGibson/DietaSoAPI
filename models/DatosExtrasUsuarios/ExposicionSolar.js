@@ -5,7 +5,7 @@ const exposicionSSchema = new Schema(
     usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     minutosAlSol: { type: String, required: false },
     cubresTuPiel: { type: String, required: false }, //con ropa, multiopcion
-    bloqueadorSolar: { type: Boolean, required: false },
+    bloqueadorSolar: { type: String, required: false, default: "No" },
     diasXsemana: { type: String, required: false },
   },
   {

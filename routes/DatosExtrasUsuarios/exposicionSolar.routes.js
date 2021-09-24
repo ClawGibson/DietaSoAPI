@@ -3,25 +3,7 @@ const ExposicionSolar = require("../../models/DatosExtrasUsuarios/ExposicionSola
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { buscarUsuario } = require("../constants/index");
-
-const buscarUsuarioo = async (id) => {
-  try {
-    const buscarUsuarioo = await Usuarios.find({
-      usuario: id,
-    });
-
-    if (!buscarUsuarioo)
-      return res.status(404).send({
-        Error: "No se encontró el registro de informacion de usuario",
-      });
-    return buscarUsuarioo;
-  } catch (error) {
-    return res.status(500).json({
-      error: `Error al buscar informacion de usuario - ${error}`,
-    });
-  }
-};
+const { buscarUsuario } = require("../../constants/index");
 
 router.get("/", async (req, res) => {
   const listaDSUsuarios = await ExposicionSolar.find();
@@ -129,16 +111,16 @@ router.post("/individual", async (req, res) => {
 
 router.patch("/individual", async (req, res) => {
   try {
-    const existeUsuario = await buscarUsuarioo(req.query.usuario);
+    const existeUsuario = await buscarUsuario(req.query.usuario);
     let editarInformacionS;
-    if (!existeUsuario[0])
+    if (!existeUsuario)
       return res
         .status(500)
         .json({ success: false, message: "El usuario no existe." });
 
     try {
       editarInformacionS = await ExposicionSolar.findOneAndUpdate(
-        { usuario: existeUsuario[0].usuario },
+        { usuario: existeUsuario.usuario },
         {
           minutosAlSol: req.body.minutosAlSol,
           cubresTuPiel: req.body.cubresTuPiel,

@@ -13,42 +13,42 @@ const estadoGeneralSchema = new Schema(
     muchasGanasDeOrinar: { type: String, required: false, default: "No" },
     muchaHambre: { type: String, required: false, default: "No" },
     piesYmanos: {
-      seHinchan: { type: Boolean, required: false, default: "No" }, //consultamos este para ver si se hinchan llenar lo demas y si no, nada
+      seHinchan: { type: String, required: false, default: "No" }, //consultamos este para ver si se hinchan llenar lo demas y si no, nada
       aQuehora: { type: String, required: false },
       frecuencia: { type: String, required: false },
       horasSentado: { type: String, required: false },
       horasParado: { type: String, required: false },
     },
     nariz: {
-      sangradoDe: { type: Boolean, required: false, default: false },
+      sangradoDe: { type: String, required: false, default: "No" },
       frecuenciaDe: { type: String, required: false },
     },
     piel: {
-      manchasRojasMoretes: { type: Boolean, required: false, default: false },
+      manchasRojasMoretes: { type: String, required: false, default: "No" },
       frecuenciaDeEllo: { type: String, required: false },
     },
     unas: {
       //uñas
-      quebradizas: { type: Boolean, required: false, default: false },
+      quebradizas: { type: String, required: false, default: "No" },
       frecuencia: { type: String, required: false },
     },
     cabello: {
-      caidaDeCabello: { type: Boolean, required: false, default: false },
-      cabelloQuebradizo: { type: Boolean, required: false, default: false },
+      caidaDeCabello: { type: String, required: false, default: "No" },
+      cabelloQuebradizo: { type: String, required: false, default: "No" },
       cabelloTenidoOTratamiento: {
-        type: Boolean,
+        type: String,
         required: false,
-        default: false,
+        default: "No",
       },
     },
     boca: {
-      cortadurasEnComisuras: { type: Boolean, required: false },
+      cortadurasEnComisuras: { type: String, required: false, default: "No" },
       frecuencia: { type: String, required: false },
-      inflamacionDeLengua: { type: Boolean, required: false },
+      inflamacionDeLengua: { type: String, required: false, default: "No" },
       frecuenciaDe: { type: String, required: false },
-      inflamacionEncias: { type: Boolean, required: false },
+      inflamacionEncias: { type: String, required: false, default: "No" },
       frecuenciaDeIE: { type: String, required: false },
-      sangradoEncias: { type: Boolean, required: false },
+      sangradoEncias: { type: String, required: false, default: "No" },
       frecuenciaDeSE: { type: String, required: false },
     },
     tipoDeNacimiento: { type: String, required: false }, //cesarea, parto vaginal

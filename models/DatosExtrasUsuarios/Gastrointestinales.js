@@ -8,19 +8,19 @@ const gastroiSchema = new Schema(
       required: true,
     },
     inflamacionAbdominal: {
-      estado: { type: Boolean, required: false },
+      estado: { type: String, required: false, default: "No" },
       frecuencia: { type: String, required: false },
     },
     diarrea: {
-      estado: { type: Boolean, required: false }, //consultamos este para ver si se hinchan llenar lo demas y si no, nada
-      frecuencia: { type: String, required: false, default: "" }, //para respuestas secundarias
+      estado: { type: String, required: false, default: "No" }, //consultamos este para ver si se hinchan llenar lo demas y si no, nada
+      frecuencia: { type: String, required: false }, //para respuestas secundarias
     },
     estreñimiento: {
-      estado: { type: Boolean, required: false },
+      estado: { type: String, required: false, default: "No" },
       frecuencia: { type: String, required: false },
     },
     reflujo: {
-      estado: { type: Boolean, required: false },
+      estado: { type: String, required: false, default: "No" },
       frecuencia: { type: String, required: false },
     },
   },

@@ -9,7 +9,7 @@ const iSueñoSchema = new Schema(
     },
     horasDeSueño: { type: String, required: false },
     estadoDeDescanso: { type: String, required: false },
-    despiertaPorLaNoche: { type: Boolean, default: false },
+    despiertaPorLaNoche: { type: String, default: false, default: "No" },
     frecuencia: { type: String, default: false },
   },
   {
