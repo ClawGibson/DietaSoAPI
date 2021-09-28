@@ -2,9 +2,11 @@ const Recomendaciones = require('../../models/Recomendaciones/RecomendacionesPob
 const express = require('express');
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        console.log('csomethings');
+        const recomendacion = await Recomendaciones.find({
+            grupoId: req.body.grupoId.toString(),
+        });
     } catch (error) {
         return res.status(500).json({
             success: false,
