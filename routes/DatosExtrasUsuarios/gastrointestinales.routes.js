@@ -1,19 +1,36 @@
 const Usuarios = require("../models/Usuarios");
-const DatosSocioeconomicos = require("../models/DatosSocioeconomicos");
-const PuntosDeUsuario = require("../models/PuntosDeUsuario");
+const Gastrointestinales = require("../../models/DatosExtrasUsuarios/Gastrointestinales");
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const { buscarUsuario } = require("../constants/index");
+const { buscarUsuario } = require("../../constants/index");
+
+const buscarUsuarioo = async (id) => {
+  try {
+    const buscarUsuarioo = await Usuarios.find({
+      usuario: id,
+    });
+
+    if (!buscarUsuarioo)
+      return res.status(404).send({
+        Error: "No se encontró el registro de informacion de usuario",
+      });
+    return buscarUsuarioo;
+  } catch (error) {
+    return res.status(500).json({
+      error: `Error al buscar informacion de usuario - ${error}`,
+    });
+  }
+};
 
 router.get("/", async (req, res) => {
-  const listaDSUsuarios = await DatosSocioeconomicos.find();
+  const listaDSUsuarios = await Gastrointestinales.find();
 
   if (listaDSUsuarios.length <= 0)
     return res.status(500).json({
       success: false,
       message:
-        "No se encontro ninguna informacion de datos socioeconomicos de los usuarios",
+        "No se encontro ninguna información gastrointestinal de los usuarios",
     });
   res.send(listaDSUsuarios);
 });
@@ -31,21 +48,21 @@ router.get("/individual", async (req, res) => {
     } else console.log("El usuario existe");
 
     try {
-      const datosDeUsuario = await DatosSocioeconomicos.findOne({
+      const datosDeUsuario = await Gastrointestinales.findOne({
         usuario: req.query.usuario,
-      }).select("nivelSocioeconomico");
+      });
       console.log(datosDeUsuario);
       if (!datosDeUsuario)
         return res.status(500).json({
           success: true,
-          message: "El usuario no tiene datos socioeconomicos todavia",
+          message: "El usuario no tiene datos gastrointestinales todavia",
         });
 
       res.send(datosDeUsuario);
     } catch (err) {
       return res.status(500).json({
         success: true,
-        message: "Ocurrio un error al guardar los datos socioeconomicos",
+        message: "Ocurrio un error al guardar los datos gastrointestinales",
       });
     }
   } catch (err) {
@@ -62,20 +79,20 @@ router.post("/individual", async (req, res) => {
       usuario: req.query.usuario,
     });
     if (usuarioCreado) {
-      const infoUsuario = await DatosSocioeconomicos.findOne({
+      const infoUsuario = await Gastrointestinales.findOne({
         usuario: req.query.usuario,
       });
       try {
         if (infoUsuario)
           return res.status(500).json({
             success: false,
-            message: "Datos socioeconomicos de Usuario ya registrados",
+            message: "Datos gastrointestinales de Usuario ya registrados",
           });
       } catch (err) {
         return res.status(500).json({
           success: false,
           message:
-            "Ocurrió un error al buscar los datos socioeconomicos del usuario",
+            "Ocurrió un error al buscar los datos gastrointestinales del usuario",
         });
       }
     } else console.log("El usuario no existe");
@@ -86,23 +103,26 @@ router.post("/individual", async (req, res) => {
     });
   }
 
-  let dSocioeconomicos = new DatosSocioeconomicos({
+  let dGastrointestinales = new Gastrointestinales({
     usuario: req.query.usuario,
-    nivelSocioeconomico: req.body.nivelSocioeconomico,
+    inflamacionAbdominal: req.body.inflamacionAbdominal,
+    diarrea: req.body.diarrea,
+    estreñimiento: req.body.estreñimiento,
+    reflujo: req.body.reflujo,
   });
 
   try {
-    dSocioeconomicos = await dSocioeconomicos.save();
+    dGastrointestinales = await dGastrointestinales.save();
 
-    if (!dSocioeconomicos)
+    if (!dGastrointestinales)
       return res
         .status(400)
-        .send("No se pudieron agregar datos socioeconomicos");
-    res.send(dSocioeconomicos);
+        .send("No se pudieron agregar datos gastrointestinales");
+    res.send(dGastrointestinales);
   } catch (err) {
     return res.status(500).json({
       success: false,
-      message: "Ocurrió un error al guardar los datos socioeconomicos",
+      message: "Ocurrió un error al guardar los datos gastrointestinales",
     });
   }
 });
@@ -111,17 +131,19 @@ router.patch("/individual", async (req, res) => {
   try {
     const existeUsuario = await buscarUsuario(req.query.usuario);
     let editarInformacionS;
-    console.log(existeUsuario);
     if (!existeUsuario)
       return res
         .status(500)
         .json({ success: false, message: "El usuario no existe." });
 
     try {
-      editarInformacionS = await DatosSocioeconomicos.findOneAndUpdate(
+      editarInformacionS = await Gastrointestinales.findOneAndUpdate(
         { usuario: existeUsuario.usuario },
         {
-          nivelSocioeconomico: req.body.nivelSocioeconomico,
+          inflamacionAbdominal: req.body.inflamacionAbdominal,
+          diarrea: req.body.diarrea,
+          estreñimiento: req.body.estreñimiento,
+          reflujo: req.body.reflujo,
         }
       );
 
@@ -138,7 +160,8 @@ router.patch("/individual", async (req, res) => {
     } catch (err) {
       res.status(500).json({
         success: false,
-        message: "Ocurrió un error al actualizar los datos socioeconomicos-",
+        message:
+          " Ocurrió un error al actualizar los datos gastrointestinales- ",
       });
     }
   } catch (err) {
