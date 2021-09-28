@@ -24,19 +24,26 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   //const usuario = await buscarUsuario(req.params.id);
   //constantes.buscarUsuario(req.params.id);
+ 
   try {
+
+    console.log("Id --> ", req.params);
+
     const usuario = await Usuarios.findById(req.params.id).select(
       "-contrasena"
     );
 
+   
+
     if (!usuario)
-      return res
-        .status(500)
-        .json({ success: false, message: "Usuario no encontrado" });
+      return res.status(500).json({ success: false, message: "Usuario no encontrado" });
+
+      return res.send(usuario);
   } catch (err) {
     console.log("Error al buscar el usuario - ", err);
+      return res.status(500).json({ success: false, message: "Usuario no encontrado" });
   }
-  //res.send(usuario);
+ 
 });
 
 router.post("/", async (req, res) => {

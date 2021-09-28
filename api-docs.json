@@ -1,64 +1,168 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "version": "1.0.0",
-        "title": "DietaSo",
-        "description": "API REST para un sistema orientado a nutriologos.",
-        "license": {
-            "name": "MIT",
-            "url": "https://opensource.org/licenses/MIT"
+    "openapi": "3.0.0",
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1/",
+            "description": "Servidor de producción."
         }
-    },
-    "host": "localhost:3000",
-    "basePath": "/",
-    "tags": [
-        "Alimentos"
-    ],
-    "schemes": [],
-    "consumes": [
-        "application/json"
-    ],
-    "produces": [
-        "application/json"
     ],
     "paths": {
-        "usuarios/login": {
+        "/usuarios/login": {
             "post": {
                 "tags": [
                     "Usuarios"
                 ],
-                "summary": "Inicio de sesión para los usuarios."
+                "summary": "Inicio de sesión para los usuarios.",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginSuccess"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuario no registrado :c"
+                    },
+                    "401": {
+                        "description": "Acceso no autorizado | Contraseña incorrecta"
+                    }
+                }
             }
         },
-        "usuarios/": {
+        "/usuarios/": {
             "get": {
                 "tags": [
                     "Usuarios"
                 ],
-                "summary": "Muestra la información de todos los usuarios registrados."
+                "summary": "Muestra la información de todos los usuarios registrados.",
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Users"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "No se encontraron usuarios."
+                    },
+                    "401": {
+                        "description": "Acceso no autorizado."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
                     "Usuarios"
                 ],
-                "summary": "Agrega un nuevo usuario."
+                "summary": "Agrega un nuevo usuario.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "No se pudo crear el usuario"
+                    },
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDto"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
-        "usuarios/:id": {
+        "/usuarios/{id}": {
             "get": {
                 "tags": [
                     "Usuarios"
                 ],
-                "summary": "Obtiene la información de un usuario."
+                "summary": "Obtiene la información de un usuario.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Id de usuario"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDto"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Acceso no autorizado."
+                    },
+                    "500": {
+                        "description": "Usuario no encontrado."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
                     "Usuarios"
                 ],
-                "summary": "Actualiza la información de un usuario."
+                "summary": "Actualiza la información de un usuario.",
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
-        "usuarios/register": {
+        "/usuarios/register": {
             "post": {
                 "summary": "Registra un usuario.",
                 "tags": [
@@ -635,6 +739,157 @@
                     "Registro Dietetico"
                 ],
                 "summary": "Agrega una descripción."
+            }
+        }
+    },
+    "info": {
+        "title": "API REST DietaSo.",
+        "description": "Api Rest enfocada para el area de nutriologia.",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http"
+            }
+        },
+        "schemas": {
+            "UnauthorizedException": {},
+            "LoginDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "contrasena": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "usernameOrEmail",
+                    "password"
+                ]
+            },
+            "LoginSuccess": {
+                "type": "object",
+                "properties": {
+                    "usuario": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "token": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    }
+                }
+            },
+            "UserDto": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    "esAdmin": {
+                        "type": "boolean"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "logros": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "_v": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Users": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/UserDto"
+                }
+            },
+            "RoleDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "description"
+                ]
+            },
+            "ResourceDto": {
+                "type": "object",
+                "properties": {
+                    "id_role": {
+                        "type": "number"
+                    },
+                    "url": {
+                        "type": "string",
+                        "example": "/module/resoure"
+                    },
+                    "read": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "own",
+                            "any"
+                        ]
+                    },
+                    "create": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "own",
+                            "any"
+                        ]
+                    },
+                    "update": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "own",
+                            "any"
+                        ]
+                    },
+                    "delete": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "own",
+                            "any"
+                        ]
+                    }
+                },
+                "required": [
+                    "id_role",
+                    "url",
+                    "read",
+                    "create",
+                    "update",
+                    "delete"
+                ]
             }
         }
     }

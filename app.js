@@ -36,7 +36,7 @@ const { API_URL, PORT, MONGODB, DBNAME } = process.env;
 
 //Docuemntation
 const swaggerUi = require('swagger-ui-express'),
-      swaggerDocument = require('./swagger.json');
+      swaggerDocument = require('./api-docs.json');
 
 app.use(
     '/docs',
@@ -54,11 +54,11 @@ app.use(errorHandler);
 
 
 // routes
+app.use(`${API_URL}/usuarios`, usuariosRoute);
 app.use(`${API_URL}/alimentos`, alimentosRoute);
 app.use(`${API_URL}/grupoAlimentos`, grupoAlimentosRoute);
 app.use(`${API_URL}/subGrupoAlimentos`, subGrupoAlimentosRoute);
 app.use(`${API_URL}/recetas`, recetasRoute);
-app.use(`${API_URL}/usuarios`, usuariosRoute);
 app.use(`${API_URL}/menusBase`, menusBaseRoute);
 app.use(`${API_URL}/logros`, logrosRoute);
 app.use(`${API_URL}/logrosDeUsuario`, logrosDeUsuarioRoute);
