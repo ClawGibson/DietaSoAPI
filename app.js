@@ -8,6 +8,7 @@ const { router } = require('./apiV2');
 
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
+const { trim_all } = require('request_trimmer');
 
 const { PORT, MONGODB, DBNAME } = process.env;
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(morgan('tiny'));
 app.use(authJwt());
 app.use(errorHandler);
+app.use(trim_all);
 
 // routes
 app.use(router);
