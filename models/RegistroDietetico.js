@@ -37,7 +37,7 @@ const registroDieteticoSchema = new Schema(
     }
 );
 
-registroDieteticoSchema.virtual('id').get(() => {
+registroDieteticoSchema.virtual('id').get(function () {
     return this._id.toHexString();
 });
 

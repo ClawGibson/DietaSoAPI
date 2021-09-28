@@ -1,38 +1,15 @@
-/** @format */
-
 require('dotenv/config');
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-
-const {
-    grupoAlimentosRoute,
-    alimentosRoute,
-    subGrupoAlimentosRoute,
-    recetasRoute,
-    usuariosRoute,
-    menusBaseRoute,
-    logrosRoute,
-    logrosDeUsuarioRoute,
-    puntosDeUsuarioRoute,
-    equivalenciasRoute,
-    informacionUsuariosRoute,
-    datosUsuarioRoute,
-    historialClinicoRoute,
-    datosSocioeconomicosRoute,
-    alimentacionUsuariosRoute,
-    estadisticasIMCRoute,
-    estadisticasNivelesRoute,
-    estadisticasPresionRoute,
-    registroDieteticoRoute,
-} = require('./routes/index');
+const { router } = require('./apiV2');
 
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
-const { API_URL, PORT, MONGODB, DBNAME } = process.env;
+const { PORT, MONGODB, DBNAME } = process.env;
 
 //Docuemntation
 const swaggerUi = require('swagger-ui-express'),
@@ -54,25 +31,7 @@ app.use(errorHandler);
 
 
 // routes
-app.use(`${API_URL}/usuarios`, usuariosRoute);
-app.use(`${API_URL}/alimentos`, alimentosRoute);
-app.use(`${API_URL}/grupoAlimentos`, grupoAlimentosRoute);
-app.use(`${API_URL}/subGrupoAlimentos`, subGrupoAlimentosRoute);
-app.use(`${API_URL}/recetas`, recetasRoute);
-app.use(`${API_URL}/menusBase`, menusBaseRoute);
-app.use(`${API_URL}/logros`, logrosRoute);
-app.use(`${API_URL}/logrosDeUsuario`, logrosDeUsuarioRoute);
-app.use(`${API_URL}/puntosDeUsuario`, puntosDeUsuarioRoute);
-app.use(`${API_URL}/equivalencias`, equivalenciasRoute);
-app.use(`${API_URL}/informacionUsuarios`, informacionUsuariosRoute);
-app.use(`${API_URL}/datosUsuarios`, datosUsuarioRoute);
-app.use(`${API_URL}/historialClinico`, historialClinicoRoute);
-app.use(`${API_URL}/datosSocioeconomicos`, datosSocioeconomicosRoute);
-app.use(`${API_URL}/alimentacionUsuarios`, alimentacionUsuariosRoute);
-app.use(`${API_URL}/estadisticasIMC`, estadisticasIMCRoute);
-app.use(`${API_URL}/estadisticasNiveles`, estadisticasNivelesRoute);
-app.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
-app.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
+app.use(router);
 
 
 mongoose
