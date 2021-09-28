@@ -21,6 +21,8 @@ const estadisticasPresionRoute = require('./Estadisticas/estadisticasPresion.rou
 const registroDieteticoRoute = require('./RegistroDietetico/registroDietetico.routes');
 const metas = require("./Metas/metas.routes");
 const recordatorios = require("./Recordatorios/recordatorios.routes");
+const mensajes = require("./Message/message.routes");
+const chat = require("./Chat/chat.routes");
 
 module.exports = {
     grupoAlimentosRoute,
@@ -44,4 +46,6 @@ module.exports = {
     registroDieteticoRoute,
     metas,
     recordatorios,
+    mensajes,
+    chat,
 };
