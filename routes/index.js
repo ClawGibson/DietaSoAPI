@@ -18,6 +18,7 @@ const estadisticasNivelesRoute = require('./Estadisticas/estadisticas.niveles.ro
 const estadisticasPresionRoute = require('./Estadisticas/estadisticasPresion.routes');
 const registroDieteticoRoute = require('./RegistroDietetico/registroDietetico.routes');
 const importarAlimentosRoute = require('../routes/Import/alimentos.routes');
+const recomendacionesPoblacionalesRoute = require('../routes/Recomendaciones/recomendacionesPoblacionales.routes');
 
 module.exports = {
     grupoAlimentosRoute,
@@ -40,4 +41,5 @@ module.exports = {
     estadisticasPresionRoute,
     registroDieteticoRoute,
     importarAlimentosRoute,
+    recomendacionesPoblacionalesRoute,
 };
