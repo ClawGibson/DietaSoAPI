@@ -25,7 +25,7 @@ router.post('/', async (req, res, next) => {
                     .send(`Ocurrió un error al guardar los alimentos ${error}`);
             }
         }
-        res.redirect('/actualizar');
+        return res.status(200).json({ message: 'El alimento ya existe' });
     } catch (error) {
         return res
             .status(500)
@@ -33,8 +33,57 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-router.patch('/actualizar', async (req, res) => {
-    console.log('HOLAS', req.body);
+router.patch('/', async (req, res) => {
+    let alimento;
+    try {
+        alimento = await Alimentos.findOneAndUpdate(
+            {
+                sku: req.body.sku.toString(),
+            },
+            {
+                nombreAlimento: req.body.nombreAlimento,
+                imagen: req.body.imagen,
+                grupoExportable: req.body.grupoExportable,
+                subGrupoExportable: req.body.subGrupoExportable,
+                clasificacionExportable: req.body.clasificacionExportable,
+                grupoAlimento: req.body.grupoAlimento,
+                mensaje: req.body.mensaje,
+                icono: req.body.icono,
+                opcionesPreparacion: req.body.opcionesPreparacion,
+                cantidadAlimento: req.body.cantidadAlimento,
+                caloriasMacronutrientes: req.body.caloriasMacronutrientes,
+                vitaminas: req.body.vitaminas,
+                minerales: req.body.minerales,
+                aspectoGlucemico: req.body.aspectoGlucemico,
+                aspectoMedioambiental: req.body.aspectoMedioambiental,
+                aspectoEconomico: req.body.aspectoEconomico,
+                componentesBioactivos: req.body.componentesBioactivos,
+                aditivosAlimentarios: req.body.aditivosAlimentarios,
+                atributosAdicionales: req.body.atributosAdicionales,
+                marca: req.body.marca,
+                puntos: req.body.puntos,
+            }
+        );
+
+        alimento = alimento
+            .save()
+            .then((response) =>
+                res.status(200).json({ message: 'Alimento actualizado' })
+            )
+            .catch((err) =>
+                res.status(500).json({
+                    success: false,
+                    message: 'No se pudo actualizar el alimento - ',
+                    err,
+                })
+            );
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Ocurrió un error al actualizar los datos de alimentos - ',
+            error,
+        });
+    }
 });
 
 module.exports = router;
