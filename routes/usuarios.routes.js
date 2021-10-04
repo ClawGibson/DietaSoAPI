@@ -45,12 +45,16 @@ router.get("/individual", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+
   let crearUsuario = new Usuarios({
+    usuario: req.body.usuario,
     email: req.body.email,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
   });
 
+  
   crearUsuario = await crearUsuario.save();
+  console.log("2 usuario -> ", crearUsuario);
 
   if (!crearUsuario)
     return res.status(400).send("No se pudo crear el usuario :c");
@@ -89,12 +93,14 @@ router.post('/login', async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
+  
   try {
     const usuario = await Usuarios.findOne({ email: req.body.email });
     if (usuario)
       return res
         .status(500)
         .json({ success: false, message: "Usuario ya creado" });
+
   } catch (err) {
     return res.status(500).json({
       success: false,

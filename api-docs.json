@@ -3,7 +3,7 @@
     "servers": [
         {
             "url": "http://localhost:3000/api/v1/",
-            "description": "Servidor de producción."
+            "description": "Servidor Local."
         }
     ],
     "paths": {
@@ -84,7 +84,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UserDto"
+                                "$ref": "#/components/schemas/CreateUserDto"
                             }
                         }
                     }
@@ -110,7 +110,7 @@
                 ]
             }
         },
-        "/usuarios/{id}": {
+        "/usuarios/individual": {
             "get": {
                 "tags": [
                     "Usuarios"
@@ -168,11 +168,36 @@
                 "tags": [
                     "Usuarios"
                 ],
-                "security": [
-                    {
-                        "bearer": []
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterUserDto"
+                            }
+                        }
                     }
-                ]
+                },
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserDto"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Acceso no autorizado."
+                    },
+                    "404": {
+                        "description": "Ocurrio un problema al buscar el usuario."
+                    },
+                    "500": {
+                        "description": "No se puedo agregar al usuario."
+                    }
+                }
             }
         },
         "alimentos/all": {
@@ -785,6 +810,39 @@
                     "token": {
                         "type": "string",
                         "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    }
+                }
+            },
+            "CreateUserDto": {
+                "type": "object",
+                "properties": {
+                    "usuario": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "contrasena": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RegisterUserDto": {
+                "type": "object",
+                "properties": {
+                    "usuario": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "contrasena": {
+                        "type": "string"
+                    },
+                    "esAdmin": {
+                        "type": "boolean"
                     }
                 }
             },
