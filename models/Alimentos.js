@@ -3,6 +3,7 @@ const { Schema, model } = require('mongoose');
 const alimentosSchema = new Schema(
     {
         nombreAlimento: { type: String, required: true },
+        sku: { type: String, required: true },
         imagen: { type: String, required: false, default: '' },
         grupoExportable: { type: String, required: false, default: '' },
         subGrupoExportable: { type: String, required: false, default: '' },

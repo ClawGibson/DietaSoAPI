@@ -22,10 +22,13 @@
     "mongoose": "^5.13.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.12",
-    "swagger-ui-express": "^4.1.6"
+    "request_trimmer": "^1.0.0"
   },
   "engines": {
     "node": "14.x",
     "npm": "6.x"
+  },
+  "devDependencies": {
+    "mpath": ">=0.8.4"
   }
 }
