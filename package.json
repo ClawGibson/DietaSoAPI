@@ -29,7 +29,6 @@
         "npm": "6.x"
     },
     "devDependencies": {
-        "mpath": ">=0.8.4",
-        "ansi-regex": ">=5.0.1"
+        "mpath": ">=0.8.4"
     }
 }

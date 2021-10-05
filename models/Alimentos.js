@@ -206,14 +206,15 @@ const alimentosSchema = new Schema(
                 default: '',
             },
         },
-        atributosAdicionales: {
-            atributoAdicional: {
-                type: String,
-                required: false,
-                default: '',
+        atributosAdicionales: [
+            {
+                atributoAdicional: {
+                    type: String,
+                    required: false,
+                    default: '',
+                },
             },
-        },
-
+        ],
         marca: { type: String, required: false, default: '' },
     },
     {
