@@ -28,6 +28,9 @@ router.get("/individual", async (req, res) => {
   //constantes.buscarUsuario(req.params.id);
  
   try {
+
+   
+
     const usuario = await Usuarios.findById(req.query.usuario).select(
       "-contrasena"
     );
@@ -93,7 +96,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  
+
   try {
     const usuario = await Usuarios.findOne({ email: req.body.email });
     if (usuario)
@@ -108,7 +111,10 @@ router.post("/register", async (req, res) => {
     });
   }
 
+
+
   let registrarUsuario = new Usuarios({
+    usuario: req.body.usuario,
     email: req.body.email,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
   });
@@ -136,11 +142,14 @@ router.post("/register", async (req, res) => {
 
 router.put("/individual", async (req, res) => {
   try {
+
     const usuario = await Usuarios.findOne({ usuario: req.query.usuario });
+
     if (!usuario)
       return res
         .status(500)
         .json({ success: false, message: "Usuario no existe" });
+        
     console.log(usuario);
     let editarUsuario = await Usuarios.findOneAndUpdate(
       { usuario: usuario.usuario },
