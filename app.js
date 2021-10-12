@@ -31,6 +31,7 @@ const {
     recordatorios,
     mensajes,
     chat,
+    foro,
 } = require('./routes/index');
 
 const authJwt = require('./helpers/jwt');
@@ -68,7 +69,8 @@ app.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
 app.use(`${API_URL}/metas`, metas);
 app.use(`${API_URL}/recordatorios`, recordatorios);
 app.use(`${API_URL}/mensajes`, mensajes);
-app.use(`${API_URL}/chat`, chat)
+app.use(`${API_URL}/chat`, chat);
+app.use(`${API_URL}/foro`, foro);
 
 mongoose
     .connect(MONGODB, {

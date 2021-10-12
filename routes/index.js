@@ -23,6 +23,7 @@ const metas = require("./Metas/metas.routes");
 const recordatorios = require("./Recordatorios/recordatorios.routes");
 const mensajes = require("./Message/message.routes");
 const chat = require("./Chat/chat.routes");
+const foro = require("./Foro/foro.routes");
 
 module.exports = {
     grupoAlimentosRoute,
@@ -48,4 +49,5 @@ module.exports = {
     recordatorios,
     mensajes,
     chat,
+    foro,
 };
