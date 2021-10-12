@@ -25,6 +25,11 @@ const {
     registroDieteticoRoute,
     importarAlimentosRoute,
     recomendacionesPoblacionalesRoute,
+    metas,
+    recordatorios,
+    mensajes,
+    chat,
+    foro,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -53,6 +58,11 @@ router.use(
     `${API_URL}/recomendacionPoblacional`,
     recomendacionesPoblacionalesRoute
 );
+router.use(`${API_URL}/metas`, metas);
+router.use(`${API_URL}/recordatorios`, recordatorios);
+router.use(`${API_URL}/mensajes`, mensajes);
+router.use(`${API_URL}/chat`, chat);
+router.use(`${API_URL}/foro`, foro);
 
 module.exports = {
     router,
