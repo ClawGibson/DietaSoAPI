@@ -1,5 +1,3 @@
-/** @format */
-
 const grupoAlimentosRoute = require('./grupoAlimentos.routes');
 const alimentosRoute = require('./alimentos.routes');
 const subGrupoAlimentosRoute = require('./subGrupoAlimentos.routes');
@@ -19,11 +17,8 @@ const estadisticasIMCRoute = require('./Estadisticas/estadisticas.IMC.routes');
 const estadisticasNivelesRoute = require('./Estadisticas/estadisticas.niveles.routes');
 const estadisticasPresionRoute = require('./Estadisticas/estadisticasPresion.routes');
 const registroDieteticoRoute = require('./RegistroDietetico/registroDietetico.routes');
-const metas = require("./Metas/metas.routes");
-const recordatorios = require("./Recordatorios/recordatorios.routes");
-const mensajes = require("./Message/message.routes");
-const chat = require("./Chat/chat.routes");
-const foro = require("./Foro/foro.routes");
+const importarAlimentosRoute = require('../routes/Import/alimentos.routes');
+const recomendacionesPoblacionalesRoute = require('../routes/Recomendaciones/recomendacionesPoblacionales.routes');
 
 module.exports = {
     grupoAlimentosRoute,
@@ -45,9 +40,6 @@ module.exports = {
     estadisticasNivelesRoute,
     estadisticasPresionRoute,
     registroDieteticoRoute,
-    metas,
-    recordatorios,
-    mensajes,
-    chat,
-    foro,
+    importarAlimentosRoute,
+    recomendacionesPoblacionalesRoute,
 };

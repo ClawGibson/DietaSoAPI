@@ -1,3 +1,5 @@
+/** @format */
+
 const Usuarios = require("../models/Usuarios");
 const express = require("express");
 const router = express.Router();
@@ -21,22 +23,24 @@ router.get("/", async (req, res) => {
   res.send(listaUsuarios);
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/individual", async (req, res) => {
   //const usuario = await buscarUsuario(req.params.id);
   //constantes.buscarUsuario(req.params.id);
   try {
-    const usuario = await Usuarios.findById(req.params.id).select(
+    const usuario = await Usuarios.findById(req.query.usuario).select(
       "-contrasena"
     );
-
+    //console.log(usuario);
     if (!usuario)
       return res
         .status(500)
         .json({ success: false, message: "Usuario no encontrado" });
+    res.send(usuario);
   } catch (err) {
-    console.log("Error al buscar el usuario - ", err);
+    return res
+      .status(500)
+      .json({ success: false, message: "Error al buscar el usuario " });
   }
-  //res.send(usuario);
 });
 
 router.post("/", async (req, res) => {
@@ -58,7 +62,7 @@ router.post("/login", async (req, res) => {
   const SECRET = process.env.SECRET;
 
   if (!usuario) {
-    return res.status(400).send("Usuario no registrado :c");
+    return res.status(404).json("Usuario no registrado :c");
   }
 
   if (usuario && bcrypt.compareSync(req.body.contrasena, usuario.contrasena)) {
@@ -70,21 +74,28 @@ router.post("/login", async (req, res) => {
       SECRET,
       { expiresIn: "1y" }
     );
-    res.status(200).send({ usuario: usuario.email, token: token });
+    res.status(200).send({
+      usuario: usuario.email,
+      token: token,
+      admin: usuario.esAdmin,
+    });
   } else {
-    res.status(400).send("Contraseña incorrecta");
+    res.status(401).json("Contraseña incorrecta");
   }
 });
 
 router.post("/register", async (req, res) => {
-  const usuario = await Usuarios.findOne({ email: req.body.email });
   try {
+    const usuario = await Usuarios.findOne({ email: req.body.email });
     if (usuario)
       return res
         .status(500)
         .json({ success: false, message: "Usuario ya creado" });
   } catch (err) {
-    console.log("Ocurrió un error al buscar el usuario - ", err);
+    return res.status(500).json({
+      success: false,
+      message: "Ocurrió un error al buscar el usuario",
+    });
   }
 
   let registrarUsuario = new Usuarios({
@@ -113,17 +124,33 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  let editarUsuario = await Usuarios.findOneAndUpdate(req.params.id, {
-    email: req.body.email,
-    contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-  });
+router.put("/individual", async (req, res) => {
+  try {
+    const usuario = await Usuarios.findOne({ usuario: req.query.usuario });
+    if (!usuario)
+      return res
+        .status(500)
+        .json({ success: false, message: "Usuario no existe" });
+    console.log(usuario);
+    let editarUsuario = await Usuarios.findOneAndUpdate(
+      { usuario: usuario.usuario },
+      {
+        email: req.body.email,
+        contrasena: bcrypt.hashSync(req.body.contrasena, 10),
+      }
+    );
+    console.log(editarUsuario);
+    editarUsuario = await editarUsuario.save();
 
-  editarUsuario = await editarUsuario.save();
+    if (!editarUsuario)
+      return res.status(400).send("No se pudo editar el usuario :c");
 
-  if (!editarUsuario)
-    return res.status(400).send("No se pudo editar el usuario :c");
-
-  res.send(editarUsuario);
+    res.send("ok");
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Ocurrió un error al buscar el usuario",
+    });
+  }
 });
 module.exports = router;
