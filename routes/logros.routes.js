@@ -1,51 +1,69 @@
 const Logros = require('../models/Logros');
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const listaLogros = await Logros.find();
+    const listaLogros = await Logros.find();
 
-  !listaLogros
-    ? res.status(500).json({ success: false })
-    : res.send(listaLogros);
+    !listaLogros
+        ? res.status(500).json({ success: false })
+        : res.send(listaLogros);
 });
 
 router.get('/:id', async (req, res) => {
-  let logroInd;
+    let logroInd;
 
-  try {
-    if (req.body.logroRequerido) {
-      logroInd = await Logros.find({
-        logroRequerido: req.body.logroRequerido,
-      }).populate('logroRequerido');
-    } else {
-      logroInd = await Logros.findById(req.params.id);
+    try {
+        if (req.body.logroRequerido) {
+            logroInd = await Logros.find({
+                logroRequerido: req.body.logroRequerido,
+            }).populate('logroRequerido');
+        } else {
+            logroInd = await Logros.findById(req.params.id);
+        }
+    } catch (e) {
+        console.log('Ocurrió un error inesperado: ', e);
     }
-  } catch (e) {
-    console.log('Ocurrió un error inesperado: ', e);
-  }
 
-  if (!logroInd)
-    return res.status(500).json({
-      success: false,
-      message: 'No se encontró el logro que buscaba',
-    });
+    if (!logroInd)
+        return res.status(500).json({
+            success: false,
+            message: 'No se encontró el logro que buscaba',
+        });
 
-  res.send(logroInd);
+    res.send(logroInd);
 });
 
 router.post('/', async (req, res) => {
+    try {
+        const nombreExiste = await Logros.find({ logro: req.body.logro });
 
+        if (nombreExiste.length > 0)
+            return res.status(500).json({
+                succes: false,
+                message: 'El nombre de este logro ya existe',
+            });
 
-  try {
+        if (req.body.logroRequerido) {
+            const logroExiste = await Logros.find({
+                logro: req.body.logroRequerido,
+            });
 
-    const nombreExiste = await Logros.find({ logro: req.body.logro });
+            if (logroExiste.length > 0)
+                return res
+                    .status(500)
+                    .json({ succes: false, message: 'Este logro no existe' });
+        }
+    } catch (err) {
+        console.log(err);
+    }
 
-    if (nombreExiste.length > 0)
-      return res
-        .status(500)
-        .json({ succes: false, message: 'El nombre de este logro ya existe' });
+    let nuevoLogro = new Logros({
+        ...req.body,
+    });
 
+<<<<<<< HEAD
     if (req.body.logroRequerido) {
       const logroExiste = await Logros.find({ logro: req.body.logroRequerido });
       
@@ -70,48 +88,55 @@ router.post('/', async (req, res) => {
   !nuevoLogro
     ? res.status(400).send('No se pudo crear el nuevo logro')
     : res.send(nuevoLogro);
+=======
+    nuevoLogro = await nuevoLogro.save();
+
+    !nuevoLogro
+        ? res.status(400).send('No se pudo crear el nuevo logro')
+        : res.send(nuevoLogro);
+>>>>>>> 0a049d60abb3975ef5d438435af2a97283482d49
 });
 
 router.put('/:id', async (req, res) => {
-  const logroExiste = await Logros.findById(req.params.id);
+    const logroExiste = await Logros.findById(req.params.id);
 
-  logroExiste
-    ? null
-    : res.status(500).json({
-        succes: false,
-        message: 'El logro que está buscando no existe :c',
-      });
+    logroExiste
+        ? null
+        : res.status(500).json({
+              succes: false,
+              message: 'El logro que está buscando no existe :c',
+          });
 
-  let logroActualizado = await Logros.findByIdAndUpdate(
-    req.params.id,
-    {
-      logro: req.body.logro,
-      fotoLogro: req.body.fotoLogro,
-      puntosNecesarios: req.body.puntosNecesarios,
-      logroRequerido: req.body.logroRequerido,
-    },
-    {
-      new: true,
-    }
-  );
+    let logroActualizado = await Logros.findByIdAndUpdate(
+        req.params.id,
+        {
+            logro: req.body.logro,
+            fotoLogro: req.body.fotoLogro,
+            puntosNecesarios: req.body.puntosNecesarios,
+            logroRequerido: req.body.logroRequerido,
+        },
+        {
+            new: true,
+        }
+    );
 
-  logroActualizado = await logroActualizado.save();
+    logroActualizado = await logroActualizado.save();
 
-  !logroActualizado
-    ? res.status(400).send('No se pudo actualizar el logro :c')
-    : res.send(logroActualizado);
+    !logroActualizado
+        ? res.status(400).send('No se pudo actualizar el logro :c')
+        : res.send(logroActualizado);
 });
 
 router.delete('/:id', async (req, res) => {
-  if (!mongoose.isValidObjectId(req.params.id))
-    return res.status(400).send('El ID del logro no es válido.');
+    if (!mongoose.isValidObjectId(req.params.id))
+        return res.status(400).send('El ID del logro no es válido.');
 
-  const logro = await Logros.findByIdAndRemove(req.params.id);
+    const logro = await Logros.findByIdAndRemove(req.params.id);
 
-  if (!logro)
-    return res.status(400).send('No se encontró el logro a eliminar :c');
+    if (!logro)
+        return res.status(400).send('No se encontró el logro a eliminar :c');
 
-  res.status(200).send('Logro eliminado :D!');
+    res.status(200).send('Logro eliminado :D!');
 });
 
 module.exports = router;
