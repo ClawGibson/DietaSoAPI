@@ -35,7 +35,10 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+
+
   try {
+
     const nombreExiste = await Logros.find({ logro: req.body.logro });
 
     if (nombreExiste.length > 0)
@@ -45,7 +48,7 @@ router.post('/', async (req, res) => {
 
     if (req.body.logroRequerido) {
       const logroExiste = await Logros.find({ logro: req.body.logroRequerido });
-
+      
       if (logroExiste.length > 0)
         return res
           .status(500)
