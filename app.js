@@ -22,7 +22,7 @@ app.use(trim_all);
 
 // routes
 app.use(router);
-console.log(`PORT================${PORT}`);
+console.log(`PORT================${process.env.PORT}`);
 mongoose
     .connect(MONGODB, {
         useNewUrlParser: true,
