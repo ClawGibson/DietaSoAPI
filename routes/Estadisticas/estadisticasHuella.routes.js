@@ -75,10 +75,32 @@ router.post('/', async (req, res) => {
 });
 router.patch('/:id', async (req, res) => {
 
-    //Que datos se van a actualizar
-    // huellaHidricaTotal: { type: Number, default: 0 },
-    // huellaCarbonoTotal: { type: Number, default: 0 },
-    // puntajeEcologicoSostenible: { type: Number, default: 0 },
-    // puntosEconomiaDeFichas: { type: Number, default: 0 },
+    try{
+
+        let estadisticaHuella = await EstadisticasHuella.find({usuario: req.params.id});
+
+        if (estadisticaHuella.length <= 0)
+            return res.status(404).send({
+                success: false,
+                message: 'No se encontraron datos',
+            });
+
+        estadisticaHuella = new EstadisiticasHuella({ ...req.body });
+
+        estadisitcaHuella = await estadisiticaHuella.save();
+
+        if(!estadisticaHuella)
+            return res.status(500).send({
+                success: false,
+                message: 'Error al querer guardar la estadistica Huella',
+            });
+       
+        return res.status(200).send(estadisticaHuella);
+
+    } catch(e){
+        return res
+            .status(500)
+            .send('Error inesperado al actualizar la estadistica Huella - ', e);
+    }
 
 });

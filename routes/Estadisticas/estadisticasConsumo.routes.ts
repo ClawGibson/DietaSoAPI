@@ -68,22 +68,36 @@ router.post('/', async (req, res) => {
     }
 
 });
+
 router.path('/:id', async (req, res) => {
 
-    //Que datos se van a actualizar
-    // frutasVegetales: { type: Number, default: 0 },
-    // alimentosMexicanos: { type: Number, default: 0 },
-    // cerealesIntegrales: { type: Number, default: 0 },
-    // leguminosas: { type: Number, default: 0 },
-    // lacteos: { type: Number, default: 0 },
-    // semillasGrasasSaludables: { type: Number, default: 0 },
-    // huevo: { type: Number, default: 0 },
-    // pescadoMariscos: { type: Number, default: 0 },
-    // pollo: { type: Number, default: 0 },
-    // carnesRojasProcesadas: { type: Number, default: 0 },
-    // ultraProcesados: { type: Number, default: 0 },
-    // azucar: { type: Number, default: 0 },
-    // grasaSaturada: { type: Number, default: 0 },
-    // grasaTrans: { type: Number, default: 0 },
+    try {
+
+        let estadisticaConsumo = await EstadisticasConsumo.find({ usuario: req.params.id });
+
+
+        if (estadisticaConsumo.length <= 0)
+            return res.status(404).send({
+                success: false,
+                message: 'No se encontraron datos',
+            });
+
+        estadisticaConsumo = new EstadisticasConsumo({ ...req.body });
+
+        estadisticaConsumo = await estadisticaConsumo.save();
+
+        if (!estadisticaConsumo)
+            return res.status(500).send({
+                success: false,
+                message: 'Error al querer guardar la estadistica Consumo',
+            });
+
+        return res.status(200).send(estadisticaConsumo);
+
+    } catch (e) {
+        return res
+            .status(500)
+            .send('Error inesperado al actualizar la estadistica Consumo - ', e);
+    }
 
 });
