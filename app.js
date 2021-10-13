@@ -22,7 +22,7 @@ app.use(trim_all);
 
 // routes
 app.use(router);
-
+console.log(`PORT================${PORT}`);
 mongoose
     .connect(MONGODB, {
         useNewUrlParser: true,
@@ -38,5 +38,5 @@ mongoose
     });
 
 app.listen(PORT || 4000, () => {
-    console.log(`Server running at ${process.env.port || 4000}`);
+    console.log(`Server running at ${PORT || 4000}`);
 });
