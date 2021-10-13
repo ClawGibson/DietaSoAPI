@@ -9,7 +9,7 @@ const alimentacionUsuariosSchema = new Schema(
     lugarDeCompras: [String],
     quienCocina: [String],
     estatusDieta: {
-      sigueDieta: { type: String, required: false },
+      sigueDieta: { type: String, required: false }, //Si lo hace agrega el tipo de dieta, de lo contrario no entra aqui
       conNutriologo: { type: Number, required: false },
     },
     extras: [String],
