@@ -1,36 +1,36 @@
 /** @format */
 
-const { Router } = require("express");
+const { Router } = require('express');
 const router = Router();
 
 const {
-  grupoAlimentosRoute,
-  alimentosRoute,
-  subGrupoAlimentosRoute,
-  recetasRoute,
-  usuariosRoute,
-  menusBaseRoute,
-  logrosRoute,
-  logrosDeUsuarioRoute,
-  puntosDeUsuarioRoute,
-  equivalenciasRoute,
-  informacionUsuariosRoute,
-  datosUsuarioRoute,
-  historialClinicoRoute,
-  datosSocioeconomicosRoute,
-  alimentacionUsuariosRoute,
-  estadisticasIMCRoute,
-  estadisticasNivelesRoute,
-  estadisticasPresionRoute,
-  registroDieteticoRoute,
-  importarAlimentosRoute,
-  recomendacionesPoblacionalesRoute,
-  metas,
-  recordatorios,
-  mensajes,
-  chat,
-  foro,
-} = require("./routes/index");
+    grupoAlimentosRoute,
+    alimentosRoute,
+    subGrupoAlimentosRoute,
+    recetasRoute,
+    usuariosRoute,
+    menusBaseRoute,
+    logrosRoute,
+    logrosDeUsuarioRoute,
+    puntosDeUsuarioRoute,
+    equivalenciasRoute,
+    informacionUsuariosRoute,
+    datosUsuarioRoute,
+    historialClinicoRoute,
+    datosSocioeconomicosRoute,
+    alimentacionUsuariosRoute,
+    estadisticasIMCRoute,
+    estadisticasNivelesRoute,
+    estadisticasPresionRoute,
+    registroDieteticoRoute,
+    importarAlimentosRoute,
+    recomendacionesPoblacionalesRoute,
+    metas,
+    recordatorios,
+    mensajes,
+    chat,
+    foro,
+} = require('./routes/index');
 
 const { API_URL } = process.env;
 
@@ -55,8 +55,8 @@ router.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
 router.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
 router.use(`${API_URL}/importarAlimentos`, importarAlimentosRoute);
 router.use(
-  `${API_URL}/recomendacionPoblacional`,
-  recomendacionesPoblacionalesRoute
+    `${API_URL}/recomendacionPoblacional`,
+    recomendacionesPoblacionalesRoute
 );
 router.use(`${API_URL}/metas`, metas);
 router.use(`${API_URL}/recordatorios`, recordatorios);
@@ -65,5 +65,5 @@ router.use(`${API_URL}/chat`, chat);
 router.use(`${API_URL}/foro`, foro);
 
 module.exports = {
-  router,
+    router,
 };
