@@ -63,38 +63,11 @@ router.post('/', async (req, res) => {
         ...req.body,
     });
 
-<<<<<<< HEAD
-    if (req.body.logroRequerido) {
-      const logroExiste = await Logros.find({ logro: req.body.logroRequerido });
-      
-      if (logroExiste.length > 0)
-        return res
-          .status(500)
-          .json({ succes: false, message: 'Este logro no existe' });
-    }
-  } catch (err) {
-    console.log(err);
-  }
-
-  let nuevoLogro = new Logros({
-    logro: req.body.logro,
-    fotoLogro: req.body.fotoLogro,
-    puntosNecesarios: req.body.puntosNecesarios,
-    logroRequerido: req.body.logroRequerido,
-  });
-
-  nuevoLogro = await nuevoLogro.save();
-
-  !nuevoLogro
-    ? res.status(400).send('No se pudo crear el nuevo logro')
-    : res.send(nuevoLogro);
-=======
     nuevoLogro = await nuevoLogro.save();
 
     !nuevoLogro
         ? res.status(400).send('No se pudo crear el nuevo logro')
         : res.send(nuevoLogro);
->>>>>>> 0a049d60abb3975ef5d438435af2a97283482d49
 });
 
 router.put('/:id', async (req, res) => {
