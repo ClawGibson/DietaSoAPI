@@ -20,7 +20,7 @@ usuariosSchema.method("toJSON", function () {
 });
 
 usuariosSchema.virtual("id").get(function () {
-  return this._id.toHexStr;
+  return this._id.toHexString();
 });
 
 usuariosSchema.set("toJSON", {
