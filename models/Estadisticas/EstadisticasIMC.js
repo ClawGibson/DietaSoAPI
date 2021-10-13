@@ -7,6 +7,7 @@ const estadisticasIMCSchema = new Schema(
       ref: 'Usuarios',
       required: true,
     },
+    realizacionActividadFisicaMinutos: { type: Number },
     porcentajeGrasaCorporal: { type: Number, default: 0 },
     porcentajeMasaMuscular: { type: Number, default: 0 },
   },
