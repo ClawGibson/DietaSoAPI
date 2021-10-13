@@ -10,7 +10,7 @@ const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 const { trim_all } = require('request_trimmer');
 
-const { PORT, MONGODB, DBNAME } = process.env;
+const { MONGODB, DBNAME } = process.env;
 
 // middlewares
 app.use(cors());
@@ -37,6 +37,6 @@ mongoose
         console.log(err);
     });
 
-app.listen(PORT || 4000, () => {
-    console.log(`Server running at ${PORT || 4000}`);
+app.listen(process.env.PORT || 4000, () => {
+    console.log(`Server running at ${process.env.PORT || 4000}`);
 });
