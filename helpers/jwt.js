@@ -10,6 +10,9 @@ function authJwt() {
         path: [
             `${process.env.API_URL}/usuarios/login`,
             `${process.env.API_URL}/usuarios/register`,
+            `${process.env.API_URL}/historialClinico/individual`,
+            `${process.env.API_URL}/informacionUsuarios/`,
+            `${process.env.API_URL}/datosUsuarios/`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {
@@ -27,18 +30,6 @@ function authJwt() {
                 methods: ['GET', 'POST', 'PUT'],
             },
             { url: `${process.env.API_URL}/equivalencias/`, methods: ['GET'] },
-            {
-                url: `${process.env.API_URL}/informacionUsuarios/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
-            },
-            {
-                url: `${process.env.API_URL}/datosUsuarios/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
-            },
-            {
-                url: `${process.env.API_URL}/historialClinico/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
-            },
             {
                 url: `${process.env.API_URL}/estadisticasIMC/`,
                 methods: ['GET', 'POST', 'PUT', 'PATCH'],
@@ -67,7 +58,7 @@ async function isRevoked(req, payload, done) {
         if (err) return done(null, false);
         if (req.method !== 'GET') {
             if (!payload.isAdmin) {
-                //console.log('Payload:', decoded);
+                //console.log('Payload admin:', decoded);
                 return done(null, true);
             }
             //console.log('Payload:', decoded, ' - Token: ', token);
