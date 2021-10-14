@@ -157,6 +157,8 @@ router.patch("/individual", async (req, res) => {
         }
       );
 
+      
+
       editarInformacionA = editarInformacionA
         .save()
         .then((response) => res.status(200).json({ message: "ok" }))
@@ -168,6 +170,7 @@ router.patch("/individual", async (req, res) => {
           })
         );
     } catch (err) {
+      console.log("Error: ", err);
       res.status(500).json({
         success: false,
         message: "Ocurrió un error al actualizar los datos de alimentos - ",

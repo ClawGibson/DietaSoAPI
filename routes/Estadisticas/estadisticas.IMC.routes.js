@@ -43,6 +43,7 @@ router.post('/', async (req, res) => {
       usuario: req.body.usuario,
       porcentajeGrasaCorporal: req.body.porcentajeGrasaCorporal,
       porcentajeMasaMuscular: req.body.porcentajeMasaMuscular,
+      realizacionActividadFisicaMinutos: req.body.realizacionActividadFisicaMinutos
     });
 
     estadisticaIMC = await estadisticaIMC.save();

@@ -103,6 +103,7 @@ router.post("/individual", async (req, res) => {
         .send("No se pudieron agregar los datos del usuario");
     res.send(datos);
   } catch (err) {
+    console.log("ERROR -> ", err);
     return res.status(500).json({
       success: false,
       message: "Ocurrió un error al guardar los datos del usuario",

@@ -41,9 +41,12 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    
     const grupoAlimento = await GrupoAlimento.find({
         grupoDeAlimento: req.body.grupoAlimento,
     });
+
+
     if (!grupoAlimento)
         return res.status(400).send('Grupo de alimento inválido');
 

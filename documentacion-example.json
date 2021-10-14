@@ -1,0 +1,739 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/": {
+            "get": {
+                "operationId": "AppController_getHello",
+                "summary": "Muestra información de la pagina principal.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Home"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "operationId": "AuthController_login",
+                "summary": "Inicio de sesión de la aplicación.",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Authentication"
+                ]
+            }
+        },
+        "/usr/users": {
+            "get": {
+                "operationId": "UsersController_getMany",
+                "summary": "Muestra a todos los usuarios del sistema.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "users:[User]"
+                    },
+                    "401": {
+                        "description": "Por favor, inicie sesión para poder acceder a este recurso."
+                    },
+                    "403": {
+                        "description": "No tienes permitido acceder a este recurso."
+                    }
+                },
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "operationId": "UsersController_createOne",
+                "summary": "Crea un nuevo usuario dentro del sistema.",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Por favor, ingrese un correo electronico válido."
+                    }
+                },
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/usr/users/{id_user}": {
+            "get": {
+                "operationId": "UsersController_getOne",
+                "summary": "Muestra la información del usuario indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "operationId": "UsersController_updateOne",
+                "summary": "Actualiza al usuario indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "UsersController_deleteOne",
+                "summary": "Elimina a un usuario indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Users"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/usr/roles": {
+            "get": {
+                "operationId": "RolesController_getMany",
+                "summary": "Muestra todos los roles existentes en el sistema.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "operationId": "RolesController_craeteOne",
+                "summary": "Crea un nuevo rol dentro del sistema.",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RoleDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/usr/roles/{id_role}": {
+            "get": {
+                "operationId": "RolesController_getOne",
+                "summary": "Muestra la información del rol indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_role",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "operationId": "RolesController_updateOne",
+                "summary": "Actualiza la información de un rol indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_role",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "RolesController_deleteOne",
+                "summary": "Elimina un rol del sistema, indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_role",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Roles"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/usr/resources": {
+            "get": {
+                "operationId": "ResourcesController_getMany",
+                "summary": "Muestra todos los recursos existentes en el sistema.",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Resources"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "operationId": "ResourcesController_craeteOne",
+                "summary": "Crea un nuevo recurso dentro del sistema.",
+                "parameters": [],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResourceDto"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Resources"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/usr/resources/{id_resource}": {
+            "get": {
+                "operationId": "ResourcesController_getOne",
+                "summary": "Muestra la información de un recurso, indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_resource",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Resources"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "operationId": "ResourcesController_updateOne",
+                "summary": "Actualiza la información de un  recurso, indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_resource",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Resources"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "ResourcesController_deleteOne",
+                "summary": "Elimina un recurso, indicado por su id.",
+                "parameters": [
+                    {
+                        "name": "id_resource",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "Resources"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/usr/users/{id_user}/identifications": {
+            "get": {
+                "operationId": "UserIdentificationsController_getMany",
+                "summary": "Muestra todas las identificaciones relacionadas al usuario con el id proporcionado.",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "User Identifications"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "operationId": "UserIdentificationsController_createOne",
+                "summary": "Añada una nueva identificación al usuario correspondiente al id proporcionado.",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "User Identifications"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/usr/users/{id_user}/identifications/{id_identification}": {
+            "get": {
+                "operationId": "UserIdentificationsController_getOne",
+                "summary": "Muestra la identificaión del usuario correspondiente al id proporcionado.",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "id_identification",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "User Identifications"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "operationId": "UserIdentificationsController_updateOne",
+                "summary": "Actualiza la información de la identificaión del usuario correspondiente al id proporcionado.",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "id_identification",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "User Identifications"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "operationId": "UserIdentificationsController_deleteOne",
+                "summary": "Elimina la identificaión del usuario correspondiente al id proporcionado.",
+                "parameters": [
+                    {
+                        "name": "id_user",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "id_identification",
+                        "required": true,
+                        "in": "path",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                },
+                "tags": [
+                    "User Identifications"
+                ],
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Role Base Access Control System.",
+        "description": "Api implementada con un sistema de roles custom.",
+        "version": "1.0",
+        "contact": {}
+    },
+    "tags": [],
+    "servers": [],
+    "components": {
+        "securitySchemes": {
+            "bearer": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http"
+            }
+        },
+        "schemas": {
+            "LoginDto": {
+                "type": "object",
+                "properties": {
+                    "usernameOrEmail": {
+                        "type": "string",
+                        "example": "user@email.com | user_name"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "usernameOrEmail",
+                    "password"
+                ]
+            },
+            "UserDto": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "description": "email of user",
+                        "example": "email@provider.com"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "id_role": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "email",
+                    "username",
+                    "password",
+                    "id_role"
+                ]
+            },
+            "RoleDto": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "description"
+                ]
+            },
+            "ResourceDto": {
+                "type": "object",
+                "properties": {
+                    "id_role": {
+                        "type": "number"
+                    },
+                    "url": {
+                        "type": "string",
+                        "example": "/module/resoure"
+                    },
+                    "read": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "own",
+                            "any"
+                        ]
+                    },
+                    "create": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "own",
+                            "any"
+                        ]
+                    },
+                    "update": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "own",
+                            "any"
+                        ]
+                    },
+                    "delete": {
+                        "type": "string",
+                        "enum": [
+                            "none",
+                            "own",
+                            "any"
+                        ]
+                    }
+                },
+                "required": [
+                    "id_role",
+                    "url",
+                    "read",
+                    "create",
+                    "update",
+                    "delete"
+                ]
+            }
+        }
+    }
+}

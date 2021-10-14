@@ -26,7 +26,11 @@ router.get("/", async (req, res) => {
 router.get("/individual", async (req, res) => {
   //const usuario = await buscarUsuario(req.params.id);
   //constantes.buscarUsuario(req.params.id);
+ 
   try {
+
+   
+
     const usuario = await Usuarios.findById(req.query.usuario).select(
       "-contrasena"
     );
@@ -44,12 +48,16 @@ router.get("/individual", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+
   let crearUsuario = new Usuarios({
+    usuario: req.body.usuario,
     email: req.body.email,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
   });
 
+  
   crearUsuario = await crearUsuario.save();
+  console.log("2 usuario -> ", crearUsuario);
 
   if (!crearUsuario)
     return res.status(400).send("No se pudo crear el usuario :c");
@@ -57,7 +65,8 @@ router.post("/", async (req, res) => {
   res.send(crearUsuario);
 });
 
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
+
   const usuario = await Usuarios.findOne({ email: req.body.email });
   const SECRET = process.env.SECRET;
 
@@ -82,15 +91,19 @@ router.post("/login", async (req, res) => {
   } else {
     res.status(401).json("Contraseña incorrecta");
   }
+
+
 });
 
 router.post("/register", async (req, res) => {
+
   try {
     const usuario = await Usuarios.findOne({ email: req.body.email });
     if (usuario)
       return res
         .status(500)
         .json({ success: false, message: "Usuario ya creado" });
+
   } catch (err) {
     return res.status(500).json({
       success: false,
@@ -98,7 +111,10 @@ router.post("/register", async (req, res) => {
     });
   }
 
+
+
   let registrarUsuario = new Usuarios({
+    usuario: req.body.usuario,
     email: req.body.email,
     contrasena: bcrypt.hashSync(req.body.contrasena, 10),
   });
@@ -126,11 +142,14 @@ router.post("/register", async (req, res) => {
 
 router.put("/individual", async (req, res) => {
   try {
+
     const usuario = await Usuarios.findOne({ usuario: req.query.usuario });
+
     if (!usuario)
       return res
         .status(500)
         .json({ success: false, message: "Usuario no existe" });
+        
     console.log(usuario);
     let editarUsuario = await Usuarios.findOneAndUpdate(
       { usuario: usuario.usuario },
