@@ -73,6 +73,7 @@ router.post('/', async (req, res) => {
     }
 
 });
+
 router.patch('/:id', async (req, res) => {
 
     try{
@@ -104,3 +105,5 @@ router.patch('/:id', async (req, res) => {
     }
 
 });
+
+module.exports = router;

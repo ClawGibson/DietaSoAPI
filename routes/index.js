@@ -24,6 +24,8 @@ const recordatorios = require("./Recordatorios/recordatorios.routes");
 const mensajes = require("./Message/message.routes");
 const chat = require("./Chat/chat.routes");
 const foro = require("./Foro/foro.routes");
+const estadisticasHuella = require("./Estadisticas/estadisticasHuella.routes");
+const estadisticasConsumo = require("./Estadisticas/estadisticasConsumo.routes");
 
 module.exports = {
     grupoAlimentosRoute,
@@ -44,6 +46,8 @@ module.exports = {
     estadisticasIMCRoute,
     estadisticasNivelesRoute,
     estadisticasPresionRoute,
+    estadisticasHuellaRoute,
+    estadisticasConsumoRoute,
     registroDieteticoRoute,
     importarAlimentosRoute,
     recomendacionesPoblacionalesRoute,
