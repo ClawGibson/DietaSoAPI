@@ -10,18 +10,7 @@ const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 const { trim_all } = require('request_trimmer');
 
-const { PORT, MONGODB, DBNAME } = process.env;
-
-//Docuemntation
-const swaggerUi = require('swagger-ui-express'),
-      swaggerDocument = require('./api-docs.json');
-
-app.use(
-    '/docs',
-    swaggerUi.serve,
-    swaggerUi.setup(swaggerDocument)
-);
-
+const { MONGODB, DBNAME } = process.env;
 
 // middlewares
 app.use(cors());
@@ -31,11 +20,9 @@ app.use(authJwt());
 app.use(errorHandler);
 app.use(trim_all);
 
-
 // routes
 app.use(router);
-
-
+console.log(`PORT================${process.env.PORT}`);
 mongoose
     .connect(MONGODB, {
         useNewUrlParser: true,
@@ -50,6 +37,6 @@ mongoose
         console.log(err);
     });
 
-app.listen(PORT || 4000, () => {
-    console.log(`Server running at ${process.env.port || 4000}`);
+app.listen(process.env.PORT || 4000, () => {
+    console.log(`Server running at ${process.env.PORT || 4000}`);
 });

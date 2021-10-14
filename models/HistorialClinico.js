@@ -5,7 +5,7 @@ const historialClinicoSchema = new Schema(
     usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
     historiaClinica: {
       antecedentesPatologicos: [String],
-      antecedentesHeredoFamiliares: [String],
+      antecedentesHeredoFamiliares: [{ familiar: String, enfermedad: String }],
       medicamentos: [String],
       suplementos: [String],
     },
