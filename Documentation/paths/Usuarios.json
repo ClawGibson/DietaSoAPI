@@ -1,0 +1,22 @@
+{
+    "/usuarios/login": {
+        "post": {
+            "tags": [
+                "Usuarios"
+            ],
+            "summary": "Inicio de sesión para los usuarios.",
+            "parameters": [],
+            "requestBody": {
+                "required": true,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../schemas/Login.json"
+                        }
+                    }
+                }
+            },
+            "responses": {}
+        }
+    }
+}

@@ -1,0 +1,651 @@
+{
+    "type": "object",
+    "properties": {
+        "nombreAlimento": {
+            "type": "string"
+        },
+        "sku": {
+            "type": "string"
+        },
+        "imagen": {
+            "type": "string",
+            "default": ""
+        },
+        "grupoExportable": {
+            "type": "string",
+            "default": ""
+        },
+        "subGrupoExportable": {
+            "type": "string",
+            "default": ""
+        },
+        "clasificacionExportable": {
+            "type": "string",
+            "default": ""
+        },
+        "grupoAlimento": {
+            "type": "string"
+        },
+        "mensaje": {
+            "type": "object",
+            "properties": {
+                "nutricional": {
+                    "type": "string",
+                    "default": ""
+                },
+                "ambiental": {
+                    "type": "string",
+                    "default": ""
+                },
+                "mensajeEconomia": {
+                    "type": "string",
+                    "default": ""
+                },
+                "mensajeCulturaSociedad": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "nutricional",
+                "ambiental",
+                "mensajeEconomia",
+                "mensajeCulturaSociedad"
+            ]
+        },
+        "icono": {
+            "type": "object",
+            "properties": {
+                "iconoNutricional": {
+                    "type": "string",
+                    "default": ""
+                },
+                "iconoAmbiental": {
+                    "type": "string",
+                    "default": ""
+                },
+                "iconoEconomia": {
+                    "type": "string",
+                    "default": ""
+                },
+                "iconoCulturaSociedad": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "iconoNutricional",
+                "iconoAmbiental",
+                "iconoEconomia",
+                "iconoCulturaSociedad"
+            ]
+        },
+        "opcionesPreparacion": {
+            "type": "string",
+            "default": ""
+        },
+        "cantidadAlimento": {
+            "type": "object",
+            "properties": {
+                "cantidadSugerida": {
+                    "type": "number",
+                    "default": 0
+                },
+                "unidad": {
+                    "type": "string",
+                    "default": ""
+                },
+                "pesoNeto": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "cantidadSugerida",
+                "unidad",
+                "pesoNeto"
+            ]
+        },
+        "caloriasMacronutrientes": {
+            "type": "object",
+            "properties": {
+                "energia": {
+                    "type": "string",
+                    "default": ""
+                },
+                "proteina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "lipidos": {
+                    "type": "string",
+                    "default": ""
+                },
+                "agSaturados": {
+                    "type": "string",
+                    "default": ""
+                },
+                "agMonoinsaturados": {
+                    "type": "string",
+                    "default": ""
+                },
+                "adPoliinsaturados": {
+                    "type": "string",
+                    "default": ""
+                },
+                "colesterol": {
+                    "type": "string",
+                    "default": ""
+                },
+                "omega3": {
+                    "type": "string",
+                    "default": ""
+                },
+                "omega6": {
+                    "type": "string",
+                    "default": ""
+                },
+                "omega9": {
+                    "type": "string",
+                    "default": ""
+                },
+                "hidratosDeCarbono": {
+                    "type": "string",
+                    "default": ""
+                },
+                "fibra": {
+                    "type": "string",
+                    "default": ""
+                },
+                "fibraInsoluble": {
+                    "type": "string",
+                    "default": ""
+                },
+                "azucar": {
+                    "type": "string",
+                    "default": ""
+                },
+                "etanol": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "energia",
+                "proteina",
+                "lipidos",
+                "agSaturados",
+                "agMonoinsaturados",
+                "adPoliinsaturados",
+                "colesterol",
+                "omega3",
+                "omega6",
+                "omega9",
+                "hidratosDeCarbono",
+                "fibra",
+                "fibraInsoluble",
+                "azucar",
+                "etanol"
+            ]
+        },
+        "vitaminas": {
+            "type": "object",
+            "properties": {
+                "tiamina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "riboflavin": {
+                    "type": "string",
+                    "default": ""
+                },
+                "niacina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "acidoPantotenico": {
+                    "type": "string",
+                    "default": ""
+                },
+                "piridoxina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "biotina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "cobalmina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "acidoAscorbico": {
+                    "type": "string",
+                    "default": ""
+                },
+                "acidoFolico": {
+                    "type": "string",
+                    "default": ""
+                },
+                "vitaminaA": {
+                    "type": "string",
+                    "default": ""
+                },
+                "vitaminaD": {
+                    "type": "string",
+                    "default": ""
+                },
+                "vitaminaK": {
+                    "type": "string",
+                    "default": ""
+                },
+                "vitaminaE": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "tiamina",
+                "riboflavin",
+                "niacina",
+                "acidoPantotenico",
+                "piridoxina",
+                "biotina",
+                "cobalmina",
+                "acidoAscorbico",
+                "acidoFolico",
+                "vitaminaA",
+                "vitaminaD",
+                "vitaminaK",
+                "vitaminaE"
+            ]
+        },
+        "minerales": {
+            "type": "object",
+            "properties": {
+                "calcio": {
+                    "type": "string",
+                    "default": ""
+                },
+                "fosforo": {
+                    "type": "string",
+                    "default": ""
+                },
+                "hierro": {
+                    "type": "string",
+                    "default": ""
+                },
+                "hierroNoHem": {
+                    "type": "string",
+                    "default": ""
+                },
+                "hierroTotal": {
+                    "type": "string",
+                    "default": ""
+                },
+                "magnesio": {
+                    "type": "string",
+                    "default": ""
+                },
+                "sodio": {
+                    "type": "string",
+                    "default": ""
+                },
+                "potasio": {
+                    "type": "string",
+                    "default": ""
+                },
+                "zinc": {
+                    "type": "string",
+                    "default": ""
+                },
+                "selenio": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "calcio",
+                "fosforo",
+                "hierro",
+                "hierroNoHem",
+                "hierroTotal",
+                "magnesio",
+                "sodio",
+                "potasio",
+                "zinc",
+                "selenio"
+            ]
+        },
+        "aspectoGlucemico": {
+            "type": "object",
+            "properties": {
+                "indiceGlicemico": {
+                    "type": "string",
+                    "default": ""
+                },
+                "cargaGlicemica": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "indiceGlicemico",
+                "cargaGlicemica"
+            ]
+        },
+        "aspectoMedioambiental": {
+            "type": "object",
+            "properties": {
+                "factorDeCorreccionParaHuellaHidricaYEGEI": {
+                    "type": "number",
+                    "default": 0
+                },
+                "tipo": {
+                    "type": "string",
+                    "default": ""
+                },
+                "lugar": {
+                    "type": "string",
+                    "default": ""
+                },
+                "huellaHidricaTotal": {
+                    "type": "string",
+                    "default": ""
+                },
+                "huellaHidricaVerde": {
+                    "type": "string",
+                    "default": ""
+                },
+                "huellaHidricaAzul": {
+                    "type": "string",
+                    "default": ""
+                },
+                "huellaHidricaGris": {
+                    "type": "string",
+                    "default": ""
+                },
+                "aguaParaLavado": {
+                    "type": "string",
+                    "default": ""
+                },
+                "aguaParaCoccion": {
+                    "type": "string",
+                    "default": ""
+                },
+                "lugarEGEI": {
+                    "type": "string",
+                    "default": ""
+                },
+                "citaEGEI": {
+                    "type": "string",
+                    "default": ""
+                },
+                "huellaCarbono": {
+                    "type": "string",
+                    "default": ""
+                },
+                "huellaEcologica": {
+                    "type": "string",
+                    "default": ""
+                },
+                "energiaFosil": {
+                    "type": "string",
+                    "default": ""
+                },
+                "usoDeSuelo": {
+                    "type": "string",
+                    "default": ""
+                },
+                "nitrogeno": {
+                    "type": "string",
+                    "default": ""
+                },
+                "fosforo": {
+                    "type": "string",
+                    "default": ""
+                },
+                "puntajeEcologico": {
+                    "type": "number",
+                    "default": 0
+                }
+            },
+            "required": [
+                "factorDeCorreccionParaHuellaHidricaYEGEI",
+                "tipo",
+                "lugar",
+                "huellaHidricaTotal",
+                "huellaHidricaVerde",
+                "huellaHidricaAzul",
+                "huellaHidricaGris",
+                "aguaParaLavado",
+                "aguaParaCoccion",
+                "lugarEGEI",
+                "citaEGEI",
+                "huellaCarbono",
+                "huellaEcologica",
+                "energiaFosil",
+                "usoDeSuelo",
+                "nitrogeno",
+                "fosforo",
+                "puntajeEcologico"
+            ]
+        },
+        "aspectoEconomico": {
+            "type": "object",
+            "properties": {
+                "precio": {
+                    "type": "number",
+                    "default": 0
+                },
+                "lugarDeCompra": {
+                    "type": "string",
+                    "default": ""
+                },
+                "lugarDeVenta": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "precio",
+                "lugarDeCompra",
+                "lugarDeVenta"
+            ]
+        },
+        "componentesBioactivos": {
+            "type": "object",
+            "properties": {
+                "fitoquimicos": {
+                    "type": "string",
+                    "default": ""
+                },
+                "polifenoles": {
+                    "type": "string",
+                    "default": ""
+                },
+                "antocianinas": {
+                    "type": "string",
+                    "default": ""
+                },
+                "taninos": {
+                    "type": "string",
+                    "default": ""
+                },
+                "isoflavonas": {
+                    "type": "string",
+                    "default": ""
+                },
+                "resveratrol": {
+                    "type": "string",
+                    "default": ""
+                },
+                "isotiocinatos": {
+                    "type": "string",
+                    "default": ""
+                },
+                "caretenoides": {
+                    "type": "string",
+                    "default": ""
+                },
+                "betacarotenos": {
+                    "type": "string",
+                    "default": ""
+                },
+                "licopeno": {
+                    "type": "string",
+                    "default": ""
+                },
+                "luteina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "alicina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "cafeina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "UFC": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "fitoquimicos",
+                "polifenoles",
+                "antocianinas",
+                "taninos",
+                "isoflavonas",
+                "resveratrol",
+                "isotiocinatos",
+                "caretenoides",
+                "betacarotenos",
+                "licopeno",
+                "luteina",
+                "alicina",
+                "cafeina",
+                "UFC"
+            ]
+        },
+        "aditivosAlimentarios": {
+            "type": "object",
+            "properties": {
+                "benzoatoDeSodio": {
+                    "type": "string",
+                    "default": ""
+                },
+                "polisorbato": {
+                    "type": "string",
+                    "default": ""
+                },
+                "azulBrillanteFCFoE133": {
+                    "type": "string",
+                    "default": ""
+                },
+                "azurrubinaOE102": {
+                    "type": "string",
+                    "default": ""
+                },
+                "amarilloOcasoFDFoE110": {
+                    "type": "string",
+                    "default": ""
+                },
+                "tartrazinaOE102": {
+                    "type": "string",
+                    "default": ""
+                },
+                "verdeSoE142": {
+                    "type": "string",
+                    "default": ""
+                },
+                "negroBrillanteBNoE151": {
+                    "type": "string",
+                    "default": ""
+                },
+                "sucralosa": {
+                    "type": "string",
+                    "default": ""
+                },
+                "estevia": {
+                    "type": "string",
+                    "default": ""
+                },
+                "sacarina": {
+                    "type": "string",
+                    "default": ""
+                },
+                "aspartame": {
+                    "type": "string",
+                    "default": ""
+                },
+                "acesulfameK": {
+                    "type": "string",
+                    "default": ""
+                },
+                "carboxymethylcellulose": {
+                    "type": "string",
+                    "default": ""
+                },
+                "dioxidoDeTitanio": {
+                    "type": "string",
+                    "default": ""
+                },
+                "monolauratoDeGlicerol": {
+                    "type": "string",
+                    "default": ""
+                }
+            },
+            "required": [
+                "benzoatoDeSodio",
+                "polisorbato",
+                "azulBrillanteFCFoE133",
+                "azurrubinaOE102",
+                "amarilloOcasoFDFoE110",
+                "tartrazinaOE102",
+                "verdeSoE142",
+                "negroBrillanteBNoE151",
+                "sucralosa",
+                "estevia",
+                "sacarina",
+                "aspartame",
+                "acesulfameK",
+                "carboxymethylcellulose",
+                "dioxidoDeTitanio",
+                "monolauratoDeGlicerol"
+            ]
+        },
+        "atributosAdicionales": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "atributoAdicional": {
+                        "type": "string",
+                        "default": ""
+                    }
+                },
+                "required": [
+                    "atributoAdicional"
+                ]
+            }
+        },
+        "marca": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "required": [
+        "nombreAlimento",
+        "sku",
+        "imagen",
+        "grupoExportable",
+        "subGrupoExportable",
+        "clasificacionExportable",
+        "grupoAlimento",
+        "opcionesPreparacion",
+        "marca"
+    ]
+}

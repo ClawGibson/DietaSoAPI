@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "horasDeSueño": {
+            "type": "string"
+        },
+        "estadoDeDescanso": {
+            "type": "string"
+        },
+        "despiertaPorLaNoche": {
+            "type": "string",
+            "default": "No"
+        },
+        "frecuencia": {
+            "type": "string",
+            "default": false
+        }
+    },
+    "required": [
+        "usuario",
+        "horasDeSueño",
+        "estadoDeDescanso"
+    ]
+}

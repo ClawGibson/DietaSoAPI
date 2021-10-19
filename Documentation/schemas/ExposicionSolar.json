@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "minutosAlSol": {
+            "type": "string"
+        },
+        "cubresTuPiel": {
+            "type": "string"
+        },
+        "bloqueadorSolar": {
+            "type": "string",
+            "default": "No"
+        },
+        "diasXsemana": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usuario",
+        "minutosAlSol",
+        "cubresTuPiel",
+        "bloqueadorSolar",
+        "diasXsemana"
+    ]
+}

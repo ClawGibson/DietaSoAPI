@@ -1,0 +1,32 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "DietaSo. API REST ",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "license": {
+            "name": "MIT"
+        },
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.example.com/support",
+            "email": "support@example.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1/",
+            "name": "Servidor Local."
+        }
+    ],
+    "paths": {
+        "$ref": "./paths/Usuarios.json"
+    },
+    "components": {
+        "parameters": {},
+        "schemas": {
+            "$ref": "./schemas/index.json"
+        },
+        "responses": {}
+    }
+}

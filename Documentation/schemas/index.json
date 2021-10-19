@@ -1,0 +1,122 @@
+{
+    "Login": {
+        "$ref": "Login.json"
+    },
+    "Usuarios": {
+        "$ref": "Usuarios.json"
+    },
+    "SubGrupoAlimentos": {
+        "$ref": "SubGrupoAlimentos.json"
+    },
+    "RegistroDietetico": {
+        "$ref": "RegistroDietetico.json"
+    },
+    "Recetas": {
+        "$ref": "Recetas.json"
+    },
+    "PuntosDeUsuario": {
+        "$ref": "PuntosDeUsuario.json"
+    },
+    "MenuBase": {
+        "$ref": "MenuBase.json"
+    },
+    "LogrosDeUsuario": {
+        "$ref": "LogrosDeUsuario.json"
+    },
+    "Logros": {
+        "$ref": "Logros.json"
+    },
+    "InformacionUsuarios": {
+        "$ref": "InformacionUsuarios.json"
+    },
+    "HistorialClinica": {
+        "$ref": "HistorialClinica.json"
+    },
+    "GrupoAlimentos": {
+        "$ref": "GrupoAlimentos.json"
+    },
+    "Equivalencia": {
+        "$ref": "Equivalencia.json"
+    },
+    "DatosUsuarios": {
+        "$ref": "DatosUsuarios.json"
+    },
+    "DatosSocioeconomicos": {
+        "$ref": "DatosSocioeconomicos.json"
+    },
+    "Alimentos": {
+        "$ref": "Alimentos.json"
+    },
+    "AlimentacionUsuarios": {
+        "$ref": "AlimentacionUsuarios.json"
+    },
+    "Recordatoria": {
+        "$ref": "Recordatoria.json"
+    },
+    "RecomendacionesPoblacionales": {
+        "$ref": "RecomendacionesPoblacionales.json"
+    },
+    "Like": {
+        "$ref": "Like.json"
+    },
+    "Comment": {
+        "$ref": "Comment.json"
+    },
+    "Metas": {
+        "$ref": "Metas.json"
+    },
+    "Message": {
+        "$ref": "Message.json"
+    },
+    "Publicacion": {
+        "$ref": "Publicacion.json"
+    },
+    "EstadisticasPresion": {
+        "$ref": "EstadisticasPresion.json"
+    },
+    "EstadisticasNiveles": {
+        "$ref": "EstadisticasNiveles.json"
+    },
+    "EstadisticasIMC": {
+        "$ref": "EstadisticasIMC.json"
+    },
+    "EstadisticasHuella": {
+        "$ref": "EstadisticasHuella.json"
+    },
+    "EstadisticasConsumo": {
+        "$ref": "EstadisticasConsumo.json"
+    },
+    "EconomiaFichas": {
+        "$ref": "EconomiaFichas.json"
+    },
+    "LactanciaUsuarios": {
+        "$ref": "LactanciaUsuarios.json"
+    },
+    "IndicadoresSeño": {
+        "$ref": "IndicadoresSeño.json"
+    },
+    "IndicadoresClinicos": {
+        "$ref": "IndicadoresClinicos.json"
+    },
+    "IndicadoresBioquimicos": {
+        "$ref": "IndicadoresBioquimicos.json"
+    },
+    "Gastrointestinales": {
+        "$ref": "Gastrointestinales.json"
+    },
+    "ExposicionSolar": {
+        "$ref": "ExposicionSolar.json"
+    },
+    "EstadoGeneral": {
+        "$ref": "EstadoGeneral.json"
+    },
+    "ComposCorpUsuario": {
+        "$ref": "ComposCorpUsuario.json"
+    },
+    "CircunferenciaUsuario": {
+        "$ref": "CircunferenciaUsuario.json"
+    },
+    "Chat": {
+        "$ref": "Chat.json"
+    }
+}

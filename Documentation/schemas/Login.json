@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "email": {
+            "type": "string",
+            "format": "email"
+        },
+        "contrasena": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usernameOrEmail",
+        "password"
+    ]
+}

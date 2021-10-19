@@ -1,0 +1,180 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "muchoCansancio": {
+            "type": "string"
+        },
+        "mareos": {
+            "type": "string",
+            "default": "No"
+        },
+        "muchaSed": {
+            "type": "string",
+            "default": "No"
+        },
+        "muchasGanasDeOrinar": {
+            "type": "string",
+            "default": "No"
+        },
+        "muchaHambre": {
+            "type": "string",
+            "default": "No"
+        },
+        "piesYmanos": {
+            "type": "object",
+            "properties": {
+                "seHinchan": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "aQuehora": {
+                    "type": "string"
+                },
+                "frecuencia": {
+                    "type": "string"
+                },
+                "horasSentado": {
+                    "type": "string"
+                },
+                "horasParado": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "seHinchan",
+                "aQuehora",
+                "frecuencia",
+                "horasSentado",
+                "horasParado"
+            ]
+        },
+        "nariz": {
+            "type": "object",
+            "properties": {
+                "sangradoDe": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuenciaDe": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "sangradoDe",
+                "frecuenciaDe"
+            ]
+        },
+        "piel": {
+            "type": "object",
+            "properties": {
+                "manchasRojasMoretes": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuenciaDeEllo": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "manchasRojasMoretes",
+                "frecuenciaDeEllo"
+            ]
+        },
+        "unas": {
+            "type": "object",
+            "properties": {
+                "quebradizas": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuencia": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "quebradizas",
+                "frecuencia"
+            ]
+        },
+        "cabello": {
+            "type": "object",
+            "properties": {
+                "caidaDeCabello": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "cabelloQuebradizo": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "cabelloTenidoOTratamiento": {
+                    "type": "string",
+                    "default": "No"
+                }
+            },
+            "required": [
+                "caidaDeCabello",
+                "cabelloQuebradizo",
+                "cabelloTenidoOTratamiento"
+            ]
+        },
+        "boca": {
+            "type": "object",
+            "properties": {
+                "cortadurasEnComisuras": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuencia": {
+                    "type": "string"
+                },
+                "inflamacionDeLengua": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuenciaDe": {
+                    "type": "string"
+                },
+                "inflamacionEncias": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuenciaDeIE": {
+                    "type": "string"
+                },
+                "sangradoEncias": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuenciaDeSE": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cortadurasEnComisuras",
+                "frecuencia",
+                "inflamacionDeLengua",
+                "frecuenciaDe",
+                "inflamacionEncias",
+                "frecuenciaDeIE",
+                "sangradoEncias",
+                "frecuenciaDeSE"
+            ]
+        },
+        "tipoDeNacimiento": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usuario",
+        "muchoCansancio",
+        "mareos",
+        "muchaSed",
+        "muchasGanasDeOrinar",
+        "muchaHambre",
+        "tipoDeNacimiento"
+    ]
+}

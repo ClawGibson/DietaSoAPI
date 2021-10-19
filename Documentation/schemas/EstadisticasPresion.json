@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "presionArterialSistolica": {
+            "type": "number",
+            "minimum": 0,
+            "maximun": 300
+        },
+        "presionArterialDiastolica": {
+            "type": "number",
+            "minimum": 0,
+            "maximun": 300
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

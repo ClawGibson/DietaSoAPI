@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "properties": {
+        "user": {
+            "$ref": "InformacionUsuarios.json"
+        },
+        "text": {
+            "type": "string"
+        },
+        "activate": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "required": [
+        "user"
+    ]
+}

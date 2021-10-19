@@ -1,0 +1,14 @@
+{
+    "type": "object",
+    "properties": {
+        "users": {
+            "type": "array",
+            "items": {
+                "$ref": "Usuarios.json"
+            }
+        }
+    },
+    "required": [
+        "items"
+    ]
+}

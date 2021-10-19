@@ -1,0 +1,25 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "alimento": {
+            "$ref": "Alimentos.json"
+        },
+        "puntosTotales": {
+            "type": "number",
+            "default": 0
+        },
+        "puntosObtenidosPorAlimento": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": [
+        "usuario",
+        "alimento",
+        "puntosTotales",
+        "puntosObtenidosPorAlimento"
+    ]
+}

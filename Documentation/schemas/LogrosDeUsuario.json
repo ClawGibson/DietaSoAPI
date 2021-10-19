@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "properties": {
+        "logro": {
+            "type": "array",
+            "items": {
+                "$ref": "Logros.json"
+            }
+        },
+        "usuario": {
+            "$ref": "Usuarios.json"
+        }
+    },
+    "required": [
+        "items",
+        "usuario"
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "puntos": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "usuario",
+        "puntos"
+    ]
+}

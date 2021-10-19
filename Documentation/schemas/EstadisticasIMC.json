@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "realizacionActividadFisicaMinutos": {
+            "type": "number"
+        },
+        "porcentajeGrasaCorporal": {
+            "type": "number",
+            "default": 0
+        },
+        "porcentajeMasaMuscular": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}
