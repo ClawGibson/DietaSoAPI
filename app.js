@@ -14,7 +14,7 @@ const { PORT, MONGODB, DBNAME } = process.env;
 
 //Docuemntation
 const swaggerUi = require('swagger-ui-express'),
-      swaggerDocument = require('./api-docs.json');
+      swaggerDocument = require('./openapi.json');
 
 app.use(
     '/docs',

@@ -1,5 +1,11 @@
 {
     "openapi": "3.0.0",
+    "info": {
+        "title": "API REST DietaSo.",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "version": "1.0",
+        "contact": {}
+    },
     "servers": [
         {
             "url": "http://localhost:3000/api/v1/",
@@ -766,12 +772,6 @@
                 "summary": "Agrega una descripción."
             }
         }
-    },
-    "info": {
-        "title": "API REST DietaSo.",
-        "description": "Api Rest enfocada para el area de nutriologia.",
-        "version": "1.0",
-        "contact": {}
     },
     "tags": [],
     "components": {

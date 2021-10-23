@@ -24,8 +24,8 @@ const recordatorios = require("./Recordatorios/recordatorios.routes");
 const mensajes = require("./Message/message.routes");
 const chat = require("./Chat/chat.routes");
 const foro = require("./Foro/foro.routes");
-const estadisticasHuella = require("./Estadisticas/estadisticasHuella.routes");
-const estadisticasConsumo = require("./Estadisticas/estadisticasConsumo.routes");
+const estadisticasHuellaRoute = require("./Estadisticas/estadisticasHuella.routes");
+const estadisticasConsumoRoute = require("./Estadisticas/estadisticasConsumo.routes");
 
 module.exports = {
     grupoAlimentosRoute,

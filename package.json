@@ -12,6 +12,7 @@
   "author": "Gamaliel Bernal",
   "license": "ISC",
   "dependencies": {
+    "@apidevtools/swagger-cli": "^4.0.4",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

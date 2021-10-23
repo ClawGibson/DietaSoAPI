@@ -3,6 +3,8 @@
 const { Router } = require('express');
 const router = Router();
 
+
+
 const {
     grupoAlimentosRoute,
     alimentosRoute,
@@ -66,6 +68,8 @@ router.use(`${API_URL}/recordatorios`, recordatorios);
 router.use(`${API_URL}/mensajes`, mensajes);
 router.use(`${API_URL}/chat`, chat);
 router.use(`${API_URL}/foro`, foro);
+
+
 
 module.exports = {
     router,

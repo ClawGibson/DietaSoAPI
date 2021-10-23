@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const EstadisticasConsumo = require("../../models/Estadisticas/EstadisticasConsumo");
-
+ 
 router.get('/', async (req, res) => {
     try {
         const response = await EstadisticasConsumo.find();
@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
 
 });
 
-router.path('/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
 
     try {
 
