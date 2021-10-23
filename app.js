@@ -22,7 +22,6 @@ app.use(
     swaggerUi.setup(swaggerDocument)
 );
 
-
 // middlewares
 app.use(cors());
 app.use(express.json());
@@ -31,11 +30,9 @@ app.use(authJwt());
 app.use(errorHandler);
 app.use(trim_all);
 
-
 // routes
 app.use(router);
-
-
+console.log(`PORT================${process.env.PORT}`);
 mongoose
     .connect(MONGODB, {
         useNewUrlParser: true,
@@ -50,6 +47,6 @@ mongoose
         console.log(err);
     });
 
-app.listen(PORT || 4000, () => {
-    console.log(`Server running at ${process.env.port || 4000}`);
+app.listen(process.env.PORT || 4000, () => {
+    console.log(`Server running at ${process.env.PORT || 4000}`);
 });

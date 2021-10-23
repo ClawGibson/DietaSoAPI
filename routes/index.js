@@ -19,13 +19,13 @@ const estadisticasPresionRoute = require('./Estadisticas/estadisticasPresion.rou
 const registroDieteticoRoute = require('./RegistroDietetico/registroDietetico.routes');
 const importarAlimentosRoute = require('../routes/Import/alimentos.routes');
 const recomendacionesPoblacionalesRoute = require('../routes/Recomendaciones/recomendacionesPoblacionales.routes');
-const metas = require("./Metas/metas.routes");
-const recordatorios = require("./Recordatorios/recordatorios.routes");
-const mensajes = require("./Message/message.routes");
-const chat = require("./Chat/chat.routes");
-const foro = require("./Foro/foro.routes");
-const estadisticasHuellaRoute = require("./Estadisticas/estadisticasHuella.routes");
-const estadisticasConsumoRoute = require("./Estadisticas/estadisticasConsumo.routes");
+const metas = require('./Metas/metas.routes');
+const recordatorios = require('./Recordatorios/recordatorios.routes');
+const mensajes = require('./Message/message.routes');
+const chat = require('./Chat/chat.routes');
+const foro = require('./Foro/foro.routes');
+const estadisticasHuellaRoute = require('./Estadisticas/estadisticasHuella.routes');
+const estadisticasConsumoRoute = require('./Estadisticas/estadisticasConsumo.routes');
 
 module.exports = {
     grupoAlimentosRoute,

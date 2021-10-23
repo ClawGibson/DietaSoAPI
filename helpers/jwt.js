@@ -10,6 +10,11 @@ function authJwt() {
         path: [
             `${process.env.API_URL}/usuarios/login`,
             `${process.env.API_URL}/usuarios/register`,
+            `${process.env.API_URL}/historialClinico/individual`,
+            `${process.env.API_URL}/datosUsuarios/`,
+            `${process.env.API_URL}/datosSocioeconomicos/`,
+            `${process.env.API_URL}/alimentacionUsuarios/`,
+            `${process.env.API_URL}/registroDietetico/`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {
@@ -28,18 +33,6 @@ function authJwt() {
             },
             { url: `${process.env.API_URL}/equivalencias/`, methods: ['GET'] },
             {
-                url: `${process.env.API_URL}/informacionUsuarios/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
-            },
-            {
-                url: `${process.env.API_URL}/datosUsuarios/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
-            },
-            {
-                url: `${process.env.API_URL}/historialClinico/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
-            },
-            {
                 url: `${process.env.API_URL}/estadisticasIMC/`,
                 methods: ['GET', 'POST', 'PUT', 'PATCH'],
             },
@@ -52,8 +45,8 @@ function authJwt() {
                 methods: ['GET', 'POST', 'PUT', 'PATCH'],
             },
             {
-                url: `${process.env.API_URL}/registroDietetico/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
+                url: `${process.env.API_URL}/informacionUsuarios/individual`,
+                methods: ['POST', 'GET'],
             },
         ],
     });
@@ -67,14 +60,12 @@ async function isRevoked(req, payload, done) {
         if (err) return done(null, false);
         if (req.method !== 'GET') {
             if (!payload.isAdmin) {
-                //console.log('Payload:', decoded);
                 return done(null, true);
             }
-            //console.log('Payload:', decoded, ' - Token: ', token);
             done();
         }
+        done();
     });
-
     done();
 }
 
