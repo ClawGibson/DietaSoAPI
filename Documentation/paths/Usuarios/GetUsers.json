@@ -1,0 +1,36 @@
+{
+    "get": {
+        "tags": [
+            "Usuarios"
+        ],
+        "summary": "Muestra la información de todos los usuarios registrados.",
+        "responses": {
+            "200": {
+                "description": "",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/UsuariosArray.json"
+                        }
+                    }
+                }
+            },
+            "500": {
+                "description": "No se encontraron usuarios."
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "security": [
+        {
+            "bearer": []
+        }
+    ]
+}

@@ -2,6 +2,9 @@
     "Login": {
         "$ref": "Login.json"
     },
+    "LoginSuccess": {
+        "$ref": "LoginSuccess.json"
+    },
     "Usuarios": {
         "$ref": "Usuarios.json"
     },

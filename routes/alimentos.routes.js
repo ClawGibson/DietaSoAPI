@@ -52,6 +52,7 @@ router.post('/', async (req, res) => {
 
     let alimento = new Alimentos({
         nombreAlimento: req.body.nombreAlimento,
+        sku: req.body.sku,
         imagen: req.body.imagen,
         grupoExportable: req.body.grupoExportable,
         subGrupoExportable: req.body.subGrupoExportable,

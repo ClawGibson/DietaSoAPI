@@ -1,0 +1,45 @@
+{
+    "get": {
+        "tags": [
+            "Alimentos"
+        ],
+        "summary": "Muestra la información de todos los alimentos registrados.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "../../schemas/Alimentos.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "success": {
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            } 
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}
