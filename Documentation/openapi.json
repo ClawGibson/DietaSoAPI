@@ -74,7 +74,32 @@
         },
         "/menuBase/{id}": {
             "$ref": "./paths/MenuBase/IndividualBaseMenu.json"
+        },
+        "/logros/": {
+            "$ref": "./paths/Logros/Achievements.json"
+        },
+        "/logros/{id}": {
+            "$ref": "./paths/Logros/IndividualAchievement.json"
+        },
+        "/logrosDeUsuario/": {
+            "$ref": "./paths/LogrosUsuario/UserAchievement.json"
+        },
+        "/logrosDeUsuario/{id}": {
+            "$ref": "./paths/LogrosUsuario/IndividualUserAchievement.json"
+        },
+        "/logrosDeUsuario/delete/{id}": {
+            "$ref": "./paths/LogrosUsuario/DeleteUserAchievement.json"
+        },
+        "/puntosDeUsuario/{id}": {
+            "$ref": "./paths/PuntosDeUsuario/UserPoints.json"
+        },
+        "/equivalencias/": {
+            "$ref": "./paths/Equivalencias/Equivalences.json"
+        },
+        "/equivalencias/grupoAlimento": {
+            "$ref": "./paths/Equivalencias/EquivalenceFoodGroup.json"
         }
+
     },
     "components": {
         "schemas": {
