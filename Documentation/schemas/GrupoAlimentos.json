@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "grupoDeAlimento": {
+            "type": "string",
+            "unique": true
+        },
+        "src": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "grupoDeAlimento",
+        "src"
+    ]
+}

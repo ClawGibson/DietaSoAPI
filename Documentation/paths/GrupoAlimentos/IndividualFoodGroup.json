@@ -1,0 +1,123 @@
+{
+    "put": {
+        "tags": [
+            "Grupo de Alimentos"
+        ],
+        "summary": "Actualiza la información de un grupo de alimentos.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type":"object",
+                        "properties":{
+                            "grupoDeAlimento": {
+                                "type":"string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/GrupoAlimentos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404":{
+                "description": "El grupo no se encontró o no se pudo editar :c"
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "success":{
+                                    "type":"boolean",
+                                    "default": false
+                                },
+                                "error":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "delete": {
+        "tags": [
+            "Grupo de Alimentos"
+        ],
+        "summary": "Elimina un grupo de alimentos.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Grupo eliminado :D!"
+            },
+            "400": {
+                "description": "El ID del grupo de alimento a eliminar no es válido. | No se encontró el grupo a eliminar :c"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "success":{
+                                    "type":"boolean",
+                                    "default": false
+                                },
+                                "error":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

@@ -10,7 +10,17 @@ const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 const { trim_all } = require('request_trimmer');
 
-const { MONGODB, DBNAME } = process.env;
+const { PORT, MONGODB, DBNAME } = process.env;
+
+//Docuemntation
+const swaggerUi = require('swagger-ui-express'),
+      swaggerDocument = require('./openapi.json');
+
+app.use(
+    '/docs',
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerDocument)
+);
 
 // middlewares
 app.use(cors());

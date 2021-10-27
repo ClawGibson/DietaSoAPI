@@ -1,0 +1,120 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "comidaFavorita": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "comidaNoFavorita": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "alergiasAlimentarias": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "lugarDeCompras": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "quienCocina": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "estatusDieta": {
+            "type": "object",
+            "properties": {
+                "sigueDieta": {
+                    "type": "string"
+                },
+                "conNutriologo": {
+                    "type": "number"
+                }
+            }
+        },
+        "extras": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "desayuno": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "colacion1": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "comida": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "colacion2": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "cena": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "desayunoAyer": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "colacion1Ayer": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "comidaAyer": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "colacion2Ayer": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "cenaAyer": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "usuario",
+        "sigueDieta",
+        "conNutriologo"
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "properties": {
+        "idAlimento": {
+            "$ref": "Alimentos.json"
+        },
+        "cantidad": {
+            "type": "string"
+        },
+        "tipo": {
+            "type": "string"
+        },
+        "fecha": {
+            "type": "date"
+        },
+        "lugar": {
+            "type": "string"
+        },
+        "menuPreparacion": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "idAlimento",
+        "cantidad",
+        "tipo",
+        "fecha",
+        "lugar",
+        "menuPreparacion"
+    ]
+}

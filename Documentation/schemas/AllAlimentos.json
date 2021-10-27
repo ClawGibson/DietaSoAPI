@@ -1,0 +1,18 @@
+{
+    "type": "array",
+    "items": {
+        "type":"object",
+        "properties":{
+            "nombreAlimento": {
+                "type": "string"
+            },
+            "imagen": {
+                "type": "string",
+                "default": ""
+            },
+            "grupoAlimento": {
+                "type": "string"
+            }  
+        }
+    }
+}

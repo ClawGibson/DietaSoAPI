@@ -1,0 +1,91 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "DietaSo. API REST ",
+        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "license": {
+            "name": "MIT"
+        },
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.example.com/support",
+            "email": "support@example.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1/",
+            "name": "Servidor Local."
+        },
+        {
+            "url": "https://dietasoapiv1.herokuapp.com/api/v2/",
+            "name": "Servidor Producción."
+        }
+    ],
+    "paths": {
+        "/usuarios/login":{
+            "$ref": "./paths/Usuarios/Login.json"
+        },
+        "/usuarios/register": {
+            "$ref": "./paths/Usuarios/Register.json"
+        },
+        "/usuarios/": {
+            "$ref": "./paths/Usuarios/GetUsers.json"
+        },
+        "/usuarios/individual": {
+            "$ref": "./paths/Usuarios/IndividualUser.json"
+        },
+        "/alimentos/all/": {
+            "$ref": "./paths/Alimentos/AllFood.json"
+        },
+        "/alimentos/": {
+            "$ref": "./paths/Alimentos/Food.json"
+        },
+        "/alimentos/{id}": {
+            "$ref": "./paths/Alimentos/IndividualFood.json"
+        },
+        "/grupoAlimentos/": {
+            "$ref": "./paths/GrupoAlimentos/FoodGroup.json"
+        },
+        "/grupoAlimentos/detalles": {
+            "$ref": "./paths/GrupoAlimentos/FoodGroupDetails.json"
+        },
+        "/grupoAlimentos/{id}": {
+            "$ref": "./paths/GrupoAlimentos/IndividualFoodGroup.json"
+        },
+        "/subGrupoAlimentos/": {
+            "$ref": "./paths/SubGrupoAlimentos/FoodSubGroup.json"
+        },
+        "/subGrupoAlimentos/{id}": {
+            "$ref": "./paths/SubGrupoAlimentos/IndividualFoodSubGroup.json"
+        },
+        "/recetas/": {
+            "$ref": "./paths/Recetas/Recipes.json"
+        },
+        "/recetas/{id}": {
+            "$ref": "./paths/Recetas/IndividualRecipes.json"
+        },
+        "/recetas/destacadas/{count}": {
+            "$ref": "./paths/Recetas/PopularRecipes.json"
+        },
+        "/menuBase/": {
+            "$ref": "./paths/MenuBase/BaseMenu.json"
+        },
+        "/menuBase/{id}": {
+            "$ref": "./paths/MenuBase/IndividualBaseMenu.json"
+        }
+    },
+    "components": {
+        "schemas": {
+            "$ref": "./schemas/index.json"
+        },
+        "securitySchemes": {
+            "bearer": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http"
+            }
+        }
+    }
+}

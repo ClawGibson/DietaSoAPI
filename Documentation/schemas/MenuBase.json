@@ -1,0 +1,25 @@
+{
+    "type": "object",
+    "properties": {
+        "titulo": {
+            "type": "string"
+        },
+        "imagen": {
+            "type": "string"
+        },
+        "ingredientes": {
+            "type": "array",
+            "items": {
+                "$ref": "IngredientesArray.json"
+            }
+        },
+        "categoria": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "titulo",
+        "imagen",
+        "categoria"
+    ]
+}

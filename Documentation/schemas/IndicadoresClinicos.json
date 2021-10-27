@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "presionArterial": {
+            "type": "string"
+        },
+        "acantosisNigricans": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usuario",
+        "presionArterial",
+        "acantosisNigricans"
+    ]
+}

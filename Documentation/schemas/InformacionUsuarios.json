@@ -1,0 +1,23 @@
+{
+    "type": "object",
+    "properties": {
+        "logro": {
+            "type": "string"
+        },
+        "fotoLogro": {
+            "type": "string"
+        },
+        "puntosNecesarios": {
+            "type": "number"
+        },
+        "logroRequerido": {
+            "$ref": "Logros.json"
+        }
+    },
+    "required": [
+        "logro",
+        "fotoLogro",
+        "puntosNecesarios",
+        "logroRequerido"
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "properties": {
+        "user": {
+            "$ref": "InformacionUsuarios.json"
+        },
+        "post": {
+            "type": "string"
+        },
+        "file": {
+            "type": "string"
+        },
+        "comments": {
+            "type": "array",
+            "items": {
+                "$ref": "Comment.json"
+            }
+        },
+        "likes": {
+            "type": "array",
+            "items": {
+                "$ref": "Like.json"
+            }
+        }
+    },
+    "required": [
+        "user"
+    ]
+}

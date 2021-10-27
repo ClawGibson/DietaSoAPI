@@ -1,0 +1,46 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "glucosa": {
+            "type": "number"
+        },
+        "trigliceridos": {
+            "type": "number"
+        },
+        "colesterolTotal": {
+            "type": "number"
+        },
+        "colesterolLDL": {
+            "type": "number"
+        },
+        "colesterolHDL": {
+            "type": "number"
+        },
+        "nivelesGlucosa": {
+            "type": "number"
+        },
+        "nivelesTrigliceridos": {
+            "type": "number"
+        },
+        "nivelesColesterolTotal": {
+            "type": "number"
+        },
+        "nivelesColesterolLDL": {
+            "type": "number"
+        },
+        "nivelesHDL": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "usuario",
+        "glucosa",
+        "trigliceridos",
+        "colesterolTotal",
+        "colesterolLDL",
+        "colesterolHDL"
+    ]
+}

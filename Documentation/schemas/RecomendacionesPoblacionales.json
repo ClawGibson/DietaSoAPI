@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "properties": {
+        "alimento": {
+            "$ref": "Alimentos.json"
+        },
+        "grupoId": {
+            "type": "string"
+        },
+        "consumo": {
+            "type": "string"
+        },
+        "porcionRecomendada": {
+            "type": "string"
+        },
+        "porcionMinima": {
+            "type": "string"
+        },
+        "porcionMaxima": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "alimento",
+        "grupoId",
+        "consumo",
+        "porcionRecomendada",
+        "porcionMinima",
+        "porcionMaxima"
+    ]
+}

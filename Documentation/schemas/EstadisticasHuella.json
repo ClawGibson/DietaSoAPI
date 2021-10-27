@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "$ref": "Usuarios.json"
+        },
+        "huellaHidricaTotal": {
+            "type": "number",
+            "default": 0
+        },
+        "huellaCarbonoTotal": {
+            "type": "number",
+            "default": 0
+        },
+        "puntajeEcologicoSostenible": {
+            "type": "number",
+            "default": 0
+        },
+        "puntosEconomiaDeFichas": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

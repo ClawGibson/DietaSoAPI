@@ -1,0 +1,25 @@
+{
+    "type": "object",
+    "properties": {
+        "chat": {
+            "$ref": "Chat.json"
+        },
+        "user": {
+            "$ref": "Usuarios.json"
+        },
+        "message": {
+            "type": "string",
+            "require": true
+        },
+        "date": {
+            "type": "date"
+        },
+        "file": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "chat",
+        "user"
+    ]
+}

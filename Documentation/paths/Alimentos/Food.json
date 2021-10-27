@@ -1,0 +1,69 @@
+{
+    "get": {
+        "tags": [
+            "Alimentos"
+        ],
+        "summary": "Muestra la información de todos los alimentos registrados.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/AllAlimentos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No hay alimentos todavía :c"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Alimentos"
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Alimentos.json"
+                    }
+                }
+            }
+        },
+        "summary": "Agrega un nuevo alimento.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Alimentos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "Grupo de alimento inválido | No se pudo crear el alimento :C"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}
+

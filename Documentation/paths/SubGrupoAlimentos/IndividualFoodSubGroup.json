@@ -1,0 +1,82 @@
+{
+    "put": {
+        "tags": [
+            "Sub Grupo de Alimentos"
+        ],
+        "summary": "Actualiza la información de un sub grupo de alimentos.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/SubGrupoAlimentos.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/SubGrupoAlimentos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "El sub grupo no se encontró o no se pudo editar :c"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "delete": {
+        "tags": [
+            "Sub Grupo de Alimentos"
+        ],
+        "summary": "Elimina un sub grupo de alimentos.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Sub grupo eliminado :D!"
+            },
+            "400": {
+                "description": "El ID del sub grupo no es válido. | No se encontró el sub grupo a eliminar :c"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

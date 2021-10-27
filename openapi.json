@@ -1,0 +1,3507 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "DietaSo. API REST ",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "license": {
+      "name": "MIT"
+    },
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.example.com/support",
+      "email": "support@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1/",
+      "name": "Servidor Local."
+    },
+    {
+      "url": "https://dietasoapiv1.herokuapp.com/api/v2/",
+      "name": "Servidor Producción."
+    }
+  ],
+  "paths": {
+    "/usuarios/login": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Inicio de sesión para los usuarios.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Contraseña incorrecta"
+          },
+          "404": {
+            "description": "Usuario no registrado :c"
+          }
+        }
+      }
+    },
+    "/usuarios/register": {
+      "post": {
+        "summary": "Registra un usuario.",
+        "tags": [
+          "Usuarios"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuarios"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo agregar al usuario."
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "Ocurrio un problema al buscar el usuario."
+          },
+          "500": {
+            "description": "Usuario ya creado | Ocurrió un error al buscar el usuario"
+          }
+        }
+      }
+    },
+    "/usuarios/": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Muestra la información de todos los usuarios registrados.",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuarios"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontraron usuarios."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "security": [
+        {
+          "bearer": []
+        }
+      ]
+    },
+    "/usuarios/individual": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Obtiene la información de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuarios"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Usuario no encontrado. | Error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Actualiza la información de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "contrasena": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "usuario",
+                  "email",
+                  "contrasena"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "No se pudo editar el usuario :c."
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Usuario no existe. | Ocurrió un error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentos/all/": {
+      "get": {
+        "tags": [
+          "Alimentos"
+        ],
+        "summary": "Muestra la información de todos los alimentos registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Alimentos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentos/": {
+      "get": {
+        "tags": [
+          "Alimentos"
+        ],
+        "summary": "Muestra la información de todos los alimentos registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nombreAlimento": {
+                        "type": "string"
+                      },
+                      "imagen": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "grupoAlimento": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No hay alimentos todavía :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Alimentos"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Alimentos"
+              }
+            }
+          }
+        },
+        "summary": "Agrega un nuevo alimento.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alimentos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Grupo de alimento inválido | No se pudo crear el alimento :C"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentos/{id}": {
+      "get": {
+        "tags": [
+          "Alimentos"
+        ],
+        "summary": "Muestra la información de un alimiento.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alimentos"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No existe ese alimento :/."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Alimentos"
+        ],
+        "summary": "Actualiza la información de un alimento.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Alimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alimentos"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "El producto no se encontró o no se pudo editar :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Alimentos"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Elimina un alimento.",
+        "responses": {
+          "200": {
+            "description": "Alimento eliminado :D!"
+          },
+          "400": {
+            "description": "El ID del alimento no es válido. | 'No se encontró el alimento a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "El producto no se encontró o no se pudo editar :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/grupoAlimentos/": {
+      "get": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Muestra la información de todos los grupos de alimentos registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoAlimentos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Agrega un nuevo grupo de alimentos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoAlimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoAlimentos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo crear el grupo :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/grupoAlimentos/detalles": {
+      "get": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Muestra los detalles de todos los grupos de alimentos registrados.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "grupoAlimento",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Equivalencia"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/grupoAlimentos/{id}": {
+      "put": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Actualiza la información de un grupo de alimentos.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grupoDeAlimento": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoAlimentos"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "El grupo no se encontró o no se pudo editar :c"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Elimina un grupo de alimentos.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Grupo eliminado :D!"
+          },
+          "400": {
+            "description": "El ID del grupo de alimento a eliminar no es válido. | No se encontró el grupo a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/subGrupoAlimentos/": {
+      "get": {
+        "tags": [
+          "Sub Grupo de Alimentos"
+        ],
+        "summary": "Muestra la información de todos los sub grupos de alimentos registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubGrupoAlimentos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Sub Grupo de Alimentos"
+        ],
+        "summary": "Agrega un nuevo sub grupo de alimentos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubGrupoAlimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubGrupoAlimentos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo actualizar el alimento :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/subGrupoAlimentos/{id}": {
+      "put": {
+        "tags": [
+          "Sub Grupo de Alimentos"
+        ],
+        "summary": "Actualiza la información de un sub grupo de alimentos.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubGrupoAlimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubGrupoAlimentos"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "El sub grupo no se encontró o no se pudo editar :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Sub Grupo de Alimentos"
+        ],
+        "summary": "Elimina un sub grupo de alimentos.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sub grupo eliminado :D!"
+          },
+          "400": {
+            "description": "El ID del sub grupo no es válido. | No se encontró el sub grupo a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recetas/": {
+      "get": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Muestra la información de todas las recetas registradas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recetas"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Agrega una nueva receta.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recetas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recetas"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo crear la receta :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recetas/{id}": {
+      "put": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Actualiza la información de una receta.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recetas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recetas"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró o no se pudo editar la receta :c"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Elimina una receta.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Receta eliminada :D!"
+          },
+          "400": {
+            "description": "No se encontró el receta a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recetas/destacadas/{count}": {
+      "get": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Obtiene las recetas más populares.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "count",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recetas"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró o no se pudo editar la receta :c"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/menuBase/": {
+      "get": {
+        "tags": [
+          "Menu Base"
+        ],
+        "summary": "Muestra la información de todos los menu base registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuBase"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Menu Base"
+        ],
+        "summary": "Agrega un nuevo menu base.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuBase"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MenuBase"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/menuBase/{id}": {
+      "get": {
+        "tags": [
+          "Menu Base"
+        ],
+        "summary": "Muestra la información de un menu base.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MenuBase"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontró el menú base que buscaba :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Menu Base"
+        ],
+        "summary": "Actualiza la información de un menu base.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuBase"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MenuBase"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se pudo editar el menú base u ocurrió algún error inesperado"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "contrasena": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usernameOrEmail",
+          "password"
+        ]
+      },
+      "LoginSuccess": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "email"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          },
+          "admin": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Usuarios": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "contrasena": {
+            "type": "string"
+          },
+          "esAdmin": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "usuario",
+          "email",
+          "contrasena"
+        ]
+      },
+      "SubGrupoAlimentos": {
+        "type": "object",
+        "properties": {
+          "subGrupoDeAlimento": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "subGrupoDeAlimento"
+        ]
+      },
+      "RegistroDietetico": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "agua": {
+            "type": "number"
+          },
+          "ejercicio": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nombre": {
+                  "type": "string"
+                },
+                "duracion": {
+                  "type": "number"
+                },
+                "intensidad": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "nombre",
+                "duracion",
+                "intensidad"
+              ]
+            }
+          },
+          "alimentos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "idAlimento": {
+                  "$ref": "#/components/schemas/Alimentos"
+                },
+                "cantidad": {
+                  "type": "string"
+                },
+                "tipo": {
+                  "type": "string"
+                },
+                "fecha": {
+                  "type": "date"
+                },
+                "lugar": {
+                  "type": "string"
+                },
+                "menuPreparacion": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "idAlimento",
+                "cantidad",
+                "tipo",
+                "fecha",
+                "lugar",
+                "menuPreparacion"
+              ]
+            }
+          }
+        },
+        "required": [
+          "usuario",
+          "agua"
+        ]
+      },
+      "Recetas": {
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "type": "string"
+          },
+          "categoria": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "ingredientes": {
+            "type": "string"
+          },
+          "preparacion": {
+            "type": "string"
+          },
+          "destacado": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "titulo",
+          "categoria",
+          "url",
+          "ingredientes",
+          "preparacion",
+          "destacado"
+        ]
+      },
+      "PuntosDeUsuario": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "puntos": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "usuario",
+          "puntos"
+        ]
+      },
+      "MenuBase": {
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "type": "string"
+          },
+          "imagen": {
+            "type": "string"
+          },
+          "ingredientes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "alimento": {
+                  "type": "string"
+                },
+                "cantidad": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "alimento",
+                "cantidad"
+              ]
+            }
+          },
+          "categoria": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "titulo",
+          "imagen",
+          "categoria"
+        ]
+      },
+      "LogrosDeUsuario": {
+        "type": "object",
+        "properties": {
+          "logro": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Logros"
+            }
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          }
+        },
+        "required": [
+          "items",
+          "usuario"
+        ]
+      },
+      "Logros": {
+        "type": "object",
+        "properties": {
+          "logro": {
+            "type": "string"
+          },
+          "fotoLogro": {
+            "type": "string"
+          },
+          "puntosNecesarios": {
+            "type": "number"
+          },
+          "logroRequerido": {
+            "type": "Logros"
+          }
+        },
+        "required": [
+          "logro",
+          "fotoLogro",
+          "puntosNecesarios",
+          "logroRequerido"
+        ]
+      },
+      "InformacionUsuarios": {
+        "type": "object",
+        "properties": {
+          "logro": {
+            "type": "string"
+          },
+          "fotoLogro": {
+            "type": "string"
+          },
+          "puntosNecesarios": {
+            "type": "number"
+          },
+          "logroRequerido": {
+            "$ref": "#/components/schemas/Logros"
+          }
+        },
+        "required": [
+          "logro",
+          "fotoLogro",
+          "puntosNecesarios",
+          "logroRequerido"
+        ]
+      },
+      "HistorialClinica": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "historiaClinica": {
+            "type": "object",
+            "properties": {
+              "antecedentesPatologicos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "antecedentesHeredoFamiliares": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "medicamentos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "suplementos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "GrupoAlimentos": {
+        "type": "object",
+        "properties": {
+          "grupoDeAlimento": {
+            "type": "string",
+            "unique": true
+          },
+          "src": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "grupoDeAlimento",
+          "src"
+        ]
+      },
+      "Equivalencia": {
+        "type": "object",
+        "properties": {
+          "alimento": {
+            "type": "string"
+          },
+          "cantidadSugerida": {
+            "type": "string"
+          },
+          "unidad": {
+            "type": "string"
+          },
+          "pesoNetoKg": {
+            "type": "string"
+          },
+          "grupoAlimento": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "alimento",
+          "cantidadSugerida",
+          "unidad",
+          "pesoNetoKg",
+          "grupoAlimento"
+        ]
+      },
+      "DatosUsuarios": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "actividadFisica": {
+            "type": "object",
+            "properties": {
+              "tipoDeActividad": {
+                "type": "string"
+              },
+              "intensidad": {
+                "type": "string"
+              },
+              "vecesXsemana": {
+                "type": "string"
+              },
+              "minXdia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "tipoDeActividad",
+              "intensidad",
+              "vecesXsemana",
+              "minXdia"
+            ]
+          },
+          "peso": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "altura": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "usuario",
+          "tipoDeActividad",
+          "intensidad",
+          "vecesXsemana",
+          "minXdia",
+          "items",
+          "altura"
+        ]
+      },
+      "DatosSocioeconomicos": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "nivelSocioeconomico": {
+            "type": "object",
+            "properties": {
+              "ingresosMes": {
+                "type": "string"
+              },
+              "educacion": {
+                "type": "string"
+              },
+              "ocupacion": {
+                "type": "string"
+              },
+              "diasDeTrabajoXsemana": {
+                "type": "number"
+              },
+              "modalidad": {
+                "type": "string"
+              },
+              "horarioEntrada": {
+                "type": "string"
+              },
+              "horarioSalida": {
+                "type": "string"
+              },
+              "dineroDeAlimentacionXmesIndivi": {
+                "type": "string"
+              },
+              "dineroDeAlimentacionXmesHogar": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "ingresosMes",
+              "educacion",
+              "ocupacion",
+              "diasDeTrabajoXsemana",
+              "modalidad",
+              "horarioEntrada",
+              "horarioSalida",
+              "dineroDeAlimentacionXmesIndivi",
+              "dineroDeAlimentacionXmesHogar"
+            ]
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "Alimentos": {
+        "type": "object",
+        "properties": {
+          "nombreAlimento": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "imagen": {
+            "type": "string",
+            "default": ""
+          },
+          "grupoExportable": {
+            "type": "string",
+            "default": ""
+          },
+          "subGrupoExportable": {
+            "type": "string",
+            "default": ""
+          },
+          "clasificacionExportable": {
+            "type": "string",
+            "default": ""
+          },
+          "grupoAlimento": {
+            "type": "string"
+          },
+          "mensaje": {
+            "type": "object",
+            "properties": {
+              "nutricional": {
+                "type": "string",
+                "default": ""
+              },
+              "ambiental": {
+                "type": "string",
+                "default": ""
+              },
+              "mensajeEconomia": {
+                "type": "string",
+                "default": ""
+              },
+              "mensajeCulturaSociedad": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "nutricional",
+              "ambiental",
+              "mensajeEconomia",
+              "mensajeCulturaSociedad"
+            ]
+          },
+          "icono": {
+            "type": "object",
+            "properties": {
+              "iconoNutricional": {
+                "type": "string",
+                "default": ""
+              },
+              "iconoAmbiental": {
+                "type": "string",
+                "default": ""
+              },
+              "iconoEconomia": {
+                "type": "string",
+                "default": ""
+              },
+              "iconoCulturaSociedad": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "iconoNutricional",
+              "iconoAmbiental",
+              "iconoEconomia",
+              "iconoCulturaSociedad"
+            ]
+          },
+          "opcionesPreparacion": {
+            "type": "string",
+            "default": ""
+          },
+          "cantidadAlimento": {
+            "type": "object",
+            "properties": {
+              "cantidadSugerida": {
+                "type": "number",
+                "default": 0
+              },
+              "unidad": {
+                "type": "string",
+                "default": ""
+              },
+              "pesoNeto": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "cantidadSugerida",
+              "unidad",
+              "pesoNeto"
+            ]
+          },
+          "caloriasMacronutrientes": {
+            "type": "object",
+            "properties": {
+              "energia": {
+                "type": "string",
+                "default": ""
+              },
+              "proteina": {
+                "type": "string",
+                "default": ""
+              },
+              "lipidos": {
+                "type": "string",
+                "default": ""
+              },
+              "agSaturados": {
+                "type": "string",
+                "default": ""
+              },
+              "agMonoinsaturados": {
+                "type": "string",
+                "default": ""
+              },
+              "adPoliinsaturados": {
+                "type": "string",
+                "default": ""
+              },
+              "colesterol": {
+                "type": "string",
+                "default": ""
+              },
+              "omega3": {
+                "type": "string",
+                "default": ""
+              },
+              "omega6": {
+                "type": "string",
+                "default": ""
+              },
+              "omega9": {
+                "type": "string",
+                "default": ""
+              },
+              "hidratosDeCarbono": {
+                "type": "string",
+                "default": ""
+              },
+              "fibra": {
+                "type": "string",
+                "default": ""
+              },
+              "fibraInsoluble": {
+                "type": "string",
+                "default": ""
+              },
+              "azucar": {
+                "type": "string",
+                "default": ""
+              },
+              "etanol": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "energia",
+              "proteina",
+              "lipidos",
+              "agSaturados",
+              "agMonoinsaturados",
+              "adPoliinsaturados",
+              "colesterol",
+              "omega3",
+              "omega6",
+              "omega9",
+              "hidratosDeCarbono",
+              "fibra",
+              "fibraInsoluble",
+              "azucar",
+              "etanol"
+            ]
+          },
+          "vitaminas": {
+            "type": "object",
+            "properties": {
+              "tiamina": {
+                "type": "string",
+                "default": ""
+              },
+              "riboflavin": {
+                "type": "string",
+                "default": ""
+              },
+              "niacina": {
+                "type": "string",
+                "default": ""
+              },
+              "acidoPantotenico": {
+                "type": "string",
+                "default": ""
+              },
+              "piridoxina": {
+                "type": "string",
+                "default": ""
+              },
+              "biotina": {
+                "type": "string",
+                "default": ""
+              },
+              "cobalmina": {
+                "type": "string",
+                "default": ""
+              },
+              "acidoAscorbico": {
+                "type": "string",
+                "default": ""
+              },
+              "acidoFolico": {
+                "type": "string",
+                "default": ""
+              },
+              "vitaminaA": {
+                "type": "string",
+                "default": ""
+              },
+              "vitaminaD": {
+                "type": "string",
+                "default": ""
+              },
+              "vitaminaK": {
+                "type": "string",
+                "default": ""
+              },
+              "vitaminaE": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "tiamina",
+              "riboflavin",
+              "niacina",
+              "acidoPantotenico",
+              "piridoxina",
+              "biotina",
+              "cobalmina",
+              "acidoAscorbico",
+              "acidoFolico",
+              "vitaminaA",
+              "vitaminaD",
+              "vitaminaK",
+              "vitaminaE"
+            ]
+          },
+          "minerales": {
+            "type": "object",
+            "properties": {
+              "calcio": {
+                "type": "string",
+                "default": ""
+              },
+              "fosforo": {
+                "type": "string",
+                "default": ""
+              },
+              "hierro": {
+                "type": "string",
+                "default": ""
+              },
+              "hierroNoHem": {
+                "type": "string",
+                "default": ""
+              },
+              "hierroTotal": {
+                "type": "string",
+                "default": ""
+              },
+              "magnesio": {
+                "type": "string",
+                "default": ""
+              },
+              "sodio": {
+                "type": "string",
+                "default": ""
+              },
+              "potasio": {
+                "type": "string",
+                "default": ""
+              },
+              "zinc": {
+                "type": "string",
+                "default": ""
+              },
+              "selenio": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "calcio",
+              "fosforo",
+              "hierro",
+              "hierroNoHem",
+              "hierroTotal",
+              "magnesio",
+              "sodio",
+              "potasio",
+              "zinc",
+              "selenio"
+            ]
+          },
+          "aspectoGlucemico": {
+            "type": "object",
+            "properties": {
+              "indiceGlicemico": {
+                "type": "string",
+                "default": ""
+              },
+              "cargaGlicemica": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "indiceGlicemico",
+              "cargaGlicemica"
+            ]
+          },
+          "aspectoMedioambiental": {
+            "type": "object",
+            "properties": {
+              "factorDeCorreccionParaHuellaHidricaYEGEI": {
+                "type": "number",
+                "default": 0
+              },
+              "tipo": {
+                "type": "string",
+                "default": ""
+              },
+              "lugar": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaHidricaTotal": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaHidricaVerde": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaHidricaAzul": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaHidricaGris": {
+                "type": "string",
+                "default": ""
+              },
+              "aguaParaLavado": {
+                "type": "string",
+                "default": ""
+              },
+              "aguaParaCoccion": {
+                "type": "string",
+                "default": ""
+              },
+              "lugarEGEI": {
+                "type": "string",
+                "default": ""
+              },
+              "citaEGEI": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaCarbono": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaEcologica": {
+                "type": "string",
+                "default": ""
+              },
+              "energiaFosil": {
+                "type": "string",
+                "default": ""
+              },
+              "usoDeSuelo": {
+                "type": "string",
+                "default": ""
+              },
+              "nitrogeno": {
+                "type": "string",
+                "default": ""
+              },
+              "fosforo": {
+                "type": "string",
+                "default": ""
+              },
+              "puntajeEcologico": {
+                "type": "number",
+                "default": 0
+              }
+            },
+            "required": [
+              "factorDeCorreccionParaHuellaHidricaYEGEI",
+              "tipo",
+              "lugar",
+              "huellaHidricaTotal",
+              "huellaHidricaVerde",
+              "huellaHidricaAzul",
+              "huellaHidricaGris",
+              "aguaParaLavado",
+              "aguaParaCoccion",
+              "lugarEGEI",
+              "citaEGEI",
+              "huellaCarbono",
+              "huellaEcologica",
+              "energiaFosil",
+              "usoDeSuelo",
+              "nitrogeno",
+              "fosforo",
+              "puntajeEcologico"
+            ]
+          },
+          "aspectoEconomico": {
+            "type": "object",
+            "properties": {
+              "precio": {
+                "type": "number",
+                "default": 0
+              },
+              "lugarDeCompra": {
+                "type": "string",
+                "default": ""
+              },
+              "lugarDeVenta": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "precio",
+              "lugarDeCompra",
+              "lugarDeVenta"
+            ]
+          },
+          "componentesBioactivos": {
+            "type": "object",
+            "properties": {
+              "fitoquimicos": {
+                "type": "string",
+                "default": ""
+              },
+              "polifenoles": {
+                "type": "string",
+                "default": ""
+              },
+              "antocianinas": {
+                "type": "string",
+                "default": ""
+              },
+              "taninos": {
+                "type": "string",
+                "default": ""
+              },
+              "isoflavonas": {
+                "type": "string",
+                "default": ""
+              },
+              "resveratrol": {
+                "type": "string",
+                "default": ""
+              },
+              "isotiocinatos": {
+                "type": "string",
+                "default": ""
+              },
+              "caretenoides": {
+                "type": "string",
+                "default": ""
+              },
+              "betacarotenos": {
+                "type": "string",
+                "default": ""
+              },
+              "licopeno": {
+                "type": "string",
+                "default": ""
+              },
+              "luteina": {
+                "type": "string",
+                "default": ""
+              },
+              "alicina": {
+                "type": "string",
+                "default": ""
+              },
+              "cafeina": {
+                "type": "string",
+                "default": ""
+              },
+              "UFC": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "fitoquimicos",
+              "polifenoles",
+              "antocianinas",
+              "taninos",
+              "isoflavonas",
+              "resveratrol",
+              "isotiocinatos",
+              "caretenoides",
+              "betacarotenos",
+              "licopeno",
+              "luteina",
+              "alicina",
+              "cafeina",
+              "UFC"
+            ]
+          },
+          "aditivosAlimentarios": {
+            "type": "object",
+            "properties": {
+              "benzoatoDeSodio": {
+                "type": "string",
+                "default": ""
+              },
+              "polisorbato": {
+                "type": "string",
+                "default": ""
+              },
+              "azulBrillanteFCFoE133": {
+                "type": "string",
+                "default": ""
+              },
+              "azurrubinaOE102": {
+                "type": "string",
+                "default": ""
+              },
+              "amarilloOcasoFDFoE110": {
+                "type": "string",
+                "default": ""
+              },
+              "tartrazinaOE102": {
+                "type": "string",
+                "default": ""
+              },
+              "verdeSoE142": {
+                "type": "string",
+                "default": ""
+              },
+              "negroBrillanteBNoE151": {
+                "type": "string",
+                "default": ""
+              },
+              "sucralosa": {
+                "type": "string",
+                "default": ""
+              },
+              "estevia": {
+                "type": "string",
+                "default": ""
+              },
+              "sacarina": {
+                "type": "string",
+                "default": ""
+              },
+              "aspartame": {
+                "type": "string",
+                "default": ""
+              },
+              "acesulfameK": {
+                "type": "string",
+                "default": ""
+              },
+              "carboxymethylcellulose": {
+                "type": "string",
+                "default": ""
+              },
+              "dioxidoDeTitanio": {
+                "type": "string",
+                "default": ""
+              },
+              "monolauratoDeGlicerol": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "benzoatoDeSodio",
+              "polisorbato",
+              "azulBrillanteFCFoE133",
+              "azurrubinaOE102",
+              "amarilloOcasoFDFoE110",
+              "tartrazinaOE102",
+              "verdeSoE142",
+              "negroBrillanteBNoE151",
+              "sucralosa",
+              "estevia",
+              "sacarina",
+              "aspartame",
+              "acesulfameK",
+              "carboxymethylcellulose",
+              "dioxidoDeTitanio",
+              "monolauratoDeGlicerol"
+            ]
+          },
+          "atributosAdicionales": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "atributoAdicional": {
+                  "type": "string",
+                  "default": ""
+                }
+              },
+              "required": [
+                "atributoAdicional"
+              ]
+            }
+          },
+          "marca": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [
+          "nombreAlimento",
+          "sku",
+          "imagen",
+          "grupoExportable",
+          "subGrupoExportable",
+          "clasificacionExportable",
+          "grupoAlimento",
+          "opcionesPreparacion",
+          "marca"
+        ]
+      },
+      "AlimentacionUsuarios": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "comidaFavorita": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comidaNoFavorita": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "alergiasAlimentarias": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "lugarDeCompras": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "quienCocina": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "estatusDieta": {
+            "type": "object",
+            "properties": {
+              "sigueDieta": {
+                "type": "string"
+              },
+              "conNutriologo": {
+                "type": "number"
+              }
+            }
+          },
+          "extras": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "desayuno": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "colacion1": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comida": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "colacion2": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cena": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "desayunoAyer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "colacion1Ayer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comidaAyer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "colacion2Ayer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cenaAyer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "usuario",
+          "sigueDieta",
+          "conNutriologo"
+        ]
+      },
+      "Recordatoria": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Usuarios"
+            }
+          },
+          "metas": {
+            "$ref": "#/components/schemas/Metas"
+          },
+          "titulo": {
+            "type": "string",
+            "unique": true
+          },
+          "mensaje": {
+            "type": "string"
+          },
+          "categoria": {
+            "type": "string"
+          },
+          "dias": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "day": {
+                  "type": "string"
+                },
+                "activo": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          },
+          "global": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "items",
+          "metas",
+          "titulo",
+          "mensaje",
+          "categoria",
+          "day"
+        ]
+      },
+      "RecomendacionesPoblacionales": {
+        "type": "object",
+        "properties": {
+          "alimento": {
+            "$ref": "#/components/schemas/Alimentos"
+          },
+          "grupoId": {
+            "type": "string"
+          },
+          "consumo": {
+            "type": "string"
+          },
+          "porcionRecomendada": {
+            "type": "string"
+          },
+          "porcionMinima": {
+            "type": "string"
+          },
+          "porcionMaxima": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "alimento",
+          "grupoId",
+          "consumo",
+          "porcionRecomendada",
+          "porcionMinima",
+          "porcionMaxima"
+        ]
+      },
+      "Like": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/InformacionUsuarios"
+          },
+          "activate": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/InformacionUsuarios"
+          },
+          "text": {
+            "type": "string"
+          },
+          "activate": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
+      "Metas": {
+        "type": "object",
+        "properties": {
+          "objetivo": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string",
+            "default": ""
+          },
+          "categoriaDeSostenibilidad": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objetivo",
+          "descripcion",
+          "categoriaDeSostenibilidad"
+        ]
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "$ref": "#/components/schemas/Chat"
+          },
+          "user": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "message": {
+            "type": "string",
+            "require": true
+          },
+          "date": {
+            "type": "date"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "chat",
+          "user"
+        ]
+      },
+      "Publicacion": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/InformacionUsuarios"
+          },
+          "post": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Comment"
+            }
+          },
+          "likes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Like"
+            }
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
+      "EstadisticasPresion": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "presionArterialSistolica": {
+            "type": "number",
+            "minimum": 0,
+            "maximun": 300
+          },
+          "presionArterialDiastolica": {
+            "type": "number",
+            "minimum": 0,
+            "maximun": 300
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "EstadisticasNiveles": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "glucosa": {
+            "type": "number"
+          },
+          "trigliceridos": {
+            "type": "number"
+          },
+          "colesterolTotal": {
+            "type": "number"
+          },
+          "colesterolLDL": {
+            "type": "number"
+          },
+          "colesterolHDL": {
+            "type": "number"
+          },
+          "nivelesGlucosa": {
+            "type": "number"
+          },
+          "nivelesTrigliceridos": {
+            "type": "number"
+          },
+          "nivelesColesterolTotal": {
+            "type": "number"
+          },
+          "nivelesColesterolLDL": {
+            "type": "number"
+          },
+          "nivelesHDL": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "usuario",
+          "glucosa",
+          "trigliceridos",
+          "colesterolTotal",
+          "colesterolLDL",
+          "colesterolHDL"
+        ]
+      },
+      "EstadisticasIMC": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "realizacionActividadFisicaMinutos": {
+            "type": "number"
+          },
+          "porcentajeGrasaCorporal": {
+            "type": "number",
+            "default": 0
+          },
+          "porcentajeMasaMuscular": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "EstadisticasHuella": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "huellaHidricaTotal": {
+            "type": "number",
+            "default": 0
+          },
+          "huellaCarbonoTotal": {
+            "type": "number",
+            "default": 0
+          },
+          "puntajeEcologicoSostenible": {
+            "type": "number",
+            "default": 0
+          },
+          "puntosEconomiaDeFichas": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "EstadisticasConsumo": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "frutasVegetales": {
+            "type": "number",
+            "default": 0
+          },
+          "alimentosMexicanos": {
+            "type": "number",
+            "default": 0
+          },
+          "cerealesIntegrales": {
+            "type": "number",
+            "default": 0
+          },
+          "leguminosas": {
+            "type": "number",
+            "default": 0
+          },
+          "lacteos": {
+            "type": "number",
+            "default": 0
+          },
+          "semillasGrasasSaludables": {
+            "type": "number",
+            "default": 0
+          },
+          "huevo": {
+            "type": "number",
+            "default": 0
+          },
+          "pescadoMariscos": {
+            "type": "number",
+            "default": 0
+          },
+          "pollo": {
+            "type": "number",
+            "default": 0
+          },
+          "carnesRojasProcesadas": {
+            "type": "number",
+            "default": 0
+          },
+          "ultraProcesados": {
+            "type": "number",
+            "default": 0
+          },
+          "azucar": {
+            "type": "number",
+            "default": 0
+          },
+          "grasaSaturada": {
+            "type": "number",
+            "default": 0
+          },
+          "grasaTrans": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "EconomiaFichas": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "alimento": {
+            "$ref": "#/components/schemas/Alimentos"
+          },
+          "puntosTotales": {
+            "type": "number",
+            "default": 0
+          },
+          "puntosObtenidosPorAlimento": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "usuario",
+          "alimento",
+          "puntosTotales",
+          "puntosObtenidosPorAlimento"
+        ]
+      },
+      "LactanciaUsuarios": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "maternaExclusiva": {
+            "type": "string"
+          },
+          "artificial": {
+            "type": "string"
+          },
+          "mixta": {
+            "type": "string"
+          },
+          "maternaContemplada": {
+            "type": "string"
+          },
+          "mixtaContemplada": {
+            "type": "string"
+          },
+          "artificialContemplada": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "maternaExclusiva",
+          "artificial",
+          "mixta",
+          "maternaContemplada",
+          "mixtaContemplada",
+          "artificialContemplada"
+        ]
+      },
+      "IndicadoresSeño": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "horasDeSueño": {
+            "type": "string"
+          },
+          "estadoDeDescanso": {
+            "type": "string"
+          },
+          "despiertaPorLaNoche": {
+            "type": "string",
+            "default": "No"
+          },
+          "frecuencia": {
+            "type": "string",
+            "default": false
+          }
+        },
+        "required": [
+          "usuario",
+          "horasDeSueño",
+          "estadoDeDescanso"
+        ]
+      },
+      "IndicadoresClinicos": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "presionArterial": {
+            "type": "string"
+          },
+          "acantosisNigricans": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "presionArterial",
+          "acantosisNigricans"
+        ]
+      },
+      "IndicadoresBioquimicos": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "glucosaAyuno": {
+            "type": "string"
+          },
+          "glucosaDespues": {
+            "type": "string"
+          },
+          "trigliceridos": {
+            "type": "string"
+          },
+          "colesterolTotal": {
+            "type": "string"
+          },
+          "colesterolLDL": {
+            "type": "string"
+          },
+          "colesterolHDL": {
+            "type": "string"
+          },
+          "microbiotaIntestinal": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "glucosaAyuno",
+          "glucosaDespues",
+          "trigliceridos",
+          "colesterolTotal",
+          "colesterolLDL",
+          "colesterolHDL",
+          "microbiotaIntestinal"
+        ]
+      },
+      "Gastrointestinales": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "inflamacionAbdominal": {
+            "type": "object",
+            "properties": {
+              "estado": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "frecuencia",
+              "estado"
+            ]
+          },
+          "diarrea": {
+            "type": "object",
+            "properties": {
+              "estado": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "frecuencia",
+              "estado"
+            ]
+          },
+          "estreñimiento": {
+            "type": "object",
+            "properties": {
+              "estado": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "frecuencia",
+              "estado"
+            ]
+          },
+          "reflujo": {
+            "type": "object",
+            "properties": {
+              "estado": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "frecuencia",
+              "estado"
+            ]
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "ExposicionSolar": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "minutosAlSol": {
+            "type": "string"
+          },
+          "cubresTuPiel": {
+            "type": "string"
+          },
+          "bloqueadorSolar": {
+            "type": "string",
+            "default": "No"
+          },
+          "diasXsemana": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "minutosAlSol",
+          "cubresTuPiel",
+          "bloqueadorSolar",
+          "diasXsemana"
+        ]
+      },
+      "EstadoGeneral": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "muchoCansancio": {
+            "type": "string"
+          },
+          "mareos": {
+            "type": "string",
+            "default": "No"
+          },
+          "muchaSed": {
+            "type": "string",
+            "default": "No"
+          },
+          "muchasGanasDeOrinar": {
+            "type": "string",
+            "default": "No"
+          },
+          "muchaHambre": {
+            "type": "string",
+            "default": "No"
+          },
+          "piesYmanos": {
+            "type": "object",
+            "properties": {
+              "seHinchan": {
+                "type": "string",
+                "default": "No"
+              },
+              "aQuehora": {
+                "type": "string"
+              },
+              "frecuencia": {
+                "type": "string"
+              },
+              "horasSentado": {
+                "type": "string"
+              },
+              "horasParado": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "seHinchan",
+              "aQuehora",
+              "frecuencia",
+              "horasSentado",
+              "horasParado"
+            ]
+          },
+          "nariz": {
+            "type": "object",
+            "properties": {
+              "sangradoDe": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDe": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sangradoDe",
+              "frecuenciaDe"
+            ]
+          },
+          "piel": {
+            "type": "object",
+            "properties": {
+              "manchasRojasMoretes": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDeEllo": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "manchasRojasMoretes",
+              "frecuenciaDeEllo"
+            ]
+          },
+          "unas": {
+            "type": "object",
+            "properties": {
+              "quebradizas": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "quebradizas",
+              "frecuencia"
+            ]
+          },
+          "cabello": {
+            "type": "object",
+            "properties": {
+              "caidaDeCabello": {
+                "type": "string",
+                "default": "No"
+              },
+              "cabelloQuebradizo": {
+                "type": "string",
+                "default": "No"
+              },
+              "cabelloTenidoOTratamiento": {
+                "type": "string",
+                "default": "No"
+              }
+            },
+            "required": [
+              "caidaDeCabello",
+              "cabelloQuebradizo",
+              "cabelloTenidoOTratamiento"
+            ]
+          },
+          "boca": {
+            "type": "object",
+            "properties": {
+              "cortadurasEnComisuras": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              },
+              "inflamacionDeLengua": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDe": {
+                "type": "string"
+              },
+              "inflamacionEncias": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDeIE": {
+                "type": "string"
+              },
+              "sangradoEncias": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDeSE": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "cortadurasEnComisuras",
+              "frecuencia",
+              "inflamacionDeLengua",
+              "frecuenciaDe",
+              "inflamacionEncias",
+              "frecuenciaDeIE",
+              "sangradoEncias",
+              "frecuenciaDeSE"
+            ]
+          },
+          "tipoDeNacimiento": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "muchoCansancio",
+          "mareos",
+          "muchaSed",
+          "muchasGanasDeOrinar",
+          "muchaHambre",
+          "tipoDeNacimiento"
+        ]
+      },
+      "ComposCorpUsuario": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "porcentGrasa": {
+            "type": "string",
+            "default": ""
+          },
+          "porcentMasa": {
+            "type": "string",
+            "default": ""
+          },
+          "porcentAgua": {
+            "type": "string",
+            "default": ""
+          },
+          "densidadOsea": {
+            "type": "string",
+            "default": ""
+          },
+          "grasaVisceral": {
+            "type": "string",
+            "default": ""
+          },
+          "tasaMetabolica": {
+            "type": "string",
+            "default": ""
+          },
+          "edadMetabolica": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [
+          "usuario",
+          "porcentGrasa",
+          "porcentMasa",
+          "porcentAgua",
+          "densidadOsea",
+          "grasaVisceral",
+          "tasaMetabolica",
+          "edadMetabolica"
+        ]
+      },
+      "CircunferenciaUsuario": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "$ref": "#/components/schemas/Usuarios"
+          },
+          "porcentGrasa": {
+            "type": "string",
+            "default": ""
+          },
+          "porcentMasa": {
+            "type": "string",
+            "default": ""
+          },
+          "porcentAgua": {
+            "type": "string",
+            "default": ""
+          },
+          "densidadOsea": {
+            "type": "string",
+            "default": ""
+          },
+          "grasaVisceral": {
+            "type": "string",
+            "default": ""
+          },
+          "tasaMetabolica": {
+            "type": "string",
+            "default": ""
+          },
+          "edadMetabolica": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [
+          "usuario",
+          "porcentGrasa",
+          "porcentMasa",
+          "porcentAgua",
+          "densidadOsea",
+          "grasaVisceral",
+          "tasaMetabolica",
+          "edadMetabolica"
+        ]
+      },
+      "Chat": {
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Usuarios"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    }
+  }
+}
