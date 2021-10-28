@@ -18,7 +18,7 @@ router.post('/', async (req, res, next) => {
                     return res.status(500).send('No se guardó el alimento');
                 }
 
-                return res.status(201).send(nuevoAlimento);
+                return res.status(200).send(nuevoAlimento);
             } catch (error) {
                 return res
                     .status(500)
