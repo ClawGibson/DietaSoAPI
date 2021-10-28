@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "puntos": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "usuario",
+        "puntos"
+    ]
+}

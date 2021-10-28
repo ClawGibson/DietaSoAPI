@@ -1,0 +1,124 @@
+{
+    "get": {
+        "tags": [
+            "Alimentos"
+        ],
+        "summary": "Muestra la información de un alimiento.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Alimentos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No existe ese alimento :/."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+
+    },
+    "put": {
+        "tags": [
+            "Alimentos"
+        ],
+        "summary": "Actualiza la información de un alimento.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Alimentos.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Alimentos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "El producto no se encontró o no se pudo editar :c"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "delete": {
+        "tags": [
+            "Alimentos"
+        ],
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "summary": "Elimina un alimento.",
+        "responses": {
+            "200": {
+                "description": "Alimento eliminado :D!"
+            },
+            "400": {
+                "description": "El ID del alimento no es válido. | 'No se encontró el alimento a eliminar :c"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "El producto no se encontró o no se pudo editar :c"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

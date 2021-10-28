@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "alimento": {
+            "type": "string"
+        },
+        "cantidad": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "alimento",
+        "cantidad"
+    ]
+}

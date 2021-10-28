@@ -1,0 +1,144 @@
+{
+    "get": {
+        "tags": [
+            "Publicacion"
+        ],
+        "summary": "Obtiene las publicaiones más populares",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "chats":{
+                                    "$ref": "../../schemas/Publicacion.json"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Publicacion"
+        ],
+        "summary": "Agrega una nueva publicaion",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Publicacion.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Creado correctamente"
+            },
+            "401": {
+                "description": "Acceso no autorizado. | Fallo al cargar la publicación"
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "delete": {
+        "tags": [
+            "Publicacion"
+        ],
+        "summary": "Elimina una publicación",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties":{
+                               "msg":{
+                                    "type": "string",
+                                    "default": "Eliminado correctamente"
+                               }
+                           }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                           "properties":{
+                               "error":{
+                                    "type": "object"
+                               }
+                           }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

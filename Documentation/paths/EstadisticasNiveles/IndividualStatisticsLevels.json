@@ -1,0 +1,43 @@
+{
+    "get": {
+        "tags": [
+            "Estadisticas Niveles"
+        ],
+        "summary": "Obtiene una estadistica por su id.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/EstadisticasIMC.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No existe el nivel"
+            },
+            "500": {
+                "description": "Error inesperado al obtener la estadistica IMC"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

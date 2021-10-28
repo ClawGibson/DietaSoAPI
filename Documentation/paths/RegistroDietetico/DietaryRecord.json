@@ -1,0 +1,115 @@
+{
+    "get": {
+        "tags": [
+            "Registro Dietetico"
+        ],
+        "summary": "Obtiene los registros dieteticos.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/RegistroDietetico.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontraron registros."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "error":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Registro Dietetico"
+        ],
+        "summary": "Agrega un nuevo registro dietetico.",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/RegistroDietetico.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "201": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/RegistroDietetico.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "error":{
+                                    "type":"string",
+                                    "default": "No se encontró el usuario proporcionado"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "error":{
+                                    "type":"string",
+                                    "default": "Error al guardar el registro"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

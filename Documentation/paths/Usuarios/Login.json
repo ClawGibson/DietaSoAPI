@@ -1,0 +1,36 @@
+{
+    "post": {
+        "tags": [
+            "Usuarios"
+        ],
+        "summary": "Inicio de sesión para los usuarios.",
+        "parameters": [],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Login.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/LoginSuccess.json"
+                        }
+                    }
+                }
+            },
+            "404": {
+                "description": "Usuario no registrado :c"
+            },
+            "401": {
+                "description": "Contraseña incorrecta"
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "user": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "activate": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "required": [
+        "user"
+    ]
+}

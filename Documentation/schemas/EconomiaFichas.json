@@ -1,0 +1,27 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "alimento": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "puntosTotales": {
+            "type": "number",
+            "default": 0
+        },
+        "puntosObtenidosPorAlimento": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": [
+        "usuario",
+        "alimento",
+        "puntosTotales",
+        "puntosObtenidosPorAlimento"
+    ]
+}

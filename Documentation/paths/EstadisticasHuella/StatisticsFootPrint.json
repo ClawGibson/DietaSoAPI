@@ -1,0 +1,74 @@
+{
+    "get": {
+        "tags": [
+            "Estadisticas Huella"
+        ],
+        "summary": "Obtiene todas las estadisticas.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/EstadisticasHuella.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontraron datos"
+            },
+            "500": {
+                "description": "Error inesperado al obtener las estadisticas Huella"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Estadisticas Huella"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/EstadisticasHuella.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "201": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/EstadisticasHuella.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error al querer guardar la estadistica Huella | Error inesperado al crear la estadistica Huella"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

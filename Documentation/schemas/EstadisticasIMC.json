@@ -1,0 +1,23 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "realizacionActividadFisicaMinutos": {
+            "type": "number"
+        },
+        "porcentajeGrasaCorporal": {
+            "type": "number",
+            "default": 0
+        },
+        "porcentajeMasaMuscular": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

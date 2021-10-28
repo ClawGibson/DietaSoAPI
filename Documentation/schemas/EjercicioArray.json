@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "nombre": {
+            "type": "string"
+        },
+        "duracion": {
+            "type": "number"
+        },
+        "intensidad": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "nombre",
+        "duracion",
+        "intensidad"
+    ]
+}

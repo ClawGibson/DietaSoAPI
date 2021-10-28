@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "historiaClinica": {
+            "$ref": "HistoriaClinicaArray.json"
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

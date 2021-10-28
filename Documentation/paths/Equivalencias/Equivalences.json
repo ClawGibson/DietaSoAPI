@@ -1,0 +1,68 @@
+{
+    "get": {
+        "tags": [
+            "Equivalencias"
+        ],
+        "summary": "Muestra la información de todas las equivalencias registradas.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/Equivalencia.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error al obtener la lista de equivalencias | Error inesperado"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Equivalencias"
+        ],
+        "summary": "Agrega una nueva equivalencia.",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Equivalencia.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Datos guardados exitosamente! :D"
+            },
+            "400": {
+                "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error al guardar la nueva equivalencia | Ocurrió un error al querer guardar los datos | Error inesperado"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

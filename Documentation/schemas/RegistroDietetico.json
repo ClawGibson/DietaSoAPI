@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "agua": {
+            "type": "number"
+        },
+        "ejercicio": {
+            "type": "array",
+            "items": {
+                "$ref": "EjercicioArray.json"
+            }
+        },
+        "alimentos": {
+            "type": "array",
+            "items": {
+                "$ref": "AlimentosArray.json"
+            }
+        }
+    },
+    "required": [
+        "usuario",
+        "agua"
+    ]
+}

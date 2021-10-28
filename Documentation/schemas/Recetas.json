@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "properties": {
+        "titulo": {
+            "type": "string"
+        },
+        "categoria": {
+            "type": "string"
+        },
+        "url": {
+            "type": "string"
+        },
+        "ingredientes": {
+            "type": "string"
+        },
+        "preparacion": {
+            "type": "string"
+        },
+        "destacado": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "titulo",
+        "categoria",
+        "url",
+        "ingredientes",
+        "preparacion",
+        "destacado"
+    ]
+}

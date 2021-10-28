@@ -1,0 +1,43 @@
+{
+    "get": {
+        "tags": [
+            "Estadisticas Presión"
+        ],
+        "summary": "Obtiene una estadistica por id.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/EstadisticasPresion.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontrado datos"
+            },
+            "500": {
+                "description": "Error inesperado al obtener la estadistica de presión"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "get": {
+        "tags": [
+            "Alimentación de Usuarios"
+        ],
+        "summary": "Muestra una lista de todos los tipos de alimentación de usuarios.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/AlimentacionUsuarios.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ningun registro de la alimentacion de usuarios"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,50 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "actividadFisica": {
+            "type": "object",
+            "properties": {
+                "tipoDeActividad": {
+                    "type": "string"
+                },
+                "intensidad": {
+                    "type": "string"
+                },
+                "vecesXsemana": {
+                    "type": "string"
+                },
+                "minXdia": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "tipoDeActividad",
+                "intensidad",
+                "vecesXsemana",
+                "minXdia"
+            ]
+        },
+        "peso": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            }
+        },
+        "altura": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "usuario",
+        "tipoDeActividad",
+        "intensidad",
+        "vecesXsemana",
+        "minXdia",
+        "items",
+        "altura"
+    ]
+}

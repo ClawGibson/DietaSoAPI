@@ -1,0 +1,87 @@
+{
+    "get": {
+        "tags": [
+            "Logros"
+        ],
+        "summary": "Muestra la información de todos los logros registrados.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/Logros.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "success":{
+                                    "type":"boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Logros"
+        ],
+        "summary": "Agrega un nuevo logro.",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Logros.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/MenuBase.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo crear el nuevo logro"
+            },
+            "500": {
+                "description": "El nombre de este logro ya existe. | Este logro no existe"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+
+    }
+}

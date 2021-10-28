@@ -1,0 +1,83 @@
+{
+    "get": {
+        "tags": [
+            "Sub Grupo de Alimentos"
+        ],
+        "summary": "Muestra la información de todos los sub grupos de alimentos registrados.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/SubGrupoAlimentos.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "success":{
+                                    "type":"boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Sub Grupo de Alimentos"
+        ],
+        "summary": "Agrega un nuevo sub grupo de alimentos.",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/SubGrupoAlimentos.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/SubGrupoAlimentos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo actualizar el alimento :c"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

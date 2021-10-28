@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "huellaHidricaTotal": {
+            "type": "number",
+            "default": 0
+        },
+        "huellaCarbonoTotal": {
+            "type": "number",
+            "default": 0
+        },
+        "puntajeEcologicoSostenible": {
+            "type": "number",
+            "default": 0
+        },
+        "puntosEconomiaDeFichas": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

@@ -1,0 +1,46 @@
+{
+    "delete": {
+        "tags": [
+            "Chat"
+        ],
+        "summary": "Elimina una chat",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Chat eliminado"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                           "properties":{
+                               "msg":{
+                                    "type": "string",
+                                    "default": "No se ha encontrado el chat seleccionado | {erro}"
+                               }
+                           }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

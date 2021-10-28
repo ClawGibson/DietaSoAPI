@@ -1,0 +1,32 @@
+{
+    "type": "object",
+    "properties": {
+        "idAlimento": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "cantidad": {
+            "type": "string"
+        },
+        "tipo": {
+            "type": "string"
+        },
+        "fecha": {
+            "type": "date"
+        },
+        "lugar": {
+            "type": "string"
+        },
+        "menuPreparacion": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "idAlimento",
+        "cantidad",
+        "tipo",
+        "fecha",
+        "lugar",
+        "menuPreparacion"
+    ]
+}

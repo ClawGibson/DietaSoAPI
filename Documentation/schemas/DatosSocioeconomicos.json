@@ -1,0 +1,55 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "nivelSocioeconomico": {
+            "type": "object",
+            "properties": {
+                "ingresosMes": {
+                    "type": "string"
+                },
+                "educacion": {
+                    "type": "string"
+                },
+                "ocupacion": {
+                    "type": "string"
+                },
+                "diasDeTrabajoXsemana": {
+                    "type": "number"
+                },
+                "modalidad": {
+                    "type": "string"
+                },
+                "horarioEntrada": {
+                    "type": "string"
+                },
+                "horarioSalida": {
+                    "type": "string"
+                },
+                "dineroDeAlimentacionXmesIndivi": {
+                    "type": "string"
+                },
+                "dineroDeAlimentacionXmesHogar": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ingresosMes",
+                "educacion",
+                "ocupacion",
+                "diasDeTrabajoXsemana",
+                "modalidad",
+                "horarioEntrada",
+                "horarioSalida",
+                "dineroDeAlimentacionXmesIndivi",
+                "dineroDeAlimentacionXmesHogar"
+            ]
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

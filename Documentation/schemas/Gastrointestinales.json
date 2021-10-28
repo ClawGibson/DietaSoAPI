@@ -1,0 +1,76 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "inflamacionAbdominal": {
+            "type": "object",
+            "properties": {
+                "estado": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuencia": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "frecuencia",
+                "estado"
+            ]
+        },
+        "diarrea": {
+            "type": "object",
+            "properties": {
+                "estado": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuencia": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "frecuencia",
+                "estado"
+            ]
+        },
+        "estreñimiento": {
+            "type": "object",
+            "properties": {
+                "estado": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuencia": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "frecuencia",
+                "estado"
+            ]
+        },
+        "reflujo": {
+            "type": "object",
+            "properties": {
+                "estado": {
+                    "type": "string",
+                    "default": "No"
+                },
+                "frecuencia": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "frecuencia",
+                "estado"
+            ]
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

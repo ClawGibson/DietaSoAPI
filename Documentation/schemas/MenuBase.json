@@ -1,0 +1,26 @@
+{
+    "type": "object",
+    "properties": {
+        "titulo": {
+            "type": "string"
+        },
+        "imagen": {
+            "type": "string"
+        },
+        "ingredientes": {
+            "type": "array",
+            "items": {
+                "type":"string",
+                "format": "uuid"
+            }
+        },
+        "categoria": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "titulo",
+        "imagen",
+        "categoria"
+    ]
+}

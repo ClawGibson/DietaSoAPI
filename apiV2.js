@@ -3,6 +3,8 @@
 const { Router } = require('express');
 const router = Router();
 
+
+
 const {
     grupoAlimentosRoute,
     alimentosRoute,
@@ -55,6 +57,7 @@ router.use(`${API_URL}/estadisticasIMC`, estadisticasIMCRoute);
 router.use(`${API_URL}/estadisticasNiveles`, estadisticasNivelesRoute);
 router.use(`${API_URL}/estadisticasHuella`, estadisticasHuellaRoute);
 router.use(`${API_URL}/estadisticasConsumo`, estadisticasConsumoRoute);
+router.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
 router.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
 router.use(`${API_URL}/importarAlimentos`, importarAlimentosRoute);
 router.use(
@@ -66,6 +69,8 @@ router.use(`${API_URL}/recordatorios`, recordatorios);
 router.use(`${API_URL}/mensajes`, mensajes);
 router.use(`${API_URL}/chat`, chat);
 router.use(`${API_URL}/foro`, foro);
+
+
 
 module.exports = {
     router,

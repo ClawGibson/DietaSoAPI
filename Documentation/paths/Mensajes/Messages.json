@@ -1,0 +1,54 @@
+{
+    "post": {
+        "tags": [
+            "Mensajes"
+        ],
+        "summary": "Agrega un nuevo mensaje",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Message.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "msg":{ 
+                                    "type": "string",
+                                    "default": "Creado correctamente"
+                                },
+                                "newMessage":{
+                                    "$ref": "../../schemas/Message.json"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

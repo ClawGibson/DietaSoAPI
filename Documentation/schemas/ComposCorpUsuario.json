@@ -1,0 +1,47 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "porcentGrasa": {
+            "type": "string",
+            "default": ""
+        },
+        "porcentMasa": {
+            "type": "string",
+            "default": ""
+        },
+        "porcentAgua": {
+            "type": "string",
+            "default": ""
+        },
+        "densidadOsea": {
+            "type": "string",
+            "default": ""
+        },
+        "grasaVisceral": {
+            "type": "string",
+            "default": ""
+        },
+        "tasaMetabolica": {
+            "type": "string",
+            "default": ""
+        },
+        "edadMetabolica": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "required": [
+        "usuario",
+        "porcentGrasa",
+        "porcentMasa",
+        "porcentAgua",
+        "densidadOsea",
+        "grasaVisceral",
+        "tasaMetabolica",
+        "edadMetabolica"
+    ]
+}
