@@ -1,9 +1,9 @@
 {
     "get": {
         "tags": [
-            "Estadisticas IMC"
+            "Estadisticas Niveles"
         ],
-        "summary": "Obtiene todas la estadisticas.",
+        "summary": "Obtiene todas las estadisticas.",
         "responses": {
             "200": {
                 "content": {
@@ -11,7 +11,7 @@
                         "schema": {
                             "type":"array",
                             "items":{
-                                "$ref": "../../schemas/EstadisticasIMC.json"
+                                "$ref": "../../schemas/EstadisticasNiveles.json"
                             }
                         }
                     }
@@ -21,10 +21,21 @@
                 "description": "Acceso no autorizado."
             },
             "404": {
-                "description": "No se encontraron datos"
+                "description": "No hay niveles"
             },
             "500": {
-                "description": "Error inesperado al obtener las estadisticas IMC"
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "error":{
+                                    "type":"object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "security": [
@@ -35,7 +46,7 @@
     },
     "post": {
         "tags": [
-            "Estadisticas IMC"
+            "Estadisticas Niveles"
         ],
         "summary": "Agrega una nueva estadistica.",
         "requestBody": {
@@ -43,7 +54,7 @@
             "content": {
                 "application/json": {
                     "schema": {
-                        "$ref": "../../schemas/EstadisticasIMC.json"
+                        "$ref": "../../schemas/EstadisticasNiveles.json"
                     }
                 }
             }
@@ -53,7 +64,7 @@
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "../../schemas/EstadisticasIMC.json"
+                            "$ref": "../../schemas/EstadisticasNiveles.json"
                         }
                     }
                 }
@@ -62,7 +73,7 @@
                 "description": "Acceso no autorizado."
             },
             "500": {
-                "description": "Error al querer guardar la estadistica IMC | Error inesperado al crear la estadistica IMC"
+                "description": "Error al guardar la estadistica"
             }
         },
         "security": [

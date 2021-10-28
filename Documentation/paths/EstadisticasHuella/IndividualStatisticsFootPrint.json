@@ -1,7 +1,7 @@
 {
     "get": {
         "tags": [
-            "Estadisticas IMC"
+            "Estadisticas Huella"
         ],
         "summary": "Obtiene una estadistica por id.",
         "parameters": [
@@ -19,7 +19,7 @@
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "../../schemas/EstadisticasIMC.json"
+                            "$ref": "../../schemas/EstadisticasHuella.json"
                         }
                     }
                 }
@@ -27,8 +27,11 @@
             "401": {
                 "description": "Acceso no autorizado."
             },
+            "400": {
+                "description": "No se encontraron datos"
+            },
             "500": {
-                "description": "No se encontraron datos | Error inesperado al obtener la estadistica IMC"
+                "description": "Error inesperado al obtener la estadistica Huella"
             }
         },
         "security": [
@@ -39,7 +42,7 @@
     },
     "patch": {
         "tags": [
-            "Estadisticas IMC"
+            "Estadisticas Huella"
         ],
         "summary": "Actualiza una estadistica.",
         "parameters": [
@@ -59,7 +62,16 @@
                     "schema": {
                         "type": "object",
                         "properties":{
-                            "porcentajeGrasaCorporal":{
+                            "huellaHidricaTotal":{
+                                "type": "number"
+                            },
+                            "huellaCArbonTotal":{
+                                "type": "number"
+                            },
+                            "puntajeEcologicoSostenible":{
+                                "type": "number"
+                            },
+                            "puntosEconomiaDeFichas":{
                                 "type": "number"
                             }
                         }
@@ -72,7 +84,7 @@
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "../../schemas/EstadisticasIMC.json"
+                            "$ref": "../../schemas/EstadisticasHuella.json"
                         }
                     }
                 }
@@ -84,7 +96,7 @@
                 "description": "No se encontraron datos"
             },
             "500": {
-                "description": "Error al querer guardar la estadistica IMC | Error inesperado al actualizar la estadistica IMC"
+                "description": "Error al querer guardar la estadistica Huella | Error inesperado al actualizar la estadistica Huella"
             }
         },
         "security": [

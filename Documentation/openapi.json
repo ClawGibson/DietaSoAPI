@@ -2,8 +2,8 @@
     "openapi": "3.0.0",
     "info": {
         "version": "1.0.0",
-        "title": "DietaSo. API REST ",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "title": "DietaSoAPI",
+        "description": "REST API orientada al area de nutrición.",
         "license": {
             "name": "MIT"
         },
@@ -137,6 +137,24 @@
         },
         "/estaisticasIMC/{id}": {
             "$ref": "./paths/EstadisticasIMC/IndividualStatisticsIMC.json"
+        },
+        "/estadisticasNiveles/": {
+            "$ref": "./paths/EstadisticasNiveles/StatisticsLevels.json"
+        },
+        "/estaisticasNiveles/{id}": {
+            "$ref": "./paths/EstadisticasNiveles/IndividualStatisticsLevels.json"
+        },
+        "/estadisticasHuella/": {
+            "$ref": "./paths/EstadisticasHuella/StatisticsFootPrint.json"
+        },
+        "/estaisticasHuella/{id}": {
+            "$ref": "./paths/EstadisticasHuella/IndividualStatisticsFootPrint.json"
+        },
+        "/estadisticasConsumo/": {
+            "$ref": "./paths/EstadisticasConsumo/StatisticsConsumption.json"
+        },
+        "/estaisticasConsumo/{id}": {
+            "$ref": "./paths/EstadisticasConsumo/IndividualStatisticsConsumption.json"
         }
 
     },

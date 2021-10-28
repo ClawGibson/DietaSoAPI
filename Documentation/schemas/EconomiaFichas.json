@@ -2,10 +2,12 @@
     "type": "object",
     "properties": {
         "usuario": {
-            "$ref": "Usuarios.json"
+            "type":"string",
+            "format": "uuid"
         },
         "alimento": {
-            "$ref": "Alimentos.json"
+            "type":"string",
+            "format": "uuid"
         },
         "puntosTotales": {
             "type": "number",

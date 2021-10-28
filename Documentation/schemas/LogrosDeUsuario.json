@@ -4,11 +4,13 @@
         "logro": {
             "type": "array",
             "items": {
-                "$ref": "Logros.json"
+                "type":"string",
+                "format": "uuid"
             }
         },
         "usuario": {
-            "$ref": "Usuarios.json"
+            "type":"string",
+            "format": "uuid"
         }
     },
     "required": [

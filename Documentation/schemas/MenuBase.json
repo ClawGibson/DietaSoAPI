@@ -10,7 +10,8 @@
         "ingredientes": {
             "type": "array",
             "items": {
-                "$ref": "IngredientesArray.json"
+                "type":"string",
+                "format": "uuid"
             }
         },
         "categoria": {
