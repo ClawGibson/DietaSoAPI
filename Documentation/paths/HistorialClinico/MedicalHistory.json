@@ -1,7 +1,7 @@
 {
     "get": {
         "tags": [
-            "Historial clinico"
+            "Historial Clinico"
         ],
         "summary": "Muestra una lista de todos los historiales clinicos almacenados en el sistema.",
         "responses": {

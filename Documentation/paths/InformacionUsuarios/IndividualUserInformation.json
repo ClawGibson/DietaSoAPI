@@ -1,7 +1,7 @@
 {
     "get": {
         "tags": [
-            "Información de usuarios"
+            "Información de Usuarios"
         ],
         "summary": "Muestra la información especifica de un usuario.",
         "parameters": [
@@ -42,7 +42,7 @@
     },
     "post": {
         "tags": [
-            "Información de usuarios"
+            "Información de Usuarios"
         ],
         "summary": "Agrega nueva información a un usuario.",
         "parameters": [
@@ -93,7 +93,7 @@
     },
     "patch": {
         "tags": [
-            "Información de usuarios"
+            "Información de Usuarios"
         ],
         "summary": "Actualiza la información de un usuario.",
         "parameters": [

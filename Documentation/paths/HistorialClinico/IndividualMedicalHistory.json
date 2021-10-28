@@ -1,7 +1,7 @@
 {
     "get": {
         "tags": [
-            "Historial clinico"
+            "Historial Clinico"
         ],
         "summary": "Muestra los datos de un historial clinico.",
         "parameters": [
@@ -42,7 +42,7 @@
     },
     "post": {
         "tags": [
-            "Historial clinico"
+            "Historial Clinico"
         ],
         "summary": "Agrega un nuevo historial clinico.",
         "parameters": [
@@ -96,7 +96,7 @@
     },
     "patch": {
         "tags": [
-            "Historial clinico"
+            "Historial Clinico"
         ],
         "summary": "Actualiza los datos de un historial clinico",
         "parameters": [

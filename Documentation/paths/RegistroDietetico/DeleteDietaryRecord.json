@@ -1,0 +1,52 @@
+{
+    "patch": {
+        "tags": [
+            "Registro Dietetico"
+        ],
+        "summary": "Elimina un registro dietetico.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type":"object",
+                        "properties":{
+                            "idAlimento": {
+                                "type":"number"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Alimento eliminado exitosamente"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontró el usuario proporcionado | No se encontró el alimento proporcionado"
+            },
+            "500": {
+                "description": "Error al eliminar el alimento del registro"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

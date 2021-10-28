@@ -1,0 +1,90 @@
+{
+    "get": {
+        "tags": [
+            "Chat"
+        ],
+        "summary": "Obtiene todos los chats",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "chats":{
+                                    "$ref": "../../schemas/Chat.json"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Chat"
+        ],
+        "summary": "Agrega un chat",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Chat.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Creado correctamente"
+            },
+            "401": {
+                "description": "Acceso no autorizado. | Son necesarios los usuarios"
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+    
+}

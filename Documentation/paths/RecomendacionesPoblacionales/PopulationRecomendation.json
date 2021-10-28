@@ -1,0 +1,41 @@
+{
+    "post": {
+        "tags": [
+            "RecomendacionesPoblacionales"
+        ],
+        "summary": "Agrega una recomendación poblacional",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/RecomendacionesPoblacionales.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/RecomendacionesPoblacionales.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Ocurrió un error al importar las recomendaciones poblacionales"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+
+    }
+}

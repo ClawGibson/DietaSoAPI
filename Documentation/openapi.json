@@ -99,7 +99,7 @@
         "/equivalencias/grupoAlimento": {
             "$ref": "./paths/Equivalencias/EquivalenceFoodGroup.json"
         },
-        "/informacionUsuarios": {
+        "/informacionUsuarios/": {
             "$ref": "./paths/InformacionUsuarios/UserInformation.json"
         },
         "/informacionUsuarios/individual": {
@@ -123,13 +123,13 @@
         "/datosSocioeconomicos/individual": {
             "$ref": "./paths/DatosSocioeconomicos/IndividualSocioeconomicData.json"
         },
-         "/alimentacionUsuarios": {
+         "/alimentacionUsuarios/": {
             "$ref": "./paths/AlimentacionUsuarios/UserFood.json"
         },
-        "alimentacionUsuarios/individual": {
+        "/alimentacionUsuarios/individual": {
             "$ref": "./paths/AlimentacionUsuarios/IndividualUserFood.json"
         },
-        "alimentacionUsuarios/comidaFav/": {
+        "/alimentacionUsuarios/comidaFav/": {
             "$ref": "./paths/AlimentacionUsuarios/FavoriteFoodUser.json"
         },
         "/estadisticasIMC/": {
@@ -155,6 +155,54 @@
         },
         "/estaisticasConsumo/{id}": {
             "$ref": "./paths/EstadisticasConsumo/IndividualStatisticsConsumption.json"
+        },
+        "/estadisticasPresion/": {
+            "$ref": "./paths/EstadisticasPresion/StatisticsPressure.json"
+        },
+        "/estaisticasPresion/{id}": {
+            "$ref": "./paths/EstadisticasPresion/IndividualStatisticsPressure.json"
+        },
+        "/registroDietetico/": {
+            "$ref": "./paths/RegistroDietetico/DietaryRecord.json"
+        },
+        "/registroDietetico/detalles": {
+            "$ref": "./paths/RegistroDietetico/DetailsDietaryRecord.json"
+        },
+        "/registroDietetico/modificarRegistro": {
+            "$ref": "./paths/RegistroDietetico/UpdateDietaryRecord.json"
+        },
+        "/registroDietetico/eliminarRegistro": {
+            "$ref": "./paths/RegistroDietetico/DeleteDietaryRecord.json"
+        },
+        "/importarAlimentos/":{
+            "$ref": "./paths/ImportarAlimentos/Food.json"
+        },
+        "/recomendacionPoblacional/":{
+            "$ref":"./paths/RecomendacionesPoblacionales/PopulationRecomendation.json"
+        },
+        "/metas/":{
+            "$ref":"./paths/Metas/Goals.json"
+        },
+        "/recordatorios/":{
+            "$ref":"./paths/Recordatorios/Reminders.json"
+        },
+        "/mensajes/":{
+            "$ref":"./paths/Mensajes/Messages.json"
+        },
+        "/mensajes/{id}":{
+            "$ref":"./paths/Mensajes/IndividualMessages.json"
+        },
+        "/chat/":{
+            "$ref":"./paths/Chat/Chat.json"
+        },
+        "/chat/{id}":{
+            "$ref":"./paths/Chat/DeleteChat.json"
+        },
+        "/foro/":{
+            "$ref":"./paths/Foro/Publication.json"
+        },
+        "/foro/{_id}":{
+            "$ref":"./paths/Foro/IndividualPublication.json"
         }
 
     },

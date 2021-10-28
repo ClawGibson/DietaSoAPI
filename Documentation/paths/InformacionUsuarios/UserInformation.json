@@ -1,7 +1,7 @@
 {
     "get": {
         "tags": [
-            "Información de usuarios"
+            "Información de Usuarios"
         ],
         "summary": "Muestra la información de todos los usuarios registrados.",
         "responses": {
