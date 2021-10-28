@@ -11,7 +11,8 @@
             "type": "number"
         },
         "logroRequerido": {
-            "type": "Logros"
+            "type":"string",
+            "format": "uuid"
         }
     },
     "required": [

@@ -1,0 +1,240 @@
+{
+    "get": {
+        "tags": [
+            "Alimentación de Usuarios"
+        ],
+        "summary": "Muestra los datos de un tipo de alimetación de un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "comidaFavorita":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "comidaNoFavoria":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "alergiasAlimentarias":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "lugarDeCompras":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "quienCocina":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "estatusDieta":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "extras":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "desayuno":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "colacion1":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "comida":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "colacion2":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "cena":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "desayunoAyer":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "colacion1Ayer":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "comidaAyer":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "colacion2Ayer":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                },
+                                "cenaAyer":{
+                                    "type":"array",
+                                    "items":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontró el usuario proporcionado | El usuario no tiene información de alimentación registrada"
+            },
+            "500": {
+                "description": "Ocurrió un error al buscar la informacion de alimentacion | Ocurrió un error al buscar al usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Alimentación de Usuarios"
+        ],
+        "summary": "Agrega un nuevo tipo de alimentación a un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/AlimentacionUsuarios.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/AlimentacionUsuarios.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo agregar los datos de alimentacion de usuarios"
+            },
+            "500":{
+                "description": "Alimentacion de Usuario ya registrada | Ocurrió un error al buscar la alimentación del usuario | Ocurrió un error al buscar el usuario | Ocurrió un error al guardar los datos de alimentacion de usuarios"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "patch": {
+        "tags": [
+            "Alimentación de Usuarios"
+        ],
+        "summary": "Actualiza los datos de un tipo de alimentación de un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/AlimentacionUsuarios.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "ok"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500":{
+                "description": "El usuario no existe. | No se pudo guardar la alimentación | Ocurrió un error al buscar el usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

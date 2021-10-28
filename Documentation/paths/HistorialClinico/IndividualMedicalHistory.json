@@ -1,0 +1,139 @@
+{
+    "get": {
+        "tags": [
+            "Historial Clinico"
+        ],
+        "summary": "Muestra los datos de un historial clinico.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/HistorialClinica.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontró el usuario proporcionado | El usuario no tiene Historia clinica"
+            },
+            "500": {
+                "description": "Ocurrió un error al buscar el historial clinico del usuario | Ocurrió un error al buscar al usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Historial Clinico"
+        ],
+        "summary": "Agrega un nuevo historial clinico.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/HistorialClinica.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/HistorialClinica.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo agregar historial clinico"
+            },
+            "404": {
+                "description": "No se encontró el usuario proporcionado | El usuario no tiene Historia clinica"
+            },
+            "500":{
+                "description": "Historial clinico de Usuario ya creado | Ocurrió un error al buscar el historial clinico del usuario usuario | Ocurrio un error al buscar al usuario | Ocurrió un error al guardar el historial clinico"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "patch": {
+        "tags": [
+            "Historial Clinico"
+        ],
+        "summary": "Actualiza los datos de un historial clinico",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/HistorialClinica.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "ok"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500":{
+                "description": "El usuario no existe. | No se pudo guardar | Ocurrió un error al actualizar el historial clinico | Ocurrió un error al buscar al usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

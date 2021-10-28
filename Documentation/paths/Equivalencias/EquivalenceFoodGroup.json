@@ -1,0 +1,43 @@
+{
+    "get": {
+        "tags": [
+            "Equivalencias"
+        ],
+        "summary": "Muestra la información de todas las equivalencias registradas por grupo de alimento.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "grupoAlimento",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Equivalencia.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "No se encontraron resultados"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error al obtener las equivalencias"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

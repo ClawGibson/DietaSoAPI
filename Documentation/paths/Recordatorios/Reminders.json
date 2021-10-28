@@ -1,0 +1,161 @@
+{
+    "get": {
+        "tags": [
+            "Recordatorios"
+        ],
+        "summary": "Obtiene todos los recordatorios.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/Recordatoria.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "error": ""
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Recordatorios"
+        ],
+        "summary": "Agrega un nuevo recordatorio",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Recordatoria.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Se creo correctamente el recordatorio"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se pudo crear el nuevo recordatorio | { error }"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "patch": {
+        "tags": [
+            "Recordatorios"
+        ],
+        "summary": "Actualiza un recordatorio",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "titulo",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Recordatoria.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Recordatoria.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "delete": {
+        "tags": [
+            "Recordatorios"
+        ],
+        "summary": "Elimina un recordatorio",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "msg":{
+                                    "type": "string",
+                                    "default": "Recordatorios 'id' eliminado con exito"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+    
+}

@@ -2,7 +2,8 @@
     "type": "object",
     "properties": {
         "user": {
-            "$ref": "InformacionUsuarios.json"
+            "type":"string",
+            "format": "uuid"
         },
         "text": {
             "type": "string"

@@ -2,10 +2,12 @@
     "type": "object",
     "properties": {
         "chat": {
-            "$ref": "Chat.json"
+            "type":"string",
+            "format": "uuid"
         },
         "user": {
-            "$ref": "Usuarios.json"
+            "type":"string",
+            "format": "uuid"
         },
         "message": {
             "type": "string",

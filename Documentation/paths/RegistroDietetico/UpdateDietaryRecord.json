@@ -1,0 +1,47 @@
+{
+    "patch": {
+        "tags": [
+            "Registro Dietetico"
+        ],
+        "summary": "Actualiza un registro dietetico.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/RegistroDietetico.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Acceso Actualizado | Registro creado"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontró el usuario proporcionado | No se encontró el alimento proporcionado"
+            },
+            "500": {
+                "description": "Error al guardar el registro | Algo salió mal"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

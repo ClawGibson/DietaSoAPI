@@ -2,7 +2,8 @@
     "type": "object",
     "properties": {
         "user": {
-            "$ref": "InformacionUsuarios.json"
+            "type":"string",
+            "format": "uuid"
         },
         "post": {
             "type": "string"
@@ -13,13 +14,15 @@
         "comments": {
             "type": "array",
             "items": {
-                "$ref": "Comment.json"
+                "type":"string",
+            "format": "uuid"
             }
         },
         "likes": {
             "type": "array",
             "items": {
-                "$ref": "Like.json"
+                "type":"string",
+            "format": "uuid"
             }
         }
     },

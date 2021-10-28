@@ -4,7 +4,8 @@
         "users": {
             "type": "array",
             "items": {
-                "$ref": "Usuarios.json"
+                "type":"string",
+            "format": "uuid"
             }
         }
     },

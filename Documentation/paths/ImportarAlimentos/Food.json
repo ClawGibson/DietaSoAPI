@@ -1,0 +1,83 @@
+{
+    "post": {
+        "tags": [
+            "Importar Alimentos"
+        ],
+        "summary": "Importa un alimento",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Alimentos.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "201": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Alimentos.json"
+                        }
+                    }
+                }
+            },
+            "200": {
+                "description": "El alimento ya existe."
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+            },
+            "500": {
+                "description": "No se guardó el alimento | Ocurrió un error al guardar los alimentos | Error inesperado al importar los alimentos"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+
+    },
+    "patch": {
+        "tags": [
+            "Importar Alimentos"
+        ],
+        "summary":  "Actualiza un alimento importado",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Alimentos.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Alimento actualizado"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+            },
+            "500": {
+                "description": "No se pudo actualizar el alimento | Ocurrió un error al actualizar los datos de alimentos"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+       
+    }
+}

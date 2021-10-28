@@ -2,7 +2,8 @@
     "type": "object",
     "properties": {
         "usuario": {
-            "$ref": "Usuarios.json"
+            "type":"string",
+            "format": "uuid"
         },
         "presionArterialSistolica": {
             "type": "number",

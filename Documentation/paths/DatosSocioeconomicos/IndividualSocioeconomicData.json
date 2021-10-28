@@ -1,0 +1,148 @@
+{
+    "get": {
+        "tags": [
+            "Datos Socioeconomicos"
+        ],
+        "summary": "Muestra los datos socioeconomicos de un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "nivelSocioeconomico":{
+                                    "type":"object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "El usuario no existe | El usuario no tiene datos socioeconomicos todavia | Ocurrio un error al guardar los datos socioeconomicos | Ocurrio un error al buscar usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Datos Socioeconomicos"
+        ],
+        "summary": "Agrega un nuevos datos socoeconomicos a un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type":"object",
+                            "properties":{
+                                "nivelSocioeconomico":{
+                                    "type":"object"
+                                }
+                            }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/DatosSocioeconomicos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudieron agregar datos socioeconomicos"
+            },
+            "500":{
+                "description": "Datos socioeconomicos de Usuario ya registrados | Ocurrió un error al buscar los datos socioeconomicos del usuario | Ocurrió un error al buscar al usuario | Ocurrió un error al guardar los datos socioeconomicos"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "patch": {
+        "tags": [
+            "Datos Socioeconomicos"
+        ],
+        "summary": "Actualiza los datos socioeconomicos de un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type":"object",
+                        "properties":{
+                            "nivelSocioeconomico":{
+                                "type":"object"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "ok"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500":{
+                "description": "El usuario no existe. | Ocurrió un error al actualizar los datos socioeconomicos |  Ocurrió un error al buscar el usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

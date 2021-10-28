@@ -2,8 +2,8 @@
     "openapi": "3.0.0",
     "info": {
         "version": "1.0.0",
-        "title": "DietaSo. API REST ",
-        "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "title": "DietaSoAPI",
+        "description": "REST API orientada al area de nutrición.",
         "license": {
             "name": "MIT"
         },
@@ -74,7 +74,137 @@
         },
         "/menuBase/{id}": {
             "$ref": "./paths/MenuBase/IndividualBaseMenu.json"
+        },
+        "/logros/": {
+            "$ref": "./paths/Logros/Achievements.json"
+        },
+        "/logros/{id}": {
+            "$ref": "./paths/Logros/IndividualAchievement.json"
+        },
+        "/logrosDeUsuario/": {
+            "$ref": "./paths/LogrosUsuario/UserAchievement.json"
+        },
+        "/logrosDeUsuario/{id}": {
+            "$ref": "./paths/LogrosUsuario/IndividualUserAchievement.json"
+        },
+        "/logrosDeUsuario/delete/{id}": {
+            "$ref": "./paths/LogrosUsuario/DeleteUserAchievement.json"
+        },
+        "/puntosDeUsuario/{id}": {
+            "$ref": "./paths/PuntosDeUsuario/UserPoints.json"
+        },
+        "/equivalencias/": {
+            "$ref": "./paths/Equivalencias/Equivalences.json"
+        },
+        "/equivalencias/grupoAlimento": {
+            "$ref": "./paths/Equivalencias/EquivalenceFoodGroup.json"
+        },
+        "/informacionUsuarios/": {
+            "$ref": "./paths/InformacionUsuarios/UserInformation.json"
+        },
+        "/informacionUsuarios/individual": {
+            "$ref": "./paths/InformacionUsuarios/IndividualUserInformation.json"
+        },
+        "/datosUsuarios/": {
+            "$ref": "./paths/DatosUsuarios/UserData.json"
+        },
+        "/datosUsuarios/individual": {
+            "$ref": "./paths/DatosUsuarios/IndividualUserData.json"
+        },
+        "/historialClinico/": {
+            "$ref": "./paths/HistorialClinico/MedicalHistory.json"
+        },
+        "/historialClinico/individual": {
+            "$ref": "./paths/HistorialClinico/IndividualMedicalHistory.json"
+        },
+        "/datosSocioeconomicos/": {
+            "$ref": "./paths/DatosSocioeconomicos/SocioeconomicData.json"
+        },
+        "/datosSocioeconomicos/individual": {
+            "$ref": "./paths/DatosSocioeconomicos/IndividualSocioeconomicData.json"
+        },
+         "/alimentacionUsuarios/": {
+            "$ref": "./paths/AlimentacionUsuarios/UserFood.json"
+        },
+        "/alimentacionUsuarios/individual": {
+            "$ref": "./paths/AlimentacionUsuarios/IndividualUserFood.json"
+        },
+        "/alimentacionUsuarios/comidaFav/": {
+            "$ref": "./paths/AlimentacionUsuarios/FavoriteFoodUser.json"
+        },
+        "/estadisticasIMC/": {
+            "$ref": "./paths/EstadisticasIMC/StatisticsIMC.json"
+        },
+        "/estaisticasIMC/{id}": {
+            "$ref": "./paths/EstadisticasIMC/IndividualStatisticsIMC.json"
+        },
+        "/estadisticasNiveles/": {
+            "$ref": "./paths/EstadisticasNiveles/StatisticsLevels.json"
+        },
+        "/estaisticasNiveles/{id}": {
+            "$ref": "./paths/EstadisticasNiveles/IndividualStatisticsLevels.json"
+        },
+        "/estadisticasHuella/": {
+            "$ref": "./paths/EstadisticasHuella/StatisticsFootPrint.json"
+        },
+        "/estaisticasHuella/{id}": {
+            "$ref": "./paths/EstadisticasHuella/IndividualStatisticsFootPrint.json"
+        },
+        "/estadisticasConsumo/": {
+            "$ref": "./paths/EstadisticasConsumo/StatisticsConsumption.json"
+        },
+        "/estaisticasConsumo/{id}": {
+            "$ref": "./paths/EstadisticasConsumo/IndividualStatisticsConsumption.json"
+        },
+        "/estadisticasPresion/": {
+            "$ref": "./paths/EstadisticasPresion/StatisticsPressure.json"
+        },
+        "/estaisticasPresion/{id}": {
+            "$ref": "./paths/EstadisticasPresion/IndividualStatisticsPressure.json"
+        },
+        "/registroDietetico/": {
+            "$ref": "./paths/RegistroDietetico/DietaryRecord.json"
+        },
+        "/registroDietetico/detalles": {
+            "$ref": "./paths/RegistroDietetico/DetailsDietaryRecord.json"
+        },
+        "/registroDietetico/modificarRegistro": {
+            "$ref": "./paths/RegistroDietetico/UpdateDietaryRecord.json"
+        },
+        "/registroDietetico/eliminarRegistro": {
+            "$ref": "./paths/RegistroDietetico/DeleteDietaryRecord.json"
+        },
+        "/importarAlimentos/":{
+            "$ref": "./paths/ImportarAlimentos/Food.json"
+        },
+        "/recomendacionPoblacional/":{
+            "$ref":"./paths/RecomendacionesPoblacionales/PopulationRecomendation.json"
+        },
+        "/metas/":{
+            "$ref":"./paths/Metas/Goals.json"
+        },
+        "/recordatorios/":{
+            "$ref":"./paths/Recordatorios/Reminders.json"
+        },
+        "/mensajes/":{
+            "$ref":"./paths/Mensajes/Messages.json"
+        },
+        "/mensajes/{id}":{
+            "$ref":"./paths/Mensajes/IndividualMessages.json"
+        },
+        "/chat/":{
+            "$ref":"./paths/Chat/Chat.json"
+        },
+        "/chat/{id}":{
+            "$ref":"./paths/Chat/DeleteChat.json"
+        },
+        "/foro/":{
+            "$ref":"./paths/Foro/Publication.json"
+        },
+        "/foro/{_id}":{
+            "$ref":"./paths/Foro/IndividualPublication.json"
         }
+
     },
     "components": {
         "schemas": {

@@ -2,7 +2,8 @@
     "type": "object",
     "properties": {
         "alimento": {
-            "$ref": "Alimentos.json"
+            "type":"string",
+            "format": "uuid"
         },
         "grupoId": {
             "type": "string"

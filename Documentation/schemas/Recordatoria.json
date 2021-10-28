@@ -4,11 +4,13 @@
         "usuario": {
             "type": "array",
             "items": {
-                "$ref": "Usuarios.json"
+                "type":"string",
+                "format": "uuid"
             }
         },
         "metas": {
-            "$ref": "Metas.json"
+            "type":"string",
+            "format": "uuid"
         },
         "titulo": {
             "type": "string",

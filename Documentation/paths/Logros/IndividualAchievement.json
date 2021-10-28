@@ -1,0 +1,123 @@
+{
+    "get": {
+        "tags": [
+            "Logros"
+        ],
+        "summary": "Muestra la información de un logro.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Logros.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontró el logro que buscaba"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "put": {
+        "tags": [
+            "Logros"
+        ],
+        "summary": "Actualiza la información de un logro.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Logros.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Logros.json"
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "No se pudo actualizar el logro :c"
+            },
+            "404": {
+                "description": "No se pudo editar el menú base u ocurrió algún error inesperado"
+            },
+            "500": {
+                "description": "El logro que está buscando no existe :c"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "delete": {
+        "tags": [
+            "Logros"
+        ],
+        "summary": "Elimina un logro.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Logro eliminado :D!"
+            },
+            "400": {
+                "description": "El ID del logro no es válido. | No se encontró el logro a eliminar :c"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}
