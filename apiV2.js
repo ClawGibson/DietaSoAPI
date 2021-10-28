@@ -57,6 +57,7 @@ router.use(`${API_URL}/estadisticasIMC`, estadisticasIMCRoute);
 router.use(`${API_URL}/estadisticasNiveles`, estadisticasNivelesRoute);
 router.use(`${API_URL}/estadisticasHuella`, estadisticasHuellaRoute);
 router.use(`${API_URL}/estadisticasConsumo`, estadisticasConsumoRoute);
+router.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
 router.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
 router.use(`${API_URL}/importarAlimentos`, importarAlimentosRoute);
 router.use(

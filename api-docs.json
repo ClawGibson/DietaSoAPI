@@ -1,88 +1,27 @@
 {
-    "paths": {
-
-        
-        "estadisticasNiveles/": {
-            "get": {
-                "tags": [
-                    "Estadisticas Niveles"
-                ],
-                "summary": "Agrega una descripción."
-            },
-            "post": {
-                "tags": [
-                    "Estadisticas Niveles"
-                ],
-                "summary": "Agrega una descripción."
-            }
-        },
-        "estaisticasNiveles/:id": {
-            "get": {
-                "tags": [
-                    "Estadisticas Niveles"
-                ],
-                "summary": "Agrega una descripción."
-            }
-        },
-        "estadisticasPresion/": {
-            "get": {
-                "tags": [
-                    "Estadisticas Presión"
-                ],
-                "summary": "Agrega una descripción."
-            },
-            "post": {
-                "tags": [
-                    "Estadisticas Presión"
-                ],
-                "summary": "Agrega una descripción."
-            }
-        },
-        "estaisticasPresion/:id": {
-            "get": {
-                "tags": [
-                    "Estadisticas Presión"
-                ],
-                "summary": "Agrega una descripción."
-            }
-        },
-        "registroDietetico/": {
-            "get": {
-                "tags": [
-                    "Registro Dietetico"
-                ],
-                "summary": "Agrega una descripción."
-            },
-            "post": {
-                "tags": [
-                    "Registro Dietetico"
-                ],
-                "summary": "Agrega una descripción."
-            }
-        },
-        "registroDietetico/details": {
-            "get": {
-                "tags": [
-                    "Registro Dietetico"
-                ],
-                "summary": "Agrega una descripción."
-            }
-        },
-        "registroDietetico/agregarAlimento/": {
-            "patch": {
-                "tags": [
-                    "Registro Dietetico"
-                ],
-                "summary": "Agrega una descripción."
-            }
-        },
-        "registroDietetico/modificarAlimento": {
-            "patch": {
-                "tags": [
-                    "Registro Dietetico"
-                ],
-                "summary": "Agrega una descripción."
-            }
-        }
+    "get": {
+        "tags": [
+            ""
+        ],
+        "summary": ""
+    },
+    "post": {
+        "tags": [
+            ""
+        ],
+        "summary": ""
+    },
+    "patch": {
+        "tags": [
+            ""
+        ],
+        "summary": ""
+    },
+    "delete": {
+        "tags": [
+            ""
+        ],
+        "summary": ""
     }
+    
 }

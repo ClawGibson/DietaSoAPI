@@ -23,7 +23,6 @@ const addGoal = async (req, res = response) => {
     }
 }
 
-
 const getGoals = async (req, res) => {
     try {
         const respuesta = await Metas.find();

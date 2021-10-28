@@ -2040,10 +2040,10 @@
         ]
       }
     },
-    "/informacionUsuarios": {
+    "/informacionUsuarios/": {
       "get": {
         "tags": [
-          "Información de usuarios"
+          "Información de Usuarios"
         ],
         "summary": "Muestra la información de todos los usuarios registrados.",
         "responses": {
@@ -2076,7 +2076,7 @@
     "/informacionUsuarios/individual": {
       "get": {
         "tags": [
-          "Información de usuarios"
+          "Información de Usuarios"
         ],
         "summary": "Muestra la información especifica de un usuario.",
         "parameters": [
@@ -2117,7 +2117,7 @@
       },
       "post": {
         "tags": [
-          "Información de usuarios"
+          "Información de Usuarios"
         ],
         "summary": "Agrega nueva información a un usuario.",
         "parameters": [
@@ -2168,7 +2168,7 @@
       },
       "patch": {
         "tags": [
-          "Información de usuarios"
+          "Información de Usuarios"
         ],
         "summary": "Actualiza la información de un usuario.",
         "parameters": [
@@ -2215,7 +2215,7 @@
     "/datosUsuarios/": {
       "get": {
         "tags": [
-          "Datos de usuarios"
+          "Datos de Usuarios"
         ],
         "summary": "Muestra los datos de todos los usuarios.",
         "responses": {
@@ -2248,7 +2248,7 @@
     "/datosUsuarios/individual": {
       "get": {
         "tags": [
-          "Datos de usuarios"
+          "Datos de Usuarios"
         ],
         "summary": "Muestra los datos de un usuario.",
         "parameters": [
@@ -2297,7 +2297,7 @@
       },
       "post": {
         "tags": [
-          "Datos de usuarios"
+          "Datos de Usuarios"
         ],
         "summary": "Agrega nuevos datos a un usuario.",
         "parameters": [
@@ -2351,7 +2351,7 @@
       },
       "patch": {
         "tags": [
-          "Datos de usuarios"
+          "Datos de Usuarios"
         ],
         "summary": "Actualiza los datos de un usuario.",
         "parameters": [
@@ -2395,7 +2395,7 @@
     "/historialClinico/": {
       "get": {
         "tags": [
-          "Historial clinico"
+          "Historial Clinico"
         ],
         "summary": "Muestra una lista de todos los historiales clinicos almacenados en el sistema.",
         "responses": {
@@ -2428,7 +2428,7 @@
     "/historialClinico/individual": {
       "get": {
         "tags": [
-          "Historial clinico"
+          "Historial Clinico"
         ],
         "summary": "Muestra los datos de un historial clinico.",
         "parameters": [
@@ -2469,7 +2469,7 @@
       },
       "post": {
         "tags": [
-          "Historial clinico"
+          "Historial Clinico"
         ],
         "summary": "Agrega un nuevo historial clinico.",
         "parameters": [
@@ -2523,7 +2523,7 @@
       },
       "patch": {
         "tags": [
-          "Historial clinico"
+          "Historial Clinico"
         ],
         "summary": "Actualiza los datos de un historial clinico",
         "parameters": [
@@ -2745,7 +2745,7 @@
         ]
       }
     },
-    "/alimentacionUsuarios": {
+    "/alimentacionUsuarios/": {
       "get": {
         "tags": [
           "Alimentación de Usuarios"
@@ -2778,7 +2778,7 @@
         ]
       }
     },
-    "alimentacionUsuarios/individual": {
+    "/alimentacionUsuarios/individual": {
       "get": {
         "tags": [
           "Alimentación de Usuarios"
@@ -3018,7 +3018,7 @@
         ]
       }
     },
-    "alimentacionUsuarios/comidaFav/": {
+    "/alimentacionUsuarios/comidaFav/": {
       "get": {
         "tags": [
           "Alimentación de Usuarios"
@@ -3849,6 +3849,1355 @@
           },
           "500": {
             "description": "Error al querer guardar la estadistica Consumo | Error inesperado al actualizar la estadistica Consumo"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estadisticasPresion/": {
+      "get": {
+        "tags": [
+          "Estadisticas Presión"
+        ],
+        "summary": "Obtiene todas la estadisticas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstadisticasPresion"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron datos"
+          },
+          "500": {
+            "description": "Error inesperado al obtener las estadisticas de presión"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Estadisticas Presión"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadisticasPresion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasPresion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al guardar la estadistica de presión | Error inesperado al guardar la estadistica de presión"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estaisticasPresion/{id}": {
+      "get": {
+        "tags": [
+          "Estadisticas Presión"
+        ],
+        "summary": "Obtiene una estadistica por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasPresion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontrado datos"
+          },
+          "500": {
+            "description": "Error inesperado al obtener la estadistica de presión"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/registroDietetico/": {
+      "get": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Obtiene los registros dieteticos.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RegistroDietetico"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron registros."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Agrega un nuevo registro dietetico.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistroDietetico"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RegistroDietetico"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "default": "No se encontró el usuario proporcionado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "default": "Error al guardar el registro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/registroDietetico/detalles": {
+      "get": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Obtiene los detalles de un registro dietetico.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistroDietetico"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | El usuario aún no cuenta con registros dietéticos"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/registroDietetico/modificarRegistro": {
+      "patch": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Actualiza un registro dietetico.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistroDietetico"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Acceso Actualizado | Registro creado"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | No se encontró el alimento proporcionado"
+          },
+          "500": {
+            "description": "Error al guardar el registro | Algo salió mal"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/registroDietetico/eliminarRegistro": {
+      "patch": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Elimina un registro dietetico.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idAlimento": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alimento eliminado exitosamente"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | No se encontró el alimento proporcionado"
+          },
+          "500": {
+            "description": "Error al eliminar el alimento del registro"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/importarAlimentos/": {
+      "post": {
+        "tags": [
+          "Importar Alimentos"
+        ],
+        "summary": "Importa un alimento",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Alimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "El alimento ya existe."
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alimentos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se guardó el alimento | Ocurrió un error al guardar los alimentos | Error inesperado al importar los alimentos"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Importar Alimentos"
+        ],
+        "summary": "Actualiza un alimento importado",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Alimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alimento actualizado"
+          },
+          "400": {
+            "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se pudo actualizar el alimento | Ocurrió un error al actualizar los datos de alimentos"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recomendacionPoblacional/": {
+      "post": {
+        "tags": [
+          "RecomendacionesPoblacionales"
+        ],
+        "summary": "Agrega una recomendación poblacional",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecomendacionesPoblacionales"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecomendacionesPoblacionales"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Ocurrió un error al importar las recomendaciones poblacionales"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/metas/": {
+      "get": {
+        "tags": [
+          "Metas"
+        ],
+        "summary": "Obtiene todas la metas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Metas"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontraron metas. | { error }"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Metas"
+        ],
+        "summary": "Agrega una nueva meta",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Metas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Se creo correctamente la meta"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se pudo crear la nueva meta | { error }"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Metas"
+        ],
+        "summary": "Actualiza una meta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Metas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Metas"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Metas"
+        ],
+        "summary": "Elimina una meta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Eliminado correctamente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Meta no encontrada"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Hable con el administrador"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recordatorios/": {
+      "get": {
+        "tags": [
+          "Recordatorios"
+        ],
+        "summary": "Obtiene todos los recordatorios.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recordatoria"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Recordatorios"
+        ],
+        "summary": "Agrega un nuevo recordatorio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recordatoria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Se creo correctamente el recordatorio"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se pudo crear el nuevo recordatorio | { error }"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Recordatorios"
+        ],
+        "summary": "Actualiza un recordatorio",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "titulo",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recordatoria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recordatoria"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Recordatorios"
+        ],
+        "summary": "Elimina un recordatorio",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Recordatorios 'id' eliminado con exito"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/mensajes/": {
+      "post": {
+        "tags": [
+          "Mensajes"
+        ],
+        "summary": "Agrega un nuevo mensaje",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Message"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Creado correctamente"
+                    },
+                    "newMessage": {
+                      "$ref": "#/components/schemas/Message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/mensajes/{id}": {
+      "get": {
+        "tags": [
+          "Mensajes"
+        ],
+        "summary": "Obtiene los mensajes de un chat",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "$ref": "#/components/schemas/Message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Mensajes"
+        ],
+        "summary": "Elimina un mensaje",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Eliminado correctamente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "No se encontro mensaje"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/chat/": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Obtiene todos los chats",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chats": {
+                      "$ref": "#/components/schemas/Chat"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Agrega un chat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Chat"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Creado correctamente"
+          },
+          "401": {
+            "description": "Acceso no autorizado. | Son necesarios los usuarios"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/chat/{id}": {
+      "delete": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Elimina una chat",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chat eliminado"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "No se ha encontrado el chat seleccionado | {erro}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/foro/": {
+      "get": {
+        "tags": [
+          "Publicacion"
+        ],
+        "summary": "Obtiene las publicaiones más populares",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chats": {
+                      "$ref": "#/components/schemas/Publicacion"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Publicacion"
+        ],
+        "summary": "Agrega una nueva publicaion",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publicacion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Creado correctamente"
+          },
+          "401": {
+            "description": "Acceso no autorizado. | Fallo al cargar la publicación"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Publicacion"
+        ],
+        "summary": "Elimina una publicación",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Eliminado correctamente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/foro/{_id}": {
+      "patch": {
+        "tags": [
+          "Publicacion"
+        ],
+        "summary": "Actualiza una publicación",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publicacion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/components/schemas/Publicacion"
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "security": [
