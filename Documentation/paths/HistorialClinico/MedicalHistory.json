@@ -1,0 +1,33 @@
+{
+    "get": {
+        "tags": [
+            "Historial clinico"
+        ],
+        "summary": "Muestra una lista de todos los historiales clinicos almacenados en el sistema.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/HistorialClinica.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ningun historial clinico de usuarios."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

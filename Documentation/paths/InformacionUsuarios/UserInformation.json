@@ -1,0 +1,33 @@
+{
+    "get": {
+        "tags": [
+            "Información de usuarios"
+        ],
+        "summary": "Muestra la información de todos los usuarios registrados.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/InformacionUsuarios.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ninguna información de usuarios | Ocurrió un error al buscar la información de los usuarios"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

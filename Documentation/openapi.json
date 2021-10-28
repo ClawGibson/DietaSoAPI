@@ -98,6 +98,45 @@
         },
         "/equivalencias/grupoAlimento": {
             "$ref": "./paths/Equivalencias/EquivalenceFoodGroup.json"
+        },
+        "/informacionUsuarios": {
+            "$ref": "./paths/InformacionUsuarios/UserInformation.json"
+        },
+        "/informacionUsuarios/individual": {
+            "$ref": "./paths/InformacionUsuarios/IndividualUserInformation.json"
+        },
+        "/datosUsuarios/": {
+            "$ref": "./paths/DatosUsuarios/UserData.json"
+        },
+        "/datosUsuarios/individual": {
+            "$ref": "./paths/DatosUsuarios/IndividualUserData.json"
+        },
+        "/historialClinico/": {
+            "$ref": "./paths/HistorialClinico/MedicalHistory.json"
+        },
+        "/historialClinico/individual": {
+            "$ref": "./paths/HistorialClinico/IndividualMedicalHistory.json"
+        },
+        "/datosSocioeconomicos/": {
+            "$ref": "./paths/DatosSocioeconomicos/SocioeconomicData.json"
+        },
+        "/datosSocioeconomicos/individual": {
+            "$ref": "./paths/DatosSocioeconomicos/IndividualSocioeconomicData.json"
+        },
+         "/alimentacionUsuarios": {
+            "$ref": "./paths/AlimentacionUsuarios/UserFood.json"
+        },
+        "alimentacionUsuarios/individual": {
+            "$ref": "./paths/AlimentacionUsuarios/IndividualUserFood.json"
+        },
+        "alimentacionUsuarios/comidaFav/": {
+            "$ref": "./paths/AlimentacionUsuarios/FavoriteFoodUser.json"
+        },
+        "/estadisticasIMC/": {
+            "$ref": "./paths/EstadisticasIMC/StatisticsIMC.json"
+        },
+        "/estaisticasIMC/{id}": {
+            "$ref": "./paths/EstadisticasIMC/IndividualStatisticsIMC.json"
         }
 
     },

@@ -1,0 +1,33 @@
+{
+    "get": {
+        "tags": [
+            "Datos Socioeconomicos"
+        ],
+        "summary": "Muestra una lista de todos los datos socio economicos almacenados en el sistema.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/DatosSocioeconomicos.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ninguna informacion de datos socioeconomicos de los usuarios"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

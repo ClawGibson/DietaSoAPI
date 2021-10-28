@@ -1,0 +1,147 @@
+{
+    "get": {
+        "tags": [
+            "Datos de usuarios"
+        ],
+        "summary": "Muestra los datos de un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "peso":{
+                                    "type":"object"
+                                },
+                                "altura":{
+                                    "type":"object"
+                                },
+                                "actividadFisica":{
+                                    "type":"object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "El usuario no existe | El usuario no tiene datos todavia | Ocurrio un error al buscar los datos del usuario | Ocurrio un error al buscar al usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Datos de usuarios"
+        ],
+        "summary": "Agrega nuevos datos a un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/DatosUsuarios.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/DatosUsuarios.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudieron agregar los datos del usuario"
+            },
+            "404": {
+                "description": "Datos de Usuario ya registrados"
+            },
+            "500":{
+                "description": "Ocurrió un error al buscar datos del usuario | Ocurrió un error al buscar el usuario | Ocurrió un error al guardar los datos del usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "patch": {
+        "tags": [
+            "Datos de usuarios"
+        ],
+        "summary": "Actualiza los datos de un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/DatosUsuarios.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "ok"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500":{
+                "description": "Usuario No existe | No se pudo guardar | Ocurrió un error al actualizar los datos del usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

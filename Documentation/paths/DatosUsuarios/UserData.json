@@ -1,0 +1,33 @@
+{
+    "get": {
+        "tags": [
+            "Datos de usuarios"
+        ],
+        "summary": "Muestra los datos de todos los usuarios.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/DatosUsuarios.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontraron los datos de los usuarios."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}
