@@ -8,6 +8,7 @@ const { router } = require('./apiV2');
 
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
+const { socketController } = require('./sockets/socket.controller');
 const { trim_all } = require('request_trimmer');
 
 const { MONGODB, DBNAME } = process.env;
@@ -48,10 +49,7 @@ mongoose
         console.log(err);
     });
 
-io.on('connection', (socket) => {
-    console.log('New client connected');
-    socket.on('disconnect', () => console.log('Client disconnected'));
-});
+io.on('connection', socketController);
 
 server.listen(process.env.PORT || 4000, () => {
     console.log(`Server running at ${process.env.PORT || 4000}`);
