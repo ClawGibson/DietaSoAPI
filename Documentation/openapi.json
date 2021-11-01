@@ -203,6 +203,9 @@
         },
         "/foro/{_id}":{
             "$ref":"./paths/Foro/IndividualPublication.json"
+        },
+        "/images":{
+            "$ref":"./paths/Images/Images.json"
         }
 
     },
