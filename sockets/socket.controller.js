@@ -11,6 +11,11 @@ const socketController = (socket) => {
             mensaje: 'Todo salio bien',
         });
     });
+
+    socket.on('crear-chat', (payload, callback) => {
+        console.log('payload:', payload);
+        console.log('callback:', callback);
+    });
 };
 
 module.exports = { socketController };
