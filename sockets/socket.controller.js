@@ -14,7 +14,12 @@ const socketController = (socket) => {
 
     socket.on('crear-chat', (payload, callback) => {
         console.log('payload:', payload);
-        console.log('callback:', callback);
+
+        try {
+            callback();
+        } catch (error) {
+            console.log(error);
+        }
     });
 };
 
