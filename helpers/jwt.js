@@ -15,6 +15,7 @@ function authJwt() {
             `${process.env.API_URL}/datosSocioeconomicos/`,
             `${process.env.API_URL}/alimentacionUsuarios/`,
             `${process.env.API_URL}/registroDietetico/`,
+            `${process.env.API_URL}/images`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {
