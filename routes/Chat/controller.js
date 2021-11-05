@@ -31,10 +31,10 @@ const getAllChats = async (req, res = response) => {
 const getChatId = async (req, res = response) => {
     try {
         const { adminId, userId } = req.params.users;
-        const chat = await Chat.find({
-            users: {
-                $all: [adminId, userId],
-            },
+
+        // Fin the chat where the adminId and userId are in the users array
+        const chat = await Chat.findOne({
+            users: [adminId, userId],
         });
 
         if (!chat) {
