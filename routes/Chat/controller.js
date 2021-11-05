@@ -34,7 +34,7 @@ const getChatId = async (req, res = response) => {
 
         // Fin the chat where the adminId and userId are in the users array
         const chat = await Chat.find({
-            users: [id1, id2],
+            users: [mongoose.Types.ObjectId(id1), mongoose.Types.ObjectId(id2)],
         });
 
         if (!chat) {
