@@ -43,6 +43,7 @@ const getChatId = async (req, res = response) => {
                 msg: 'No se ha encontrado el chat seleccionado',
             });
         }
+        console.log('chat:', chat);
         res.status(200).json({
             chat,
         });
