@@ -1,0 +1,74 @@
+{
+    "get": {
+        "tags": [
+            "Estadisticas Consumo"
+        ],
+        "summary": "Obtiene todas las estadisticas.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/EstadisticasConsumo.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se encontraron datos"
+            },
+            "500": {
+                "description": "Error inesperado al obtener las estadisticas Consumo"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Estadisticas Consumo"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/EstadisticasConsumo.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/EstadisticasConsumo.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error al querer guardar la estadistica Consumo | Error inesperado al crear la estadistica Consumo"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

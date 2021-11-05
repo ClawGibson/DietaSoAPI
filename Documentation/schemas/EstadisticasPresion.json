@@ -1,0 +1,22 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "presionArterialSistolica": {
+            "type": "number",
+            "minimum": 0,
+            "maximun": 300
+        },
+        "presionArterialDiastolica": {
+            "type": "number",
+            "minimum": 0,
+            "maximun": 300
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

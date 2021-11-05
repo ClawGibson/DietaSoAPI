@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "properties": {
+        "antecedentesPatologicos": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "antecedentesHeredoFamiliares": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "medicamentos": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "suplementos": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    }
+}

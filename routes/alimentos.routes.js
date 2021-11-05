@@ -41,14 +41,18 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    
     const grupoAlimento = await GrupoAlimento.find({
         grupoDeAlimento: req.body.grupoAlimento,
     });
+
+
     if (!grupoAlimento)
         return res.status(400).send('Grupo de alimento inválido');
 
     let alimento = new Alimentos({
         nombreAlimento: req.body.nombreAlimento,
+        sku: req.body.sku,
         imagen: req.body.imagen,
         grupoExportable: req.body.grupoExportable,
         subGrupoExportable: req.body.subGrupoExportable,

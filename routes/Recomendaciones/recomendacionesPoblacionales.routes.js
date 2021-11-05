@@ -4,9 +4,14 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        const recomendacion = await Recomendaciones.find({
+        let recomendacion = await Recomendaciones.find({
             grupoId: req.body.grupoId.toString(),
         });
+
+        recomendacion = await recomendacion.save();
+
+        res.send(recomendacion);
+
     } catch (error) {
         return res.status(500).json({
             success: false,

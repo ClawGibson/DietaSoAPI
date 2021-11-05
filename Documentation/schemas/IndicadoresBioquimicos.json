@@ -1,0 +1,40 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "glucosaAyuno": {
+            "type": "string"
+        },
+        "glucosaDespues": {
+            "type": "string"
+        },
+        "trigliceridos": {
+            "type": "string"
+        },
+        "colesterolTotal": {
+            "type": "string"
+        },
+        "colesterolLDL": {
+            "type": "string"
+        },
+        "colesterolHDL": {
+            "type": "string"
+        },
+        "microbiotaIntestinal": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usuario",
+        "glucosaAyuno",
+        "glucosaDespues",
+        "trigliceridos",
+        "colesterolTotal",
+        "colesterolLDL",
+        "colesterolHDL",
+        "microbiotaIntestinal"
+    ]
+}

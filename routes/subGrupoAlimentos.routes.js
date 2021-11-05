@@ -45,7 +45,7 @@ router.delete('/:id', async (req, res) => {
     if (!mongoose.isValidObjectId(req.params.id))
         return res.status(400).send('El ID del sub grupo no es válido.');
 
-    const subGrupo = await nuevoSubGrupo.findByIdAndRemove(req.params.id);
+    const nuevoSubGrupo = await subGrupo.findByIdAndRemove(req.params.id);
 
     if (!subGrupo)
         return res.status(400).send('No se encontró el sub grupo a eliminar :c');

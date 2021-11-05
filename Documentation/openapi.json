@@ -1,0 +1,221 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "DietaSoAPI",
+        "description": "REST API orientada al area de nutrición.",
+        "license": {
+            "name": "MIT"
+        },
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.example.com/support",
+            "email": "support@example.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1/",
+            "name": "Servidor Local."
+        },
+        {
+            "url": "https://dietasoapiv1.herokuapp.com/api/v2/",
+            "name": "Servidor Producción."
+        }
+    ],
+    "paths": {
+        "/usuarios/login":{
+            "$ref": "./paths/Usuarios/Login.json"
+        },
+        "/usuarios/register": {
+            "$ref": "./paths/Usuarios/Register.json"
+        },
+        "/usuarios/": {
+            "$ref": "./paths/Usuarios/GetUsers.json"
+        },
+        "/usuarios/individual": {
+            "$ref": "./paths/Usuarios/IndividualUser.json"
+        },
+        "/alimentos/all/": {
+            "$ref": "./paths/Alimentos/AllFood.json"
+        },
+        "/alimentos/": {
+            "$ref": "./paths/Alimentos/Food.json"
+        },
+        "/alimentos/{id}": {
+            "$ref": "./paths/Alimentos/IndividualFood.json"
+        },
+        "/grupoAlimentos/": {
+            "$ref": "./paths/GrupoAlimentos/FoodGroup.json"
+        },
+        "/grupoAlimentos/detalles": {
+            "$ref": "./paths/GrupoAlimentos/FoodGroupDetails.json"
+        },
+        "/grupoAlimentos/{id}": {
+            "$ref": "./paths/GrupoAlimentos/IndividualFoodGroup.json"
+        },
+        "/subGrupoAlimentos/": {
+            "$ref": "./paths/SubGrupoAlimentos/FoodSubGroup.json"
+        },
+        "/subGrupoAlimentos/{id}": {
+            "$ref": "./paths/SubGrupoAlimentos/IndividualFoodSubGroup.json"
+        },
+        "/recetas/": {
+            "$ref": "./paths/Recetas/Recipes.json"
+        },
+        "/recetas/{id}": {
+            "$ref": "./paths/Recetas/IndividualRecipes.json"
+        },
+        "/recetas/destacadas/{count}": {
+            "$ref": "./paths/Recetas/PopularRecipes.json"
+        },
+        "/menuBase/": {
+            "$ref": "./paths/MenuBase/BaseMenu.json"
+        },
+        "/menuBase/{id}": {
+            "$ref": "./paths/MenuBase/IndividualBaseMenu.json"
+        },
+        "/logros/": {
+            "$ref": "./paths/Logros/Achievements.json"
+        },
+        "/logros/{id}": {
+            "$ref": "./paths/Logros/IndividualAchievement.json"
+        },
+        "/logrosDeUsuario/": {
+            "$ref": "./paths/LogrosUsuario/UserAchievement.json"
+        },
+        "/logrosDeUsuario/{id}": {
+            "$ref": "./paths/LogrosUsuario/IndividualUserAchievement.json"
+        },
+        "/logrosDeUsuario/delete/{id}": {
+            "$ref": "./paths/LogrosUsuario/DeleteUserAchievement.json"
+        },
+        "/puntosDeUsuario/{id}": {
+            "$ref": "./paths/PuntosDeUsuario/UserPoints.json"
+        },
+        "/equivalencias/": {
+            "$ref": "./paths/Equivalencias/Equivalences.json"
+        },
+        "/equivalencias/grupoAlimento": {
+            "$ref": "./paths/Equivalencias/EquivalenceFoodGroup.json"
+        },
+        "/informacionUsuarios/": {
+            "$ref": "./paths/InformacionUsuarios/UserInformation.json"
+        },
+        "/informacionUsuarios/individual": {
+            "$ref": "./paths/InformacionUsuarios/IndividualUserInformation.json"
+        },
+        "/datosUsuarios/": {
+            "$ref": "./paths/DatosUsuarios/UserData.json"
+        },
+        "/datosUsuarios/individual": {
+            "$ref": "./paths/DatosUsuarios/IndividualUserData.json"
+        },
+        "/historialClinico/": {
+            "$ref": "./paths/HistorialClinico/MedicalHistory.json"
+        },
+        "/historialClinico/individual": {
+            "$ref": "./paths/HistorialClinico/IndividualMedicalHistory.json"
+        },
+        "/datosSocioeconomicos/": {
+            "$ref": "./paths/DatosSocioeconomicos/SocioeconomicData.json"
+        },
+        "/datosSocioeconomicos/individual": {
+            "$ref": "./paths/DatosSocioeconomicos/IndividualSocioeconomicData.json"
+        },
+         "/alimentacionUsuarios/": {
+            "$ref": "./paths/AlimentacionUsuarios/UserFood.json"
+        },
+        "/alimentacionUsuarios/individual": {
+            "$ref": "./paths/AlimentacionUsuarios/IndividualUserFood.json"
+        },
+        "/alimentacionUsuarios/comidaFav/": {
+            "$ref": "./paths/AlimentacionUsuarios/FavoriteFoodUser.json"
+        },
+        "/estadisticasIMC/": {
+            "$ref": "./paths/EstadisticasIMC/StatisticsIMC.json"
+        },
+        "/estaisticasIMC/{id}": {
+            "$ref": "./paths/EstadisticasIMC/IndividualStatisticsIMC.json"
+        },
+        "/estadisticasNiveles/": {
+            "$ref": "./paths/EstadisticasNiveles/StatisticsLevels.json"
+        },
+        "/estaisticasNiveles/{id}": {
+            "$ref": "./paths/EstadisticasNiveles/IndividualStatisticsLevels.json"
+        },
+        "/estadisticasHuella/": {
+            "$ref": "./paths/EstadisticasHuella/StatisticsFootPrint.json"
+        },
+        "/estaisticasHuella/{id}": {
+            "$ref": "./paths/EstadisticasHuella/IndividualStatisticsFootPrint.json"
+        },
+        "/estadisticasConsumo/": {
+            "$ref": "./paths/EstadisticasConsumo/StatisticsConsumption.json"
+        },
+        "/estaisticasConsumo/{id}": {
+            "$ref": "./paths/EstadisticasConsumo/IndividualStatisticsConsumption.json"
+        },
+        "/estadisticasPresion/": {
+            "$ref": "./paths/EstadisticasPresion/StatisticsPressure.json"
+        },
+        "/estaisticasPresion/{id}": {
+            "$ref": "./paths/EstadisticasPresion/IndividualStatisticsPressure.json"
+        },
+        "/registroDietetico/": {
+            "$ref": "./paths/RegistroDietetico/DietaryRecord.json"
+        },
+        "/registroDietetico/detalles": {
+            "$ref": "./paths/RegistroDietetico/DetailsDietaryRecord.json"
+        },
+        "/registroDietetico/modificarRegistro": {
+            "$ref": "./paths/RegistroDietetico/UpdateDietaryRecord.json"
+        },
+        "/registroDietetico/eliminarRegistro": {
+            "$ref": "./paths/RegistroDietetico/DeleteDietaryRecord.json"
+        },
+        "/importarAlimentos/":{
+            "$ref": "./paths/ImportarAlimentos/Food.json"
+        },
+        "/recomendacionPoblacional/":{
+            "$ref":"./paths/RecomendacionesPoblacionales/PopulationRecomendation.json"
+        },
+        "/metas/":{
+            "$ref":"./paths/Metas/Goals.json"
+        },
+        "/recordatorios/":{
+            "$ref":"./paths/Recordatorios/Reminders.json"
+        },
+        "/mensajes/":{
+            "$ref":"./paths/Mensajes/Messages.json"
+        },
+        "/mensajes/{id}":{
+            "$ref":"./paths/Mensajes/IndividualMessages.json"
+        },
+        "/chat/":{
+            "$ref":"./paths/Chat/Chat.json"
+        },
+        "/chat/{id}":{
+            "$ref":"./paths/Chat/DeleteChat.json"
+        },
+        "/foro/":{
+            "$ref":"./paths/Foro/Publication.json"
+        },
+        "/foro/{_id}":{
+            "$ref":"./paths/Foro/IndividualPublication.json"
+        }
+
+    },
+    "components": {
+        "schemas": {
+            "$ref": "./schemas/index.json"
+        },
+        "securitySchemes": {
+            "bearer": {
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "type": "http"
+            }
+        }
+    }
+}

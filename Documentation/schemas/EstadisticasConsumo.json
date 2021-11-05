@@ -1,0 +1,68 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "frutasVegetales": {
+            "type": "number",
+            "default": 0
+        },
+        "alimentosMexicanos": {
+            "type": "number",
+            "default": 0
+        },
+        "cerealesIntegrales": {
+            "type": "number",
+            "default": 0
+        },
+        "leguminosas": {
+            "type": "number",
+            "default": 0
+        },
+        "lacteos": {
+            "type": "number",
+            "default": 0
+        },
+        "semillasGrasasSaludables": {
+            "type": "number",
+            "default": 0
+        },
+        "huevo": {
+            "type": "number",
+            "default": 0
+        },
+        "pescadoMariscos": {
+            "type": "number",
+            "default": 0
+        },
+        "pollo": {
+            "type": "number",
+            "default": 0
+        },
+        "carnesRojasProcesadas": {
+            "type": "number",
+            "default": 0
+        },
+        "ultraProcesados": {
+            "type": "number",
+            "default": 0
+        },
+        "azucar": {
+            "type": "number",
+            "default": 0
+        },
+        "grasaSaturada": {
+            "type": "number",
+            "default": 0
+        },
+        "grasaTrans": {
+            "type": "number",
+            "default": 0
+        }
+    },
+    "required": [
+        "usuario"
+    ]
+}

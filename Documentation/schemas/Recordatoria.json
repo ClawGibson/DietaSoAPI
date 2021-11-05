@@ -1,0 +1,53 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type": "array",
+            "items": {
+                "type":"string",
+                "format": "uuid"
+            }
+        },
+        "metas": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "titulo": {
+            "type": "string",
+            "unique": true
+        },
+        "mensaje": {
+            "type": "string"
+        },
+        "categoria": {
+            "type": "string"
+        },
+        "dias": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "day": {
+                        "type": "string"
+                    },
+                    "activo": {
+                        "type": "boolean",
+                        "default": false
+                    }
+                }
+            }
+        },
+        "global": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "required": [
+        "items",
+        "metas",
+        "titulo",
+        "mensaje",
+        "categoria",
+        "day"
+    ]
+}

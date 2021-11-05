@@ -1,0 +1,85 @@
+{
+    "get": {
+        "tags": [
+            "Usuarios"
+        ],
+        "summary": "Obtiene la información de un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Usuarios.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Usuario no encontrado. | Error al buscar el usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "put": {
+        "tags": [
+            "Usuarios"
+        ],
+        "summary": "Actualiza la información de un usuario.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/UsuarioActualizar.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "ok"
+            },
+            "400": {
+                "description": "No se pudo editar el usuario :c."
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Usuario no existe. | Ocurrió un error al buscar el usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,173 @@
+{
+    "get": {
+        "tags": [
+            "Puntos de Usuario"
+        ],
+        "summary": "Muestra todos los puntos obtenidos por cada usuario.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items":{
+                                "type": "object",
+                                "properties":{
+                                    "puntos":{
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "El usuario no existe."
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Ocurrió un error al buscar el usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Puntos de Usuario"
+        ],
+        "summary": "Agrega puntos a un usuario.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties":{
+                            "puntos":{
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties":{
+                                "puntos":{
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "El usuario no existe. | No se pudo agregar el puntaje al usuario"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Ocurrió un error al buscar el usuario"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "put": {
+        "tags": [
+            "Puntos de Usuario"
+        ],
+        "summary": "Actualiza los puntos de un usuario.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties":{
+                            "puntos":{
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                                "properties":{
+                                    "puntos":{
+                                        "type": "number"
+                                    }
+                                }
+                        }
+                    }
+                }
+            },
+            "400": {
+                "description": "El usuario no existe."
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Ocurrió un error al buscar el usuario | No se pudo guardar" 
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

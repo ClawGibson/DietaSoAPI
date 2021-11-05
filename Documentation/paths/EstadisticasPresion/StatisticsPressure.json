@@ -1,0 +1,74 @@
+{
+    "get": {
+        "tags": [
+            "Estadisticas Presión"
+        ],
+        "summary": "Obtiene todas la estadisticas.",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/EstadisticasPresion.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontraron datos"
+            },
+            "500": {
+                "description": "Error inesperado al obtener las estadisticas de presión"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "post": {
+        "tags": [
+            "Estadisticas Presión"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/EstadisticasPresion.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/EstadisticasPresion.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error al guardar la estadistica de presión | Error inesperado al guardar la estadistica de presión"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

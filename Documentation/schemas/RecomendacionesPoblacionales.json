@@ -1,0 +1,32 @@
+{
+    "type": "object",
+    "properties": {
+        "alimento": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "grupoId": {
+            "type": "string"
+        },
+        "consumo": {
+            "type": "string"
+        },
+        "porcionRecomendada": {
+            "type": "string"
+        },
+        "porcionMinima": {
+            "type": "string"
+        },
+        "porcionMaxima": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "alimento",
+        "grupoId",
+        "consumo",
+        "porcionRecomendada",
+        "porcionMinima",
+        "porcionMaxima"
+    ]
+}

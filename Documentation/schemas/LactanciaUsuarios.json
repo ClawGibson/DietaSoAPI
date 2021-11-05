@@ -1,0 +1,36 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "maternaExclusiva": {
+            "type": "string"
+        },
+        "artificial": {
+            "type": "string"
+        },
+        "mixta": {
+            "type": "string"
+        },
+        "maternaContemplada": {
+            "type": "string"
+        },
+        "mixtaContemplada": {
+            "type": "string"
+        },
+        "artificialContemplada": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usuario",
+        "maternaExclusiva",
+        "artificial",
+        "mixta",
+        "maternaContemplada",
+        "mixtaContemplada",
+        "artificialContemplada"
+    ]
+}

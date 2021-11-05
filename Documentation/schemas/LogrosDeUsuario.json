@@ -1,0 +1,20 @@
+{
+    "type": "object",
+    "properties": {
+        "logro": {
+            "type": "array",
+            "items": {
+                "type":"string",
+                "format": "uuid"
+            }
+        },
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        }
+    },
+    "required": [
+        "items",
+        "usuario"
+    ]
+}

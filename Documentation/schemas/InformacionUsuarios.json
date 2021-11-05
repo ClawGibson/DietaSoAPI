@@ -1,0 +1,24 @@
+{
+    "type": "object",
+    "properties": {
+        "logro": {
+            "type": "string"
+        },
+        "fotoLogro": {
+            "type": "string"
+        },
+        "puntosNecesarios": {
+            "type": "number"
+        },
+        "logroRequerido": {
+            "type":"string",
+            "format": "uuid"
+        }
+    },
+    "required": [
+        "logro",
+        "fotoLogro",
+        "puntosNecesarios",
+        "logroRequerido"
+    ]
+}

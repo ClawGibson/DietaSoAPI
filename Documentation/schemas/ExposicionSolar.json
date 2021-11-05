@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type":"string",
+            "format": "uuid"
+        },
+        "minutosAlSol": {
+            "type": "string"
+        },
+        "cubresTuPiel": {
+            "type": "string"
+        },
+        "bloqueadorSolar": {
+            "type": "string",
+            "default": "No"
+        },
+        "diasXsemana": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usuario",
+        "minutosAlSol",
+        "cubresTuPiel",
+        "bloqueadorSolar",
+        "diasXsemana"
+    ]
+}

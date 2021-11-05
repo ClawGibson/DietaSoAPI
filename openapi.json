@@ -1,0 +1,7396 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "DietaSoAPI",
+    "description": "REST API orientada al area de nutrición.",
+    "license": {
+      "name": "MIT"
+    },
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.example.com/support",
+      "email": "support@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1/",
+      "name": "Servidor Local."
+    },
+    {
+      "url": "https://dietasoapiv1.herokuapp.com/api/v2/",
+      "name": "Servidor Producción."
+    }
+  ],
+  "paths": {
+    "/usuarios/login": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Inicio de sesión para los usuarios.",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Contraseña incorrecta"
+          },
+          "404": {
+            "description": "Usuario no registrado :c"
+          }
+        }
+      }
+    },
+    "/usuarios/register": {
+      "post": {
+        "summary": "Registra un usuario.",
+        "tags": [
+          "Usuarios"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuarios"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo agregar al usuario."
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "Ocurrio un problema al buscar el usuario."
+          },
+          "500": {
+            "description": "Usuario ya creado | Ocurrió un error al buscar el usuario"
+          }
+        }
+      }
+    },
+    "/usuarios/": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Muestra la información de todos los usuarios registrados.",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Usuarios"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontraron usuarios."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "security": [
+        {
+          "bearer": []
+        }
+      ]
+    },
+    "/usuarios/individual": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Obtiene la información de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Usuarios"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Usuario no encontrado. | Error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Actualiza la información de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "contrasena": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "usuario",
+                  "email",
+                  "contrasena"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "400": {
+            "description": "No se pudo editar el usuario :c."
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Usuario no existe. | Ocurrió un error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentos/all/": {
+      "get": {
+        "tags": [
+          "Alimentos"
+        ],
+        "summary": "Muestra la información de todos los alimentos registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Alimentos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentos/": {
+      "get": {
+        "tags": [
+          "Alimentos"
+        ],
+        "summary": "Muestra la información de todos los alimentos registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "nombreAlimento": {
+                        "type": "string"
+                      },
+                      "imagen": {
+                        "type": "string",
+                        "default": ""
+                      },
+                      "grupoAlimento": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No hay alimentos todavía :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Alimentos"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Alimentos"
+              }
+            }
+          }
+        },
+        "summary": "Agrega un nuevo alimento.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alimentos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Grupo de alimento inválido | No se pudo crear el alimento :C"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentos/{id}": {
+      "get": {
+        "tags": [
+          "Alimentos"
+        ],
+        "summary": "Muestra la información de un alimiento.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alimentos"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No existe ese alimento :/."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Alimentos"
+        ],
+        "summary": "Actualiza la información de un alimento.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Alimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alimentos"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "El producto no se encontró o no se pudo editar :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Alimentos"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "summary": "Elimina un alimento.",
+        "responses": {
+          "200": {
+            "description": "Alimento eliminado :D!"
+          },
+          "400": {
+            "description": "El ID del alimento no es válido. | 'No se encontró el alimento a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "El producto no se encontró o no se pudo editar :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/grupoAlimentos/": {
+      "get": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Muestra la información de todos los grupos de alimentos registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GrupoAlimentos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Agrega un nuevo grupo de alimentos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrupoAlimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoAlimentos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo crear el grupo :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/grupoAlimentos/detalles": {
+      "get": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Muestra los detalles de todos los grupos de alimentos registrados.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "grupoAlimento",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Equivalencia"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/grupoAlimentos/{id}": {
+      "put": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Actualiza la información de un grupo de alimentos.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grupoDeAlimento": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GrupoAlimentos"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "El grupo no se encontró o no se pudo editar :c"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Grupo de Alimentos"
+        ],
+        "summary": "Elimina un grupo de alimentos.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Grupo eliminado :D!"
+          },
+          "400": {
+            "description": "El ID del grupo de alimento a eliminar no es válido. | No se encontró el grupo a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/subGrupoAlimentos/": {
+      "get": {
+        "tags": [
+          "Sub Grupo de Alimentos"
+        ],
+        "summary": "Muestra la información de todos los sub grupos de alimentos registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubGrupoAlimentos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Sub Grupo de Alimentos"
+        ],
+        "summary": "Agrega un nuevo sub grupo de alimentos.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubGrupoAlimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubGrupoAlimentos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo actualizar el alimento :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/subGrupoAlimentos/{id}": {
+      "put": {
+        "tags": [
+          "Sub Grupo de Alimentos"
+        ],
+        "summary": "Actualiza la información de un sub grupo de alimentos.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubGrupoAlimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubGrupoAlimentos"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "El sub grupo no se encontró o no se pudo editar :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Sub Grupo de Alimentos"
+        ],
+        "summary": "Elimina un sub grupo de alimentos.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sub grupo eliminado :D!"
+          },
+          "400": {
+            "description": "El ID del sub grupo no es válido. | No se encontró el sub grupo a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recetas/": {
+      "get": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Muestra la información de todas las recetas registradas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recetas"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Agrega una nueva receta.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recetas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recetas"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo crear la receta :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recetas/{id}": {
+      "put": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Actualiza la información de una receta.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recetas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recetas"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró o no se pudo editar la receta :c"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Elimina una receta.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Receta eliminada :D!"
+          },
+          "400": {
+            "description": "No se encontró el receta a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recetas/destacadas/{count}": {
+      "get": {
+        "tags": [
+          "Recetas"
+        ],
+        "summary": "Obtiene las recetas más populares.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "count",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recetas"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró o no se pudo editar la receta :c"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/menuBase/": {
+      "get": {
+        "tags": [
+          "Menu Base"
+        ],
+        "summary": "Muestra la información de todos los menu base registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuBase"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Menu Base"
+        ],
+        "summary": "Agrega un nuevo menu base.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuBase"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MenuBase"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/menuBase/{id}": {
+      "get": {
+        "tags": [
+          "Menu Base"
+        ],
+        "summary": "Muestra la información de un menu base.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MenuBase"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontró el menú base que buscaba :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Menu Base"
+        ],
+        "summary": "Actualiza la información de un menu base.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuBase"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MenuBase"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se pudo editar el menú base u ocurrió algún error inesperado"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/logros/": {
+      "get": {
+        "tags": [
+          "Logros"
+        ],
+        "summary": "Muestra la información de todos los logros registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Logros"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "default": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Logros"
+        ],
+        "summary": "Agrega un nuevo logro.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Logros"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MenuBase"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo crear el nuevo logro"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "El nombre de este logro ya existe. | Este logro no existe"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/logros/{id}": {
+      "get": {
+        "tags": [
+          "Logros"
+        ],
+        "summary": "Muestra la información de un logro.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Logros"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontró el logro que buscaba"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Logros"
+        ],
+        "summary": "Actualiza la información de un logro.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Logros"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Logros"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo actualizar el logro :c"
+          },
+          "404": {
+            "description": "No se pudo editar el menú base u ocurrió algún error inesperado"
+          },
+          "500": {
+            "description": "El logro que está buscando no existe :c"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Logros"
+        ],
+        "summary": "Elimina un logro.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logro eliminado :D!"
+          },
+          "400": {
+            "description": "El ID del logro no es válido. | No se encontró el logro a eliminar :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/logrosDeUsuario/": {
+      "get": {
+        "tags": [
+          "Logros de Usuario"
+        ],
+        "summary": "Muestra la información de todos los logros de usuarios.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LogrosDeUsuario"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontraron logros de usuario."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Logros de Usuario"
+        ],
+        "summary": "Agrega un nuevo logro de usuario.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogrosDeUsuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogrosDeUsuario"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo agregar el logro al usuario"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Este logro no existe | El usuario no existe"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/logrosDeUsuario/{id}": {
+      "get": {
+        "tags": [
+          "Logros de Usuario"
+        ],
+        "summary": "Muestra la información de un logro de usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogrosDeUsuario"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "El usuario no existe. | El usuario no tiene logros todavía"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Logros de Usuario"
+        ],
+        "summary": "Actualiza la información de un logro de usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogrosDeUsuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogrosDeUsuario"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Este logro no existe"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/logrosDeUsuario/delete/{id}": {
+      "put": {
+        "tags": [
+          "Logros de Usuario"
+        ],
+        "summary": "Elimina un logro de usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogrosDeUsuario"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Este logro no existe."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/puntosDeUsuario/{id}": {
+      "get": {
+        "tags": [
+          "Puntos de Usuario"
+        ],
+        "summary": "Muestra todos los puntos obtenidos por cada usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "puntos": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "El usuario no existe."
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Ocurrió un error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Puntos de Usuario"
+        ],
+        "summary": "Agrega puntos a un usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "puntos": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "puntos": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "El usuario no existe. | No se pudo agregar el puntaje al usuario"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Ocurrió un error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Puntos de Usuario"
+        ],
+        "summary": "Actualiza los puntos de un usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "puntos": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "puntos": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "El usuario no existe."
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Ocurrió un error al buscar el usuario | No se pudo guardar"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/equivalencias/": {
+      "get": {
+        "tags": [
+          "Equivalencias"
+        ],
+        "summary": "Muestra la información de todas las equivalencias registradas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Equivalencia"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al obtener la lista de equivalencias | Error inesperado"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Equivalencias"
+        ],
+        "summary": "Agrega una nueva equivalencia.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Equivalencia"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Datos guardados exitosamente! :D"
+          },
+          "400": {
+            "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al guardar la nueva equivalencia | Ocurrió un error al querer guardar los datos | Error inesperado"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/equivalencias/grupoAlimento": {
+      "get": {
+        "tags": [
+          "Equivalencias"
+        ],
+        "summary": "Muestra la información de todas las equivalencias registradas por grupo de alimento.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "grupoAlimento",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Equivalencia"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se encontraron resultados"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al obtener las equivalencias"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/informacionUsuarios/": {
+      "get": {
+        "tags": [
+          "Información de Usuarios"
+        ],
+        "summary": "Muestra la información de todos los usuarios registrados.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/InformacionUsuarios"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontro ninguna información de usuarios | Ocurrió un error al buscar la información de los usuarios"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/informacionUsuarios/individual": {
+      "get": {
+        "tags": [
+          "Información de Usuarios"
+        ],
+        "summary": "Muestra la información especifica de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InformacionUsuarios"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | El usuario no tiene información"
+          },
+          "500": {
+            "description": "El usuario no existe"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Información de Usuarios"
+        ],
+        "summary": "Agrega nueva información a un usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InformacionUsuarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InformacionUsuarios"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo agregar la información al usuario | Ocurrió un error al guardar información de usuario"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Información de Usuario ya registrada | Ocurrió un error al buscar la información el usuario | El usuario no existe | Ocurrió un error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Información de Usuarios"
+        ],
+        "summary": "Actualiza la información de un usuario.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InformacionUsuarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se pudo guardar"
+          },
+          "500": {
+            "description": "El usuario no existe | No se pudo guardar la nueva información | Ocurrió un error al actualizar informacion de usuario | Ocurrió un error al buscar al usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/datosUsuarios/": {
+      "get": {
+        "tags": [
+          "Datos de Usuarios"
+        ],
+        "summary": "Muestra los datos de todos los usuarios.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatosUsuarios"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontraron los datos de los usuarios."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/datosUsuarios/individual": {
+      "get": {
+        "tags": [
+          "Datos de Usuarios"
+        ],
+        "summary": "Muestra los datos de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "peso": {
+                      "type": "object"
+                    },
+                    "altura": {
+                      "type": "object"
+                    },
+                    "actividadFisica": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "El usuario no existe | El usuario no tiene datos todavia | Ocurrio un error al buscar los datos del usuario | Ocurrio un error al buscar al usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Datos de Usuarios"
+        ],
+        "summary": "Agrega nuevos datos a un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatosUsuarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatosUsuarios"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudieron agregar los datos del usuario"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "Datos de Usuario ya registrados"
+          },
+          "500": {
+            "description": "Ocurrió un error al buscar datos del usuario | Ocurrió un error al buscar el usuario | Ocurrió un error al guardar los datos del usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Datos de Usuarios"
+        ],
+        "summary": "Actualiza los datos de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatosUsuarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Usuario No existe | No se pudo guardar | Ocurrió un error al actualizar los datos del usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/historialClinico/": {
+      "get": {
+        "tags": [
+          "Historial Clinico"
+        ],
+        "summary": "Muestra una lista de todos los historiales clinicos almacenados en el sistema.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HistorialClinica"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontro ningun historial clinico de usuarios."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/historialClinico/individual": {
+      "get": {
+        "tags": [
+          "Historial Clinico"
+        ],
+        "summary": "Muestra los datos de un historial clinico.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialClinica"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | El usuario no tiene Historia clinica"
+          },
+          "500": {
+            "description": "Ocurrió un error al buscar el historial clinico del usuario | Ocurrió un error al buscar al usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Historial Clinico"
+        ],
+        "summary": "Agrega un nuevo historial clinico.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistorialClinica"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialClinica"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo agregar historial clinico"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | El usuario no tiene Historia clinica"
+          },
+          "500": {
+            "description": "Historial clinico de Usuario ya creado | Ocurrió un error al buscar el historial clinico del usuario usuario | Ocurrio un error al buscar al usuario | Ocurrió un error al guardar el historial clinico"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Historial Clinico"
+        ],
+        "summary": "Actualiza los datos de un historial clinico",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistorialClinica"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "El usuario no existe. | No se pudo guardar | Ocurrió un error al actualizar el historial clinico | Ocurrió un error al buscar al usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/datosSocioeconomicos/": {
+      "get": {
+        "tags": [
+          "Datos Socioeconomicos"
+        ],
+        "summary": "Muestra una lista de todos los datos socio economicos almacenados en el sistema.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatosSocioeconomicos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontro ninguna informacion de datos socioeconomicos de los usuarios"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/datosSocioeconomicos/individual": {
+      "get": {
+        "tags": [
+          "Datos Socioeconomicos"
+        ],
+        "summary": "Muestra los datos socioeconomicos de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nivelSocioeconomico": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "El usuario no existe | El usuario no tiene datos socioeconomicos todavia | Ocurrio un error al guardar los datos socioeconomicos | Ocurrio un error al buscar usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Datos Socioeconomicos"
+        ],
+        "summary": "Agrega un nuevos datos socoeconomicos a un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nivelSocioeconomico": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatosSocioeconomicos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudieron agregar datos socioeconomicos"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Datos socioeconomicos de Usuario ya registrados | Ocurrió un error al buscar los datos socioeconomicos del usuario | Ocurrió un error al buscar al usuario | Ocurrió un error al guardar los datos socioeconomicos"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Datos Socioeconomicos"
+        ],
+        "summary": "Actualiza los datos socioeconomicos de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nivelSocioeconomico": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "El usuario no existe. | Ocurrió un error al actualizar los datos socioeconomicos |  Ocurrió un error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentacionUsuarios/": {
+      "get": {
+        "tags": [
+          "Alimentación de Usuarios"
+        ],
+        "summary": "Muestra una lista de todos los tipos de alimentación de usuarios.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AlimentacionUsuarios"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontro ningun registro de la alimentacion de usuarios"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentacionUsuarios/individual": {
+      "get": {
+        "tags": [
+          "Alimentación de Usuarios"
+        ],
+        "summary": "Muestra los datos de un tipo de alimetación de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "comidaFavorita": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "comidaNoFavoria": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "alergiasAlimentarias": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "lugarDeCompras": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "quienCocina": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "estatusDieta": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "extras": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "desayuno": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "colacion1": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "comida": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "colacion2": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "cena": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "desayunoAyer": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "colacion1Ayer": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "comidaAyer": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "colacion2Ayer": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "cenaAyer": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | El usuario no tiene información de alimentación registrada"
+          },
+          "500": {
+            "description": "Ocurrió un error al buscar la informacion de alimentacion | Ocurrió un error al buscar al usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Alimentación de Usuarios"
+        ],
+        "summary": "Agrega un nuevo tipo de alimentación a un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlimentacionUsuarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlimentacionUsuarios"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo agregar los datos de alimentacion de usuarios"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Alimentacion de Usuario ya registrada | Ocurrió un error al buscar la alimentación del usuario | Ocurrió un error al buscar el usuario | Ocurrió un error al guardar los datos de alimentacion de usuarios"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Alimentación de Usuarios"
+        ],
+        "summary": "Actualiza los datos de un tipo de alimentación de un usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlimentacionUsuarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "El usuario no existe. | No se pudo guardar la alimentación | Ocurrió un error al buscar el usuario"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/alimentacionUsuarios/comidaFav/": {
+      "get": {
+        "tags": [
+          "Alimentación de Usuarios"
+        ],
+        "summary": "Obtener comidas favoritas del usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "comidaFavorita": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "El usuario no tiene informacion de su alimentacion | Ocurrió un error al obtener la informacion de alimentacionn"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Alimentación de Usuarios"
+        ],
+        "summary": "Agregar una comida favoria al usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comidaFavorita": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok."
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Esa comida ya esta registrada | Ocurrió un error al buscar la comida | Ocurrió un error al buscar el usuario | Comida ya esta registrada"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Alimentación de Usuarios"
+        ],
+        "summary": "Elimina una comida favoria del usuario.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comidaFavorita": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ok."
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Esa comida no existe | Ocurrió un error al buscar la comida | Ocurrió un error al buscar el usuario | error al eliminar la comida"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estadisticasIMC/": {
+      "get": {
+        "tags": [
+          "Estadisticas IMC"
+        ],
+        "summary": "Obtiene todas la estadisticas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstadisticasIMC"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron datos"
+          },
+          "500": {
+            "description": "Error inesperado al obtener las estadisticas IMC"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Estadisticas IMC"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadisticasIMC"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasIMC"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al querer guardar la estadistica IMC | Error inesperado al crear la estadistica IMC"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estaisticasIMC/{id}": {
+      "get": {
+        "tags": [
+          "Estadisticas IMC"
+        ],
+        "summary": "Obtiene una estadistica por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasIMC"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontraron datos | Error inesperado al obtener la estadistica IMC"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Estadisticas IMC"
+        ],
+        "summary": "Actualiza una estadistica.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "porcentajeGrasaCorporal": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasIMC"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron datos"
+          },
+          "500": {
+            "description": "Error al querer guardar la estadistica IMC | Error inesperado al actualizar la estadistica IMC"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estadisticasNiveles/": {
+      "get": {
+        "tags": [
+          "Estadisticas Niveles"
+        ],
+        "summary": "Obtiene todas las estadisticas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstadisticasNiveles"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No hay niveles"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Estadisticas Niveles"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadisticasNiveles"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasNiveles"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al guardar la estadistica"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estaisticasNiveles/{id}": {
+      "get": {
+        "tags": [
+          "Estadisticas Niveles"
+        ],
+        "summary": "Obtiene una estadistica por su id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasIMC"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No existe el nivel"
+          },
+          "500": {
+            "description": "Error inesperado al obtener la estadistica IMC"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estadisticasHuella/": {
+      "get": {
+        "tags": [
+          "Estadisticas Huella"
+        ],
+        "summary": "Obtiene todas las estadisticas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstadisticasHuella"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron datos"
+          },
+          "500": {
+            "description": "Error inesperado al obtener las estadisticas Huella"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Estadisticas Huella"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadisticasHuella"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasHuella"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al querer guardar la estadistica Huella | Error inesperado al crear la estadistica Huella"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estaisticasHuella/{id}": {
+      "get": {
+        "tags": [
+          "Estadisticas Huella"
+        ],
+        "summary": "Obtiene una estadistica por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasHuella"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se encontraron datos"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error inesperado al obtener la estadistica Huella"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Estadisticas Huella"
+        ],
+        "summary": "Actualiza una estadistica.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "huellaHidricaTotal": {
+                    "type": "number"
+                  },
+                  "huellaCArbonTotal": {
+                    "type": "number"
+                  },
+                  "puntajeEcologicoSostenible": {
+                    "type": "number"
+                  },
+                  "puntosEconomiaDeFichas": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasHuella"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron datos"
+          },
+          "500": {
+            "description": "Error al querer guardar la estadistica Huella | Error inesperado al actualizar la estadistica Huella"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estadisticasConsumo/": {
+      "get": {
+        "tags": [
+          "Estadisticas Consumo"
+        ],
+        "summary": "Obtiene todas las estadisticas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstadisticasConsumo"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se encontraron datos"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error inesperado al obtener las estadisticas Consumo"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Estadisticas Consumo"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadisticasConsumo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasConsumo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al querer guardar la estadistica Consumo | Error inesperado al crear la estadistica Consumo"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estaisticasConsumo/{id}": {
+      "get": {
+        "tags": [
+          "Estadisticas Consumo"
+        ],
+        "summary": "Obtiene una estadistica por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasConsumo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron datos"
+          },
+          "500": {
+            "description": "Error inesperado al obtener la estadistica Consumo"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Estadisticas Consumo"
+        ],
+        "summary": "Actualiza la estadistica.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "frutasVegetales": {
+                    "type": "number"
+                  },
+                  "alimentosMexicanos": {
+                    "type": "number"
+                  },
+                  "cerealesIntegrales": {
+                    "type": "number"
+                  },
+                  "leguminosas": {
+                    "type": "number"
+                  },
+                  "lacteos": {
+                    "type": "number"
+                  },
+                  "semillaGrasaaSaludables": {
+                    "type": "number"
+                  },
+                  "huevo": {
+                    "type": "number"
+                  },
+                  "pescadoMariscos": {
+                    "type": "number"
+                  },
+                  "pollo": {
+                    "type": "number"
+                  },
+                  "carnesRojasProcesadas": {
+                    "type": "number"
+                  },
+                  "ultraProcesados": {
+                    "type": "number"
+                  },
+                  "azucar": {
+                    "type": "number"
+                  },
+                  "grasaSaturada": {
+                    "type": "number"
+                  },
+                  "grasaTrans": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasConsumo"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron datos"
+          },
+          "500": {
+            "description": "Error al querer guardar la estadistica Consumo | Error inesperado al actualizar la estadistica Consumo"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estadisticasPresion/": {
+      "get": {
+        "tags": [
+          "Estadisticas Presión"
+        ],
+        "summary": "Obtiene todas la estadisticas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EstadisticasPresion"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron datos"
+          },
+          "500": {
+            "description": "Error inesperado al obtener las estadisticas de presión"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Estadisticas Presión"
+        ],
+        "summary": "Agrega una nueva estadistica.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EstadisticasPresion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasPresion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Error al guardar la estadistica de presión | Error inesperado al guardar la estadistica de presión"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/estaisticasPresion/{id}": {
+      "get": {
+        "tags": [
+          "Estadisticas Presión"
+        ],
+        "summary": "Obtiene una estadistica por id.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EstadisticasPresion"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontrado datos"
+          },
+          "500": {
+            "description": "Error inesperado al obtener la estadistica de presión"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/registroDietetico/": {
+      "get": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Obtiene los registros dieteticos.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RegistroDietetico"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontraron registros."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Agrega un nuevo registro dietetico.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistroDietetico"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RegistroDietetico"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "default": "No se encontró el usuario proporcionado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "default": "Error al guardar el registro"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/registroDietetico/detalles": {
+      "get": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Obtiene los detalles de un registro dietetico.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistroDietetico"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | El usuario aún no cuenta con registros dietéticos"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/registroDietetico/modificarRegistro": {
+      "patch": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Actualiza un registro dietetico.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistroDietetico"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Acceso Actualizado | Registro creado"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | No se encontró el alimento proporcionado"
+          },
+          "500": {
+            "description": "Error al guardar el registro | Algo salió mal"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/registroDietetico/eliminarRegistro": {
+      "patch": {
+        "tags": [
+          "Registro Dietetico"
+        ],
+        "summary": "Elimina un registro dietetico.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "idAlimento": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alimento eliminado exitosamente"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "404": {
+            "description": "No se encontró el usuario proporcionado | No se encontró el alimento proporcionado"
+          },
+          "500": {
+            "description": "Error al eliminar el alimento del registro"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/importarAlimentos/": {
+      "post": {
+        "tags": [
+          "Importar Alimentos"
+        ],
+        "summary": "Importa un alimento",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Alimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "El alimento ya existe."
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alimentos"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se guardó el alimento | Ocurrió un error al guardar los alimentos | Error inesperado al importar los alimentos"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Importar Alimentos"
+        ],
+        "summary": "Actualiza un alimento importado",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Alimentos"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alimento actualizado"
+          },
+          "400": {
+            "description": "Ocurrió un error con el alimento seleccionado :c | No se pudo crear el menú base :c"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se pudo actualizar el alimento | Ocurrió un error al actualizar los datos de alimentos"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recomendacionPoblacional/": {
+      "post": {
+        "tags": [
+          "RecomendacionesPoblacionales"
+        ],
+        "summary": "Agrega una recomendación poblacional",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecomendacionesPoblacionales"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecomendacionesPoblacionales"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "Ocurrió un error al importar las recomendaciones poblacionales"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/metas/": {
+      "get": {
+        "tags": [
+          "Metas"
+        ],
+        "summary": "Obtiene todas la metas.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Metas"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se encontraron metas. | { error }"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Metas"
+        ],
+        "summary": "Agrega una nueva meta",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Metas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Se creo correctamente la meta"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se pudo crear la nueva meta | { error }"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Metas"
+        ],
+        "summary": "Actualiza una meta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Metas"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Metas"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Metas"
+        ],
+        "summary": "Elimina una meta",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Eliminado correctamente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Meta no encontrada"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Hable con el administrador"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/recordatorios/": {
+      "get": {
+        "tags": [
+          "Recordatorios"
+        ],
+        "summary": "Obtiene todos los recordatorios.",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recordatoria"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Recordatorios"
+        ],
+        "summary": "Agrega un nuevo recordatorio",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recordatoria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Se creo correctamente el recordatorio"
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "description": "No se pudo crear el nuevo recordatorio | { error }"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Recordatorios"
+        ],
+        "summary": "Actualiza un recordatorio",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "titulo",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recordatoria"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recordatoria"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Recordatorios"
+        ],
+        "summary": "Elimina un recordatorio",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Recordatorios 'id' eliminado con exito"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/mensajes/": {
+      "post": {
+        "tags": [
+          "Mensajes"
+        ],
+        "summary": "Agrega un nuevo mensaje",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Message"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Creado correctamente"
+                    },
+                    "newMessage": {
+                      "$ref": "#/components/schemas/Message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "type": "object",
+            "properties": {
+              "error": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/mensajes/{id}": {
+      "get": {
+        "tags": [
+          "Mensajes"
+        ],
+        "summary": "Obtiene los mensajes de un chat",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "$ref": "#/components/schemas/Message"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Mensajes"
+        ],
+        "summary": "Elimina un mensaje",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Eliminado correctamente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "No se encontro mensaje"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/chat/": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Obtiene todos los chats",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chats": {
+                      "$ref": "#/components/schemas/Chat"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Agrega un chat",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Chat"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Creado correctamente"
+          },
+          "401": {
+            "description": "Acceso no autorizado. | Son necesarios los usuarios"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/chat/{id}": {
+      "delete": {
+        "tags": [
+          "Chat"
+        ],
+        "summary": "Elimina una chat",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chat eliminado"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "No se ha encontrado el chat seleccionado | {erro}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/foro/": {
+      "get": {
+        "tags": [
+          "Publicacion"
+        ],
+        "summary": "Obtiene las publicaiones más populares",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chats": {
+                      "$ref": "#/components/schemas/Publicacion"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Publicacion"
+        ],
+        "summary": "Agrega una nueva publicaion",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publicacion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Creado correctamente"
+          },
+          "401": {
+            "description": "Acceso no autorizado. | Fallo al cargar la publicación"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Publicacion"
+        ],
+        "summary": "Elimina una publicación",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "default": "Eliminado correctamente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/foro/{_id}": {
+      "patch": {
+        "tags": [
+          "Publicacion"
+        ],
+        "summary": "Actualiza una publicación",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Publicacion"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/components/schemas/Publicacion"
+            }
+          },
+          "401": {
+            "description": "Acceso no autorizado."
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "contrasena": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usernameOrEmail",
+          "password"
+        ]
+      },
+      "LoginSuccess": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "email"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          },
+          "admin": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Usuarios": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "contrasena": {
+            "type": "string"
+          },
+          "esAdmin": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "usuario",
+          "email",
+          "contrasena"
+        ]
+      },
+      "SubGrupoAlimentos": {
+        "type": "object",
+        "properties": {
+          "subGrupoDeAlimento": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "subGrupoDeAlimento"
+        ]
+      },
+      "RegistroDietetico": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "agua": {
+            "type": "number"
+          },
+          "ejercicio": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nombre": {
+                  "type": "string"
+                },
+                "duracion": {
+                  "type": "number"
+                },
+                "intensidad": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "nombre",
+                "duracion",
+                "intensidad"
+              ]
+            }
+          },
+          "alimentos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "idAlimento": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "cantidad": {
+                  "type": "string"
+                },
+                "tipo": {
+                  "type": "string"
+                },
+                "fecha": {
+                  "type": "date"
+                },
+                "lugar": {
+                  "type": "string"
+                },
+                "menuPreparacion": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "idAlimento",
+                "cantidad",
+                "tipo",
+                "fecha",
+                "lugar",
+                "menuPreparacion"
+              ]
+            }
+          }
+        },
+        "required": [
+          "usuario",
+          "agua"
+        ]
+      },
+      "Recetas": {
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "type": "string"
+          },
+          "categoria": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "ingredientes": {
+            "type": "string"
+          },
+          "preparacion": {
+            "type": "string"
+          },
+          "destacado": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "titulo",
+          "categoria",
+          "url",
+          "ingredientes",
+          "preparacion",
+          "destacado"
+        ]
+      },
+      "PuntosDeUsuario": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "puntos": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "usuario",
+          "puntos"
+        ]
+      },
+      "MenuBase": {
+        "type": "object",
+        "properties": {
+          "titulo": {
+            "type": "string"
+          },
+          "imagen": {
+            "type": "string"
+          },
+          "ingredientes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "categoria": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "titulo",
+          "imagen",
+          "categoria"
+        ]
+      },
+      "LogrosDeUsuario": {
+        "type": "object",
+        "properties": {
+          "logro": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "items",
+          "usuario"
+        ]
+      },
+      "Logros": {
+        "type": "object",
+        "properties": {
+          "logro": {
+            "type": "string"
+          },
+          "fotoLogro": {
+            "type": "string"
+          },
+          "puntosNecesarios": {
+            "type": "number"
+          },
+          "logroRequerido": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "logro",
+          "fotoLogro",
+          "puntosNecesarios",
+          "logroRequerido"
+        ]
+      },
+      "InformacionUsuarios": {
+        "type": "object",
+        "properties": {
+          "logro": {
+            "type": "string"
+          },
+          "fotoLogro": {
+            "type": "string"
+          },
+          "puntosNecesarios": {
+            "type": "number"
+          },
+          "logroRequerido": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": [
+          "logro",
+          "fotoLogro",
+          "puntosNecesarios",
+          "logroRequerido"
+        ]
+      },
+      "HistorialClinica": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "historiaClinica": {
+            "type": "object",
+            "properties": {
+              "antecedentesPatologicos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "antecedentesHeredoFamiliares": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "medicamentos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "suplementos": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "GrupoAlimentos": {
+        "type": "object",
+        "properties": {
+          "grupoDeAlimento": {
+            "type": "string",
+            "unique": true
+          },
+          "src": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "grupoDeAlimento",
+          "src"
+        ]
+      },
+      "Equivalencia": {
+        "type": "object",
+        "properties": {
+          "alimento": {
+            "type": "string"
+          },
+          "cantidadSugerida": {
+            "type": "string"
+          },
+          "unidad": {
+            "type": "string"
+          },
+          "pesoNetoKg": {
+            "type": "string"
+          },
+          "grupoAlimento": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "alimento",
+          "cantidadSugerida",
+          "unidad",
+          "pesoNetoKg",
+          "grupoAlimento"
+        ]
+      },
+      "DatosUsuarios": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "actividadFisica": {
+            "type": "object",
+            "properties": {
+              "tipoDeActividad": {
+                "type": "string"
+              },
+              "intensidad": {
+                "type": "string"
+              },
+              "vecesXsemana": {
+                "type": "string"
+              },
+              "minXdia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "tipoDeActividad",
+              "intensidad",
+              "vecesXsemana",
+              "minXdia"
+            ]
+          },
+          "peso": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "altura": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "usuario",
+          "tipoDeActividad",
+          "intensidad",
+          "vecesXsemana",
+          "minXdia",
+          "items",
+          "altura"
+        ]
+      },
+      "DatosSocioeconomicos": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nivelSocioeconomico": {
+            "type": "object",
+            "properties": {
+              "ingresosMes": {
+                "type": "string"
+              },
+              "educacion": {
+                "type": "string"
+              },
+              "ocupacion": {
+                "type": "string"
+              },
+              "diasDeTrabajoXsemana": {
+                "type": "number"
+              },
+              "modalidad": {
+                "type": "string"
+              },
+              "horarioEntrada": {
+                "type": "string"
+              },
+              "horarioSalida": {
+                "type": "string"
+              },
+              "dineroDeAlimentacionXmesIndivi": {
+                "type": "string"
+              },
+              "dineroDeAlimentacionXmesHogar": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "ingresosMes",
+              "educacion",
+              "ocupacion",
+              "diasDeTrabajoXsemana",
+              "modalidad",
+              "horarioEntrada",
+              "horarioSalida",
+              "dineroDeAlimentacionXmesIndivi",
+              "dineroDeAlimentacionXmesHogar"
+            ]
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "Alimentos": {
+        "type": "object",
+        "properties": {
+          "nombreAlimento": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "imagen": {
+            "type": "string",
+            "default": ""
+          },
+          "grupoExportable": {
+            "type": "string",
+            "default": ""
+          },
+          "subGrupoExportable": {
+            "type": "string",
+            "default": ""
+          },
+          "clasificacionExportable": {
+            "type": "string",
+            "default": ""
+          },
+          "grupoAlimento": {
+            "type": "string"
+          },
+          "mensaje": {
+            "type": "object",
+            "properties": {
+              "nutricional": {
+                "type": "string",
+                "default": ""
+              },
+              "ambiental": {
+                "type": "string",
+                "default": ""
+              },
+              "mensajeEconomia": {
+                "type": "string",
+                "default": ""
+              },
+              "mensajeCulturaSociedad": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "nutricional",
+              "ambiental",
+              "mensajeEconomia",
+              "mensajeCulturaSociedad"
+            ]
+          },
+          "icono": {
+            "type": "object",
+            "properties": {
+              "iconoNutricional": {
+                "type": "string",
+                "default": ""
+              },
+              "iconoAmbiental": {
+                "type": "string",
+                "default": ""
+              },
+              "iconoEconomia": {
+                "type": "string",
+                "default": ""
+              },
+              "iconoCulturaSociedad": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "iconoNutricional",
+              "iconoAmbiental",
+              "iconoEconomia",
+              "iconoCulturaSociedad"
+            ]
+          },
+          "opcionesPreparacion": {
+            "type": "string",
+            "default": ""
+          },
+          "cantidadAlimento": {
+            "type": "object",
+            "properties": {
+              "cantidadSugerida": {
+                "type": "number",
+                "default": 0
+              },
+              "unidad": {
+                "type": "string",
+                "default": ""
+              },
+              "pesoNeto": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "cantidadSugerida",
+              "unidad",
+              "pesoNeto"
+            ]
+          },
+          "caloriasMacronutrientes": {
+            "type": "object",
+            "properties": {
+              "energia": {
+                "type": "string",
+                "default": ""
+              },
+              "proteina": {
+                "type": "string",
+                "default": ""
+              },
+              "lipidos": {
+                "type": "string",
+                "default": ""
+              },
+              "agSaturados": {
+                "type": "string",
+                "default": ""
+              },
+              "agMonoinsaturados": {
+                "type": "string",
+                "default": ""
+              },
+              "adPoliinsaturados": {
+                "type": "string",
+                "default": ""
+              },
+              "colesterol": {
+                "type": "string",
+                "default": ""
+              },
+              "omega3": {
+                "type": "string",
+                "default": ""
+              },
+              "omega6": {
+                "type": "string",
+                "default": ""
+              },
+              "omega9": {
+                "type": "string",
+                "default": ""
+              },
+              "hidratosDeCarbono": {
+                "type": "string",
+                "default": ""
+              },
+              "fibra": {
+                "type": "string",
+                "default": ""
+              },
+              "fibraInsoluble": {
+                "type": "string",
+                "default": ""
+              },
+              "azucar": {
+                "type": "string",
+                "default": ""
+              },
+              "etanol": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "energia",
+              "proteina",
+              "lipidos",
+              "agSaturados",
+              "agMonoinsaturados",
+              "adPoliinsaturados",
+              "colesterol",
+              "omega3",
+              "omega6",
+              "omega9",
+              "hidratosDeCarbono",
+              "fibra",
+              "fibraInsoluble",
+              "azucar",
+              "etanol"
+            ]
+          },
+          "vitaminas": {
+            "type": "object",
+            "properties": {
+              "tiamina": {
+                "type": "string",
+                "default": ""
+              },
+              "riboflavin": {
+                "type": "string",
+                "default": ""
+              },
+              "niacina": {
+                "type": "string",
+                "default": ""
+              },
+              "acidoPantotenico": {
+                "type": "string",
+                "default": ""
+              },
+              "piridoxina": {
+                "type": "string",
+                "default": ""
+              },
+              "biotina": {
+                "type": "string",
+                "default": ""
+              },
+              "cobalmina": {
+                "type": "string",
+                "default": ""
+              },
+              "acidoAscorbico": {
+                "type": "string",
+                "default": ""
+              },
+              "acidoFolico": {
+                "type": "string",
+                "default": ""
+              },
+              "vitaminaA": {
+                "type": "string",
+                "default": ""
+              },
+              "vitaminaD": {
+                "type": "string",
+                "default": ""
+              },
+              "vitaminaK": {
+                "type": "string",
+                "default": ""
+              },
+              "vitaminaE": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "tiamina",
+              "riboflavin",
+              "niacina",
+              "acidoPantotenico",
+              "piridoxina",
+              "biotina",
+              "cobalmina",
+              "acidoAscorbico",
+              "acidoFolico",
+              "vitaminaA",
+              "vitaminaD",
+              "vitaminaK",
+              "vitaminaE"
+            ]
+          },
+          "minerales": {
+            "type": "object",
+            "properties": {
+              "calcio": {
+                "type": "string",
+                "default": ""
+              },
+              "fosforo": {
+                "type": "string",
+                "default": ""
+              },
+              "hierro": {
+                "type": "string",
+                "default": ""
+              },
+              "hierroNoHem": {
+                "type": "string",
+                "default": ""
+              },
+              "hierroTotal": {
+                "type": "string",
+                "default": ""
+              },
+              "magnesio": {
+                "type": "string",
+                "default": ""
+              },
+              "sodio": {
+                "type": "string",
+                "default": ""
+              },
+              "potasio": {
+                "type": "string",
+                "default": ""
+              },
+              "zinc": {
+                "type": "string",
+                "default": ""
+              },
+              "selenio": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "calcio",
+              "fosforo",
+              "hierro",
+              "hierroNoHem",
+              "hierroTotal",
+              "magnesio",
+              "sodio",
+              "potasio",
+              "zinc",
+              "selenio"
+            ]
+          },
+          "aspectoGlucemico": {
+            "type": "object",
+            "properties": {
+              "indiceGlicemico": {
+                "type": "string",
+                "default": ""
+              },
+              "cargaGlicemica": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "indiceGlicemico",
+              "cargaGlicemica"
+            ]
+          },
+          "aspectoMedioambiental": {
+            "type": "object",
+            "properties": {
+              "factorDeCorreccionParaHuellaHidricaYEGEI": {
+                "type": "number",
+                "default": 0
+              },
+              "tipo": {
+                "type": "string",
+                "default": ""
+              },
+              "lugar": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaHidricaTotal": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaHidricaVerde": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaHidricaAzul": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaHidricaGris": {
+                "type": "string",
+                "default": ""
+              },
+              "aguaParaLavado": {
+                "type": "string",
+                "default": ""
+              },
+              "aguaParaCoccion": {
+                "type": "string",
+                "default": ""
+              },
+              "lugarEGEI": {
+                "type": "string",
+                "default": ""
+              },
+              "citaEGEI": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaCarbono": {
+                "type": "string",
+                "default": ""
+              },
+              "huellaEcologica": {
+                "type": "string",
+                "default": ""
+              },
+              "energiaFosil": {
+                "type": "string",
+                "default": ""
+              },
+              "usoDeSuelo": {
+                "type": "string",
+                "default": ""
+              },
+              "nitrogeno": {
+                "type": "string",
+                "default": ""
+              },
+              "fosforo": {
+                "type": "string",
+                "default": ""
+              },
+              "puntajeEcologico": {
+                "type": "number",
+                "default": 0
+              }
+            },
+            "required": [
+              "factorDeCorreccionParaHuellaHidricaYEGEI",
+              "tipo",
+              "lugar",
+              "huellaHidricaTotal",
+              "huellaHidricaVerde",
+              "huellaHidricaAzul",
+              "huellaHidricaGris",
+              "aguaParaLavado",
+              "aguaParaCoccion",
+              "lugarEGEI",
+              "citaEGEI",
+              "huellaCarbono",
+              "huellaEcologica",
+              "energiaFosil",
+              "usoDeSuelo",
+              "nitrogeno",
+              "fosforo",
+              "puntajeEcologico"
+            ]
+          },
+          "aspectoEconomico": {
+            "type": "object",
+            "properties": {
+              "precio": {
+                "type": "number",
+                "default": 0
+              },
+              "lugarDeCompra": {
+                "type": "string",
+                "default": ""
+              },
+              "lugarDeVenta": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "precio",
+              "lugarDeCompra",
+              "lugarDeVenta"
+            ]
+          },
+          "componentesBioactivos": {
+            "type": "object",
+            "properties": {
+              "fitoquimicos": {
+                "type": "string",
+                "default": ""
+              },
+              "polifenoles": {
+                "type": "string",
+                "default": ""
+              },
+              "antocianinas": {
+                "type": "string",
+                "default": ""
+              },
+              "taninos": {
+                "type": "string",
+                "default": ""
+              },
+              "isoflavonas": {
+                "type": "string",
+                "default": ""
+              },
+              "resveratrol": {
+                "type": "string",
+                "default": ""
+              },
+              "isotiocinatos": {
+                "type": "string",
+                "default": ""
+              },
+              "caretenoides": {
+                "type": "string",
+                "default": ""
+              },
+              "betacarotenos": {
+                "type": "string",
+                "default": ""
+              },
+              "licopeno": {
+                "type": "string",
+                "default": ""
+              },
+              "luteina": {
+                "type": "string",
+                "default": ""
+              },
+              "alicina": {
+                "type": "string",
+                "default": ""
+              },
+              "cafeina": {
+                "type": "string",
+                "default": ""
+              },
+              "UFC": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "fitoquimicos",
+              "polifenoles",
+              "antocianinas",
+              "taninos",
+              "isoflavonas",
+              "resveratrol",
+              "isotiocinatos",
+              "caretenoides",
+              "betacarotenos",
+              "licopeno",
+              "luteina",
+              "alicina",
+              "cafeina",
+              "UFC"
+            ]
+          },
+          "aditivosAlimentarios": {
+            "type": "object",
+            "properties": {
+              "benzoatoDeSodio": {
+                "type": "string",
+                "default": ""
+              },
+              "polisorbato": {
+                "type": "string",
+                "default": ""
+              },
+              "azulBrillanteFCFoE133": {
+                "type": "string",
+                "default": ""
+              },
+              "azurrubinaOE102": {
+                "type": "string",
+                "default": ""
+              },
+              "amarilloOcasoFDFoE110": {
+                "type": "string",
+                "default": ""
+              },
+              "tartrazinaOE102": {
+                "type": "string",
+                "default": ""
+              },
+              "verdeSoE142": {
+                "type": "string",
+                "default": ""
+              },
+              "negroBrillanteBNoE151": {
+                "type": "string",
+                "default": ""
+              },
+              "sucralosa": {
+                "type": "string",
+                "default": ""
+              },
+              "estevia": {
+                "type": "string",
+                "default": ""
+              },
+              "sacarina": {
+                "type": "string",
+                "default": ""
+              },
+              "aspartame": {
+                "type": "string",
+                "default": ""
+              },
+              "acesulfameK": {
+                "type": "string",
+                "default": ""
+              },
+              "carboxymethylcellulose": {
+                "type": "string",
+                "default": ""
+              },
+              "dioxidoDeTitanio": {
+                "type": "string",
+                "default": ""
+              },
+              "monolauratoDeGlicerol": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": [
+              "benzoatoDeSodio",
+              "polisorbato",
+              "azulBrillanteFCFoE133",
+              "azurrubinaOE102",
+              "amarilloOcasoFDFoE110",
+              "tartrazinaOE102",
+              "verdeSoE142",
+              "negroBrillanteBNoE151",
+              "sucralosa",
+              "estevia",
+              "sacarina",
+              "aspartame",
+              "acesulfameK",
+              "carboxymethylcellulose",
+              "dioxidoDeTitanio",
+              "monolauratoDeGlicerol"
+            ]
+          },
+          "atributosAdicionales": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "atributoAdicional": {
+                  "type": "string",
+                  "default": ""
+                }
+              },
+              "required": [
+                "atributoAdicional"
+              ]
+            }
+          },
+          "marca": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [
+          "nombreAlimento",
+          "sku",
+          "imagen",
+          "grupoExportable",
+          "subGrupoExportable",
+          "clasificacionExportable",
+          "grupoAlimento",
+          "opcionesPreparacion",
+          "marca"
+        ]
+      },
+      "AlimentacionUsuarios": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "comidaFavorita": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comidaNoFavorita": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "alergiasAlimentarias": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "lugarDeCompras": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "quienCocina": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "estatusDieta": {
+            "type": "object",
+            "properties": {
+              "sigueDieta": {
+                "type": "string"
+              },
+              "conNutriologo": {
+                "type": "number"
+              }
+            }
+          },
+          "extras": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "desayuno": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "colacion1": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comida": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "colacion2": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cena": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "desayunoAyer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "colacion1Ayer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "comidaAyer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "colacion2Ayer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cenaAyer": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "usuario",
+          "sigueDieta",
+          "conNutriologo"
+        ]
+      },
+      "Recordatoria": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "metas": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "titulo": {
+            "type": "string",
+            "unique": true
+          },
+          "mensaje": {
+            "type": "string"
+          },
+          "categoria": {
+            "type": "string"
+          },
+          "dias": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "day": {
+                  "type": "string"
+                },
+                "activo": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          },
+          "global": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "items",
+          "metas",
+          "titulo",
+          "mensaje",
+          "categoria",
+          "day"
+        ]
+      },
+      "RecomendacionesPoblacionales": {
+        "type": "object",
+        "properties": {
+          "alimento": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "grupoId": {
+            "type": "string"
+          },
+          "consumo": {
+            "type": "string"
+          },
+          "porcionRecomendada": {
+            "type": "string"
+          },
+          "porcionMinima": {
+            "type": "string"
+          },
+          "porcionMaxima": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "alimento",
+          "grupoId",
+          "consumo",
+          "porcionRecomendada",
+          "porcionMinima",
+          "porcionMaxima"
+        ]
+      },
+      "Like": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "activate": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
+      "Comment": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "text": {
+            "type": "string"
+          },
+          "activate": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
+      "Metas": {
+        "type": "object",
+        "properties": {
+          "objetivo": {
+            "type": "string"
+          },
+          "descripcion": {
+            "type": "string",
+            "default": ""
+          },
+          "categoriaDeSostenibilidad": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objetivo",
+          "descripcion",
+          "categoriaDeSostenibilidad"
+        ]
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "chat": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "user": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "message": {
+            "type": "string",
+            "require": true
+          },
+          "date": {
+            "type": "date"
+          },
+          "file": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "chat",
+          "user"
+        ]
+      },
+      "Publicacion": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "post": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "likes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "user"
+        ]
+      },
+      "EstadisticasPresion": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "presionArterialSistolica": {
+            "type": "number",
+            "minimum": 0,
+            "maximun": 300
+          },
+          "presionArterialDiastolica": {
+            "type": "number",
+            "minimum": 0,
+            "maximun": 300
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "EstadisticasNiveles": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "glucosa": {
+            "type": "number"
+          },
+          "trigliceridos": {
+            "type": "number"
+          },
+          "colesterolTotal": {
+            "type": "number"
+          },
+          "colesterolLDL": {
+            "type": "number"
+          },
+          "colesterolHDL": {
+            "type": "number"
+          },
+          "nivelesGlucosa": {
+            "type": "number"
+          },
+          "nivelesTrigliceridos": {
+            "type": "number"
+          },
+          "nivelesColesterolTotal": {
+            "type": "number"
+          },
+          "nivelesColesterolLDL": {
+            "type": "number"
+          },
+          "nivelesHDL": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "usuario",
+          "glucosa",
+          "trigliceridos",
+          "colesterolTotal",
+          "colesterolLDL",
+          "colesterolHDL"
+        ]
+      },
+      "EstadisticasIMC": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "realizacionActividadFisicaMinutos": {
+            "type": "number"
+          },
+          "porcentajeGrasaCorporal": {
+            "type": "number",
+            "default": 0
+          },
+          "porcentajeMasaMuscular": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "EstadisticasHuella": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "huellaHidricaTotal": {
+            "type": "number",
+            "default": 0
+          },
+          "huellaCarbonoTotal": {
+            "type": "number",
+            "default": 0
+          },
+          "puntajeEcologicoSostenible": {
+            "type": "number",
+            "default": 0
+          },
+          "puntosEconomiaDeFichas": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "EstadisticasConsumo": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "frutasVegetales": {
+            "type": "number",
+            "default": 0
+          },
+          "alimentosMexicanos": {
+            "type": "number",
+            "default": 0
+          },
+          "cerealesIntegrales": {
+            "type": "number",
+            "default": 0
+          },
+          "leguminosas": {
+            "type": "number",
+            "default": 0
+          },
+          "lacteos": {
+            "type": "number",
+            "default": 0
+          },
+          "semillasGrasasSaludables": {
+            "type": "number",
+            "default": 0
+          },
+          "huevo": {
+            "type": "number",
+            "default": 0
+          },
+          "pescadoMariscos": {
+            "type": "number",
+            "default": 0
+          },
+          "pollo": {
+            "type": "number",
+            "default": 0
+          },
+          "carnesRojasProcesadas": {
+            "type": "number",
+            "default": 0
+          },
+          "ultraProcesados": {
+            "type": "number",
+            "default": 0
+          },
+          "azucar": {
+            "type": "number",
+            "default": 0
+          },
+          "grasaSaturada": {
+            "type": "number",
+            "default": 0
+          },
+          "grasaTrans": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "EconomiaFichas": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "alimento": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "puntosTotales": {
+            "type": "number",
+            "default": 0
+          },
+          "puntosObtenidosPorAlimento": {
+            "type": "number",
+            "default": 0
+          }
+        },
+        "required": [
+          "usuario",
+          "alimento",
+          "puntosTotales",
+          "puntosObtenidosPorAlimento"
+        ]
+      },
+      "LactanciaUsuarios": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "maternaExclusiva": {
+            "type": "string"
+          },
+          "artificial": {
+            "type": "string"
+          },
+          "mixta": {
+            "type": "string"
+          },
+          "maternaContemplada": {
+            "type": "string"
+          },
+          "mixtaContemplada": {
+            "type": "string"
+          },
+          "artificialContemplada": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "maternaExclusiva",
+          "artificial",
+          "mixta",
+          "maternaContemplada",
+          "mixtaContemplada",
+          "artificialContemplada"
+        ]
+      },
+      "IndicadoresSeño": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "horasDeSueño": {
+            "type": "string"
+          },
+          "estadoDeDescanso": {
+            "type": "string"
+          },
+          "despiertaPorLaNoche": {
+            "type": "string",
+            "default": "No"
+          },
+          "frecuencia": {
+            "type": "string",
+            "default": false
+          }
+        },
+        "required": [
+          "usuario",
+          "horasDeSueño",
+          "estadoDeDescanso"
+        ]
+      },
+      "IndicadoresClinicos": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "presionArterial": {
+            "type": "string"
+          },
+          "acantosisNigricans": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "presionArterial",
+          "acantosisNigricans"
+        ]
+      },
+      "IndicadoresBioquimicos": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "glucosaAyuno": {
+            "type": "string"
+          },
+          "glucosaDespues": {
+            "type": "string"
+          },
+          "trigliceridos": {
+            "type": "string"
+          },
+          "colesterolTotal": {
+            "type": "string"
+          },
+          "colesterolLDL": {
+            "type": "string"
+          },
+          "colesterolHDL": {
+            "type": "string"
+          },
+          "microbiotaIntestinal": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "glucosaAyuno",
+          "glucosaDespues",
+          "trigliceridos",
+          "colesterolTotal",
+          "colesterolLDL",
+          "colesterolHDL",
+          "microbiotaIntestinal"
+        ]
+      },
+      "Gastrointestinales": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "inflamacionAbdominal": {
+            "type": "object",
+            "properties": {
+              "estado": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "frecuencia",
+              "estado"
+            ]
+          },
+          "diarrea": {
+            "type": "object",
+            "properties": {
+              "estado": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "frecuencia",
+              "estado"
+            ]
+          },
+          "estreñimiento": {
+            "type": "object",
+            "properties": {
+              "estado": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "frecuencia",
+              "estado"
+            ]
+          },
+          "reflujo": {
+            "type": "object",
+            "properties": {
+              "estado": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "frecuencia",
+              "estado"
+            ]
+          }
+        },
+        "required": [
+          "usuario"
+        ]
+      },
+      "ExposicionSolar": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "minutosAlSol": {
+            "type": "string"
+          },
+          "cubresTuPiel": {
+            "type": "string"
+          },
+          "bloqueadorSolar": {
+            "type": "string",
+            "default": "No"
+          },
+          "diasXsemana": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "minutosAlSol",
+          "cubresTuPiel",
+          "bloqueadorSolar",
+          "diasXsemana"
+        ]
+      },
+      "EstadoGeneral": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "muchoCansancio": {
+            "type": "string"
+          },
+          "mareos": {
+            "type": "string",
+            "default": "No"
+          },
+          "muchaSed": {
+            "type": "string",
+            "default": "No"
+          },
+          "muchasGanasDeOrinar": {
+            "type": "string",
+            "default": "No"
+          },
+          "muchaHambre": {
+            "type": "string",
+            "default": "No"
+          },
+          "piesYmanos": {
+            "type": "object",
+            "properties": {
+              "seHinchan": {
+                "type": "string",
+                "default": "No"
+              },
+              "aQuehora": {
+                "type": "string"
+              },
+              "frecuencia": {
+                "type": "string"
+              },
+              "horasSentado": {
+                "type": "string"
+              },
+              "horasParado": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "seHinchan",
+              "aQuehora",
+              "frecuencia",
+              "horasSentado",
+              "horasParado"
+            ]
+          },
+          "nariz": {
+            "type": "object",
+            "properties": {
+              "sangradoDe": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDe": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sangradoDe",
+              "frecuenciaDe"
+            ]
+          },
+          "piel": {
+            "type": "object",
+            "properties": {
+              "manchasRojasMoretes": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDeEllo": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "manchasRojasMoretes",
+              "frecuenciaDeEllo"
+            ]
+          },
+          "unas": {
+            "type": "object",
+            "properties": {
+              "quebradizas": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "quebradizas",
+              "frecuencia"
+            ]
+          },
+          "cabello": {
+            "type": "object",
+            "properties": {
+              "caidaDeCabello": {
+                "type": "string",
+                "default": "No"
+              },
+              "cabelloQuebradizo": {
+                "type": "string",
+                "default": "No"
+              },
+              "cabelloTenidoOTratamiento": {
+                "type": "string",
+                "default": "No"
+              }
+            },
+            "required": [
+              "caidaDeCabello",
+              "cabelloQuebradizo",
+              "cabelloTenidoOTratamiento"
+            ]
+          },
+          "boca": {
+            "type": "object",
+            "properties": {
+              "cortadurasEnComisuras": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuencia": {
+                "type": "string"
+              },
+              "inflamacionDeLengua": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDe": {
+                "type": "string"
+              },
+              "inflamacionEncias": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDeIE": {
+                "type": "string"
+              },
+              "sangradoEncias": {
+                "type": "string",
+                "default": "No"
+              },
+              "frecuenciaDeSE": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "cortadurasEnComisuras",
+              "frecuencia",
+              "inflamacionDeLengua",
+              "frecuenciaDe",
+              "inflamacionEncias",
+              "frecuenciaDeIE",
+              "sangradoEncias",
+              "frecuenciaDeSE"
+            ]
+          },
+          "tipoDeNacimiento": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "usuario",
+          "muchoCansancio",
+          "mareos",
+          "muchaSed",
+          "muchasGanasDeOrinar",
+          "muchaHambre",
+          "tipoDeNacimiento"
+        ]
+      },
+      "ComposCorpUsuario": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "porcentGrasa": {
+            "type": "string",
+            "default": ""
+          },
+          "porcentMasa": {
+            "type": "string",
+            "default": ""
+          },
+          "porcentAgua": {
+            "type": "string",
+            "default": ""
+          },
+          "densidadOsea": {
+            "type": "string",
+            "default": ""
+          },
+          "grasaVisceral": {
+            "type": "string",
+            "default": ""
+          },
+          "tasaMetabolica": {
+            "type": "string",
+            "default": ""
+          },
+          "edadMetabolica": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [
+          "usuario",
+          "porcentGrasa",
+          "porcentMasa",
+          "porcentAgua",
+          "densidadOsea",
+          "grasaVisceral",
+          "tasaMetabolica",
+          "edadMetabolica"
+        ]
+      },
+      "CircunferenciaUsuario": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "porcentGrasa": {
+            "type": "string",
+            "default": ""
+          },
+          "porcentMasa": {
+            "type": "string",
+            "default": ""
+          },
+          "porcentAgua": {
+            "type": "string",
+            "default": ""
+          },
+          "densidadOsea": {
+            "type": "string",
+            "default": ""
+          },
+          "grasaVisceral": {
+            "type": "string",
+            "default": ""
+          },
+          "tasaMetabolica": {
+            "type": "string",
+            "default": ""
+          },
+          "edadMetabolica": {
+            "type": "string",
+            "default": ""
+          }
+        },
+        "required": [
+          "usuario",
+          "porcentGrasa",
+          "porcentMasa",
+          "porcentAgua",
+          "densidadOsea",
+          "grasaVisceral",
+          "tasaMetabolica",
+          "edadMetabolica"
+        ]
+      },
+      "Chat": {
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "items"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    }
+  }
+}

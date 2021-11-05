@@ -12,6 +12,11 @@ const estadisticasNivelesSchema = new Schema(
     colesterolTotal: { type: Number, required: true },
     colesterolLDL: { type: Number, required: true },
     colesterolHDL: { type: Number, required: true },
+    nivelesGlucosa: { type: Number },
+    nivelesTrigliceridos: { type: Number },
+    nivelesColesterolTotal: { type: Number },
+    nivelesColesterolLDL: { type: Number },
+    nivelesHDL: { type: Number },
   },
   {
     timestamps: true,

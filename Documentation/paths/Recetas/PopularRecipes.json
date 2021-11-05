@@ -1,0 +1,58 @@
+{
+    "get": {
+        "tags": [
+            "Recetas"
+        ],
+        "summary": "Obtiene las recetas más populares.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "count",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"array",
+                            "items":{
+                                "$ref": "../../schemas/Recetas.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontró o no se pudo editar la receta :c"
+            },
+            "500":{
+                "content": {
+                    "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties":{
+                               "success":{
+                                   "type": "boolean",
+                                   "default": false
+                               }
+                           }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

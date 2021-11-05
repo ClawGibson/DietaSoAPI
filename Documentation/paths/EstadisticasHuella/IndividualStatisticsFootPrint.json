@@ -1,0 +1,108 @@
+{
+    "get": {
+        "tags": [
+            "Estadisticas Huella"
+        ],
+        "summary": "Obtiene una estadistica por id.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/EstadisticasHuella.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se encontraron datos"
+            },
+            "500": {
+                "description": "Error inesperado al obtener la estadistica Huella"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "patch": {
+        "tags": [
+            "Estadisticas Huella"
+        ],
+        "summary": "Actualiza una estadistica.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties":{
+                            "huellaHidricaTotal":{
+                                "type": "number"
+                            },
+                            "huellaCArbonTotal":{
+                                "type": "number"
+                            },
+                            "puntajeEcologicoSostenible":{
+                                "type": "number"
+                            },
+                            "puntosEconomiaDeFichas":{
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/EstadisticasHuella.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontraron datos"
+            },
+            "500": {
+                "description": "Error al querer guardar la estadistica Huella | Error inesperado al actualizar la estadistica Huella"
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

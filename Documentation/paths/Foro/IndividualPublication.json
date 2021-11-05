@@ -1,0 +1,58 @@
+{
+    "patch": {
+        "tags": [
+            "Publicacion"
+        ],
+        "summary": "Actualiza una publicación",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Publicacion.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "schema": {
+                    "$ref": "../../schemas/Publicacion.json"
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+
+    }
+}

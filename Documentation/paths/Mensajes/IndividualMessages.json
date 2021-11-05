@@ -1,0 +1,112 @@
+{
+    "get": {
+        "tags": [
+            "Mensajes"
+        ],
+        "summary": "Obtiene los mensajes de un chat",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties":{
+                               "msg":{
+                                    "$ref": "../../schemas/Message.json"
+                               }
+                           }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                           "properties":{
+                               "error":{
+                                    "type": "object"
+                               }
+                           }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]   
+    },
+    "delete": {
+        "tags": [
+            "Mensajes"
+        ],
+        "summary": "Elimina un mensaje",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties":{
+                               "msg":{
+                                    "type": "string",
+                                    "default": "Eliminado correctamente"
+                               }
+                           }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                           "properties":{
+                               "msg":{
+                                    "type": "string",
+                                    "default": "No se encontro mensaje"
+                               }
+                           }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,96 @@
+{
+    "put": {
+        "tags": [
+            "Recetas"
+        ],
+        "summary": "Actualiza la información de una receta.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Recetas.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Recetas.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontró o no se pudo editar la receta :c"
+            },
+            "500":{
+                "content": {
+                    "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "properties":{
+                               "error":{
+                                   "type": "object"
+                               }
+                           }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    },
+    "delete": {
+        "tags": [
+            "Recetas"
+        ],
+        "summary": "Elimina una receta.",
+        "parameters": [
+            {
+                "in": "path",
+                "name": "id",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "description": "Receta eliminada :D!"
+            },
+            "400": {
+                "description": "No se encontró el receta a eliminar :c"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

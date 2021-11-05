@@ -1,0 +1,56 @@
+{
+    "get": {
+        "tags": [
+            "Grupo de Alimentos"
+        ],
+        "summary": "Muestra los detalles de todos los grupos de alimentos registrados.",
+        "parameters": [
+            {
+                "in": "query",
+                "name": "grupoAlimento",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true,
+                "description": "usuario"
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Equivalencia.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type":"object",
+                            "properties":{
+                                "success":{
+                                    "type":"boolean",
+                                    "default": false
+                                },
+                                "error":{
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "get": {
+        "tags": [
+            ""
+        ],
+        "summary": ""
+    },
+    "post": {
+        "tags": [
+            ""
+        ],
+        "summary": ""
+    },
+    "patch": {
+        "tags": [
+            ""
+        ],
+        "summary": ""
+    },
+    "delete": {
+        "tags": [
+            ""
+        ],
+        "summary": ""
+    }
+    
+}

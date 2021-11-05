@@ -42,7 +42,8 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
 
-    const recetaEditar = await Recetas.findOneAndUpdate(req.params.id, {
+    //Estaba una constante
+    let recetaEditar = await Recetas.findOneAndUpdate(req.params.id, {
         titulo: req.body.titulo,
         categoria: req.body.categoria,
         url: req.body.url,
@@ -53,7 +54,11 @@ router.put('/:id', async (req, res) => {
         new: true
     });
 
-    recetaEditar = await recetaEditar.save();
+    try{
+        recetaEditar = await recetaEditar.save();
+    } catch(error){
+        return res.status(500).send(error);
+    }
 
     if (!recetaEditar)
         return res.status(404).send('No se encontró o no se pudo editar la receta :c');
