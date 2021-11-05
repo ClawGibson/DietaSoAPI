@@ -1,4 +1,5 @@
 const { response } = require('express');
+const mongoose = require('mongoose');
 const Chat = require('../../models/Chat/Chat');
 
 const createNewChat = async (req, res = response) => {
