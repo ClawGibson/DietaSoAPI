@@ -4,7 +4,7 @@ const Chat = require("../../models/Chat/Chat");
 const createNewChat = async (req, res = response) => {
     try {
         let newChat = new Chat({
-            users: req.body.users,
+            usuarios: req.body.usuarios,
         })
         newChat = await newChat.save();
         if (!newChat) {
@@ -20,10 +20,13 @@ const createNewChat = async (req, res = response) => {
 
 const getAllChats = async (req, res = response) => {
     try {
-        const allChats = await Chat.find();
-        res.status(200).json({
-            chats: allChats
-        });
+        await Chat.find().populate({ path: "usuarios", select: "nombre apellidoPaterno apellidoMaterno foto" })
+            .exec((e, populated) => {
+                if (e) {
+                    return e;
+                }
+                res.send(populated);
+            });
     } catch (error) {
         res.status(500).json({ error })
     }

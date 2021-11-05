@@ -4,7 +4,7 @@ const Recordatorio = require("../../models/Recordatorios/Recordatorio");
 const addReminder = async (req, res = response) => {
     try {
         let nuevoRecordatorio = new Recordatorio({
-            usuario: req.body.usuario,
+            usuarios: req.body.usuarios,
             metas: req.body.metas,
             titulo: req.body.titulo,
             mensaje: req.body.mensaje,
@@ -27,7 +27,7 @@ const addReminder = async (req, res = response) => {
 const getReminders = async (req, res = response) => {
     try {
         return await Recordatorio.find()
-            .populate({ path: "usuario", select: "email" })
+            .populate({ path: "usuarios", select: "nombre apellidoPaterno apellidoMaterno foto" })
             .populate({ path: "metas", select: "objetivo descripcion" })
             .exec((e, populated) => {
                 if (e) {

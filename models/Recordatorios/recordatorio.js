@@ -2,11 +2,15 @@ const { Schema, model } = require("mongoose");
 
 const recordatorioModel = new Schema({
 
-    usuario: [{
-        type: Schema.Types.ObjectId, ref: "Usuarios", required: true
+    usuarios: [{
+        type: Schema.Types.ObjectId,
+        ref: "InformacionUsuarios",
+        required: true,
     }],
     metas: {
-        type: Schema.Types.ObjectId, ref: "Metas", required: true,
+        type: Schema.Types.ObjectId,
+        ref: "Metas",
+        required: true,
     },
     titulo: {
         type: String,
@@ -31,10 +35,10 @@ const recordatorioModel = new Schema({
             default: false,
         }
     }],
-    // horario: {
-    //     type: String,
-    //     required: false, // Para prueba en false
-    // },
+    horario: {
+        type: String,
+        required: false, // Para prueba en false
+    },
 
     global: {
         type: Boolean,
