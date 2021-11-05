@@ -30,8 +30,7 @@ const getAllChats = async (req, res = response) => {
 
 const getChatId = async (req, res = response) => {
     try {
-        const id1 = req.params.users[0];
-        const id2 = req.params.users[1];
+        const { id1, id2 } = req.params;
 
         // Fin the chat where the adminId and userId are in the users array
         const chat = await Chat.find({
