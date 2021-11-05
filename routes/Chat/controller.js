@@ -18,24 +18,15 @@ const createNewChat = async (req, res = response) => {
     }
 };
 
-const getAllChats = async (req, res = response) => {
-    try {
-        const allChats = await Chat.find();
-        res.status(200).json({
-            chats: allChats,
-        });
-    } catch (error) {
-        res.status(500).json({ error });
-    }
-};
-
 const getChatId = async (req, res = response) => {
     try {
         const { id1, id2 } = req.query;
 
         // Fin the chat where the adminId and userId are in the users array
         const chat = await Chat.find({
-            users: [mongoose.Types.ObjectId(id2)],
+            users: {
+                $all: [mongoose.Types.ObjectId(id2)],
+            },
         });
 
         if (!chat) {
@@ -48,6 +39,17 @@ const getChatId = async (req, res = response) => {
         });
     } catch (error) {
         res.status(400).json({ error });
+    }
+};
+
+const getAllChats = async (req, res = response) => {
+    try {
+        const allChats = await Chat.find();
+        res.status(200).json({
+            chats: allChats,
+        });
+    } catch (error) {
+        res.status(500).json({ error });
     }
 };
 

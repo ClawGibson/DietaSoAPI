@@ -9,8 +9,8 @@ const {
 } = require('./controller');
 
 router.post('/', createNewChat);
+router.get('/', getChatId);
 router.get('/', getAllChats);
-router.get('/:users', getChatId);
-router.delete('/:id', deleteChat);
+router.delete('/', deleteChat);
 
 module.exports = router;
