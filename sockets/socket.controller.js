@@ -6,12 +6,21 @@ const socketController = (socket) => {
     socket.on('enviar-mensaje', (payload, callback) => {
         console.log(`[enviar-mensaje]: ${payload}`);
         //socket.broadcast.emit('enviar-mensaje', payload); // Enviar el mensaje a todos los sockets conectados con broadcast.
-        callback();
+        socket.emit('mensaje-recibido', payload, callback);
+        try {
+            callback();
+        } catch (error) {
+            console.log(`[enviar-mensaje-ERROR]: ${error}`);
+        }
     });
 
     socket.on('mensaje-recibido', (payload, callback) => {
         console.log(`[mensaje-recibido]: ${payload}`);
-        socket.emit('enviar-mensaje', callback);
+        try {
+            callback();
+        } catch (error) {
+            console.log(`[mensaje-recibido-ERROR]: ${error}`);
+        }
     });
 
     socket.on('crear-chat', (payload, callback) => {
@@ -20,7 +29,7 @@ const socketController = (socket) => {
         try {
             callback();
         } catch (error) {
-            console.log(error);
+            console.log(`[crear-chat-ERROR]: ${error}`);
         }
     });
 };
