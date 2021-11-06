@@ -9,6 +9,10 @@ const socketController = (socket) => {
         callback();
     });
 
+    socket.on('mensaje-recibido', (payload, callback) => {
+        socket.emit('enviar-mensaje', callback);
+    });
+
     socket.on('crear-chat', (payload, callback) => {
         console.log('payload:', payload);
 
