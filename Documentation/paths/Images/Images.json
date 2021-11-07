@@ -1,0 +1,55 @@
+{
+    "post": {
+        "tags": [
+            "Imagenes"
+        ],
+        "summary": "Subir una imagen",
+        "consumes":[
+            "multipart/form-data"
+        ],
+        "parameters": [],
+          "requestBody": {
+            "required": false,
+            "content": {
+                "multipart/form-data": {
+                    "schema": {
+                        "type":"object",
+                        "properties":{
+                            "image":{
+                                "type": "string",
+                                "format": "binary"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+          "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items":{
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            }
+        },
+        "security": [
+            {
+                "bearer": []
+            }
+        ]
+    }
+}
