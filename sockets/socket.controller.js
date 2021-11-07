@@ -32,11 +32,6 @@ const socketController = (socket) => {
             console.log(`[crear-chat-ERROR]: ${error}`);
         }
     });
-
-    socket.on('crear-chat', (payload, callback) => {
-        console.log('payload:', payload);
-        console.log('callback:', callback);
-    });
 };
 
 module.exports = { socketController };
