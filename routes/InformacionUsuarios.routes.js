@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
             });
         res.send(listaIUsuarios);
     } catch (err) {
+        console.log(`Error - ${err}`);
         return res.status(500).json({
             success: false,
             message:
@@ -46,6 +47,7 @@ router.get('/individual', async (req, res) => {
 
         res.send(listaInfoUsuarios[0]);
     } catch (err) {
+        console.log(`Error - ${err}`);
         return res.status(500).json({
             success: false,
             message: 'El usuario no existe',
@@ -77,12 +79,13 @@ router.post('/individual', async (req, res) => {
                 });
             }
         } else {
-            return res.status(500).json({
+            return res.status(404).json({
                 success: false,
                 message: 'El usuario no existe',
             });
         }
     } catch (err) {
+        console.log(`Error - ${err}`);
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al buscar el usuario',
@@ -114,6 +117,7 @@ router.post('/individual', async (req, res) => {
                 .send('No se pudo agregar la información al usuario');
         res.send(informacion);
     } catch (err) {
+        console.log(`Error - ${err}`);
         return res
             .status(400)
             .send('Ocurrió un error al guardar información de usuario');
@@ -170,6 +174,7 @@ router.patch('/individual', async (req, res) => {
 
             //console.log(editarUsuario);
         } catch (err) {
+            console.log(`Error - ${err}`);
             res.status(500).json({
                 success: false,
                 message:
@@ -178,6 +183,7 @@ router.patch('/individual', async (req, res) => {
             });
         }
     } catch (err) {
+        console.log(`Error - ${err}`);
         res.status(500).json({
             success: false,
             message: 'Ocurrió un error al buscar al usuario - ',
