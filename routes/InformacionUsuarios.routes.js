@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
         const listaIUsuarios = await InformacionUsuarios.find();
 
         if (listaIUsuarios.length <= 0)
-            return res.status(500).json({
+            return res.status(404).json({
                 success: false,
                 message: 'No se encontro ninguna información de usuarios',
             });
