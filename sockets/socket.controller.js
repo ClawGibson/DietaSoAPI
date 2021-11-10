@@ -6,7 +6,7 @@ const socketController = (socket) => {
     socket.on('enviar-mensaje', (payload, callback) => {
         console.log(`[enviar-mensaje]: ${payload}`);
         //socket.broadcast.emit('enviar-mensaje', payload); // Enviar el mensaje a todos los sockets conectados con broadcast.
-        socket.emit('mensaje-recibido', payload, callback);
+        socket.emit('mensaje-recibido', payload);
         try {
             callback();
         } catch (error) {
