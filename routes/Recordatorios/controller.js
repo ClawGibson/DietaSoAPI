@@ -26,7 +26,7 @@ const addReminder = async (req, res = response) => {
 const getReminders = async (req, res = response) => {
     try {
         return await Recordatorio.find()
-            .populate({ path: 'usuario', select: 'email' })
+            .populate({ path: 'usuario', select: 'nombre' })
             .populate({ path: 'metas', select: 'objetivo descripcion' })
             .exec((e, populated) => {
                 if (e) {
