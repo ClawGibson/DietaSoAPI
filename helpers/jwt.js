@@ -20,6 +20,7 @@ function authJwt() {
             `${process.env.API_URL}/mensajes/:id`,
             `${process.env.API_URL}/informacionUsuarios/`,
             `${process.env.API_URL}/informacionUsuarios`,
+            `${process.env.API_URL}/chat`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {
