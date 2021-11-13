@@ -1,5 +1,3 @@
-/** @format */
-
 const Usuarios = require('../models/Usuarios');
 const express = require('express');
 const router = express.Router();

@@ -1,5 +1,3 @@
-/** @format */
-
 const RegistroDietetico = require('../../models/RegistroDietetico');
 const mongoose = require('mongoose');
 const express = require('express');

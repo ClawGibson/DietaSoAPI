@@ -27,6 +27,7 @@ const foro = require('./Foro/foro.routes');
 const estadisticasHuellaRoute = require('./Estadisticas/estadisticasHuella.routes');
 const estadisticasConsumoRoute = require('./Estadisticas/estadisticasConsumo.routes');
 const imagesRoute = require('./Images/imges.routes');
+const ejerciciosRoute = require('./Ejercicios/ejercicios.routes');
 
 module.exports = {
     grupoAlimentosRoute,
@@ -57,5 +58,6 @@ module.exports = {
     mensajes,
     chat,
     foro,
-    imagesRoute
+    imagesRoute,
+    ejerciciosRoute,
 };
