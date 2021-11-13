@@ -28,6 +28,7 @@ const estadisticasHuellaRoute = require('./Estadisticas/estadisticasHuella.route
 const estadisticasConsumoRoute = require('./Estadisticas/estadisticasConsumo.routes');
 const imagesRoute = require('./Images/imges.routes');
 const ejerciciosRoute = require('./Ejercicios/ejercicios.routes');
+const puntosPorEjercicioRoute = require('./Ejercicios/puntosPorEjercicio.routes');
 
 module.exports = {
     grupoAlimentosRoute,
@@ -60,4 +61,5 @@ module.exports = {
     foro,
     imagesRoute,
     ejerciciosRoute,
+    puntosPorEjercicioRoute,
 };
