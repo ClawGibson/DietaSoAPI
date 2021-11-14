@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
 
         res.status(200).send(menuBase);
     } catch (err) {
-        console.log('Error al crear un menu base');
+        console.log('Error al crear un menu base', err);
         return res.status(500).send({
             success: false,
             message: 'Error al crear un menu base',
