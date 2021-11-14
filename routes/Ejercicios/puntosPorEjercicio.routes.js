@@ -1,20 +1,43 @@
 const PuntosPorEjercicio = require('../../models/Ejercicios/PuntosPorEjercicio');
 const router = require('express').Router();
 
+router.get('/all', async (req, res) => {
+    try {
+        const registros = await PuntosPorEjercicio.find();
+
+        if (!registros) {
+            res.status(404).send({
+                message: 'No se encontraron puntos por ejercicio',
+            });
+        }
+
+        res.status(200).send(registros);
+    } catch (error) {
+        console.log('Error al obtener los puntos por ejercicio');
+        return res.status(500).send({
+            success: false,
+            message: 'Error al obtener los puntos por ejercicio',
+            error: error,
+        });
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
-        const { nombreEjercicio, grupo, duracion, intensidad } = req.query;
+        const { ejercicio, grupo, duracion, intensidad } = req.query;
 
         const puntosPorEjercicio = await PuntosPorEjercicio.find({
-            ejercicio: nombreEjercicio,
+            ejercicio: ejercicio,
             grupo: grupo,
             duracion: duracion,
             intensidad: intensidad,
-        });
+        })
+            .populate('ejercicio')
+            .select('nombre categoria grupo duracion intensidad puntos');
 
         if (!puntosPorEjercicio) {
-            res.status(404).json({
-                message: 'No se encontraron puntos por ejercicio',
+            res.status(404).send({
+                message: 'No se encontraron puntos del ejercicio proporcionado',
             });
         }
 
@@ -36,7 +59,7 @@ router.post('/', async (req, res) => {
         puntos = await puntos.save();
 
         if (!puntos) {
-            res.status(500).json({
+            res.status(500).send({
                 message: 'No se pudo guardar los puntos por ejercicio',
             });
         }
@@ -61,7 +84,7 @@ router.patch('/:id', async (req, res) => {
         });
 
         if (!puntos) {
-            res.status(404).json({
+            res.status(404).send({
                 message: 'No se encontraron puntos por ejercicio',
             });
         }
@@ -72,6 +95,29 @@ router.patch('/:id', async (req, res) => {
         return res.status(500).send({
             success: false,
             message: 'Error al actualizar los puntos por ejercicio',
+            error: error,
+        });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        let puntos = await PuntosPorEjercicio.findByIdAndDelete(id);
+
+        if (!puntos) {
+            res.status(404).send({
+                message: 'No se encontraron puntos por ejercicio',
+            });
+        }
+
+        res.status(200).send(puntos);
+    } catch (error) {
+        console.log('Error al eliminar los puntos por ejercicio');
+        return res.status(500).send({
+            success: false,
+            message: 'Error al eliminar los puntos por ejercicio',
             error: error,
         });
     }
