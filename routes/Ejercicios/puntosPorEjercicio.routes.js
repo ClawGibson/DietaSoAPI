@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 router.get('/all', async (req, res) => {
     try {
-        const registros = await PuntosPorEjercicio.find();
+        const registros = await PuntosPorEjercicio.find().populate('ejercicio');
 
         if (!registros) {
             res.status(404).send({
