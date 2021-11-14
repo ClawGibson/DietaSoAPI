@@ -20,6 +20,29 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:ejercicio', async (req, res) => {
+    try {
+        const { ejercicio } = req.params;
+
+        const ejercicioEncontrado = await Ejercicios.find({
+            nombre: ejercicio,
+        });
+
+        if (!ejercicioEncontrado) {
+            return res.status(404).send('No hay ejercicio');
+        }
+
+        res.send(ejercicioEncontrado);
+    } catch (error) {
+        console.log('Error al obtener el ejercicio buscado');
+        return res.status(500).send({
+            success: false,
+            message: 'Error al obtener el ejercicio buscado',
+            error: error,
+        });
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         let ejercicio = new Ejercicios(req.body);
