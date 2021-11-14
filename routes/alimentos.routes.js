@@ -24,6 +24,28 @@ router.get('/:id', async (req, res) => {
     res.send(alimento);
 });
 
+router.get('/sku', async (req, res) => {
+    try {
+        const sku = await Alimentos.find().sort({ nombreAlimento: 1 }).limit(1);
+
+        if (!sku) {
+            return res.status(401).send({
+                success: false,
+                message: 'No se encontraron sku',
+            });
+        }
+
+        res.status(200).send(sku);
+    } catch (error) {
+        console.log('Error al obtener el sku máximo');
+        return res.status(500).send({
+            success: false,
+            message: 'Error al obtener el sku máximo',
+            error: error,
+        });
+    }
+});
+
 router.get('/', async (req, res) => {
     const alimento = await Alimentos.find().select(
         'nombreAlimento imagen grupoAlimento'
