@@ -26,7 +26,7 @@ const getChatId = async (req, res = response) => {
         const chat = await Chat.find({
             users: {
                 $all: [
-                    mongoose.Types.ObjectId(id2),
+                    mongoose.Types.ObjectId(id1),
                     mongoose.Types.ObjectId(id2),
                 ],
             },

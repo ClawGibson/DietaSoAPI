@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const chatModel = new Schema({
-    usuarios: [{
+    users: [{
         type: Schema.Types.ObjectId,
         ref: "InformacionUsuarios",
         required: true,
