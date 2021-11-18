@@ -33,7 +33,7 @@ const alimentosSchema = new Schema(
                 default: '',
             },
         },
-        opcionesPreparacion: { type: String, required: false, default: '' },
+        opcionesPreparacion: [String],
         cantidadAlimento: {
             cantidadSugerida: { Number, required: false, default: 0 },
             unidad: { type: String, required: false, default: '' },

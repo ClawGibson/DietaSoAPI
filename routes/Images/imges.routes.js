@@ -35,18 +35,19 @@ router.post('/multi', upload.array('images'), async (req, res, next) => {
 });
 
 router.post('/', upload.single('image'), async (req, res, next) => {
-    // console.log("file details: ", req.file);
+    try {
+        console.log('Request:', req);
+        const result = await cloudinary.uploader.upload(req.file.path);
 
-    const result = await cloudinary.uploader.upload(req.file.path);
-
-    // console.log(result)
-
-    // const post_details = {
-    //     title: req.body.title,
-    //     image: result.public_id
-    // }
-
-    return res.status(200).json({ image: result.public_id });
+        return res.status(200).json({ image: result.public_id });
+    } catch (error) {
+        console.log('Error al subir la imagen', error);
+        return res.status(500).send({
+            succes: false,
+            message: 'Error al subir la imagen',
+            error: error,
+        });
+    }
 });
 
 module.exports = router;
