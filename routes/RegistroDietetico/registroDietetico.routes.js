@@ -70,18 +70,14 @@ router.get('/detalles', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const usuario = await buscarUsuario(req.query.usuario);
-
-        if (!usuario)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el usuario proporcionado' });
-
         let nuevoRegistroDietetico = new RegistroDietetico({
             usuario: req.body.usuario,
             alimentos: req.body.alimentos,
+            tipo: req.body.tipo,
+            horario: req.body.horario,
             agua: req.body.agua,
             ejercicio: req.body.ejercicio,
+            menuPreparacion: req.body.menuPreparacion,
         });
 
         nuevoRegistroDietetico = nuevoRegistroDietetico.save();
