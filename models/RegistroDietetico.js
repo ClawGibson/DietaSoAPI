@@ -11,13 +11,11 @@ const registroDieteticoSchema = new Schema(
         horario: { type: String, required: true },
         menuPreparacion: { type: String, required: false },
         agua: { type: Number, required: false },
-        ejercicio: [
-            {
-                nombre: { type: String, required: false },
-                duracion: { type: Number, required: false },
-                intensidad: { type: Number, required: false },
-            },
-        ],
+        ejercicio: {
+            nombres: { type: String, required: false },
+            duracion: { type: Number, required: false },
+            intensidad: { type: Number, required: false },
+        },
         alimentos: [
             {
                 idAlimento: {
