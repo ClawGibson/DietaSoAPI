@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const alimentosSchema = new Schema(
     {
         nombreAlimento: { type: String, required: true },
-        sku: { type: String, required: true },
+        sku: { type: String, required: true, unique: true },
         imagen: { type: String, required: false, default: '' },
         grupoExportable: { type: String, required: false, default: '' },
         subGrupoExportable: { type: String, required: false, default: '' },
@@ -33,7 +33,7 @@ const alimentosSchema = new Schema(
                 default: '',
             },
         },
-        opcionesPreparacion: { type: String, required: false, default: '' },
+        opcionesPreparacion: [String],
         cantidadAlimento: {
             cantidadSugerida: { Number, required: false, default: 0 },
             unidad: { type: String, required: false, default: '' },

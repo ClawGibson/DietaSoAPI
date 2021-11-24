@@ -1,5 +1,3 @@
-/** @format */
-
 const { Schema, model } = require('mongoose');
 
 const registroDieteticoSchema = new Schema(
@@ -9,14 +7,15 @@ const registroDieteticoSchema = new Schema(
             ref: 'Usuarios',
             required: true,
         },
+        tipo: { type: String, required: true }, // Desayuno, comida, cena, colación.
+        horario: { type: String, required: true },
+        menuPreparacion: { type: String, required: false },
         agua: { type: Number, required: false },
-        ejercicio: [
-            {
-                nombre: { type: String, required: false },
-                duracion: { type: Number, required: false },
-                intensidad: { type: Number, required: false },
-            },
-        ],
+        ejercicio: {
+            nombres: { type: String, required: false },
+            duracion: { type: Number, required: false },
+            intensidad: { type: Number, required: false },
+        },
         alimentos: [
             {
                 idAlimento: {
@@ -25,10 +24,6 @@ const registroDieteticoSchema = new Schema(
                     required: true,
                 },
                 cantidad: { type: String, required: true },
-                tipo: { type: String, required: true }, // Desayuno, comida, cena, colación.
-                fecha: { type: Date, required: true },
-                lugar: { type: String, required: false },
-                menuPreparacion: { type: String, required: false },
             },
         ],
     },

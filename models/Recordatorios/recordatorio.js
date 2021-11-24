@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const recordatorioModel = new Schema({
 
@@ -30,7 +30,24 @@ const recordatorioModel = new Schema({
             type: String,
             required: true,
         },
-        activo: {
+        dias: [
+            {
+                day: {
+                    type: String,
+                    required: true,
+                },
+                activo: {
+                    type: Boolean,
+                    default: false,
+                },
+            },
+        ],
+        // horario: {
+        //     type: String,
+        //     required: false, // Para prueba en false
+        // },
+
+        global: {
             type: Boolean,
             default: false,
         }
@@ -44,6 +61,7 @@ const recordatorioModel = new Schema({
         type: Boolean,
         default: false,
     },
-}, { timestamp: true });
+    { timestamp: true }
+);
 
-module.exports = model("Recordatorio", recordatorioModel);
+module.exports = model('Recordatorio', recordatorioModel);
