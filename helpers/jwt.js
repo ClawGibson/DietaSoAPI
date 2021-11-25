@@ -23,6 +23,8 @@ function authJwt() {
             `${process.env.API_URL}/informacionUsuarios`,
             `${process.env.API_URL}/chat`,
             `${process.env.API_URL}/ejercicios`,
+            `${process.env.API_URL}/pushToken`,
+            `${process.env.API_URL}/pushToken/varios`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {

@@ -61,7 +61,7 @@ const recordatorioModel = new Schema({
         type: Boolean,
         default: false,
     },
-    { timestamp: true }
-);
+
+}, { timestamp: true });
 
 module.exports = model('Recordatorio', recordatorioModel);
