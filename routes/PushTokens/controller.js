@@ -10,7 +10,6 @@ const createNewPushToken = async (req, res = response) => {
             token: req.body.token,
         })
         newPushToken = await newPushToken.save();
-        console.log(newPushToken)
         if (!newPushToken) {
             return res.status(400).json({ msg: "es necesario mandar información en la petición" });
         }
@@ -43,8 +42,27 @@ const getSelected = async (req, res = response) => {
 const getPushTokens = async (req, res = response) => {
     console.log("ok")
 }
+
+
+const actualizarPushToken = async (req, res = response) => {
+    try {
+        const { usuario } = req.body;
+        const { token } = req.body;
+        console.log(usuario);
+        const remplazado = await PushToken.findOneAndUpdate({ usuario: usuario }, { token: token });
+        console.log(remplazado);
+        if (!remplazado) {
+            return res.status(500).json({ msg: "Ha ocurrido un error" })
+        }
+        return res.status(200).json({ msg: "Se ha actualizado" });
+
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
 module.exports = {
     createNewPushToken,
     getSelected,
-    getPushTokens
+    getPushTokens,
+    actualizarPushToken,
 }

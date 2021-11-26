@@ -32,6 +32,7 @@ app.use(router);
 console.log(`PORT================${process.env.PORT}`);
 
 ////Sockets
+const { socketController } = require('./sockets/socket.controller');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 mongoose
@@ -48,11 +49,7 @@ mongoose
         console.log(err);
     });
 
-io.on('connection',
-    () => {
-        console.log("Conectado");
-    }
-);
+io.on('connection', socketController);
 
 server.listen(process.env.PORT || 4000, () => {
     console.log(`Server running at ${process.env.PORT || 4000}`);
