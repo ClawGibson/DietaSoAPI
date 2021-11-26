@@ -29,6 +29,7 @@ const estadisticasConsumoRoute = require('./Estadisticas/estadisticasConsumo.rou
 const imagesRoute = require('./Images/imges.routes');
 const ejerciciosRoute = require('./Ejercicios/ejercicios.routes');
 const puntosPorEjercicioRoute = require('./Ejercicios/puntosPorEjercicio.routes');
+const pushToken = require("./PushTokens/pushTokens.routes");
 
 module.exports = {
     grupoAlimentosRoute,
@@ -62,4 +63,5 @@ module.exports = {
     imagesRoute,
     ejerciciosRoute,
     puntosPorEjercicioRoute,
+    pushToken,
 };

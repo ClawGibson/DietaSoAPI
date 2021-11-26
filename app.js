@@ -8,7 +8,7 @@ const { router } = require('./apiV2');
 
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
-const { socketController } = require('./sockets/socket.controller');
+
 const { trim_all } = require('request_trimmer');
 
 const { MONGODB, DBNAME } = process.env;
@@ -32,9 +32,9 @@ app.use(router);
 console.log(`PORT================${process.env.PORT}`);
 
 ////Sockets
+const { socketController } = require('./sockets/socket.controller');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-
 mongoose
     .connect(MONGODB, {
         useNewUrlParser: true,

@@ -55,6 +55,8 @@ router.get('/individual', async (req, res) => {
     }
 });
 
+
+
 router.post('/individual', async (req, res) => {
     try {
         const usuarioCreado = await Usuarios.findById(req.query.usuario);
