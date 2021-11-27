@@ -45,6 +45,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
+        console.log('ID: ', req.params.id, '\nBody: ', req.body);
         const menuBaseEditar = await MenusBase.findOneAndUpdate(
             req.params.id,
             {
