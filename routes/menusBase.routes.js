@@ -44,27 +44,34 @@ router.post('/', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-    const menuBaseEditar = await MenusBase.findOneAndUpdate(
-        req.params.id,
-        {
-            titulo: req.body.titulo,
-            imagen: req.body.imagen,
-            ingredientes: req.body.ingredientes,
-            categoria: req.body.categoria,
-        },
-        {
-            new: true,
-        }
-    );
+    try {
+        const menuBaseEditar = await MenusBase.findOneAndUpdate(
+            req.params.id,
+            {
+                ...req.body,
+            },
+            {
+                new: true,
+            }
+        );
 
-    if (!menuBaseEditar)
-        return res
-            .status(404)
-            .send(
-                'No se pudo editar el menú base u ocurrió algún error inesperado'
-            );
+        if (!menuBaseEditar)
+            return res.status(204).send({
+                succes: false,
+                message:
+                    'No se pudo editar el menú base u ocurrió algún error inesperado',
+                error: error,
+            });
 
-    res.status(200).send(menuBaseEditar);
+        res.status(200).send(menuBaseEditar);
+    } catch (error) {
+        console.log('Error al actualizar un menu base', error);
+        return res.status(500).send({
+            success: false,
+            message: 'Error al actualizar un menu base',
+            error: error,
+        });
+    }
 });
 
 module.exports = router;
