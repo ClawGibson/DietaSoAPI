@@ -41,4 +41,22 @@ const buscarAlimento = async (alimentoId, res = response) => {
     }
 };
 
-module.exports = { buscarUsuario, buscarAlimento };
+const buscarAlimentoPorNombre = async (alimentoNombre, res = response) => {
+    try {
+        const alimento = await Alimentos.findOne({
+            nombreAlimento: alimentoNombre,
+        });
+
+        if (!alimento)
+            return res.status(404).send({
+                Error: 'No se encontró el alimento proporcionado',
+            });
+        return alimento;
+    } catch (error) {
+        return res.status(500).json({
+            error: `Error al buscar el alimento - ${error}`,
+        });
+    }
+};
+
+module.exports = { buscarUsuario, buscarAlimento, buscarAlimentoPorNombre };

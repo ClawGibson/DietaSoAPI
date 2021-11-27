@@ -2,33 +2,41 @@ const Equivalencias = require('../../models/Equivalencias');
 const express = require('express');
 const router = express.Router();
 
+const { buscarAlimentoPorNombre } = require('../../constants');
+
 router.post('/', async (req, res) => {
     try {
+        const { id } = await buscarAlimentoPorNombre(req.body.alimento);
+
+        if (!id) {
+            return res.status(404).send({
+                Error: 'No se encontró el alimento proporcionado',
+            });
+        }
+
         let nuevaEquivalencia = new Equivalencias({
             alimento: req.body.alimento,
+            idAlimento: id,
             cantidadSugerida: req.body.cantidadSugerida,
             unidad: req.body.unidad,
             pesoNetoKg: req.body.pesoNeto,
             grupoAlimento: req.body.grupoAlimento,
         });
 
-        try {
-            nuevaEquivalencia = await nuevaEquivalencia.save();
+        nuevaEquivalencia = await nuevaEquivalencia.save();
 
-            if (!nuevaEquivalencia) {
-                return res
-                    .status(500)
-                    .send('Error al guardar la nueva equivalencia');
-            }
-
-            return res.status(200).send('Datos guardados exitosamente! :D');
-        } catch (err) {
+        if (!nuevaEquivalencia) {
             return res
-                .status(500)
-                .send('Ocurrió un error al querer guardar los datos', err);
+                .status(400)
+                .send('Error al guardar la nueva equivalencia');
         }
+
+        return res.status(200).send(nuevaEquivalencia);
     } catch (err) {
-        return res.status(500).send('Error inesperado - ', err);
+        console.log('Error al crear la equivalencia', err);
+        return res
+            .status(500)
+            .send({ message: 'Error al crear la equivalencia', error: err });
     }
 });
 
@@ -42,7 +50,10 @@ router.get('/', async (req, res) => {
         }
         return res.status(200).send(listaEquivalencias);
     } catch (err) {
-        return res.status(500).send('Error inesperado - ', err.message);
+        return res.status(500).send({
+            message: 'Error al obtener la lista de equivalencias',
+            error: err,
+        });
     }
 });
 
@@ -55,13 +66,14 @@ router.get('/grupoAlimento', async (req, res) => {
         });
 
         if (!buscarEquivalencias)
-            return res.status(400).send('No se encontraron resultados');
+            return res.status(204).send('No se encontraron resultados');
 
         return res.status(200).send(buscarEquivalencias);
     } catch (error) {
-        return res
-            .status(500)
-            .send('Error al obtener las equivalencias - ', error.message);
+        return res.status(500).send({
+            message: 'Error al obtener las equivalencias',
+            error: error,
+        });
     }
 });
 
