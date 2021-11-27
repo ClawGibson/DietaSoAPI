@@ -6,6 +6,11 @@ const menusBaseSchema = new Schema(
         imagen: { type: String, required: false },
         ingredientes: [
             {
+                id: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Alimentos',
+                    required: true,
+                },
                 alimento: { type: String, required: true },
                 cantidad: { type: Number, required: true },
                 unidad: { type: String, required: true },
