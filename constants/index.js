@@ -51,6 +51,7 @@ const buscarAlimentoPorNombre = async (alimentoNombre, res = response) => {
             return res.status(404).send({
                 Error: 'No se encontró el alimento proporcionado',
             });
+
         return alimento;
     } catch (error) {
         return res.status(500).json({

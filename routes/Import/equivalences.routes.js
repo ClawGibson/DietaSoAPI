@@ -6,7 +6,10 @@ const { buscarAlimentoPorNombre } = require('../../constants');
 
 router.post('/', async (req, res) => {
     try {
-        const { id } = await buscarAlimentoPorNombre(req.body.alimento);
+        const { _id, nombreAlimento } = await buscarAlimentoPorNombre(
+            req.body.alimento
+        );
+        //console.log('[ID] - ', _id, ' - [Nombre] - ', nombreAlimento);
 
         if (!id) {
             return res.status(404).send({
@@ -16,7 +19,7 @@ router.post('/', async (req, res) => {
 
         let nuevaEquivalencia = new Equivalencias({
             alimento: req.body.alimento,
-            idAlimento: id,
+            idAlimento: _id,
             cantidadSugerida: req.body.cantidadSugerida,
             unidad: req.body.unidad,
             pesoNetoKg: req.body.pesoNeto,
