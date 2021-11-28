@@ -2,26 +2,6 @@ const MenusPorUsuario = require('../../models/MenusPorUsuario/MenusPorUsuario');
 const mongoose = require('mongoose');
 const router = require('express').Router();
 
-router.get('/', async (req, res) => {
-    try {
-        const menusPorUsuario = await MenusPorUsuario.find();
-
-        if (!menusPorUsuario || menusPorUsuario.length === 0)
-            return res.status(204).send({
-                message: 'No se encontraron menus por usuario',
-            });
-
-        res.status(200).send(menusPorUsuario);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).send({
-            success: false,
-            message: 'Ocurrió un error inesperado',
-            error: error,
-        });
-    }
-});
-
 router.get('/:userId', async (req, res) => {
     try {
         const registro = await MenusPorUsuario.findOne({
@@ -34,6 +14,26 @@ router.get('/:userId', async (req, res) => {
             });
 
         res.status(200).send(registro);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({
+            success: false,
+            message: 'Ocurrió un error inesperado',
+            error: error,
+        });
+    }
+});
+
+router.get('/', async (req, res) => {
+    try {
+        const menusPorUsuario = await MenusPorUsuario.find();
+
+        if (!menusPorUsuario || menusPorUsuario.length === 0)
+            return res.status(204).send({
+                message: 'No se encontraron menus por usuario',
+            });
+
+        res.status(200).send(menusPorUsuario);
     } catch (error) {
         console.error(error);
         return res.status(500).send({
