@@ -26,6 +26,8 @@ function authJwt() {
             `${process.env.API_URL}/pushToken`,
             `${process.env.API_URL}/pushToken/varios`,
             `${process.env.API_URL}/pushToken/actualizarToken`,
+            `${process.env.API_URL}/menusPorUsuario`,
+            `${process.env.API_URL}/menusPorUsuario/:id`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {
