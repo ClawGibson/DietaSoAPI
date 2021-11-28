@@ -48,13 +48,14 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { usuario, menus, dia, hora } = req.body;
+        const { usuario, menus, dia, hora, categoria } = req.body;
         console.log('BODY_', usuario, menus, dia, hora);
         let menusPorUsuario = new MenusPorUsuario({
             usuario: mongoose.Types.ObjectId(usuario),
             menu: mongoose.Types.ObjectId(menus),
-            dia: dia,
+            categoria: categoria,
             hora: hora,
+            dia: dia,
         });
         menusPorUsuario = await menusPorUsuario.save();
 
