@@ -6,7 +6,7 @@ router.get('/:userId', async (req, res) => {
     try {
         const registro = await MenusPorUsuario.findOne({
             usuario: req.params.userId,
-        });
+        }).populate('menu usuario');
 
         if (!registro)
             return res.status(204).send({
@@ -26,7 +26,9 @@ router.get('/:userId', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const menusPorUsuario = await MenusPorUsuario.find();
+        const menusPorUsuario = await MenusPorUsuario.find().populate(
+            'menu usuario'
+        );
 
         if (!menusPorUsuario || menusPorUsuario.length === 0)
             return res.status(204).send({
@@ -46,11 +48,13 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { usuario, menus } = req.body;
-
+        const { usuario, menus, dia, hora } = req.body;
+        console.log('BODY_', usuario, menus, dia, hora);
         let menusPorUsuario = new MenusPorUsuario({
             usuario: mongoose.Types.ObjectId(usuario),
             menu: mongoose.Types.ObjectId(menus),
+            dia: dia,
+            hora: hora,
         });
         menusPorUsuario = await menusPorUsuario.save();
 
