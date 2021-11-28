@@ -33,7 +33,8 @@ const {
     imagesRoute,
     ejerciciosRoute,
     puntosPorEjercicioRoute,
-    pushToken
+    pushToken,
+    menusPorUsuarioRoute,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -73,6 +74,7 @@ router.use(`${API_URL}/foro`, foro);
 router.use(`${API_URL}/images`, imagesRoute);
 router.use(`${API_URL}/ejercicios`, ejerciciosRoute);
 router.use(`${API_URL}/puntosPorEjercicio`, puntosPorEjercicioRoute);
+router.use(`${API_URL}/menusPorUsuario`, menusPorUsuarioRoute);
 
 module.exports = {
     router,
