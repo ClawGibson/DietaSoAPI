@@ -6,7 +6,9 @@ router.get('/:userId', async (req, res) => {
     try {
         const registro = await MenusPorUsuario.find({
             usuario: req.params.userId,
-        }).populate('menu usuario');
+        })
+            .populate('menu usuario')
+            .select('-contrasena');
 
         if (!registro)
             return res.status(204).send({
@@ -26,9 +28,9 @@ router.get('/:userId', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const menusPorUsuario = await MenusPorUsuario.find().populate(
-            'menu usuario'
-        );
+        const menusPorUsuario = await MenusPorUsuario.find()
+            .populate('menu usuario')
+            .select('-contrasena');
 
         if (!menusPorUsuario || menusPorUsuario.length === 0)
             return res.status(204).send({
