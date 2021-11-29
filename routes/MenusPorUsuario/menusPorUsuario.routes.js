@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 router.get('/:userId', async (req, res) => {
     try {
-        const registro = await MenusPorUsuario.findOne({
+        const registro = await MenusPorUsuario.find({
             usuario: req.params.userId,
         }).populate('menu usuario');
 
