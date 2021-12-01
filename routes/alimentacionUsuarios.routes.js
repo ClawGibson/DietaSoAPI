@@ -126,23 +126,7 @@ router.patch('/individual', async (req, res) => {
             editarInformacionA = await AlimentacionUsuarios.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
                 {
-                    comidaFavorita: req.body.comidaFavorita,
-                    comidaNoFavorita: req.body.comidaNoFavorita,
-                    alergiasAlimentarias: req.body.alergiasAlimentarias,
-                    lugarDeCompras: req.body.lugarDeCompras,
-                    quienCocina: req.body.quienCocina,
-                    estatusDieta: req.body.estatusDieta,
-                    extras: req.body.extras,
-                    desayuno: req.body.desayuno,
-                    colacion1: req.body.colacion1,
-                    comida: req.body.comida,
-                    colacion2: req.body.colacion2,
-                    cena: req.body.cena,
-                    desayunoAyer: req.body.desayunoAyer,
-                    colacion1Ayer: req.body.colacion1Ayer,
-                    comidaAyer: req.body.comidaAyer,
-                    colacion2Ayer: req.body.colacion2Ayer,
-                    cenaAyer: req.body.cenaAyer,
+                    ...req.body,
                 }
             );
 
@@ -174,7 +158,7 @@ router.patch('/individual', async (req, res) => {
     }
 });
 
-router.post('/comidaFav/', async (req, res) => {
+router.patch('/comidaFav/', async (req, res) => {
     const usuarioCreado = await Usuarios.findOne({
         usuario: req.query.usuario,
     });
