@@ -9,7 +9,7 @@ const publicationModel = new Schema({
     post: {
         type: String,
     },
-    file: {
+    fileUrl: {
         type: String,
     },
     comments: [{

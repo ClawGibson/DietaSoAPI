@@ -5,16 +5,15 @@ const recordatorioModel = new Schema({
     usuarios: [{
         type: Schema.Types.ObjectId,
         ref: "InformacionUsuarios",
-        required: true,
+        required: false,
     }],
     metas: {
         type: Schema.Types.ObjectId,
         ref: "Metas",
-        required: true,
+        required: false,
     },
     titulo: {
         type: String,
-        unique: true,
         required: true,
     },
     mensaje: {
@@ -23,39 +22,49 @@ const recordatorioModel = new Schema({
     },
     categoria: {
         type: String,
-        required: true,
+        required: false,
     },
-    dias: [{
-        day: {
-            type: String,
-            required: true,
-        },
-        dias: [
-            {
-                day: {
-                    type: String,
-                    required: true,
-                },
-                activo: {
-                    type: Boolean,
-                    default: false,
-                },
-            },
-        ],
-        // horario: {
-        //     type: String,
-        //     required: false, // Para prueba en false
-        // },
-
-        global: {
-            type: Boolean,
-            default: false,
-        }
+    expoTokens: [{
+        type: String
+    }
+    ],
+    fecha: [{
+        type: Date,
     }],
-    horario: {
+    hora: [{
         type: String,
-        required: false, // Para prueba en false
-    },
+    }],
+    // dias: [{ 
+    //     day: {
+    //         type: String,
+    //         required: true,
+    //     },
+    //     dias: [
+    //         {
+    //             day: {
+    //                 type: String,
+    //                 required: true,
+    //             },
+    //             activo: {
+    //                 type: Boolean,
+    //                 default: false,
+    //             },
+    //         },
+    //     ],
+    //     // horario: {
+    //     //     type: String,
+    //     //     required: false, // Para prueba en false
+    //     // },
+
+    //     global: {
+    //         type: Boolean,
+    //         default: false,
+    //     }
+    // }],
+    // horario: {
+    //     type: String,
+    //     required: false, // Para prueba en false
+    // },
 
     global: {
         type: Boolean,
