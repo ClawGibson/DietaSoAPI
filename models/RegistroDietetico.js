@@ -26,6 +26,7 @@ const registroDieteticoSchema = new Schema(
                 cantidad: { type: String, required: true },
             },
         ],
+        imagen: { type: String, required: false },
     },
     {
         timestamps: true,
