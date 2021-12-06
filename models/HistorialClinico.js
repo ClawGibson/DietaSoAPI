@@ -7,7 +7,7 @@ const historialClinicoSchema = new Schema(
       antecedentesPatologicos: [String],
       antecedentesHeredoFamiliares: [{ familiar: String, enfermedad: String }],
       medicamentos: [String],
-      suplementos: [String],
+      suplementos: [{ suplemento: String, marca: String }],
     },
   },
   {
