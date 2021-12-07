@@ -59,9 +59,7 @@ router.get('/individual', async (req, res) => {
 
 router.post('/individual', async (req, res) => {
     try {
-        const usuarioCreado = await Usuarios.findOne({
-            usuario: req.query.usuario,
-        });
+        const usuarioCreado = await buscarUsuario(req.query.usuario);
         if (usuarioCreado) {
             try {
                 const infoUsuario = await AlimentacionUsuarios.findOne({
@@ -93,6 +91,7 @@ router.post('/individual', async (req, res) => {
         });
     }
     let aUsuarios = new AlimentacionUsuarios({
+        usuario: req.query.usuario,
         ...req.body,
     });
 
