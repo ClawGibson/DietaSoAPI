@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
         );
         //console.log('[ID] - ', _id, ' - [Nombre] - ', nombreAlimento);
 
-        if (!id) {
+        if (!_id) {
             return res.status(404).send({
                 Error: 'No se encontró el alimento proporcionado',
             });
