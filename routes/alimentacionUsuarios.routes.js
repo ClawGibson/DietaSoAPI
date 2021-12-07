@@ -69,13 +69,16 @@ router.post('/individual', async (req, res) => {
                 });
 
                 if (infoUsuario)
-                    return res.status(500).json({
+                    return res.status(204).json({
                         success: false,
                         message: 'Alimentacion de Usuario ya registrada',
                     });
             } catch (err) {
-                //console.log("Ocurrió un error al buscar el usuario - ", err);
-                return res.status(500).json({
+                console.log(
+                    'Ocurrió un error al buscar la alimentación de usuarios - ',
+                    err
+                );
+                return res.status(204).json({
                     success: false,
                     message:
                         'Ocurrió un error al buscar la alimentación del usuario',
@@ -83,7 +86,7 @@ router.post('/individual', async (req, res) => {
             }
         } else console.log('El usuario no existe');
     } catch (err) {
-        //console.log("Ocurrió un error al buscar el usuario - ", err);
+        console.log('Ocurrió un error al buscar el usuario - ', err);
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al buscar el usuario',
@@ -104,6 +107,10 @@ router.post('/individual', async (req, res) => {
                 );
         res.send(aUsuarios);
     } catch (err) {
+        console.log(
+            'Ocurrió un error al guardar los datos de alimentacion - ',
+            err
+        );
         return res.status(500).json({
             success: false,
             message:
