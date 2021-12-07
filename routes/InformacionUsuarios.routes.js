@@ -57,7 +57,7 @@ router.get('/individual', async (req, res) => {
 
 router.post('/individual', async (req, res) => {
     try {
-        const usuarioCreado = await Usuarios.findById(req.query.usuario);
+        const usuarioCreado = await buscarUsuario(req.query.usuario);
         if (usuarioCreado) {
             //console.log("si existe ese usuario");
             try {
