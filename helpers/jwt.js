@@ -10,6 +10,7 @@ function authJwt() {
         path: [
             `${process.env.API_URL}/usuarios/login`,
             `${process.env.API_URL}/usuarios/register`,
+            `${process.env.API_URL}/historialClinico/individual`,
             `${process.env.API_URL}/historialClinico/individual/`,
             `${process.env.API_URL}/historialClinico/individual/:id`,
             `${process.env.API_URL}/datosUsuarios/`,
