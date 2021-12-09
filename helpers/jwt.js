@@ -27,6 +27,10 @@ function authJwt() {
             `${process.env.API_URL}/foro`,
             `${process.env.API_URL}/pushToken/varios`,
             `${process.env.API_URL}/pushToken/actualizarToken`,
+            `${process.env.API_URL}/like`,
+            `${process.env.API_URL}/like/publicacion`,
+            `${process.env.API_URL}/like/publicacionReaccionoUsuario`,
+            `${process.env.API_URL}/recordatorios`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {

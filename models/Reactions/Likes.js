@@ -6,9 +6,9 @@ const likeModel = new Schema({
         ref: "InformacionUsuarios",
         required: true,
     },
-    activate: {
-        type: Boolean,
-        default: false,
+    publicacion: {
+        type: Schema.Types.ObjectId,
+        ref: "Publication"
     }
 });
 
