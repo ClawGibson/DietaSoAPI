@@ -1,9 +1,10 @@
 const Usuarios = require('../models/Usuarios');
 const InformacionUsuarios = require('../models/InformacionUsuarios');
-const PuntosDeUsuario = require('../models/PuntosDeUsuario');
+
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+
 const { buscarUsuario } = require('../constants/index');
 
 router.get('/', async (req, res) => {
@@ -28,20 +29,19 @@ router.get('/', async (req, res) => {
 
 router.get('/individual', async (req, res) => {
     try {
-        const usuario = await buscarUsuario(req.query.usuario);
-        //console.log(usuario);
+        const { _id } = await buscarUsuario(req.query.usuario);
 
-        if (!usuario)
+        if (!_id)
             return res
                 .status(404)
                 .send({ Error: 'No se encontró el usuario proporcionado' });
 
         const listaInfoUsuarios = await InformacionUsuarios.find({
-            usuario: req.query.usuario,
+            usuario: mongoose.Types.ObjectId(_id),
         });
-        //console.log(listaInfoUsuarios[0]);
-        if (!listaInfoUsuarios)
-            return res.status(404).send({
+
+        if (!listaInfoUsuarios || listaInfoUsuarios.length === 0)
+            return res.status(204).send({
                 message: 'El usuario no tiene información',
             });
 
@@ -55,11 +55,9 @@ router.get('/individual', async (req, res) => {
     }
 });
 
-
-
 router.post('/individual', async (req, res) => {
     try {
-        const usuarioCreado = await Usuarios.findById(req.query.usuario);
+        const usuarioCreado = await buscarUsuario(req.query.usuario);
         if (usuarioCreado) {
             //console.log("si existe ese usuario");
             try {

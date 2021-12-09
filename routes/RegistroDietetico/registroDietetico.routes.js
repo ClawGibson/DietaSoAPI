@@ -71,13 +71,7 @@ router.get('/detalles', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         let nuevoRegistroDietetico = new RegistroDietetico({
-            usuario: req.body.usuario,
-            alimentos: req.body.alimentos,
-            tipo: req.body.tipo,
-            horario: req.body.horario,
-            agua: req.body.agua,
-            ejercicio: req.body.ejercicio,
-            menuPreparacion: req.body.menuPreparacion,
+            ...req.body,
         });
 
         nuevoRegistroDietetico = nuevoRegistroDietetico.save();
@@ -124,6 +118,7 @@ router.patch('/modificarRegistro', async (req, res) => {
                 fecha: req.body.fecha,
                 lugar: req.body.lugar,
                 menuPreparacion: req.body.menuPreparacion,
+                imagen: req.body.imagen,
             };
 
             registro[0].alimentos[index] = registroAModificar[0].alimentos;
@@ -145,6 +140,7 @@ router.patch('/modificarRegistro', async (req, res) => {
                     fecha: req.body.fecha,
                     lugar: req.body.lugar,
                     menuPreparacion: req.body.menuPreparacion,
+                    imagen: req.body.imagen,
                 },
             ];
 
