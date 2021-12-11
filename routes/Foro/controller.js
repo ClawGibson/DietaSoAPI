@@ -1,15 +1,17 @@
 const { response } = require("express");
 const Publication = require("../../models/Foro/Publicacion");
+const { cloudinary } = require("../../utils/cloudinary");
 
 const createNewPublication = async (req, res = response) => {
     try {
         let newPublication = new Publication({
-            user: req.query.user,
+            user: req.body.user,
             post: req.body.post,
-            file: req.body.file,
+            fileUrl: req.body.fileUrl,
         })
+        console.log(req.body.fileUrl);
         if (!newPublication) {
-            return res.status(401).json({ msg: "Fallo al cargar la publicación" });
+            return res.status(400).json({ msg: "Fallo al cargar[Error en la petición]" });
         }
         newPublication = await newPublication.save();
         return res.status(200).json({ msg: "Creado correctamente" });
@@ -33,7 +35,7 @@ const getAllPublications = async (req, res = response) => {
 
 const getAllPublicationsPupulate = async (req, res = response) => {
     try {
-        await Publication.find()
+        await Publication.find().sort({ $natural: -1 })
             .populate({ path: "user", select: "nombre apellidoPaterno apellidoMaterno foto" })
             .exec((e, populated) => {
                 if (e) {
@@ -49,10 +51,10 @@ const getAllPublicationsPupulate = async (req, res = response) => {
 
 const updatePublication = async (req, res = response) => {
     const { _id } = req.params;
-    const { post } = req.body;
+    const { likes } = req.body;
 
     try {
-        const update = await Publication.findOneAndUpdate({ _id }, { post })
+        const update = await Publication.findOneAndUpdate({ _id }, { likes })
         res.send(update);
     } catch (error) {
         res.send(error);

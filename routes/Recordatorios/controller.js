@@ -9,7 +9,10 @@ const addReminder = async (req, res = response) => {
             titulo: req.body.titulo,
             mensaje: req.body.mensaje,
             categoria: req.body.categoria,
-            dias: req.body.dias,
+            //dias: req.body.dias,
+            expoTokens: req.body.expoTokens,
+            fecha: req.body.fecha,
+            hora: req.body.hora,
         });
         nuevoRecordatorio = await nuevoRecordatorio.save();
         if (!nuevoRecordatorio) {
@@ -25,19 +28,24 @@ const addReminder = async (req, res = response) => {
 
 const getReminders = async (req, res = response) => {
     try {
-        return await Recordatorio.find()
-            .populate({ path: 'usuario', select: 'nombre' })
-            .populate({ path: 'metas', select: 'objetivo descripcion' })
-            .exec((e, populated) => {
-                if (e) {
-                    return e;
-                }
-                res.send(populated);
-            });
+        const recordatorios = await Recordatorio.find();
+        return res.status(200).json(recordatorios);
     } catch (error) {
         return res.status(500).json({ error });
     }
 };
+const getRemindersByUser = async (req, res = response) => {
+    try {
+        const recordatorios = await Recordatorio.find({ usuarios: req.query.id });
+        if (recordatorios.length === 0) {
+            return res.status(204).json({ msg: "No hay recordatorios" })
+        }
+        res.status(200).json(recordatorios);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+}
 
 const updateRemindersAddUsers = async (req, res = response) => {
     const { titulo } = req.query;
@@ -66,4 +74,5 @@ module.exports = {
     getReminders,
     updateRemindersAddUsers,
     deleteReminder,
+    getRemindersByUser,
 };

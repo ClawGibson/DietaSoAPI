@@ -11,8 +11,8 @@ const addMessage = async (req, res = response) => {
         });
         newMessage = await newMessage.save();
         if (!newMessage) {
-            return res.status(500).json({
-                msg: "No se puede crear el mensaje"
+            return res.status(400).json({
+                msg: "No se puede crear el mensaje[Error en la petición]"
             });
         }
         res.status(200).json({ msg: "Creado correctamente", newMessage })

@@ -1,47 +1,73 @@
 const { Schema, model } = require('mongoose');
 
-const recordatorioModel = new Schema({
-
-    usuarios: [{
-        type: Schema.Types.ObjectId,
-        ref: "InformacionUsuarios",
-        required: true,
-    }],
-    metas: {
-        type: Schema.Types.ObjectId,
-        ref: "Metas",
-        required: true,
-    },
-    titulo: {
-        type: String,
-        unique: true,
-        required: true,
-    },
-    mensaje: {
-        type: String,
-        required: true,
-    },
-    categoria: {
-        type: String,
-        required: true,
-    },
-    dias: [{
-        day: {
+const recordatorioModel = new Schema(
+    {
+        usuarios: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'InformacionUsuarios',
+                required: true,
+            },
+        ],
+        metas: {
+            type: Schema.Types.ObjectId,
+            ref: 'Metas',
+            required: false,
+        },
+        titulo: {
             type: String,
             required: true,
         },
-        dias: [
+        mensaje: {
+            type: String,
+            required: true,
+        },
+        categoria: {
+            type: String,
+            required: false,
+        },
+        expoTokens: [
             {
-                day: {
-                    type: String,
-                    required: true,
-                },
-                activo: {
-                    type: Boolean,
-                    default: false,
-                },
+                type: String,
             },
         ],
+        fecha: [
+            {
+                type: Date,
+            },
+        ],
+        hora: [
+            {
+                type: String,
+            },
+        ],
+        // dias: [{
+        //     day: {
+        //         type: String,
+        //         required: true,
+        //     },
+        //     dias: [
+        //         {
+        //             day: {
+        //                 type: String,
+        //                 required: true,
+        //             },
+        //             activo: {
+        //                 type: Boolean,
+        //                 default: false,
+        //             },
+        //         },
+        //     ],
+        //     // horario: {
+        //     //     type: String,
+        //     //     required: false, // Para prueba en false
+        //     // },
+
+        //     global: {
+        //         type: Boolean,
+        //         default: false,
+        //     }
+        // }],
         // horario: {
         //     type: String,
         //     required: false, // Para prueba en false
@@ -50,18 +76,9 @@ const recordatorioModel = new Schema({
         global: {
             type: Boolean,
             default: false,
-        }
-    }],
-    horario: {
-        type: String,
-        required: false, // Para prueba en false
+        },
     },
-
-    global: {
-        type: Boolean,
-        default: false,
-    },
-
-}, { timestamp: true });
+    { timestamp: true }
+);
 
 module.exports = model('Recordatorio', recordatorioModel);
