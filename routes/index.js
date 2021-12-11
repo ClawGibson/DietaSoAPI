@@ -30,7 +30,7 @@ const imagesRoute = require('./Images/imges.routes');
 const ejerciciosRoute = require('./Ejercicios/ejercicios.routes');
 const puntosPorEjercicioRoute = require('./Ejercicios/puntosPorEjercicio.routes');
 const pushToken = require('./PushTokens/pushTokens.routes');
-const like = require('./Reactions/Likes/likes.routes');
+const like = require('./Reactions/Likes/Likes.routes');
 const menusPorUsuarioRoute = require('./MenusPorUsuario/menusPorUsuario.routes');
 
 module.exports = {
