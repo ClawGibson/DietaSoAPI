@@ -93,7 +93,7 @@ router.get('/', async (req, res) => {
         const alimentos = await Alimentos.find().select(
             'nombreAlimento imagen grupoAlimento'
         );
-        console.log('alimentos', alimentos);
+
         if (!alimentos)
             res.status(204).json({
                 message: 'No hay alimentos todavía :c',
