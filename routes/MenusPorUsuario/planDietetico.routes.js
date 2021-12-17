@@ -4,11 +4,11 @@ const router = require('express').Router();
 
 const buscarMenuExistente = (plan, dia, categoria) => {
     try {
-        const filtrado = plan.filter(
+        const filtered = plan.filter(
             (menu) => menu.dia === dia && menu.categoria === categoria
         );
 
-        if (filtrado.length > 0) return filtrado[0];
+        if (filtered.length > 0) return filtered[0];
 
         return {};
     } catch (error) {
@@ -17,11 +17,18 @@ const buscarMenuExistente = (plan, dia, categoria) => {
     }
 };
 
-const poblarMenu = async (usuario) => {
+const poblarMenu = async (usuario, menu) => {
     try {
+        const result = await PlanDietetico.find({
+            usuario: moongose.Types.ObjectId(usuario),
+        }).populate({
+            path: 'plan',
+        });
+
+        return result[0];
     } catch (error) {
-        console.log('Ocurrió un error al buscar el menu existente', error);
-        return error;
+        console.log('Ocurrió un error al poblar el menú', error);
+        return null;
     }
 };
 
@@ -34,19 +41,19 @@ router.get('/busquedaPorDia', async (req, res) => {
         }).populate({
             path: 'plan',
         });
-
+        console.log('Poblado: ', planDietetico);
         if (!planDietetico)
             return res
                 .status(204)
                 .send({ message: 'No se encontraron planes dietéticos' });
 
-        const filtrado = buscarMenuExistente(
+        const filtered = buscarMenuExistente(
             planDietetico[0].plan,
             dia,
             categoria
         );
 
-        res.status(200).send(filtrado);
+        res.status(200).send(filtered);
     } catch (error) {
         console.error(error);
         return res.status(500).send({
@@ -137,61 +144,53 @@ router.patch('/:id', async (req, res) => {
     try {
         const { menu, dia, categoria } = req.body;
 
-        // Verificar si en el arreglo plan existe algún registro con el campo dia igual al día del body
-        const existe = buscarMenuExistente(menu, dia, categoria);
-        console.log(existe);
+        const populated = await poblarMenu(req.params.id);
 
-        if (existe) {
-            // Si existe, actualizar el registro
-            const menuActualizado = await PlanDietetico.findOneAndUpdate(
+        // Filter in populated array the menu that matches the dia and categoria
+        const filtered = buscarMenuExistente(populated.plan, dia, categoria);
+
+        if (filtered.menu) {
+            // Update the menu
+            const updated = await PlanDietetico.findOneAndUpdate(
+                { usuario: req.params.id },
                 {
-                    usuario: req.params.id,
-                    plan: {
-                        $elemMatch: {
-                            dia: dia,
-                        },
-                    },
-                },
-                {
-                    $set: {
-                        'plan.$[elemento].menu': menu,
-                    },
-                },
-                {
-                    arrayFilters: [
+                    plan: [
+                        ...populated.plan.filter(
+                            (menu) => menu.id !== filtered.id
+                        ),
                         {
-                            'elemento.dia': dia,
+                            ...filtered,
+                            menu: menu,
                         },
                     ],
-                    new: true,
-                }
+                },
+                { new: true }
             );
 
-            console.log('->', menuActualizado);
+            console.log('updated: ', updated);
+            if (!updated)
+                return res.status(204).send({
+                    message: 'No se pudo actualizar el menu',
+                });
+            res.status(200).send(updated);
         } else {
-            // Si no existe, pushear el registro al arreglo.
-            const menuNuevo = new PlanDietetico({
+            // Create the menu
+            console.log('Create the menu');
+            console.log('Populated: ', populated);
+            let newMenu = new PlanDietetico({
                 usuario: req.params.id,
-                $push: {
-                    plan: menu,
-                },
+                plan: [...populated.plan, moongose.Types.ObjectId(menu)],
             });
 
-            console.log('menu nuevo', menuNuevo);
+            newMenu = await newMenu.save();
+            console.log('newMenu: ', newMenu);
+            if (!newMenu)
+                return res.status(204).send({
+                    message: 'No se pudo crear el menu',
+                });
 
-            //menuNuevo = await menuNuevo.save();
+            res.status(200).send(newMenu);
         }
-
-        const planActualizado = await PlanDietetico.findByIdAndUpdate(
-            req.params.id,
-            {
-                $push: {
-                    plan: menu,
-                },
-            }
-        );
-
-        console.log('plan actualizado', planActualizado);
     } catch (error) {
         console.error(error);
         return res.status(500).send({
