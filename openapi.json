@@ -5261,6 +5261,39 @@
           }
         ]
       }
+    },
+    "/planAlimencitio/": {
+      "get": {
+        "tags": [
+          "Plan alimenticio"
+        ],
+        "summary": "Obtiene todos los planes alimenticios de todos los usuarios",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PlanAlimenticio"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No hay planes alimenticios"
+          },
+          "401": {
+            "description": "No autorizado"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -7438,6 +7471,21 @@
         "required": [
           "items"
         ]
+      },
+      "PlanAlimenticio": {
+        "type": "object",
+        "properties": {
+          "usuario": {
+            "type": "string"
+          },
+          "plan": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
