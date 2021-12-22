@@ -2,10 +2,14 @@ const MenusPorUsuario = require('../../models/MenusPorUsuario/MenusPorUsuario');
 const mongoose = require('mongoose');
 const router = require('express').Router();
 
-router.get('/:userId', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
+        const { usuario, dia, categoria } = req.query;
+
         const registro = await MenusPorUsuario.find({
-            usuario: req.params.userId,
+            usuario: mongoose.Types.ObjectId(usuario),
+            dia: dia,
+            categoria: categoria,
         })
             .populate('menu usuario')
             .select('-contrasena');
