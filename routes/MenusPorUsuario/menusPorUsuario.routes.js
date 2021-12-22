@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
         const menusPorUsuario = await MenusPorUsuario.find()
             .populate('menu usuario')
