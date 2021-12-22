@@ -52,6 +52,32 @@ router.get('/all', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const registro = await MenusPorUsuario.find({
+            usuario: mongoose.Types.ObjectId(id),
+        })
+            .populate('menu usuario')
+            .select('-contrasena');
+
+        if (!registro)
+            return res.status(204).send({
+                message: 'No se encontró el registro',
+            });
+
+        res.status(200).send(registro);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({
+            success: false,
+            message: 'Ocurrió un error inesperado',
+            error: error,
+        });
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const { usuario, menus, dia, hora, categoria } = req.body;
