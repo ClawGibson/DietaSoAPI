@@ -1,6 +1,5 @@
 const Usuarios = require('../models/Usuarios');
 const AlimentacionUsuarios = require('../models/AlimentacionUsuarios');
-const PuntosDeUsuario = require('../models/PuntosDeUsuario');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -120,13 +119,19 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     const { usuario } = req.query;
-    let editarInformacionA;
     try {
-        editarInformacionA = await AlimentacionUsuarios.findOneAndUpdate(
+        const editarInformacionA = await AlimentacionUsuarios.findOneAndUpdate(
             { usuario: usuario },
             { ...req.body },
             { new: true }
         );
+
+        if (!editarInformacionA)
+            return res.status(204).send({
+                message: 'No se pudo guardar la alimentación ayer.',
+            });
+
+        res.status(200).send(editarInformacionA);
 
         /* editarInformacionA = editarInformacionA
             .save()
