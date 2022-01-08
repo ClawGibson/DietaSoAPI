@@ -131,9 +131,7 @@ router.patch('/individual', async (req, res) => {
         try {
             editarInformacionA = await AlimentacionUsuarios.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
-                {
-                    ...req.body,
-                }
+                { ...req.body }
             );
 
             editarInformacionA = editarInformacionA

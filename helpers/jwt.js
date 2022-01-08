@@ -28,6 +28,7 @@ function authJwt() {
             `${process.env.API_URL}/datosSocioeconomicos/individual`,
             `${process.env.API_URL}/datosSocioeconomicos/individual/`,
             `${process.env.API_URL}/datosSocioeconomicos/individual/:id`,
+            `${process.env.API_URL}/alimentacionUsuarios`,
             `${process.env.API_URL}/alimentacionUsuarios/`,
             `${process.env.API_URL}/alimentacionUsuarios/:id`,
             `${process.env.API_URL}/alimentacionUsuarios/individual`,
