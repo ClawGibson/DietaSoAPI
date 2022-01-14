@@ -24,7 +24,7 @@
         }
     ],
     "paths": {
-        "/usuarios/login":{
+        "/usuarios/login": {
             "$ref": "./paths/Usuarios/Login.json"
         },
         "/usuarios/register": {
@@ -123,7 +123,7 @@
         "/datosSocioeconomicos/individual": {
             "$ref": "./paths/DatosSocioeconomicos/IndividualSocioeconomicData.json"
         },
-         "/alimentacionUsuarios/": {
+        "/alimentacionUsuarios/": {
             "$ref": "./paths/AlimentacionUsuarios/UserFood.json"
         },
         "/alimentacionUsuarios/individual": {
@@ -174,40 +174,42 @@
         "/registroDietetico/eliminarRegistro": {
             "$ref": "./paths/RegistroDietetico/DeleteDietaryRecord.json"
         },
-        "/importarAlimentos/":{
+        "/importarAlimentos/": {
             "$ref": "./paths/ImportarAlimentos/Food.json"
         },
-        "/recomendacionPoblacional/":{
-            "$ref":"./paths/RecomendacionesPoblacionales/PopulationRecomendation.json"
+        "/recomendacionPoblacional/": {
+            "$ref": "./paths/RecomendacionesPoblacionales/PopulationRecomendation.json"
         },
-        "/metas/":{
-            "$ref":"./paths/Metas/Goals.json"
+        "/metas/": {
+            "$ref": "./paths/Metas/Goals.json"
         },
-        "/recordatorios/":{
-            "$ref":"./paths/Recordatorios/Reminders.json"
+        "/recordatorios/": {
+            "$ref": "./paths/Recordatorios/Reminders.json"
         },
-        "/mensajes/":{
-            "$ref":"./paths/Mensajes/Messages.json"
+        "/mensajes/": {
+            "$ref": "./paths/Mensajes/Messages.json"
         },
-        "/mensajes/{id}":{
-            "$ref":"./paths/Mensajes/IndividualMessages.json"
+        "/mensajes/{id}": {
+            "$ref": "./paths/Mensajes/IndividualMessages.json"
         },
-        "/chat/":{
-            "$ref":"./paths/Chat/Chat.json"
+        "/chat/": {
+            "$ref": "./paths/Chat/Chat.json"
         },
-        "/chat/{id}":{
-            "$ref":"./paths/Chat/DeleteChat.json"
+        "/chat/{id}": {
+            "$ref": "./paths/Chat/DeleteChat.json"
         },
-        "/foro/":{
-            "$ref":"./paths/Foro/Publication.json"
+        "/foro/": {
+            "$ref": "./paths/Foro/Publication.json"
         },
-        "/foro/{_id}":{
-            "$ref":"./paths/Foro/IndividualPublication.json"
+        "/foro/{_id}": {
+            "$ref": "./paths/Foro/IndividualPublication.json"
         },
-        "/images":{
-            "$ref":"./paths/Images/Images.json"
+        "/images": {
+            "$ref": "./paths/Images/Images.json"
+        },
+        "/planAlimencitio/": {
+            "$ref": "./paths/PlanAlimenticio/FoodPlan.json"
         }
-
     },
     "components": {
         "schemas": {

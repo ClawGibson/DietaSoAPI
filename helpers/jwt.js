@@ -28,6 +28,7 @@ function authJwt() {
             `${process.env.API_URL}/datosSocioeconomicos/individual`,
             `${process.env.API_URL}/datosSocioeconomicos/individual/`,
             `${process.env.API_URL}/datosSocioeconomicos/individual/:id`,
+            `${process.env.API_URL}/alimentacionUsuarios`,
             `${process.env.API_URL}/alimentacionUsuarios/`,
             `${process.env.API_URL}/alimentacionUsuarios/:id`,
             `${process.env.API_URL}/alimentacionUsuarios/individual`,
@@ -51,6 +52,8 @@ function authJwt() {
             `${process.env.API_URL}/menusPorUsuario`,
             `${process.env.API_URL}/menusPorUsuario/:id`,
             `${process.env.API_URL}/menusPorUsuario/:userId`,
+            `${process.env.API_URL}/planAlimenticio`,
+            `${process.env.API_URL}/planAlimenticio/:id`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {

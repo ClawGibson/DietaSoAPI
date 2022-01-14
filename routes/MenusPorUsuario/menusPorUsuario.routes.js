@@ -2,10 +2,14 @@ const MenusPorUsuario = require('../../models/MenusPorUsuario/MenusPorUsuario');
 const mongoose = require('mongoose');
 const router = require('express').Router();
 
-router.get('/:userId', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
+        const { usuario, dia, categoria } = req.query;
+
         const registro = await MenusPorUsuario.find({
-            usuario: req.params.userId,
+            usuario: mongoose.Types.ObjectId(usuario),
+            dia: dia,
+            categoria: categoria,
         })
             .populate('menu usuario')
             .select('-contrasena');
@@ -26,7 +30,7 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
         const menusPorUsuario = await MenusPorUsuario.find()
             .populate('menu usuario')
@@ -38,6 +42,32 @@ router.get('/', async (req, res) => {
             });
 
         res.status(200).send(menusPorUsuario);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send({
+            success: false,
+            message: 'Ocurrió un error inesperado',
+            error: error,
+        });
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const registro = await MenusPorUsuario.find({
+            usuario: mongoose.Types.ObjectId(id),
+        })
+            .populate('menu usuario')
+            .select('-contrasena');
+
+        if (!registro)
+            return res.status(204).send({
+                message: 'No se encontró el registro',
+            });
+
+        res.status(200).send(registro);
     } catch (error) {
         console.error(error);
         return res.status(500).send({

@@ -9,3 +9,5 @@ const menusPorUsuarioSchema = new Schema({
 });
 
 module.exports = model('MenusPorUsuario', menusPorUsuarioSchema);
+//Ver si es necesario modificar este modelo para recibir más menús, es decir, un array oo....
+// Crear una entidad diferente para almacenar todos estos menus para un solo usuario.

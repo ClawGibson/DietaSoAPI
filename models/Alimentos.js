@@ -64,6 +64,7 @@ const alimentosSchema = new Schema(
                 default: '',
             },
             fibra: { type: String, required: false, default: '' },
+            fibraSoluble: { type: String, required: false, default: '' },
             fibraInsoluble: { type: String, required: false, default: '' },
             azucar: { type: String, required: false, default: '' },
             etanol: { type: String, required: false, default: '' },

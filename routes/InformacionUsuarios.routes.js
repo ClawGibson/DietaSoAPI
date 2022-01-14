@@ -56,44 +56,28 @@ router.get('/individual', async (req, res) => {
 });
 
 router.post('/individual', async (req, res) => {
-    try {
-        const usuarioCreado = await buscarUsuario(req.query.usuario);
-        if (usuarioCreado) {
-            //console.log("si existe ese usuario");
-            try {
-                const infoUsuario = await InformacionUsuarios.findOne({
-                    usuario: req.query.usuario,
-                });
+    const { usuario } = req.query;
 
-                if (infoUsuario) {
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Información de Usuario ya registrada',
-                    });
-                } else console.log('no existe usuario');
-            } catch (err) {
-                return res.status(500).json({
-                    success: false,
-                    message:
-                        'Ocurrió un error al buscar la información el usuario',
-                });
-            }
-        } else {
-            return res.status(404).json({
+    /* try {
+        const infoUsuario = await InformacionUsuarios.findOne({
+            usuario: usuario,
+        });
+
+        if (infoUsuario) {
+            return res.status(500).json({
                 success: false,
-                message: 'El usuario no existe',
+                message: 'Información de Usuario ya registrada',
             });
         }
     } catch (err) {
-        console.log(`Error - ${err}`);
         return res.status(500).json({
             success: false,
-            message: 'Ocurrió un error al buscar el usuario',
+            message: 'Ocurrió un error al buscar la información el usuario',
         });
-    }
+    } */
 
     let informacion = new InformacionUsuarios({
-        usuario: req.query.usuario,
+        usuario: usuario,
         nombre: req.body.nombre,
         apellidoPaterno: req.body.apellidoPaterno,
         apellidoMaterno: req.body.apellidoMaterno,

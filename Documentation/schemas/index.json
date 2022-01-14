@@ -121,5 +121,8 @@
     },
     "Chat": {
         "$ref": "Chat.json"
+    },
+    "PlanAlimenticio": {
+        "$ref": "PlanAlimenticio.json"
     }
 }

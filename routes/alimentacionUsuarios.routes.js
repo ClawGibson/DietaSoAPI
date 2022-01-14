@@ -1,6 +1,5 @@
 const Usuarios = require('../models/Usuarios');
 const AlimentacionUsuarios = require('../models/AlimentacionUsuarios');
-const PuntosDeUsuario = require('../models/PuntosDeUsuario');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
@@ -119,46 +118,36 @@ router.post('/individual', async (req, res) => {
 });
 
 router.patch('/individual', async (req, res) => {
+    const { usuario } = req.query;
     try {
-        const existeUsuario = await buscarUsuario(req.query.usuario);
+        const editarInformacionA = await AlimentacionUsuarios.findOneAndUpdate(
+            { usuario: usuario },
+            { ...req.body },
+            { new: true }
+        );
 
-        if (!existeUsuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe.' });
-
-        let editarInformacionA;
-        try {
-            editarInformacionA = await AlimentacionUsuarios.findOneAndUpdate(
-                { usuario: existeUsuario.usuario },
-                {
-                    ...req.body,
-                }
-            );
-
-            editarInformacionA = editarInformacionA
-                .save()
-                .then((response) => res.status(200).json({ message: 'ok' }))
-                .catch((err) =>
-                    res.status(500).json({
-                        success: false,
-                        message: 'No se pudo guardar la alimentación - ',
-                        err,
-                    })
-                );
-        } catch (err) {
-            console.log('Error: ', err);
-            res.status(500).json({
-                success: false,
-                message:
-                    'Ocurrió un error al actualizar los datos de alimentos - ',
-                err,
+        if (!editarInformacionA)
+            return res.status(204).send({
+                message: 'No se pudo guardar la alimentación ayer.',
             });
-        }
+
+        res.status(200).send(editarInformacionA);
+
+        /* editarInformacionA = editarInformacionA
+            .save()
+            .then((response) => res.status(200).json({ message: 'ok' }))
+            .catch((err) =>
+                res.status(500).json({
+                    success: false,
+                    message: 'No se pudo guardar la alimentación - ',
+                    err,
+                })
+            ); */
     } catch (err) {
+        console.log('Error: ', err);
         res.status(500).json({
             success: false,
-            message: 'Ocurrió un error al buscar el usuario - ',
+            message: 'Ocurrió un error al actualizar los datos de alimentos - ',
             err,
         });
     }
