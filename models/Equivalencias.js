@@ -2,6 +2,11 @@ const { Schema, model } = require('mongoose');
 
 const equivalenciasSchema = new Schema({
     alimento: { type: String, required: true },
+    idAlimento: {
+        type: Schema.Types.ObjectId,
+        ref: 'Alimentos',
+        required: true,
+    },
     cantidadSugerida: { type: String, required: true },
     unidad: { type: String, required: true },
     pesoNetoKg: { type: String, required: true },

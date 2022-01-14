@@ -32,6 +32,16 @@ const socketController = (socket) => {
             console.log(`[crear-chat-ERROR]: ${error}`);
         }
     });
+
+    socket.on('crear-recordatorio', (payload, callback) => {
+        try {
+            console.log(`[crear-recordatorio]: ${payload}`);
+            socket.emit('recordatorio-creado', payload);
+            callback();
+        } catch (error) {
+            console.log(`[crear-recordatorio-ERROR]: ${error}`);
+        }
+    });
 };
 
 module.exports = { socketController };
