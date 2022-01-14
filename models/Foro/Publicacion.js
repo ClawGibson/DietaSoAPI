@@ -18,7 +18,7 @@ const publicationModel = new Schema({
     }],
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: "Like",
+        ref: "InformacionUsuarios",
     }]
 });
 

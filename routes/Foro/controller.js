@@ -49,18 +49,19 @@ const getAllPublicationsPupulate = async (req, res = response) => {
 }
 
 
-const updatePublication = async (req, res = response) => {
-    const { _id } = req.params;
-    const { likes } = req.body;
+const updatePublicationAddLike = async (req, res = response) => {
+    const { id } = req.params;
+    const { like } = req.body;
 
     try {
-        const update = await Publication.findOneAndUpdate({ _id }, { likes })
+        const update = await Publication.findOneAndUpdate({ _id: id }, { $addToSet: { likes: like } });
         res.send(update);
     } catch (error) {
         res.send(error);
     }
-
 }
+
+const updatePublicactionRemoveLike = async (req, res = response) => { }
 
 const deletePublication = async (req, res = response) => {
     const { id } = req.query;
@@ -75,6 +76,6 @@ module.exports = {
     createNewPublication,
     getAllPublications,
     getAllPublicationsPupulate,
-    updatePublication,
+    updatePublicationAddLike,
     deletePublication,
 }
