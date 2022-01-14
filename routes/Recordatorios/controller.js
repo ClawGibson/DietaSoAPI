@@ -3,7 +3,7 @@ const Recordatorio = require('../../models/Recordatorios/recordatorio');
 
 const addReminder = async (req, res = response) => {
     try {
-        let nuevoRecordatorio = new Recordatorio({
+        /* let nuevoRecordatorio = new Recordatorio({
             usuarios: req.body.usuarios,
             metas: req.body.metas,
             titulo: req.body.titulo,
@@ -13,12 +13,14 @@ const addReminder = async (req, res = response) => {
             expoTokens: req.body.expoTokens,
             fecha: req.body.fecha,
             hora: req.body.hora,
-        });
+        }); */
+
+        let nuevoRecordatorio = new Recordatorio({ ...req.body });
         nuevoRecordatorio = await nuevoRecordatorio.save();
         if (!nuevoRecordatorio) {
             return res
-                .status(500)
-                .send('No se pudo crear el nuevo recordatorio');
+                .status(400)
+                .send({ message: 'No se pudo crear el nuevo recordatorio' });
         }
         res.status(200).send(nuevoRecordatorio);
     } catch (error) {
