@@ -20,7 +20,7 @@ const addReminder = async (req, res = response) => {
                 .status(500)
                 .send('No se pudo crear el nuevo recordatorio');
         }
-        res.status(200).send('Se creo correctamente el recordatorio');
+        res.status(200).send(nuevoRecordatorio);
     } catch (error) {
         return res.status(500).send({ error });
     }
@@ -36,16 +36,18 @@ const getReminders = async (req, res = response) => {
 };
 const getRemindersByUser = async (req, res = response) => {
     try {
-        const recordatorios = await Recordatorio.find({ usuarios: req.query.id });
+        const recordatorios = await Recordatorio.find({
+            usuarios: req.query.id,
+        });
         if (recordatorios.length === 0) {
-            return res.status(204).json({ msg: "No hay recordatorios" })
+            return res.status(204).json({ msg: 'No hay recordatorios' });
         }
         res.status(200).json(recordatorios);
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
     }
-}
+};
 
 const updateRemindersAddUsers = async (req, res = response) => {
     const { titulo } = req.query;
