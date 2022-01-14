@@ -24,6 +24,7 @@ const addReminder = async (req, res = response) => {
         }
         res.status(200).send(nuevoRecordatorio);
     } catch (error) {
+        console.log('Error al crear el recordatorio', error);
         return res.status(500).send({ error });
     }
 };
