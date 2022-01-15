@@ -52,9 +52,9 @@ const actualizarPushToken = async (req, res = response) => {
         );
         console.log('Reemplazado: ', remplazado);
         if (!remplazado) {
-            return res.status(400).json({ msg: 'Ha ocurrido un error' });
+            return res.status(400).send({ msg: 'Ha ocurrido un error' });
         }
-        return res.status(200).json({ msg: 'Se ha actualizado' });
+        return res.status(200).send({ msg: 'Se ha actualizado' });
     } catch (error) {
         console.log('Ocurrió un error al actualizar el token', error);
         res.status(500).json(error);
