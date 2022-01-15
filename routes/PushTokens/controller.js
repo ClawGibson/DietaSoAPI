@@ -11,11 +11,9 @@ const createNewPushToken = async (req, res = response) => {
         });
         newPushToken = await newPushToken.save();
         if (!newPushToken) {
-            return res
-                .status(400)
-                .json({
-                    msg: 'es necesario mandar información en la petición',
-                });
+            return res.status(400).json({
+                msg: 'es necesario mandar información en la petición',
+            });
         }
         res.status(200).send({ token: newPushToken.token });
     } catch (error) {
@@ -54,10 +52,11 @@ const actualizarPushToken = async (req, res = response) => {
         );
         console.log('Reemplazado: ', remplazado);
         if (!remplazado) {
-            return res.status(500).json({ msg: 'Ha ocurrido un error' });
+            return res.status(400).json({ msg: 'Ha ocurrido un error' });
         }
         return res.status(200).json({ msg: 'Se ha actualizado' });
     } catch (error) {
+        console.log('Ocurrió un error al actualizar el token', error);
         res.status(500).json(error);
     }
 };
