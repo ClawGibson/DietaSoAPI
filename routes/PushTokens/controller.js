@@ -46,10 +46,9 @@ const actualizarPushToken = async (req, res = response) => {
         const { usuario } = req.body;
         const { token } = req.body;
         console.log('Usuario:', usuario, '\nToken: ', token);
-        const remplazado = await PushToken.findOneAndUpdate(
+        let remplazado = await PushToken.findOneAndUpdate(
             { usuario: usuario },
-            { ...req.body },
-            { new: true }
+            { token: token }
         );
         console.log('Reemplazado: ', remplazado);
         if (!remplazado) {
