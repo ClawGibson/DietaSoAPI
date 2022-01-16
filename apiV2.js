@@ -37,6 +37,7 @@ const {
     like,
     menusPorUsuarioRoute,
     planAlimenticioRoute,
+    opcionesRegistro,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -79,6 +80,7 @@ router.use(`${API_URL}/puntosPorEjercicio`, puntosPorEjercicioRoute);
 router.use(`${API_URL}/like`, like);
 router.use(`${API_URL}/menusPorUsuario`, menusPorUsuarioRoute);
 router.use(`${API_URL}/planAlimenticio`, planAlimenticioRoute);
+router.use(`${API_URL}/opcionesRegistro`, opcionesRegistro);
 
 module.exports = {
     router,
