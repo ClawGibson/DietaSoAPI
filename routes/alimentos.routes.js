@@ -173,7 +173,7 @@ router.patch('/:id', async (req, res) => {
                 new: true, // Return the new product.
             }
         );
-
+        console.log('alimentoEditar', alimentoEditar);
         if (!alimentoEditar)
             return res.status(204).send({
                 message: 'El producto no se encontró o no se pudo editar :c',
