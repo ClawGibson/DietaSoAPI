@@ -159,9 +159,13 @@ router.post('/', async (req, res) => {
 });
 
 router.patch('/:id', async (req, res) => {
+    const ID = req.params.id;
+
+    console.log('ID', ID);
+
     try {
         const alimentoEditar = await Alimentos.findOneAndUpdate(
-            req.params.id,
+            ID,
             {
                 ...req.body,
             },
