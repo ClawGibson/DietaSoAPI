@@ -33,11 +33,6 @@ const recordatorioModel = new Schema(
             type: String,
             required: false,
         },
-        expoTokens: [
-            {
-                type: String,
-            },
-        ],
         fecha: [
             {
                 type: Date,
