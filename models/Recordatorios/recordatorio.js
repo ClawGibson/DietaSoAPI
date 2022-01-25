@@ -9,6 +9,13 @@ const recordatorioModel = new Schema(
                 required: true,
             },
         ],
+        usuariosConfirmados: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'InformacionUsuarios',
+                required: true,
+            },
+        ],
         metas: {
             type: Schema.Types.ObjectId,
             ref: 'Metas',

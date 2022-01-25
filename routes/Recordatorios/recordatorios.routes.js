@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-const { addReminder, getReminders, updateRemindersAddUsers, deleteReminder, getRemindersByUser } = require("./controller");
+const { addReminder, getReminders, updateRemindersAddUsers, deleteReminder, getRemindersByUser, updateRemindersAddUsersToConfirm } = require("./controller");
 
 router.post("/", addReminder);
 
@@ -12,7 +12,8 @@ router.get("/usuario", getRemindersByUser);
 
 
 //update
-router.patch("/", updateRemindersAddUsers);
+// router.patch("/", updateRemindersAddUsers);
+router.patch("/", updateRemindersAddUsersToConfirm);
 
 router.delete("/", deleteReminder);
 

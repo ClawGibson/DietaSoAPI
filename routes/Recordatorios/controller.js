@@ -63,6 +63,33 @@ const updateRemindersAddUsers = async (req, res = response) => {
     }
 };
 
+const updateRemindersAddUsersToConfirm = async (req, res = response) => {
+    const { id } = req.body;
+    const { usuario } = req.body;
+    try {
+        const update = await Recordatorio.findOne(
+            {
+                $and: [{ _id: id },
+                { usuariosConfirmados: usuario }]
+            }
+        );
+        console.log(update);
+        if (update === null) {
+            console.log("No se encontro")
+            await Recordatorio.updateOne({ _id: id },
+                { $push: { usuariosConfirmados: usuario } }
+            )
+            res.status(201).json({ msg: "El usuario es agregado por que no se encontraba asignado" })
+        }
+        else {
+            res.status(200).json({ msg: "El usuario es encontrado no se ha agreado recordatorio" })
+        }
+
+    } catch (error) {
+        res.status(500).json({ msg: "Ha ocurrido un error en el servidor" });
+    }
+}
+
 const deleteReminder = async (req, res = response) => {
     const { id } = req.query;
     const reminder = await Recordatorio.findOneAndDelete({ _id: id });
@@ -75,4 +102,5 @@ module.exports = {
     updateRemindersAddUsers,
     deleteReminder,
     getRemindersByUser,
+    updateRemindersAddUsersToConfirm
 };
