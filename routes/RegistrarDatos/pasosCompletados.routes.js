@@ -2,9 +2,11 @@ const PasosCompletados = require('../../models/PasosCompletados');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
-        const pasos = await PasosCompletados.find();
+        const pasos = await PasosCompletados.find({
+            usuario: req.params.id,
+        });
 
         if (!pasos)
             return res.status(204).send({
