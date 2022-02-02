@@ -4,6 +4,7 @@ const router = express.Router();
 const {
     addReminder,
     getReminders,
+    updateReminder,
     updateRemindersAddUsers,
     deleteReminder,
     getRemindersByUser,
