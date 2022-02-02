@@ -3,14 +3,12 @@ const router = express.Router();
 
 const {
     addReminder,
-    updateReminder,
     getReminders,
     updateRemindersAddUsers,
     deleteReminder,
     getRemindersByUser,
+    updateRemindersAddUsersToConfirm,
 } = require('./controller');
-
-const { addReminder, getReminders, updateRemindersAddUsers, deleteReminder, getRemindersByUser, updateRemindersAddUsersToConfirm } = require("./controller");
 
 router.post('/', addReminder);
 
@@ -20,7 +18,7 @@ router.get('/usuario', getRemindersByUser);
 
 //update
 // router.patch("/", updateRemindersAddUsers);
-router.patch("/", updateRemindersAddUsersToConfirm);
+router.patch('/', updateRemindersAddUsersToConfirm);
 
 router.patch('/:id', updateReminder);
 
