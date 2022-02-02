@@ -14,7 +14,7 @@ const registroDieteticoSchema = new Schema(
         ejercicio: {
             nombres: { type: String, required: false },
             duracion: { type: Number, required: false },
-            intensidad: { type: Number, required: false },
+            intensidad: { type: String, required: false },
         },
         alimentos: [
             {
