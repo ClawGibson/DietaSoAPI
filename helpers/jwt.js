@@ -56,9 +56,9 @@ function authJwt() {
             `${process.env.API_URL}/planAlimenticio`,
             `${process.env.API_URL}/planAlimenticio/:id`,
             `${process.env.API_URL}/opcionesRegistro`,
-            `${process.env.API_URL}/puntosDeUsuario/:id`,
             `${process.env.API_URL}/puntosDeUsuario`,
             `${process.env.API_URL}/puntosDeUsuario/`,
+            `${process.env.API_URL}/puntosDeUsuario/:id`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {
