@@ -55,6 +55,10 @@ function authJwt() {
             `${process.env.API_URL}/menusPorUsuario/:userId`,
             `${process.env.API_URL}/planAlimenticio`,
             `${process.env.API_URL}/planAlimenticio/:id`,
+            `${process.env.API_URL}/opcionesRegistro`,
+            `${process.env.API_URL}/puntosDeUsuario/:id`,
+            `${process.env.API_URL}/puntosDeUsuario`,
+            `${process.env.API_URL}/puntosDeUsuario/`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             {
@@ -65,10 +69,6 @@ function authJwt() {
             { url: `${process.env.API_URL}/logros`, methods: ['GET'] },
             {
                 url: `${process.env.API_URL}/logrosDeUsuario/`,
-                methods: ['GET', 'POST', 'PUT'],
-            },
-            {
-                url: `${process.env.API_URL}/puntosDeUsuario/`,
                 methods: ['GET', 'POST', 'PUT'],
             },
             { url: `${process.env.API_URL}/equivalencias/`, methods: ['GET'] },

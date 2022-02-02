@@ -158,37 +158,22 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
+    const ID = req.params.id;
+
+    console.log('ID', ID);
+
     try {
         const alimentoEditar = await Alimentos.findOneAndUpdate(
-            req.params.id,
+            ID,
             {
-                nombreAlimento: req.body.nombreAlimento,
-                imagen: req.body.imagen,
-                grupoExportable: req.body.grupoExportable,
-                subGrupoExportable: req.body.subGrupoExportable,
-                clasificacionExportable: req.body.clasificacionExportable,
-                grupoAlimento: req.body.grupoAlimento,
-                mensaje: req.body.mensaje,
-                icono: req.body.icono,
-                opcionesPreparacion: req.body.opcionesPreparacion,
-                cantidadAlimento: req.body.cantidadAlimento,
-                caloriasMacronutrientes: req.body.caloriasMacronutrientes,
-                vitaminas: req.body.vitaminas,
-                minerales: req.body.minerales,
-                aspectoGlucemico: req.body.aspectoGlucemico,
-                aspectoMedioambiental: req.body.aspectoMedioambiental,
-                aspectoEconomico: req.body.aspectoEconomico,
-                componentesBioactivos: req.body.componentesBioactivos,
-                aditivosAlimentarios: req.body.aditivosAlimentarios,
-                atributosAdicionales: req.body.atributosAdicionales,
-                marca: req.body.marca,
+                ...req.body,
             },
             {
                 new: true, // Return the new product.
             }
         );
-
+        console.log('alimentoEditar', alimentoEditar);
         if (!alimentoEditar)
             return res.status(204).send({
                 message: 'El producto no se encontró o no se pudo editar :c',

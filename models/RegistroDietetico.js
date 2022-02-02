@@ -14,11 +14,11 @@ const registroDieteticoSchema = new Schema(
         ejercicio: {
             nombres: { type: String, required: false },
             duracion: { type: Number, required: false },
-            intensidad: { type: Number, required: false },
+            intensidad: { type: String, required: false },
         },
         alimentos: [
             {
-                idAlimento: {
+                id: {
                     type: Schema.Types.ObjectId,
                     ref: 'Alimentos',
                     required: true,

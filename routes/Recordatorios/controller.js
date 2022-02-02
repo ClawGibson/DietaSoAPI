@@ -3,7 +3,7 @@ const Recordatorio = require('../../models/Recordatorios/recordatorio');
 
 const addReminder = async (req, res = response) => {
     try {
-        let nuevoRecordatorio = new Recordatorio({
+        /* let nuevoRecordatorio = new Recordatorio({
             usuarios: req.body.usuarios,
             metas: req.body.metas,
             titulo: req.body.titulo,
@@ -13,15 +13,18 @@ const addReminder = async (req, res = response) => {
             expoTokens: req.body.expoTokens,
             fecha: req.body.fecha,
             hora: req.body.hora,
-        });
+        }); */
+
+        let nuevoRecordatorio = new Recordatorio({ ...req.body });
         nuevoRecordatorio = await nuevoRecordatorio.save();
         if (!nuevoRecordatorio) {
             return res
-                .status(500)
-                .send('No se pudo crear el nuevo recordatorio');
+                .status(400)
+                .send({ message: 'No se pudo crear el nuevo recordatorio' });
         }
-        res.status(200).send('Se creo correctamente el recordatorio');
+        res.status(200).send(nuevoRecordatorio);
     } catch (error) {
+        console.log('Error al crear el recordatorio', error);
         return res.status(500).send({ error });
     }
 };
@@ -36,17 +39,19 @@ const getReminders = async (req, res = response) => {
 };
 const getRemindersByUser = async (req, res = response) => {
     try {
-        const recordatorios = await Recordatorio.find({ usuarios: req.query.id });
+        const recordatorios = await Recordatorio.find({
+            usuarios: req.query.id,
+        });
         if (recordatorios.length === 0) {
-            return res.status(204).json({ msg: "No hay recordatorios" })
+            return res.status(204).json({ msg: 'No hay recordatorios' });
         }
         res.status(200).json(recordatorios);
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
     }
-}
-
+};
+// Permitir la edición del recordatorio, no solo para agregar nuevos usuarios.
 const updateRemindersAddUsers = async (req, res = response) => {
     const { titulo } = req.query;
     const { usuario } = req.body;
@@ -62,6 +67,7 @@ const updateRemindersAddUsers = async (req, res = response) => {
         res.send(error);
     }
 };
+
 
 const updateRemindersAddUsersToConfirm = async (req, res = response) => {
     const { id } = req.body;
@@ -88,6 +94,28 @@ const updateRemindersAddUsersToConfirm = async (req, res = response) => {
     }
 }
 
+const updateReminder = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+
+        let update = await Recordatorio.findOneAndUpdate(
+            { _id: id },
+            { ...req.body },
+            { new: true }
+        );
+
+        if (!update)
+            res.status(204).send({
+                message: 'No se pudo actualizar el recordatorio',
+            });
+
+        res.status(200).send(update);
+    } catch (error) {
+        console.log('Error al actualizar el recordatorio', error);
+        res.status(500).send({ msg: 'No se pudo actualizar', error: error });
+    }
+};
+
 const deleteReminder = async (req, res = response) => {
     const { id } = req.query;
     const reminder = await Recordatorio.findOneAndDelete({ _id: id });
@@ -100,5 +128,6 @@ module.exports = {
     updateRemindersAddUsers,
     deleteReminder,
     getRemindersByUser,
-    updateRemindersAddUsersToConfirm
+    updateRemindersAddUsersToConfirm,
+    updateReminder,
 };
