@@ -20,33 +20,25 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/:id', async (req, res) => {
-    let puntos;
     try {
-        puntos = new PuntosDeUsuario({
+        let puntos = new PuntosDeUsuario({
             usuario: req.body.usuario,
             puntos: req.body.puntos,
         });
 
-        puntos = await puntos.save();
-
-        res.send(puntos);
-    } catch (err) {
-        console.log('Ocurrió un error al insertar los puntos :c', err);
-    }
-
-    try {
         const puntosGuardados = await puntos.save();
 
         if (!puntosGuardados)
             return res
-                .status(400)
+                .status(204)
                 .send('No se pudo agregar el puntaje al usuario');
-        res.send(puntosGuardados);
+        res.status(200).send(puntosGuardados);
     } catch (err) {
         console.log(
             'Ocurrió un error al guardar el puntaje del usuario - ',
             err
         );
+        res.status(500).send({ msg: 'Ocurrió un error', error: err });
     }
 });
 
