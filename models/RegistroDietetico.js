@@ -18,7 +18,7 @@ const registroDieteticoSchema = new Schema(
         },
         alimentos: [
             {
-                idAlimento: {
+                id: {
                     type: Schema.Types.ObjectId,
                     ref: 'Alimentos',
                     required: true,
