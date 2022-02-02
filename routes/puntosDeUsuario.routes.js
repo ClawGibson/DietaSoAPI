@@ -3,11 +3,8 @@ const PuntosDeUsuario = require('../models/PuntosDeUsuario');
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const { buscarUsuario } = require('../constants/index');
 
 router.get('/:id', async (req, res) => {
-    buscarUsuario(req.params.id);
-
     try {
         const puntos = await PuntosDeUsuario.find({
             usuario: req.params.id,
@@ -43,8 +40,6 @@ router.post('/:id', async (req, res) => {
 });
 
 router.put('/:id', async (req, res) => {
-    buscarUsuario(req.params.id);
-
     let nuevo;
     try {
         nuevo = await PuntosDeUsuario.find({ usuario: req.params.id });

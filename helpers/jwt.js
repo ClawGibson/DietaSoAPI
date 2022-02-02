@@ -56,33 +56,19 @@ function authJwt() {
             `${process.env.API_URL}/planAlimenticio`,
             `${process.env.API_URL}/planAlimenticio/:id`,
             `${process.env.API_URL}/opcionesRegistro`,
-            `${process.env.API_URL}/puntosDeUsuario`,
-            `${process.env.API_URL}/puntosDeUsuario/`,
             `${process.env.API_URL}/puntosDeUsuario/:id`,
+            `${process.env.API_URL}/estadisticasPresion/`,
+            `${process.env.API_URL}/estadisticasNiveles/`,
+            `${process.env.API_URL}/estadisticasIMC/`,
+            `${process.env.API_URL}/logrosDeUsuario/`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
+            { url: `${process.env.API_URL}/recetas`, methods: ['GET'] },
+            { url: `${process.env.API_URL}/logros`, methods: ['GET'] },
+            { url: `${process.env.API_URL}/equivalencias/`, methods: ['GET'] },
             {
                 url: `${process.env.API_URL}/subGrupoAlimentos`,
                 methods: ['GET'],
-            },
-            { url: `${process.env.API_URL}/recetas`, methods: ['GET'] },
-            { url: `${process.env.API_URL}/logros`, methods: ['GET'] },
-            {
-                url: `${process.env.API_URL}/logrosDeUsuario/`,
-                methods: ['GET', 'POST', 'PUT'],
-            },
-            { url: `${process.env.API_URL}/equivalencias/`, methods: ['GET'] },
-            {
-                url: `${process.env.API_URL}/estadisticasIMC/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
-            },
-            {
-                url: `${process.env.API_URL}/estadisticasNiveles/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
-            },
-            {
-                url: `${process.env.API_URL}/estadisticasPresion/`,
-                methods: ['GET', 'POST', 'PUT', 'PATCH'],
             },
         ],
     });
@@ -96,7 +82,7 @@ async function isRevoked(req, payload, done) {
         if (err) return done(null, false);
         if (req.method !== 'GET') {
             if (!payload.isAdmin) {
-                return done(null, true);
+                return done(null, false);
             }
             done();
         }
