@@ -73,9 +73,7 @@ const updateRemindersAddUsersToConfirm = async (req, res = response) => {
                 { usuariosConfirmados: usuario }]
             }
         );
-        console.log(update);
         if (update === null) {
-            console.log("No se encontro")
             await Recordatorio.updateOne({ _id: id },
                 { $push: { usuariosConfirmados: usuario } }
             )
