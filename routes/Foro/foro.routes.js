@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { createNewPublication, getAllPublications, getAllPublicationsPupulate, updatePublication, deletePublication } = require("./controller");
+const { createNewPublication, getAllPublications, getAllPublicationsPupulate, updatePublicationAddLike, deletePublication } = require("./controller");
 
 router.post("/", createNewPublication);
 router.get("/", getAllPublicationsPupulate);
-router.patch("/:_id", updatePublication);
+router.patch("/:id", updatePublicationAddLike);
 router.delete("/", deletePublication);
 
 

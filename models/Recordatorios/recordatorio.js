@@ -9,6 +9,13 @@ const recordatorioModel = new Schema(
                 required: true,
             },
         ],
+        usuariosConfirmados: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'InformacionUsuarios',
+                required: true,
+            },
+        ],
         metas: {
             type: Schema.Types.ObjectId,
             ref: 'Metas',
@@ -26,11 +33,6 @@ const recordatorioModel = new Schema(
             type: String,
             required: false,
         },
-        expoTokens: [
-            {
-                type: String,
-            },
-        ],
         fecha: [
             {
                 type: Date,
