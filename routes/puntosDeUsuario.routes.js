@@ -20,14 +20,16 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/:id', async (req, res) => {
-    buscarUsuario(req.params.id);
-
     let puntos;
     try {
         puntos = new PuntosDeUsuario({
             usuario: req.body.usuario,
             puntos: req.body.puntos,
         });
+
+        puntos = await puntos.save();
+
+        res.send(puntos);
     } catch (err) {
         console.log('Ocurrió un error al insertar los puntos :c', err);
     }
