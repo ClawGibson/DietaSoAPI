@@ -1,23 +1,21 @@
-const Recetas = require('../models/Recetas')
-const express = require('express')
-const router = express.Router()
-const mongoose = require('mongoose')
+const Recetas = require('../models/Recetas');
+const express = require('express');
+const router = express.Router();
+const mongoose = require('mongoose');
 
 router.get('/', async (req, res) => {
     const recetas = await Recetas.find();
 
-    if (!recetas)
-        res.status(500).json({ success: false });
+    if (!recetas) res.status(500).json({ success: false });
 
     res.send(recetas);
 });
 
 router.get('/destacadas/:count', async (req, res) => {
-    const count = req.params.count ? req.params.count : 0
+    const count = req.params.count ? req.params.count : 0;
     const recetas = await Recetas.find({ destacado: true }).limit(+count);
 
-    if (!recetas)
-        res.status(500).json({ success: false });
+    if (!recetas) res.status(500).json({ success: false });
 
     res.send(recetas);
 });
@@ -29,39 +27,61 @@ router.post('/', async (req, res) => {
         url: req.body.url,
         ingredientes: req.body.ingredientes,
         preparacion: req.body.preparacion,
-        destacado: req.body.destacado
+        destacado: req.body.destacado,
     });
 
     receta = await receta.save();
 
-    if (!receta)
-        return res.status(400).send('No se pudo crear la receta :c');
+    if (!receta) return res.status(400).send('No se pudo crear la receta :c');
 
     res.send(receta);
 });
 
-router.put('/:id', async (req, res) => {
+router.post('/destacadas', async (req, res) => {
+    try {
+        let receta = new Recetas({
+            ...req.body,
+        });
 
+        receta = await receta.save();
+
+        if (!receta)
+            return res.status(400).send('No se pudo crear la receta :c');
+
+        res.send(receta);
+    } catch (error) {
+        console.log('Error al crear una receta destacada', error);
+        return res.status(500).send('Error al crear una receta destacada');
+    }
+});
+
+router.patch('/:id', async (req, res) => {
     //Estaba una constante
-    let recetaEditar = await Recetas.findOneAndUpdate(req.params.id, {
-        titulo: req.body.titulo,
-        categoria: req.body.categoria,
-        url: req.body.url,
-        ingredientes: req.body.ingredientes,
-        preparacion: req.body.preparacion,
-        destacado: req.body.destacado
-    }, {
-        new: true
-    });
+    let recetaEditar = await Recetas.findOneAndUpdate(
+        req.params.id,
+        {
+            titulo: req.body.titulo,
+            categoria: req.body.categoria,
+            url: req.body.url,
+            ingredientes: req.body.ingredientes,
+            preparacion: req.body.preparacion,
+            destacado: req.body.destacado,
+        },
+        {
+            new: true,
+        }
+    );
 
-    try{
+    try {
         recetaEditar = await recetaEditar.save();
-    } catch(error){
+    } catch (error) {
         return res.status(500).send(error);
     }
 
     if (!recetaEditar)
-        return res.status(404).send('No se encontró o no se pudo editar la receta :c');
+        return res
+            .status(404)
+            .send('No se encontró o no se pudo editar la receta :c');
 
     res.send(recetaEditar);
 });
