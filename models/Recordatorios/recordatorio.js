@@ -40,7 +40,7 @@ const recordatorioModel = new Schema(
         ],
         hora: [
             {
-                type: String,
+                type: Date,
             },
         ],
         // dias: [{
