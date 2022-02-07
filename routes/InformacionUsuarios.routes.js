@@ -110,67 +110,36 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     try {
-        let usuarioEncontrado = await buscarUsuario(req.query.usuario);
-        //console.log(usuarioEncontrado);
-        if (!usuarioEncontrado) {
+        const { usuario } = req.query;
+        let editarUsuario = await InformacionUsuarios.findOneAndUpdate(
+            { usuario: usuario },
+            { ...req.body },
+            { new: true }
+        );
+
+        if (editarUsuario) {
+            editarUsuario = editarUsuario
+                .save()
+                .then((response) => res.status(200).json({ message: 'ok' }))
+                .catch((err) =>
+                    res.status(500).json({
+                        success: false,
+                        message: 'No se pudo guardar la nueva información - ',
+                        err,
+                    })
+                );
+        } else {
             return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe' });
-            //console.log("entra al if");
-        } //else console.log("no entro al if", usuarioEncontrado[0]);
-
-        try {
-            let editarUsuario = await InformacionUsuarios.findOneAndUpdate(
-                { usuario: usuarioEncontrado._id },
-                {
-                    nombre: req.body.nombre,
-                    apellidoPaterno: req.body.apellidoPaterno,
-                    apellidoMaterno: req.body.apellidoMaterno,
-                    foto: req.body.foto,
-                    email: req.body.email,
-                    fechaDeNacimiento: req.body.fechaDeNacimiento,
-                    genero: req.body.genero,
-                    celular: req.body.celular,
-                    paisDeNacimiento: req.body.paisDeNacimiento,
-                    estadoDeNacimiento: req.body.estadoDeNacimiento,
-                    ciudadDeResidencia: req.body.ciudadDeResidencia,
-                    tiempoViviendoAhi: req.body.tiempoViviendoAhi,
-                }
-            );
-
-            if (editarUsuario) {
-                editarUsuario = editarUsuario
-                    .save()
-                    .then((response) => res.status(200).json({ message: 'ok' }))
-                    .catch((err) =>
-                        res.status(500).json({
-                            success: false,
-                            message:
-                                'No se pudo guardar la nueva información - ',
-                            err,
-                        })
-                    );
-            } else {
-                return res
-                    .status(404)
-                    .json({ success: false, message: 'No se pudo guardar' });
-            }
-
-            //console.log(editarUsuario);
-        } catch (err) {
-            console.log(`Error - ${err}`);
-            res.status(500).json({
-                success: false,
-                message:
-                    'Ocurrió un error al actualizar informacion de usuario- ',
-                err,
-            });
+                .status(404)
+                .json({ success: false, message: 'No se pudo guardar' });
         }
+
+        //console.log(editarUsuario);
     } catch (err) {
         console.log(`Error - ${err}`);
         res.status(500).json({
             success: false,
-            message: 'Ocurrió un error al buscar al usuario - ',
+            message: 'Ocurrió un error al actualizar informacion de usuario- ',
             err,
         });
     }
