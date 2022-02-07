@@ -58,38 +58,9 @@ router.get('/individual', async (req, res) => {
 router.post('/individual', async (req, res) => {
     const { usuario } = req.query;
 
-    /* try {
-        const infoUsuario = await InformacionUsuarios.findOne({
-            usuario: usuario,
-        });
-
-        if (infoUsuario) {
-            return res.status(500).json({
-                success: false,
-                message: 'Información de Usuario ya registrada',
-            });
-        }
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: 'Ocurrió un error al buscar la información el usuario',
-        });
-    } */
-
     let informacion = new InformacionUsuarios({
         usuario: usuario,
-        nombre: req.body.nombre,
-        apellidoPaterno: req.body.apellidoPaterno,
-        apellidoMaterno: req.body.apellidoMaterno,
-        foto: req.body.foto,
-        email: req.body.email,
-        fechaDeNacimiento: req.body.fechaDeNacimiento,
-        genero: req.body.genero,
-        celular: req.body.celular,
-        paisDeNacimiento: req.body.paisDeNacimiento,
-        estadoDeNacimiento: req.body.estadoDeNacimiento,
-        ciudadDeResidencia: req.body.ciudadDeResidencia,
-        tiempoViviendoAhi: req.body.tiempoViviendoAhi,
+        ...req.body,
     });
 
     try {
@@ -133,8 +104,6 @@ router.patch('/individual', async (req, res) => {
                 .status(404)
                 .json({ success: false, message: 'No se pudo guardar' });
         }
-
-        //console.log(editarUsuario);
     } catch (err) {
         console.log(`Error - ${err}`);
         res.status(500).json({
