@@ -95,8 +95,8 @@ router.post('/register', async (req, res) => {
         const usuario = await Usuarios.findOne({ email: req.body.email });
         if (usuario)
             return res
-                .status(500)
-                .json({ success: false, message: 'Usuario ya creado' });
+                .status(302)
+                .send({ success: false, message: 'Usuario ya creado' });
     } catch (err) {
         return res.status(500).json({
             success: false,
