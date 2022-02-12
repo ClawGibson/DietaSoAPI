@@ -35,6 +35,7 @@ const menusPorUsuarioRoute = require('./MenusPorUsuario/menusPorUsuario.routes')
 const planAlimenticioRoute = require('./MenusPorUsuario/planDietetico.routes');
 const opcionesRegistro = require('./RegistroDietetico/opcioneRegistro.routes');
 const pasosCompletados = require('../routes/RegistrarDatos/pasosCompletados.routes');
+const videosRecetasRoute = require('../routes/RecetasURL/recetas.routes');
 
 module.exports = {
     grupoAlimentosRoute,
@@ -74,4 +75,5 @@ module.exports = {
     planAlimenticioRoute,
     opcionesRegistro,
     pasosCompletados,
+    videosRecetasRoute,
 };
