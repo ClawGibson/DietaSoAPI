@@ -1,7 +1,6 @@
 const grupoAlimentosRoute = require('./grupoAlimentos.routes');
 const alimentosRoute = require('./alimentos.routes');
 const subGrupoAlimentosRoute = require('./subGrupoAlimentos.routes');
-const recetasRoute = require('./recetas.routes');
 const usuariosRoute = require('./usuarios.routes');
 const menusBaseRoute = require('./menusBase.routes');
 const logrosRoute = require('./logros.routes');
@@ -41,7 +40,6 @@ module.exports = {
     grupoAlimentosRoute,
     alimentosRoute,
     subGrupoAlimentosRoute,
-    recetasRoute,
     usuariosRoute,
     menusBaseRoute,
     logrosRoute,
