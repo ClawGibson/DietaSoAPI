@@ -164,7 +164,7 @@ router.patch('/:id', async (req, res) => {
     console.log('ID', ID);
 
     try {
-        const alimentoEditar = await Alimentos.findOneAndUpdate(
+        const alimentoEditar = await Alimentos.findByIdAndUpdate(
             ID,
             {
                 ...req.body,
