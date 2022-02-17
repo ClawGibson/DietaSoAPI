@@ -34,4 +34,4 @@ iBioquimicosSchema.set('toJSON', {
     virtuals: true,
 });
 
-module.exports = model('ComposCorpUsuarios', iBioquimicosSchema);
+module.exports = model('IndicadoresBioquimicos', iBioquimicosSchema);

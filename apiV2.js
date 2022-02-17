@@ -5,7 +5,6 @@ const {
     grupoAlimentosRoute,
     alimentosRoute,
     subGrupoAlimentosRoute,
-    recetasRoute,
     usuariosRoute,
     menusBaseRoute,
     logrosRoute,
