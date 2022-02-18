@@ -5,7 +5,6 @@ const {
     grupoAlimentosRoute,
     alimentosRoute,
     subGrupoAlimentosRoute,
-    recetasRoute,
     usuariosRoute,
     menusBaseRoute,
     logrosRoute,
@@ -39,6 +38,16 @@ const {
     planAlimenticioRoute,
     opcionesRegistro,
     pasosCompletados,
+    videosRecetasRoute,
+    extrasCircunferenciaRoutes,
+    extrasComposCorpRoutes,
+    extrasEstadoGeneralRoutes,
+    exposicionSolarRoutes,
+    gastroIntestinalesRoutes,
+    bioquimicosRoutes,
+    clinicosRoutes,
+    suenoRoutes,
+    lactanciaRoutes,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -46,7 +55,7 @@ const { API_URL } = process.env;
 router.use(`${API_URL}/alimentos`, alimentosRoute);
 router.use(`${API_URL}/grupoAlimentos`, grupoAlimentosRoute);
 router.use(`${API_URL}/subGrupoAlimentos`, subGrupoAlimentosRoute);
-router.use(`${API_URL}/recetas`, recetasRoute);
+router.use(`${API_URL}/recetas`, videosRecetasRoute);
 router.use(`${API_URL}/usuarios`, usuariosRoute);
 router.use(`${API_URL}/menusBase`, menusBaseRoute);
 router.use(`${API_URL}/logros`, logrosRoute);
@@ -83,6 +92,15 @@ router.use(`${API_URL}/menusPorUsuario`, menusPorUsuarioRoute);
 router.use(`${API_URL}/planAlimenticio`, planAlimenticioRoute);
 router.use(`${API_URL}/opcionesRegistro`, opcionesRegistro);
 router.use(`${API_URL}/pasosCompletados`, pasosCompletados);
+router.use(`${API_URL}/extrasCircunferencia`, extrasCircunferenciaRoutes);
+router.use(`${API_URL}/extrasComposCorp`, extrasComposCorpRoutes);
+router.use(`${API_URL}/extrasEstadoGeneral`, extrasEstadoGeneralRoutes);
+router.use(`${API_URL}/exposicionSolar`, exposicionSolarRoutes);
+router.use(`${API_URL}/gastroIntestinales`, gastroIntestinalesRoutes);
+router.use(`${API_URL}/bioquimicos`, bioquimicosRoutes);
+router.use(`${API_URL}/clinicos`, clinicosRoutes);
+router.use(`${API_URL}/sueno`, suenoRoutes);
+router.use(`${API_URL}/lactancia`, lactanciaRoutes);
 
 module.exports = {
     router,
