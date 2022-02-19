@@ -25,7 +25,7 @@ router.get('/individual', async (req, res) => {
             }).select('peso altura actividadFisica');
             console.log(datosDeUsuario);
             if (!datosDeUsuario)
-                return res.status(500).json({
+                return res.status(204).json({
                     success: true,
                     message: 'El usuario no tiene datos todavia',
                 });
