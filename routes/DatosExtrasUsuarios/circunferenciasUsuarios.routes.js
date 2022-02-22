@@ -23,7 +23,7 @@ router.get('/individual', async (req, res) => {
     try {
         const { usuario } = req.query;
 
-        const datosDeUsuario = await CircunferenciasUsuarios.findOne({
+        const datosDeUsuario = await CircunferenciasUsuarios.find({
             usuario: usuario,
         });
 
