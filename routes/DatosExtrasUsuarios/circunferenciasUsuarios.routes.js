@@ -84,17 +84,15 @@ router.patch('/individual', async (req, res) => {
                 },
             }
         );
+        console.log('->', editarInformacionS);
+        editarInformacionS = await editarInformacionS.save();
 
-        editarInformacionS = editarInformacionS
-            .save()
-            .then((response) => res.status(200).json(editarInformacionS))
-            .catch((err) =>
-                res.status(400).json({
-                    success: false,
-                    message: 'No se pudo guardar - ',
-                    err,
-                })
-            );
+        if (!editarInformacionS)
+            return res
+                .status(400)
+                .send('No se pudieron agregar datos de circunferencias');
+
+        res.status(200).send(editarInformacionS);
     } catch (err) {
         res.status(500).json({
             success: false,
