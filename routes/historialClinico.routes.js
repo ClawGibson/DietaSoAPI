@@ -24,7 +24,7 @@ router.get('/individual', async (req, res) => {
         });
 
         if (!historiaClinica)
-            return res.status(404).send({
+            return res.status(204).send({
                 message: 'El usuario no tiene Historia clinica',
             });
 
