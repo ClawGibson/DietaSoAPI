@@ -77,10 +77,10 @@ router.patch('/individual', async (req, res) => {
             { usuario: usuario },
             {
                 $push: {
-                    cintura: req.body.cintura,
+                    cintura: { ...req.body.cintura },
                 },
                 $push: {
-                    cadera: req.body.cadera,
+                    cadera: { ...req.body.cadera },
                 },
             }
         );
