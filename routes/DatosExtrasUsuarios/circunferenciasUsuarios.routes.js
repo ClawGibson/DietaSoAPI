@@ -76,11 +76,11 @@ router.patch('/individual', async (req, res) => {
         let editarInformacionS = await CircunferenciasUsuarios.findOneAndUpdate(
             { usuario: usuario },
             {
-                cintura: {
-                    $push: { ...req.body.cintura },
+                $push: {
+                    cintura: req.body.cintura,
                 },
-                cadera: {
-                    $push: { ...req.body.cadera },
+                $push: {
+                    cadera: req.body.cadera,
                 },
             }
         );
