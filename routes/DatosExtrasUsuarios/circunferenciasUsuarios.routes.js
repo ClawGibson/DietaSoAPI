@@ -73,14 +73,18 @@ router.patch('/individual', async (req, res) => {
     try {
         const { usuario } = req.query;
 
+        const { cintura, cadera } = req.body;
+
+        console.log('BODY:', cintura, cadera);
+
         let editarInformacionS = await CircunferenciasUsuarios.findOneAndUpdate(
             { usuario: usuario },
             {
                 $push: {
-                    cintura: [{ ...req.body.cintura }],
+                    cintura: cintura,
                 },
                 $push: {
-                    cadera: [{ ...req.body.cadera }],
+                    cadera: cadera,
                 },
             }
         );
