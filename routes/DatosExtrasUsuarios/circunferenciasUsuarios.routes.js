@@ -80,8 +80,6 @@ router.patch('/individual', async (req, res) => {
             {
                 $push: {
                     cintura: cintura,
-                },
-                $push: {
                     cadera: cadera,
                 },
             }
