@@ -95,10 +95,10 @@ router.patch('/individual', async (req, res) => {
         res.status(200).send(editarInformacionS);
     } catch (err) {
         console.log('Error al editar los datos de circunferencias', err);
-        res.status(500).json({
-            success: false,
+        res.status(500).send({
             message:
                 ' Ocurrió un error al actualizar los datos de circunferencias- ',
+            error: err,
         });
     }
 });
