@@ -75,8 +75,6 @@ router.patch('/individual', async (req, res) => {
 
         const { cintura, cadera } = req.body;
 
-        console.log('BODY:', cintura, cadera);
-
         let editarInformacionS = await CircunferenciasUsuarios.findOneAndUpdate(
             { usuario: usuario },
             {
@@ -88,8 +86,9 @@ router.patch('/individual', async (req, res) => {
                 },
             }
         );
-        console.log('->', editarInformacionS);
         editarInformacionS = await editarInformacionS.save();
+
+        console.log('->', editarInformacionS);
 
         if (!editarInformacionS)
             return res
