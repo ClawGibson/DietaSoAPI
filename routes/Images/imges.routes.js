@@ -35,9 +35,18 @@ router.post('/multi', upload.array('images'), async(req, res, next) => {
 })
 
 router.post('/', upload.single('image'), async(req, res, next) => {
-    // console.log("file details: ", req.file);
+    console.log(req)
+    console.log("file: ", req.file);
 
-    const result = await cloudinary.uploader.upload(req.file.path);
+
+    try{
+        const result = await cloudinary.uploader.upload(req.file.path);
+        return res.status(200).json({ image: result.public_id });
+    } catch(error){
+        console.log("Error: ", error)
+        res.status(500).json(error);
+    }
+
 
     // console.log(result)
 
@@ -46,7 +55,6 @@ router.post('/', upload.single('image'), async(req, res, next) => {
     //     image: result.public_id
     // }
 
-    return res.status(200).json({ image: result.public_id });
 })
 
 module.exports = router;
