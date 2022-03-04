@@ -35,7 +35,7 @@ router.get('/individual', async (req, res) => {
             );
             console.log(comidaFavorita);
             if (!comidaFavorita)
-                return res.status(404).send({
+                return res.status(204).send({
                     message:
                         'El usuario no tiene información de alimentación registrada',
                 });
