@@ -11,8 +11,8 @@ const addMessage = async (req, res = response) => {
         });
         newMessage = await newMessage.save();
         if (!newMessage) {
-            return res.status(500).json({
-                msg: "No se puede crear el mensaje"
+            return res.status(400).json({
+                msg: "No se puede crear el mensaje[Error en la petición]"
             });
         }
         res.status(200).json({ msg: "Creado correctamente", newMessage })
@@ -28,7 +28,7 @@ const getMessages = async (req, res) => {
         const allChat = await Message.find({ chat })/*.populate({ path: "chat", select: "users" })*/;
         res.status(200).json({ msg: allChat })
     } catch (error) {
-        res.status(400).json({ error });
+        res.status(204).json({ error });
     }
 };
 

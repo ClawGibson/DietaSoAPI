@@ -1,5 +1,3 @@
-/** @format */
-
 const { Router } = require('express');
 const router = Router();
 
@@ -7,7 +5,6 @@ const {
     grupoAlimentosRoute,
     alimentosRoute,
     subGrupoAlimentosRoute,
-    recetasRoute,
     usuariosRoute,
     menusBaseRoute,
     logrosRoute,
@@ -32,7 +29,25 @@ const {
     mensajes,
     chat,
     foro,
-    imagesRoute
+    imagesRoute,
+    ejerciciosRoute,
+    puntosPorEjercicioRoute,
+    pushToken,
+    like,
+    menusPorUsuarioRoute,
+    planAlimenticioRoute,
+    opcionesRegistro,
+    pasosCompletados,
+    videosRecetasRoute,
+    extrasCircunferenciaRoutes,
+    extrasComposCorpRoutes,
+    extrasEstadoGeneralRoutes,
+    exposicionSolarRoutes,
+    gastroIntestinalesRoutes,
+    bioquimicosRoutes,
+    clinicosRoutes,
+    suenoRoutes,
+    lactanciaRoutes,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -40,7 +55,7 @@ const { API_URL } = process.env;
 router.use(`${API_URL}/alimentos`, alimentosRoute);
 router.use(`${API_URL}/grupoAlimentos`, grupoAlimentosRoute);
 router.use(`${API_URL}/subGrupoAlimentos`, subGrupoAlimentosRoute);
-router.use(`${API_URL}/recetas`, recetasRoute);
+router.use(`${API_URL}/recetas`, videosRecetasRoute);
 router.use(`${API_URL}/usuarios`, usuariosRoute);
 router.use(`${API_URL}/menusBase`, menusBaseRoute);
 router.use(`${API_URL}/logros`, logrosRoute);
@@ -59,6 +74,7 @@ router.use(`${API_URL}/estadisticasConsumo`, estadisticasConsumoRoute);
 router.use(`${API_URL}/estadisticasPresion`, estadisticasPresionRoute);
 router.use(`${API_URL}/registroDietetico`, registroDieteticoRoute);
 router.use(`${API_URL}/importarAlimentos`, importarAlimentosRoute);
+router.use(`${API_URL}/pushToken`, pushToken);
 router.use(
     `${API_URL}/recomendacionPoblacional`,
     recomendacionesPoblacionalesRoute
@@ -69,7 +85,22 @@ router.use(`${API_URL}/mensajes`, mensajes);
 router.use(`${API_URL}/chat`, chat);
 router.use(`${API_URL}/foro`, foro);
 router.use(`${API_URL}/images`, imagesRoute);
-
+router.use(`${API_URL}/ejercicios`, ejerciciosRoute);
+router.use(`${API_URL}/puntosPorEjercicio`, puntosPorEjercicioRoute);
+router.use(`${API_URL}/like`, like);
+router.use(`${API_URL}/menusPorUsuario`, menusPorUsuarioRoute);
+router.use(`${API_URL}/planAlimenticio`, planAlimenticioRoute);
+router.use(`${API_URL}/opcionesRegistro`, opcionesRegistro);
+router.use(`${API_URL}/pasosCompletados`, pasosCompletados);
+router.use(`${API_URL}/extrasCircunferencia`, extrasCircunferenciaRoutes);
+router.use(`${API_URL}/extrasComposCorp`, extrasComposCorpRoutes);
+router.use(`${API_URL}/extrasEstadoGeneral`, extrasEstadoGeneralRoutes);
+router.use(`${API_URL}/exposicionSolar`, exposicionSolarRoutes);
+router.use(`${API_URL}/gastroIntestinales`, gastroIntestinalesRoutes);
+router.use(`${API_URL}/bioquimicos`, bioquimicosRoutes);
+router.use(`${API_URL}/clinicos`, clinicosRoutes);
+router.use(`${API_URL}/sueno`, suenoRoutes);
+router.use(`${API_URL}/lactancia`, lactanciaRoutes);
 
 module.exports = {
     router,

@@ -8,7 +8,7 @@ const messageModel = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: "Usuarios",
+        ref: "InformacionUsuarios",
         required: true,
     },
     message: {

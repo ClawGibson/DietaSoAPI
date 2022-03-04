@@ -1,20 +1,30 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
+const {
+    addReminder,
+    getReminders,
+    updateReminder,
+    updateRemindersAddUsers,
+    deleteReminder,
+    getRemindersByUser,
+    updateRemindersAddUsersToConfirm,
+} = require('./controller');
 
-const { addReminder, getReminders, updateRemindersAddUsers, deleteReminder } = require("./controller");
+router.post('/', addReminder);
 
-router.post("/", addReminder);
+router.get('/', getReminders);
 
-router.get("/", getReminders);
-
+router.get('/usuario', getRemindersByUser);
 
 //update
-router.patch("/", updateRemindersAddUsers);
+// router.patch("/", updateRemindersAddUsers);
+router.patch('/', updateRemindersAddUsersToConfirm);
 
-router.delete("/", deleteReminder);
+router.patch('/:id', updateReminder);
+
+router.delete('/', deleteReminder);
 
 //router.patch("/",);
-
 
 module.exports = router;

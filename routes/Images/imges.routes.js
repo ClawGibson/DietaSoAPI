@@ -1,24 +1,24 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const upload = require('../../utils/multer');
+// const upload = require('../../utils/multer');
 const { cloudinary } = require('../../utils/cloudinary');
 
 router.get('/', async (req, res, next) => {
-    try{
+    try {
         const images = await cloudinary.api.resources();
         res.status(200).json(images);
-    } catch(error){
+    } catch (error) {
         res.status(error.error.http_code).json(error);
     }
-})
+});
 
 router.get('/:public_id', async (req, res, next) => {
     const { public_id } = req.params;
 
-    try{
+    try {
         const image = await cloudinary.api.resource(public_id);
         res.status(200).json(image);
-    } catch(error){
+    } catch (error) {
         res.status(error.error.http_code).json(error);
     }
 })

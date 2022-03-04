@@ -4,17 +4,43 @@ const socketController = (socket) => {
     });
 
     socket.on('enviar-mensaje', (payload, callback) => {
-        console.log(payload);
+        console.log(`[enviar-mensaje]: ${payload}`);
         //socket.broadcast.emit('enviar-mensaje', payload); // Enviar el mensaje a todos los sockets conectados con broadcast.
-        callback({
-            ok: true,
-            mensaje: 'Todo salio bien',
-        });
+        socket.emit('mensaje-recibido', payload);
+        try {
+            callback();
+        } catch (error) {
+            console.log(`[enviar-mensaje-ERROR]: ${error}`);
+        }
     });
 
+    /* socket.on('mensaje-recibido', (payload, callback) => {
+        console.log(`[mensaje-recibido]: ${payload}`);
+        try {
+            callback();
+        } catch (error) {
+            console.log(`[mensaje-recibido-ERROR]: ${error}`);
+        }
+    }); */
+
     socket.on('crear-chat', (payload, callback) => {
-        console.log('payload:', payload);
-        console.log('callback:', callback);
+        console.log(`[crear-chat]: ${payload}`);
+
+        try {
+            callback();
+        } catch (error) {
+            console.log(`[crear-chat-ERROR]: ${error}`);
+        }
+    });
+
+    socket.on('crear-recordatorio', (payload, callback) => {
+        try {
+            console.log(`[crear-recordatorio]: ${payload}`);
+            socket.emit('recordatorio-creado', payload);
+            callback();
+        } catch (error) {
+            console.log(`[crear-recordatorio-ERROR]: ${error}`);
+        }
     });
 };
 

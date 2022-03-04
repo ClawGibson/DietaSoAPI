@@ -1,7 +1,6 @@
 const grupoAlimentosRoute = require('./grupoAlimentos.routes');
 const alimentosRoute = require('./alimentos.routes');
 const subGrupoAlimentosRoute = require('./subGrupoAlimentos.routes');
-const recetasRoute = require('./recetas.routes');
 const usuariosRoute = require('./usuarios.routes');
 const menusBaseRoute = require('./menusBase.routes');
 const logrosRoute = require('./logros.routes');
@@ -27,12 +26,29 @@ const foro = require('./Foro/foro.routes');
 const estadisticasHuellaRoute = require('./Estadisticas/estadisticasHuella.routes');
 const estadisticasConsumoRoute = require('./Estadisticas/estadisticasConsumo.routes');
 const imagesRoute = require('./Images/imges.routes');
+const ejerciciosRoute = require('./Ejercicios/ejercicios.routes');
+const puntosPorEjercicioRoute = require('./Ejercicios/puntosPorEjercicio.routes');
+const pushToken = require('./PushTokens/pushTokens.routes');
+const like = require('./Reactions/Likes/Likes.routes');
+const menusPorUsuarioRoute = require('./MenusPorUsuario/menusPorUsuario.routes');
+const planAlimenticioRoute = require('./MenusPorUsuario/planDietetico.routes');
+const opcionesRegistro = require('./RegistroDietetico/opcioneRegistro.routes');
+const pasosCompletados = require('../routes/RegistrarDatos/pasosCompletados.routes');
+const videosRecetasRoute = require('../routes/RecetasURL/recetas.routes');
+const extrasCircunferenciaRoutes = require('./DatosExtrasUsuarios/circunferenciasUsuarios.routes');
+const extrasComposCorpRoutes = require('./DatosExtrasUsuarios/composCorpUsuarios.routes');
+const extrasEstadoGeneralRoutes = require('./DatosExtrasUsuarios/estadoGeneral.routes');
+const exposicionSolarRoutes = require('./DatosExtrasUsuarios/exposicionSolar.routes');
+const gastroIntestinalesRoutes = require('./DatosExtrasUsuarios/gastrointestinales.routes');
+const bioquimicosRoutes = require('./DatosExtrasUsuarios/indicadoresBioquimicos.routes');
+const clinicosRoutes = require('./DatosExtrasUsuarios/indicadoresClinicos.routes');
+const suenoRoutes = require('./DatosExtrasUsuarios/indicadoresSueño.routes');
+const lactanciaRoutes = require('./DatosExtrasUsuarios/lactanciaUsuarios.routes');
 
 module.exports = {
     grupoAlimentosRoute,
     alimentosRoute,
     subGrupoAlimentosRoute,
-    recetasRoute,
     usuariosRoute,
     menusBaseRoute,
     logrosRoute,
@@ -57,5 +73,23 @@ module.exports = {
     mensajes,
     chat,
     foro,
-    imagesRoute
+    imagesRoute,
+    ejerciciosRoute,
+    puntosPorEjercicioRoute,
+    pushToken,
+    like,
+    menusPorUsuarioRoute,
+    planAlimenticioRoute,
+    opcionesRegistro,
+    pasosCompletados,
+    videosRecetasRoute,
+    extrasCircunferenciaRoutes,
+    extrasComposCorpRoutes,
+    extrasEstadoGeneralRoutes,
+    exposicionSolarRoutes,
+    gastroIntestinalesRoutes,
+    bioquimicosRoutes,
+    clinicosRoutes,
+    suenoRoutes,
+    lactanciaRoutes,
 };

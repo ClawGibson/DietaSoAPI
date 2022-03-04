@@ -1,71 +1,77 @@
-const Alimentos = require("../models/Alimentos");
-const MenusBase = require("../models/MenusBase");
-const express = require("express");
+const Alimentos = require('../models/Alimentos');
+const MenusBase = require('../models/MenusBase');
+const express = require('express');
 const router = express.Router();
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-router.get("/", async (req, res) => {
-  const ingredientesList = await MenusBase.find();
+router.get('/', async (req, res) => {
+    const ingredientesList = await MenusBase.find();
 
-  if (!ingredientesList) res.status(500).json({ succes: false });
+    if (!ingredientesList) res.status(500).json({ succes: false });
 
-  res.send(ingredientesList);
+    res.send(ingredientesList);
 });
 
-router.get("/:id", async (req, res) => {
-  const baseMenu = await MenusBase.findById(req.params.id);
+router.get('/:id', async (req, res) => {
+    const baseMenu = await MenusBase.findById(req.params.id);
 
-  !baseMenu
-    ? res.status(500).json({
-        succes: false,
-        message: "No se encontró el menú base que buscaba :c",
-      })
-    : res.send(baseMenu);
+    !baseMenu
+        ? res.status(500).json({
+              succes: false,
+              message: 'No se encontró el menú base que buscaba :c',
+          })
+        : res.send(baseMenu);
 });
 
-router.post("/", async (req, res) => {
-  const verificarAlimento = await Alimentos.findById(req.body.ingredientes);
+router.post('/', async (req, res) => {
+    try {
+        let menuBase = new MenusBase({ ...req.body });
 
-  if (!verificarAlimento)
-    return res
-      .status(400)
-      .send("Ocurrió un error con el alimento seleccionado :c");
+        menuBase = await menuBase.save();
 
-  let menuBase = new MenusBase({
-    titulo: req.body.titulo,
-    imagen: req.body.imagen,
-    ingredientes: req.body.ingredientes,
-    categoria: req.body.categoria,
-  });
+        if (!menuBase)
+            return res.status(400).send('No se pudo crear el menú base :c');
 
-  menuBase = await menuBase.save();
-
-  if (!menuBase)
-    return res.status(400).send("No se pudo crear el menú base :c");
-
-  res.send(menuBase);
-});
-
-router.put("/:id", async (req, res) => {
-  const menuBaseEditar = await MenusBase.findOneAndUpdate(
-    req.params.id,
-    {
-      titulo: req.body.titulo,
-      imagen: req.body.imagen,
-      ingredientes: req.body.ingredientes,
-      categoria: req.body.categoria,
-    },
-    {
-      new: true,
+        res.status(200).send(menuBase);
+    } catch (err) {
+        console.log('Error al crear un menu base', err);
+        return res.status(500).send({
+            success: false,
+            message: 'Error al crear un menu base',
+            error: err,
+        });
     }
-  );
+});
 
-  if (!menuBaseEditar)
-    return res
-      .status(404)
-      .send("No se pudo editar el menú base u ocurrió algún error inesperado");
+router.put('/:id', async (req, res) => {
+    try {
+        const menuBaseEditar = await MenusBase.findOneAndUpdate(
+            req.params.id,
+            {
+                ...req.body,
+            },
+            {
+                new: true,
+            }
+        );
 
-  res.status(200).send(menuBaseEditar);
+        if (!menuBaseEditar)
+            return res.status(204).send({
+                succes: false,
+                message:
+                    'No se pudo editar el menú base u ocurrió algún error inesperado',
+                error: error,
+            });
+
+        res.status(200).send(menuBaseEditar);
+    } catch (error) {
+        console.log('Error al actualizar un menu base', error);
+        return res.status(500).send({
+            success: false,
+            message: 'Error al actualizar un menu base',
+            error: error,
+        });
+    }
 });
 
 module.exports = router;

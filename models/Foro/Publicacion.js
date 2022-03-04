@@ -9,7 +9,7 @@ const publicationModel = new Schema({
     post: {
         type: String,
     },
-    file: {
+    fileUrl: {
         type: String,
     },
     comments: [{
@@ -18,7 +18,7 @@ const publicationModel = new Schema({
     }],
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: "Like",
+        ref: "InformacionUsuarios",
     }]
 });
 

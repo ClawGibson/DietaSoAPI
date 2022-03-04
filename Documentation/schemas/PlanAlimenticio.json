@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type": "string"
+        },
+        "plan": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "format": "uuid"
+            }
+        }
+    }
+}
