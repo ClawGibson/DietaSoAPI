@@ -93,6 +93,7 @@ router.post('/login', async (req, res) => {
 router.post('/register', async (req, res) => {
     try {
         const usuario = await Usuarios.findOne({ email: req.body.email });
+        console.log('Buscando', usuario);
         if (usuario)
             return res
                 .status(302)
@@ -109,7 +110,7 @@ router.post('/register', async (req, res) => {
         email: req.body.email,
         contrasena: bcrypt.hashSync(req.body.contrasena, 10),
     });
-
+    console.log('Nuevo usuario -> ', registrarUsuario);
     try {
         registrarUsuario = await registrarUsuario.save();
         if (!registrarUsuario)
@@ -117,17 +118,21 @@ router.post('/register', async (req, res) => {
         const buscarIdUsuario = await Usuarios.find({
             email: req.body.email,
         });
-
+        console.log('Buscando 2:', buscarIdUsuario);
         registrarUsuario.usuario = buscarIdUsuario[0].id;
 
         registrarUsuario = await registrarUsuario.save();
-
+        console.log('3: ', registrarUsuario);
         if (!registrarUsuario)
             return res.status(400).send('No se pudo agregar al usuario');
 
         res.send(registrarUsuario);
     } catch (err) {
         console.log('Ocurrió un error al guardar usuario - ', err);
+        return res.status(500).send({
+            message: 'Ocurrió un error al registrar el usuario',
+            error: err,
+        });
     }
 });
 
