@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 
 router.get('/individual', async (req, res) => {
     try {
-        const datosDeUsuario = await DatosUsuarios.findOne({
+        const datosDeUsuario = await DatosUsuarios.find({
             usuario: req.query.usuario,
         }).select('peso altura actividadFisica');
         console.log(datosDeUsuario);
@@ -39,7 +39,7 @@ router.get('/individual', async (req, res) => {
                 message: 'El usuario no tiene datos todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         console.log('Error', err);
         return res.status(500).json({
