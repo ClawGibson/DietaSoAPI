@@ -82,7 +82,7 @@ router.patch('/individual', async (req, res) => {
         console.log(existeUsuario);
         if (!existeUsuario) {
             return res
-                .status(500)
+                .status(204)
                 .json({ success: false, message: 'Usuario No existe' });
             //console.log("entra al if");
         } //else console.log("no entro al if", existeUsuario);
