@@ -19,7 +19,10 @@ const publicationModel = new Schema({
     likes: [{
         type: Schema.Types.ObjectId,
         ref: "InformacionUsuarios",
-    }]
+    }],
+    onlyText: {
+        type: Boolean,
+    }
 });
 
 module.exports = model("Publication", publicationModel);
