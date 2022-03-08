@@ -19,40 +19,23 @@ router.get('/', async (req, res) => {
 
 router.get('/individual', async (req, res) => {
     try {
-        const usuarioCreado = await buscarUsuario(req.query.usuario);
-        console.log(usuarioCreado);
-
-        if (!usuarioCreado) {
-            return res.status(500).json({
-                success: false,
-                message: 'El usuario no existe',
-            });
-        } else console.log('El usuario existe');
-
-        try {
-            const datosDeUsuario = await IndicadoresClinicos.findOne({
-                usuario: req.query.usuario,
-            });
-            console.log(datosDeUsuario);
-            if (!datosDeUsuario)
-                return res.status(500).json({
-                    success: true,
-                    message:
-                        'El usuario no tiene datos de indicadores clinicos todavia',
-                });
-
-            res.send(datosDeUsuario);
-        } catch (err) {
-            return res.status(500).json({
+        const datosDeUsuario = await IndicadoresClinicos.find({
+            usuario: req.query.usuario,
+        });
+        console.log(datosDeUsuario);
+        if (!datosDeUsuario)
+            return res.status(204).json({
                 success: true,
                 message:
-                    'Ocurrio un error al guardar los datos de indicadores clinicos',
+                    'El usuario no tiene datos de indicadores clinicos todavia',
             });
-        }
+
+        res.send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
-            message: 'Ocurrio un error al buscar usuario',
+            message:
+                'Ocurrio un error al guardar los datos de indicadores clinicos',
         });
     }
 });

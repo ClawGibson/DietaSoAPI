@@ -68,31 +68,30 @@ const updateRemindersAddUsers = async (req, res = response) => {
     }
 };
 
-
 const updateRemindersAddUsersToConfirm = async (req, res = response) => {
     const { id } = req.body;
     const { usuario } = req.body;
     try {
-        const update = await Recordatorio.findOne(
-            {
-                $and: [{ _id: id },
-                { usuariosConfirmados: usuario }]
-            }
-        );
+        const update = await Recordatorio.findOne({
+            $and: [{ _id: id }, { usuariosConfirmados: usuario }],
+        });
         if (update === null) {
-            await Recordatorio.updateOne({ _id: id },
+            await Recordatorio.updateOne(
+                { _id: id },
                 { $push: { usuariosConfirmados: usuario } }
-            )
-            res.status(201).json({ msg: "El usuario es agregado por que no se encontraba asignado" })
+            );
+            res.status(201).json({
+                msg: 'El usuario es agregado por que no se encontraba asignado',
+            });
+        } else {
+            res.status(200).json({
+                msg: 'El usuario es encontrado no se ha agreado recordatorio',
+            });
         }
-        else {
-            res.status(200).json({ msg: "El usuario es encontrado no se ha agreado recordatorio" })
-        }
-
     } catch (error) {
-        res.status(500).json({ msg: "Ha ocurrido un error en el servidor" });
+        res.status(500).json({ msg: 'Ha ocurrido un error en el servidor' });
     }
-}
+};
 
 const updateReminder = async (req, res = response) => {
     try {
@@ -117,9 +116,16 @@ const updateReminder = async (req, res = response) => {
 };
 
 const deleteReminder = async (req, res = response) => {
-    const { id } = req.query;
-    const reminder = await Recordatorio.findOneAndDelete({ _id: id });
-    res.json({ msg: `Recordatorio ${id} eliminado con exito` });
+    try {
+        const { id } = req.params;
+
+        const reminder = await Recordatorio.findOneAndDelete({ _id: id });
+
+        res.json({ msg: `Recordatorio ${id} eliminado con exito` });
+    } catch (error) {
+        console.log('Error al eliminar el recordatorio', error);
+        return res.status(500).send({ error });
+    }
 };
 
 module.exports = {

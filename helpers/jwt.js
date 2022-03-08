@@ -49,6 +49,7 @@ function authJwt() {
             `${process.env.API_URL}/like/publicacion`,
             `${process.env.API_URL}/like/publicacionReaccionoUsuario`,
             `${process.env.API_URL}/recordatorios`,
+            `${process.env.API_URL}/recordatorios/:id`,
             `${process.env.API_URL}/recordatorios/usuario`,
             `${process.env.API_URL}/menusPorUsuario`,
             `${process.env.API_URL}/menusPorUsuario/:id`,

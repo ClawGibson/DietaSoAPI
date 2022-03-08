@@ -19,36 +19,21 @@ router.get('/', async (req, res) => {
 
 router.get('/individual', async (req, res) => {
     try {
-        const usuario = await buscarUsuario(req.query.usuario);
-        console.log(usuario);
+        const historiaClinica = await HistorialClinico.findOne({
+            usuario: req.query.usuario,
+        });
 
-        if (!usuario)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el usuario proporcionado' });
-
-        try {
-            const historiaClinica = await HistorialClinico.findOne({
-                usuario: req.query.usuario,
+        if (!historiaClinica)
+            return res.status(204).send({
+                message: 'El usuario no tiene Historia clinica',
             });
-            console.log(historiaClinica);
-            if (!historiaClinica)
-                return res.status(404).send({
-                    message: 'El usuario no tiene Historia clinica',
-                });
 
-            res.send(historiaClinica);
-        } catch (err) {
-            return res.status(500).json({
-                success: false,
-                message:
-                    'Ocurrió un error al buscar el historial clinico del usuario',
-            });
-        }
+        res.send(historiaClinica);
     } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: 'Ocurrió un error al buscar al usuario',
+        console.log('Error al buscar la información clínica individual', err);
+        return res.status(500).send({
+            message: 'Error al buscar la información clínica individual',
+            error: err,
         });
     }
 });
