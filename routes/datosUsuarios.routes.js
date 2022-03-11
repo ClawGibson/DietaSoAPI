@@ -78,7 +78,7 @@ router.patch('/individual', async (req, res) => {
     const { usuario } = req.query;
 
     try {
-        editarInformacion = await DatosUsuarios.findOneAndUpdate(
+        let editarInformacion = await DatosUsuarios.findOneAndUpdate(
             {
                 usuario: usuario,
             },
