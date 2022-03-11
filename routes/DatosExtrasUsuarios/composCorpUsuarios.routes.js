@@ -112,13 +112,15 @@ router.patch('/individual', async (req, res) => {
             editarInformacionS = await ComposCorpUsuarios.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
                 {
-                    porcentGrasa: req.body.porcentGrasa,
-                    porcentMasa: req.body.porcentMasa,
-                    porcentAgua: req.body.porcentAgua,
-                    densidadOsea: req.body.densidadOsea,
-                    grasaVisceral: req.body.grasaVisceral,
-                    tasaMetabolica: req.body.tasaMetabolica,
-                    edadMetabolica: req.body.edadMetabolica,
+                    $push: {
+                        porcentGrasa: req.body.porcentGrasa,
+                        porcentMasa: req.body.porcentMasa,
+                        porcentAgua: req.body.porcentAgua,
+                        densidadOsea: req.body.densidadOsea,
+                        grasaVisceral: req.body.grasaVisceral,
+                        tasaMetabolica: req.body.tasaMetabolica,
+                        edadMetabolica: req.body.edadMetabolica,
+                    },
                 }
             );
 
