@@ -21,40 +21,33 @@ router.get('/:public_id', async (req, res, next) => {
     } catch (error) {
         res.status(error.error.http_code).json(error);
     }
-})
+});
 
-router.post('/multi', upload.array('images'), async(req, res, next) => {
-    const data = [];
+// router.post('/multi', upload.array('images'), async (req, res, next) => {
+//     const data = [];
 
-    for(let file of req.files){
-        const result = await cloudinary.uploader.upload(file.path);
-        data.push(result);
-    }
+//     for (let file of req.files) {
+//         const result = await cloudinary.uploader.upload(file.path);
+//         data.push(result);
+//     }
 
-    return res.status(200).json(data);
-})
+//     return res.status(200).json(data);
+// });
 
-router.post('/', upload.single('image'), async(req, res, next) => {
-    console.log(req)
-    console.log("file: ", req.file);
+// router.post('/', upload.single('image'), async (req, res, next) => {
+//     try {
+//         console.log('Request:', req);
+//         const result = await cloudinary.uploader.upload(req.file.path);
 
-
-    try{
-        const result = await cloudinary.uploader.upload(req.file.path);
-        return res.status(200).json({ image: result.public_id });
-    } catch(error){
-        console.log("Error: ", error)
-        res.status(500).json(error);
-    }
-
-
-    // console.log(result)
-
-    // const post_details = {
-    //     title: req.body.title,
-    //     image: result.public_id
-    // }
-
-})
+//         return res.status(200).json({ image: result.public_id });
+//     } catch (error) {
+//         console.log('Error al subir la imagen', error);
+//         return res.status(500).send({
+//             succes: false,
+//             message: 'Error al subir la imagen',
+//             error: error,
+//         });
+//     }
+// });
 
 module.exports = router;

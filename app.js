@@ -7,6 +7,13 @@ const mongoose = require('mongoose');
 const { router } = require('./apiV2');
 const { socketController } = require('./sockets/socket.controller');
 
+const Chat = require('./models/Chat/Chat');
+const Usuario = require('./models/Usuarios');
+const Message = require('./models/Message/message');
+
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -31,26 +38,90 @@ app.use(trim_all);
 // routes
 app.use(router);
 console.log(`PORT================${process.env.PORT}`);
-
-////Sockets
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
 mongoose
-    .connect(MONGODB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        dbName: DBNAME,
-        useFindAndModify: false,
-    })
-    .then(() => {
+.connect(MONGODB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: DBNAME,
+    useFindAndModify: false,
+})
+.then(() => {
+
+        //Sockets
+        io.on('connection', socket => {
+
+            socket.on("get-chat", async ({id, isAdmin, patientId}) =>{
+
+                console.log("patientId --> ", patientId);
+        
+                const users = [];
+        
+                //Get User chat
+                let chat = await Chat.findOne({
+                    users:id
+                });
+        
+        
+                //Creamos un chat con el administrador
+                if(!chat && !isAdmin){
+                    //buscamos al administrador
+                    const admin = await Usuario.findOne({ esAdmin: true});
+                    users.push(id, admin._id);
+                    //enviamos el id del chat.
+                } 
+        
+                if(!chat && isAdmin){
+                    //Creamos un chat con el usuario seleccionad
+                    users.push(id, patientId);
+                }
+                
+
+                if(!chat){
+                    chat = new Chat({ users });
+                    await chat.save();
+                }
+        
+                const messages = await Message.find({
+                    chat: chat._id
+                });
+        
+                console.log("messages --> ", messages);
+                console.log("join to chat ---> ", chat._id);
+        
+                socket.join(mongoose.Types.ObjectId(chat._id));
+                io.to(mongoose.Types.ObjectId(chat._id)).emit("getMessages", {
+                    chatId: chat._id,
+                    messages
+                });
+        
+            });
+
+
+            socket.on("sendMessage", async(data) => {
+
+                console.log("message recived!!");
+                io.to(mongoose.Types.ObjectId(data.chat)).emit("rm", {
+                    message: data.message
+                });
+
+                console.log("data -->: ",data)
+                const msg = new Message({
+                    chat: data.chat,
+                    message: data.message,
+                    user: data.user,
+                    date: new Date()
+                });
+
+                await msg.save();
+            });
+
+        });
+
         console.log(`Succefully connected to database ${DBNAME}`);
+        server.listen(process.env.PORT || 4000, () => {
+            console.log(`Server running at ${process.env.PORT || 4000}`);
+        });
     })
     .catch((err) => {
         console.log(err);
     });
-
-io.on('connection', socketController);
-
-server.listen(process.env.PORT || 4000, () => {
-    console.log(`Server running at ${process.env.PORT || 4000}`);
-});
