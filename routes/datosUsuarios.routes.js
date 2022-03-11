@@ -85,7 +85,7 @@ router.patch('/individual', async (req, res) => {
             },
             {
                 $push: {
-                    peso: req.body.peso,
+                    peso: Number(req.body.peso),
                 },
                 altura: req.body.altura,
                 actividadFisica: req.body.actividadFisica,
