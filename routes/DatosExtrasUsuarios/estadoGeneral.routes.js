@@ -114,18 +114,20 @@ router.patch('/individual', async (req, res) => {
             editarInformacionS = await EstadoGeneral.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
                 {
-                    muchoCansancio: req.body.muchoCansancio,
-                    mareos: req.body.mareos,
-                    muchaSed: req.body.muchaSed,
-                    muchasGanasDeOrinar: req.body.muchasGanasDeOrinar,
-                    muchaHambre: req.body.muchaHambre,
-                    piesYmanos: req.body.piesYmanos,
-                    nariz: req.body.nariz,
-                    piel: req.body.piel,
-                    unas: req.body.unas,
-                    cabello: req.body.cabello,
-                    boca: req.body.boca,
-                    tipoDeNacimiento: req.body.tipoDeNacimiento,
+                    $push: {
+                        muchoCansancio: req.body.muchoCansancio,
+                        mareos: req.body.mareos,
+                        muchaSed: req.body.muchaSed,
+                        muchasGanasDeOrinar: req.body.muchasGanasDeOrinar,
+                        muchaHambre: req.body.muchaHambre,
+                        piesYmanos: req.body.piesYmanos,
+                        nariz: req.body.nariz,
+                        piel: req.body.piel,
+                        unas: req.body.unas,
+                        cabello: req.body.cabello,
+                        boca: req.body.boca,
+                        tipoDeNacimiento: req.body.tipoDeNacimiento,
+                    },
                 }
             );
 
