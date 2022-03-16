@@ -1,6 +1,5 @@
 const { response } = require('express');
 const Recordatorio = require('../../models/Recordatorios/recordatorio');
-const mongoose = require('mongoose');
 
 const addReminder = async (req, res = response) => {
     try {
@@ -121,6 +120,8 @@ const deleteReminder = async (req, res = response) => {
         const { id } = req.params;
 
         const reminder = await Recordatorio.findByIdAndRemove(id);
+
+        console.log('->', reminder);
 
         if (!reminder)
             return res.status(204).send({
