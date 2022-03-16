@@ -127,28 +127,7 @@ router.patch('/individual', async (req, res) => {
             }
         );
 
-<<<<<<< Updated upstream
-        try {
-            editarInformacionS = await EstadoGeneral.findOneAndUpdate(
-                { usuario: existeUsuario.usuario },
-                {
-                    muchoCansancio: req.body.muchoCansancio,
-                    mareos: req.body.mareos,
-                    muchaSed: req.body.muchaSed,
-                    muchasGanasDeOrinar: req.body.muchasGanasDeOrinar,
-                    muchaHambre: req.body.muchaHambre,
-                    piesYmanos: req.body.piesYmanos,
-                    nariz: req.body.nariz,
-                    piel: req.body.piel,
-                    unas: req.body.unas,
-                    cabello: req.body.cabello,
-                    boca: req.body.boca,
-                    tipoDeNacimiento: req.body.tipoDeNacimiento,
-                }
-            );
-=======
         editarInformacionS = await editarInformacionS.save();
->>>>>>> Stashed changes
 
         if (!editarInformacionS)
             return res.status(400).send('No se pudo actualizar');
