@@ -132,7 +132,7 @@ router.patch('/individual', async (req, res) => {
         if (!editarInformacionS)
             return res.status(400).send('No se pudo actualizar');
 
-        res.send(editarInformacionS);
+        res.status(200).send(editarInformacionS);
     } catch (err) {
         res.status(500).json({
             success: false,
