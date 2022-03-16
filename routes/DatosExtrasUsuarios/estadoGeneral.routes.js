@@ -134,6 +134,10 @@ router.patch('/individual', async (req, res) => {
 
         res.status(200).send(editarInformacionS);
     } catch (err) {
+        console.log(
+            'Ocurrió un error al actualizar los datos de estado general',
+            err
+        );
         res.status(500).json({
             success: false,
             message:
