@@ -116,14 +116,14 @@ router.patch('/individual', async (req, res) => {
                     muchaSed: req.body.muchaSed,
                     muchasGanasDeOrinar: req.body.muchasGanasDeOrinar,
                     muchaHambre: req.body.muchaHambre,
-                    piesYmanos: req.body.piesYmanos,
-                    nariz: req.body.nariz,
-                    piel: req.body.piel,
-                    unas: req.body.unas,
-                    cabello: req.body.cabello,
-                    boca: req.body.boca,
-                    tipoDeNacimiento: req.body.tipoDeNacimiento,
                 },
+                piesYmanos: req.body.piesYmanos,
+                nariz: req.body.nariz,
+                piel: req.body.piel,
+                unas: req.body.unas,
+                cabello: req.body.cabello,
+                boca: req.body.boca,
+                tipoDeNacimiento: req.body.tipoDeNacimiento,
             }
         );
 
