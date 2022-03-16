@@ -1,5 +1,6 @@
 const { response } = require('express');
 const Recordatorio = require('../../models/Recordatorios/recordatorio');
+const mongoose = require('mongoose');
 
 const addReminder = async (req, res = response) => {
     try {
@@ -119,7 +120,12 @@ const deleteReminder = async (req, res = response) => {
     try {
         const { id } = req.params;
 
-        const reminder = await Recordatorio.findByIdAndRemove({ id });
+        if (!mongoose.isValidObjectId(id))
+            return res
+                .status(204)
+                .send({ message: 'El ID del alimento no es válido.' });
+
+        const reminder = await Recordatorio.findByIdAndRemove(id);
 
         if (!reminder)
             res.status(204).send({
