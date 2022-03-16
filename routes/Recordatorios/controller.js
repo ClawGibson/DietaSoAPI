@@ -120,15 +120,10 @@ const deleteReminder = async (req, res = response) => {
     try {
         const { id } = req.params;
 
-        if (!mongoose.isValidObjectId(id))
-            return res
-                .status(204)
-                .send({ message: 'El ID del alimento no es válido.' });
-
         const reminder = await Recordatorio.findByIdAndRemove(id);
 
         if (!reminder)
-            res.status(204).send({
+            return res.status(204).send({
                 message: 'No se pudo eliminar el recordatorio',
             });
 
