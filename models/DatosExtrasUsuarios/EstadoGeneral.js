@@ -21,18 +21,20 @@ const estadoGeneralSchema = new Schema(
         },
         nariz: {
             sangradoDe: [{ type: String, required: false, default: 'No' }],
-            frecuenciaDe: [{ type: String, required: false }],
+            frecuenciaDe: [{ type: String, required: false, default: 'N/A' }],
         },
         piel: {
             manchasRojasMoretes: [
                 { type: String, required: false, default: 'No' },
             ],
-            frecuenciaDeEllo: [{ type: String, required: false }],
+            frecuenciaDeEllo: [
+                { type: String, required: false, default: 'N/A' },
+            ],
         },
         unas: {
             //uñas
             quebradizas: [{ type: String, required: false, default: 'No' }],
-            frecuencia: [{ type: String, required: false }],
+            frecuencia: [{ type: String, required: false, default: 'N/A' }],
         },
         cabello: {
             caidaDeCabello: [{ type: String, required: false, default: 'No' }],

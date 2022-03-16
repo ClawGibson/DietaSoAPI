@@ -119,9 +119,14 @@ const deleteReminder = async (req, res = response) => {
     try {
         const { id } = req.params;
 
-        const reminder = await Recordatorio.findOneAndDelete({ _id: id });
+        const reminder = await Recordatorio.findByIdAndRemove({ id });
 
-        res.json({ msg: `Recordatorio ${id} eliminado con exito` });
+        if (!reminder)
+            res.status(204).send({
+                message: 'No se pudo eliminar el recordatorio',
+            });
+
+        res.status(200).send(reminder);
     } catch (error) {
         console.log('Error al eliminar el recordatorio', error);
         return res.status(500).send({ error });

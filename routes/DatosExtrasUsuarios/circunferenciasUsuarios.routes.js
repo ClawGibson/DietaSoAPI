@@ -86,8 +86,6 @@ router.patch('/individual', async (req, res) => {
         );
         editarInformacionS = await editarInformacionS.save();
 
-        console.log('->', editarInformacionS);
-
         if (!editarInformacionS)
             return res
                 .status(400)
