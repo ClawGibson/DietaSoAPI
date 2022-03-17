@@ -10,6 +10,7 @@ const { socketController } = require('./sockets/socket.controller');
 const Chat = require('./models/Chat/Chat');
 const Usuario = require('./models/Usuarios');
 const Message = require('./models/Message/message');
+const InformacionUsuarios = require('./models/InformacionUsuarios');
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
@@ -50,46 +51,60 @@ mongoose
         //Sockets
         io.on('connection', socket => {
 
+
             socket.on("get-chat", async ({id, isAdmin, patientId}) =>{
 
                 console.log("patientId --> ", patientId);
-        
+
+                let userPatientId;
+
+                if(patientId){
+                    userPatientId = await InformacionUsuarios.findOne({
+                        _id: patientId
+                    });
+                }
+
+
                 const users = [];
         
                 //Get User chat
                 let chat = await Chat.findOne({
-                    users:id
+                    users: isAdmin? userPatientId.usuario:id 
                 });
+
+
+                console.log("chat ----> ",chat)
         
         
                 //Creamos un chat con el administrador
                 if(!chat && !isAdmin){
                     //buscamos al administrador
+                    console.log("EL paciente creo el chat")
                     const admin = await Usuario.findOne({ esAdmin: true});
                     users.push(id, admin._id);
                     //enviamos el id del chat.
-                } 
-        
-                if(!chat && isAdmin){
+                } else if(!chat && isAdmin){
                     //Creamos un chat con el usuario seleccionad
-                    users.push(id, patientId);
+                    console.log("EL administrador creo el chat")
+                    users.push(id, userPatientId.usuario);
                 }
                 
+                let messages = [];
 
                 if(!chat){
                     chat = new Chat({ users });
                     await chat.save();
+                }else{
+                    messages = await Message.find({
+                        chat: chat._id
+                    });
                 }
-        
-                const messages = await Message.find({
-                    chat: chat._id
-                });
-        
+
                 console.log("messages --> ", messages);
                 console.log("join to chat ---> ", chat._id);
         
-                socket.join(mongoose.Types.ObjectId(chat._id));
-                io.to(mongoose.Types.ObjectId(chat._id)).emit("getMessages", {
+                socket.join("622c3116e6178335f80afab3");
+                socket.emit("getMessages", {
                     chatId: chat._id,
                     messages
                 });
@@ -99,12 +114,8 @@ mongoose
 
             socket.on("sendMessage", async(data) => {
 
-                console.log("message recived!!");
-                io.to(mongoose.Types.ObjectId(data.chat)).emit("rm", {
-                    message: data.message
-                });
+                console.log("message recived from server!!");
 
-                console.log("data -->: ",data)
                 const msg = new Message({
                     chat: data.chat,
                     message: data.message,
@@ -113,6 +124,21 @@ mongoose
                 });
 
                 await msg.save();
+
+                const messages = await Message.find({
+                    chat: data.chat
+                });
+
+               socket.to("622c3116e6178335f80afab3").emit("rm", {
+                  messages
+                });
+
+
+            });
+
+            socket.on("disconnect", () => {
+                console.log("disconnect")
+                socket.rooms.size === 0
             });
 
         });
