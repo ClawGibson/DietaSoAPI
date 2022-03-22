@@ -48,6 +48,7 @@ const {
     clinicosRoutes,
     suenoRoutes,
     lactanciaRoutes,
+    piramide,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -101,6 +102,7 @@ router.use(`${API_URL}/bioquimicos`, bioquimicosRoutes);
 router.use(`${API_URL}/clinicos`, clinicosRoutes);
 router.use(`${API_URL}/sueno`, suenoRoutes);
 router.use(`${API_URL}/lactancia`, lactanciaRoutes);
+router.use(`${API_URL}/piramide`, piramide);
 
 module.exports = {
     router,

@@ -23,7 +23,7 @@ router.patch('/', updateRemindersAddUsersToConfirm);
 
 router.patch('/:id', updateReminder);
 
-router.delete('/', deleteReminder);
+router.delete('/:id', deleteReminder);
 
 //router.patch("/",);
 
