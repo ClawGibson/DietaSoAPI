@@ -46,10 +46,10 @@ const socketController = (socket) => {
             console.log('HOLAS', tempMessages);
             messages = await Message.find({
                 chat: chat._id,
-            })
-                .sort({ date: 'desc' })
+            });
+            /* .sort({ date: 'desc' })
                 .limit(15)
-                .skip(1);
+                .skip(1); */
         }
         console.log('CHAT:', chat, 'MESSAGES:', messages);
         socket.join(String(chat._id));
