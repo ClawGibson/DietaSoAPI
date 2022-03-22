@@ -46,7 +46,7 @@ const socketController = (socket) => {
                 .limit(15)
                 .skip(1);
         }
-
+        console.log('CHAT:', chat, 'MESSAGES:', messages);
         socket.join(String(chat._id));
         socket.emit('getMessages', {
             chatId: chat._id,
