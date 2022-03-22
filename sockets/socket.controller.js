@@ -39,6 +39,8 @@ const socketController = (socket) => {
             chat = new Chat({ users });
             await chat.save();
         } else {
+            const holas = await Message.find({ chat: chat._id });
+            console.log('HOLAS', holas);
             messages = await Message.find({
                 chat: chat._id,
             })
