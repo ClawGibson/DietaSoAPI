@@ -40,7 +40,7 @@ const socketController = (socket) => {
             await chat.save();
         } else {
             messages = await Message.find({
-                chat: chat.chat,
+                chat: chat._id,
             })
                 .sort({ date: 'desc' })
                 .limit(15)
