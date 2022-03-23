@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
 
         if (listaDSUsuarios.length <= 0) return res.status(204).json([]);
 
-        res.send(listaDSUsuarios);
+        res.status(200).send(listaDSUsuarios);
     } catch (err) {
         console.log('Error al buscar los datos extras del usuario', err);
         return res.status(500).send({
@@ -33,7 +33,7 @@ router.get('/individual', async (req, res) => {
                 message: 'El usuario no tiene datos de circunferencias todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
