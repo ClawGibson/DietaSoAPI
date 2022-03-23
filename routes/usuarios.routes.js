@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const buscarUsuario = require('../constants');
 
-router.get('/', async (req, res) => {
+router.get('/', async(req, res) => {
     let listaUsuarios;
     try {
         listaUsuarios = await Usuarios.find().select('-contrasena');
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
     res.send(listaUsuarios);
 });
 
-router.get('/individual', async (req, res) => {
+router.get('/individual', async(req, res) => {
     //const usuario = await buscarUsuario(req.params.id);
     //constantes.buscarUsuario(req.params.id);
 
@@ -42,7 +42,7 @@ router.get('/individual', async (req, res) => {
     }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async(req, res) => {
     let crearUsuario = new Usuarios({
         usuario: req.body.usuario,
         email: req.body.email,
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
     res.send(crearUsuario);
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', async(req, res) => {
     const usuario = await Usuarios.findOne({ email: req.body.email });
     const SECRET = process.env.SECRET;
 
@@ -70,13 +70,11 @@ router.post('/login', async (req, res) => {
         usuario &&
         bcrypt.compareSync(req.body.contrasena, usuario.contrasena)
     ) {
-        const token = jwt.sign(
-            {
+        const token = jwt.sign({
                 userId: usuario.id,
                 isAdmin: usuario.esAdmin,
             },
-            SECRET,
-            { expiresIn: '1y' }
+            SECRET, { expiresIn: '1y' }
         );
 
         res.status(200).send({
@@ -90,7 +88,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/register', async (req, res) => {
+router.post('/register', async(req, res) => {
     try {
         const usuario = await Usuarios.findOne({ email: req.body.email });
         console.log('Buscando', usuario);
@@ -126,7 +124,7 @@ router.post('/register', async (req, res) => {
         if (!registrarUsuario)
             return res.status(400).send('No se pudo agregar al usuario');
 
-        res.send(registrarUsuario);
+        res.send(registrarUsuario); // Antes de hacer este send, enviar la confirmacion del correo
     } catch (err) {
         console.log('Ocurrió un error al guardar usuario - ', err);
         return res.status(500).send({
@@ -136,7 +134,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.put('/individual', async (req, res) => {
+router.put('/individual', async(req, res) => {
     try {
         const usuario = await Usuarios.findOne({ usuario: req.query.usuario });
 
@@ -146,13 +144,10 @@ router.put('/individual', async (req, res) => {
                 .json({ success: false, message: 'Usuario no existe' });
 
         console.log(usuario);
-        let editarUsuario = await Usuarios.findOneAndUpdate(
-            { usuario: usuario.usuario },
-            {
-                email: req.body.email,
-                contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-            }
-        );
+        let editarUsuario = await Usuarios.findOneAndUpdate({ usuario: usuario.usuario }, {
+            email: req.body.email,
+            contrasena: bcrypt.hashSync(req.body.contrasena, 10),
+        });
         console.log(editarUsuario);
         editarUsuario = await editarUsuario.save();
 
