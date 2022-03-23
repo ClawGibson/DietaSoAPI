@@ -7,8 +7,18 @@ const circunSchema = new Schema(
             ref: 'Usuarios',
             required: true,
         },
-        cintura: [{ type: String, required: false, default: '' }],
-        cadera: [{ type: String, required: false, default: '' }],
+        cintura: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        cadera: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
     },
     {
         timestamps: true,
