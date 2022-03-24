@@ -7,13 +7,48 @@ const cCUsuariosSchema = new Schema(
             ref: 'Usuarios',
             required: true,
         },
-        porcentGrasa: [{ type: String, required: false, default: '' }],
-        porcentMasa: [{ type: String, required: false, default: '' }],
-        porcentAgua: [{ type: String, required: false, default: '' }],
-        densidadOsea: [{ type: String, required: false, default: '' }],
-        grasaVisceral: [{ type: String, required: false, default: '' }],
-        tasaMetabolica: [{ type: String, required: false, default: '' }],
-        edadMetabolica: [{ type: String, required: false, default: '' }],
+        porcentGrasa: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        porcentMasa: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        porcentAgua: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        densidadOsea: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        grasaVisceral: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        tasaMetabolica: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        edadMetabolica: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
     },
     {
         timestamps: true,
