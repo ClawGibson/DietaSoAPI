@@ -45,6 +45,7 @@ const clinicosRoutes = require('./DatosExtrasUsuarios/indicadoresClinicos.routes
 const suenoRoutes = require('./DatosExtrasUsuarios/indicadoresSueño.routes');
 const lactanciaRoutes = require('./DatosExtrasUsuarios/lactanciaUsuarios.routes');
 const piramide = require('../routes/Piramide/piramide.routes');
+const comentarios = require("../routes/Comments/Comments.routes")
 
 module.exports = {
     grupoAlimentosRoute,
@@ -94,4 +95,5 @@ module.exports = {
     suenoRoutes,
     lactanciaRoutes,
     piramide,
+    comentarios,
 };
