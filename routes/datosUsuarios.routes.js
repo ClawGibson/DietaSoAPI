@@ -31,7 +31,7 @@ router.get('/individual', async (req, res) => {
     try {
         const datosDeUsuario = await DatosUsuarios.find({
             usuario: req.query.usuario,
-        }).select('peso altura actividadFisica');
+        }).select('peso altura actividadFisica registroPeso');
         console.log(datosDeUsuario);
         if (!datosDeUsuario)
             return res.status(204).json({
@@ -55,6 +55,7 @@ router.post('/individual', async (req, res) => {
         actividadFisica: req.body.actividadFisica,
         peso: req.body.peso,
         altura: req.body.altura,
+        registroPeso: [Date.now()],
     });
 
     try {
@@ -75,70 +76,36 @@ router.post('/individual', async (req, res) => {
 });
 
 router.patch('/individual', async (req, res) => {
-    //const existeUsuario = await Usuarios.findOne(req.query.usuario);
+    const { usuario } = req.query;
     try {
-        const existeUsuario = await buscarUsuario(req.query.usuario);
-        let editarInformacion;
-        console.log(existeUsuario);
-        if (!existeUsuario) {
-            return res
-                .status(204)
-                .json({ success: false, message: 'Usuario No existe' });
-            //console.log("entra al if");
-        } //else console.log("no entro al if", existeUsuario);
-
-        try {
-            editarInformacion = await DatosUsuarios.findOneAndUpdate(
-                {
-                    usuario: existeUsuario.usuario,
+        let editarInformacion = await DatosUsuarios.findOneAndUpdate(
+            {
+                usuario: usuario,
+            },
+            {
+                $push: {
+                    peso: Number(req.body.peso),
+                    registroPeso: Date.now(),
                 },
-                {
-                    //peso: req.body.peso,,
-                    altura: req.body.altura,
-                    actividadFisica: req.body.actividadFisica,
-                }
-            );
-
-            //console.log("si", editarInformacion);
-
-            editarInformacion = editarInformacion
-                .save()
-                .then((response) => res.status(200).json({ message: 'ok' }))
-                .catch((err) =>
-                    res.status(500).json({
-                        success: false,
-                        message: 'No se pudo guardar - ',
-                        err,
-                    })
-                );
-        } catch (err) {
-            res.status(500).json({
-                success: false,
-                message:
-                    'Ocurrió un error al actualizar los datos del usuario - ',
-            });
-        }
-        var pesoNuevo = { peso: req.body.peso };
-        //let existeUsuario1 = await DatosUsuarios.findOne(req.query.usuario);
-
-        //console.log(pesoNuevo.peso);
-        //console.log("nuebos", editarInformacion);
-        DatosUsuarios.findOneAndUpdate(
-            { usuario: req.query.usuario },
-            { $push: { peso: pesoNuevo.peso } },
-            function (error, success) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    //console.log(success);
-                }
+                altura: req.body.altura,
+                actividadFisica: req.body.actividadFisica,
             }
         );
+
+        editarInformacion = await editarInformacion.save();
+
+        if (!editarInformacion)
+            return res.status(400).json({
+                success: false,
+                message: 'No se pudo actualizar la información del usuario',
+            });
+
+        res.status(200).send(editarInformacion);
     } catch (err) {
+        console.log('Error', err);
         res.status(500).json({
             success: false,
-            message: 'No se encontro usuario - ',
-            err,
+            message: 'Ocurrió un error al actualizar los datos del usuario - ',
         });
     }
 });

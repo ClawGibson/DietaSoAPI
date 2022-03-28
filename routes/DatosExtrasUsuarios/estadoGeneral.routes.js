@@ -102,54 +102,46 @@ router.post('/individual', async (req, res) => {
 });
 
 router.patch('/individual', async (req, res) => {
-    try {
-        const existeUsuario = await buscarUsuario(req.query.usuario);
-        let editarInformacionS;
-        if (!existeUsuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe.' });
+    const { usuario } = req.query;
 
-        try {
-            editarInformacionS = await EstadoGeneral.findOneAndUpdate(
-                { usuario: existeUsuario.usuario },
-                {
+    let editarInformacionS;
+
+    try {
+        editarInformacionS = await EstadoGeneral.findOneAndUpdate(
+            { usuario: usuario },
+            {
+                $push: {
                     muchoCansancio: req.body.muchoCansancio,
                     mareos: req.body.mareos,
                     muchaSed: req.body.muchaSed,
                     muchasGanasDeOrinar: req.body.muchasGanasDeOrinar,
                     muchaHambre: req.body.muchaHambre,
-                    piesYmanos: req.body.piesYmanos,
-                    nariz: req.body.nariz,
-                    piel: req.body.piel,
-                    unas: req.body.unas,
-                    cabello: req.body.cabello,
-                    boca: req.body.boca,
-                    tipoDeNacimiento: req.body.tipoDeNacimiento,
-                }
-            );
+                },
+                piesYmanos: req.body.piesYmanos,
+                nariz: req.body.nariz,
+                piel: req.body.piel,
+                unas: req.body.unas,
+                cabello: req.body.cabello,
+                boca: req.body.boca,
+                tipoDeNacimiento: req.body.tipoDeNacimiento,
+            }
+        );
 
-            editarInformacionS = editarInformacionS
-                .save()
-                .then((response) => res.status(200).json({ message: 'ok' }))
-                .catch((err) =>
-                    res.status(500).json({
-                        success: false,
-                        message: 'No se pudo guardar - ',
-                        err,
-                    })
-                );
-        } catch (err) {
-            res.status(500).json({
-                success: false,
-                message:
-                    ' Ocurrió un error al actualizar los datos de estado general- ',
-            });
-        }
+        editarInformacionS = await editarInformacionS.save();
+
+        if (!editarInformacionS)
+            return res.status(400).send('No se pudo actualizar');
+
+        res.status(200).send(editarInformacionS);
     } catch (err) {
+        console.log(
+            'Ocurrió un error al actualizar los datos de estado general',
+            err
+        );
         res.status(500).json({
             success: false,
-            message: ' Ocurrió un error al buscar el usuario- ',
+            message:
+                ' Ocurrió un error al actualizar los datos de estado general- ',
         });
     }
 });
