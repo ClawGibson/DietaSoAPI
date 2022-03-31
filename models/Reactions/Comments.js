@@ -9,9 +9,9 @@ const commentModel = new Schema({
     text: {
         type: String,
     },
-    activate: {
-        type: Boolean,
-        default: false,
+    id_publicacion: {
+        type: Schema.Types.ObjectId,
+        ref: "Publication"
     }
 });
 

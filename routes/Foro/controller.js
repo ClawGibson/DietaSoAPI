@@ -8,6 +8,7 @@ const createNewPublication = async (req, res = response) => {
             user: req.body.user,
             post: req.body.post,
             fileUrl: req.body.fileUrl,
+            onlyText: req.body.onlyText,
         })
         console.log(req.body.fileUrl);
         if (!newPublication) {
