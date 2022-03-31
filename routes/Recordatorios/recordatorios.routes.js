@@ -9,11 +9,14 @@ const {
     deleteReminder,
     getRemindersByUser,
     updateRemindersAddUsersToConfirm,
+    getSingleReminder,
 } = require('./controller');
 
 router.post('/', addReminder);
 
 router.get('/', getReminders);
+
+router.get('/:id', getSingleReminder);
 
 router.get('/usuario', getRemindersByUser);
 

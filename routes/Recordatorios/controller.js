@@ -51,6 +51,24 @@ const getRemindersByUser = async (req, res = response) => {
         res.status(500).json(error);
     }
 };
+
+const getSingleReminder = async (req, res = response) => {
+    try {
+        const { id } = req.params;
+
+        const reminder = await Recordatorio.findById(id);
+
+        if (!reminder)
+            return res.status(204).send({
+                message: 'No se encontro el recordatorio',
+            });
+
+        res.status(200).send(reminder);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ error: err });
+    }
+};
 // Permitir la edición del recordatorio, no solo para agregar nuevos usuarios.
 const updateRemindersAddUsers = async (req, res = response) => {
     const { titulo } = req.query;
@@ -143,4 +161,5 @@ module.exports = {
     getRemindersByUser,
     updateRemindersAddUsersToConfirm,
     updateReminder,
+    getSingleReminder,
 };
