@@ -7,36 +7,68 @@ const estadoGeneralSchema = new Schema(
             ref: 'Usuarios',
             required: true,
         },
-        muchoCansancio: [{ type: String, required: true }],
-        mareos: [{ type: String, required: false, default: 'No' }],
-        muchaSed: [{ type: String, required: false, default: 'No' }],
-        muchasGanasDeOrinar: [{ type: String, required: false, default: 'No' }],
-        muchaHambre: [{ type: String, required: false, default: 'No' }],
-        piesYmanos: {
+
+        muchoCansancio: [{ 
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }],
+
+        mareos: [{ 
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }],
+
+        muchaSed: [{ 
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }],
+
+        muchasGanasDeOrinar: [{ 
+            fecha:{ type:Date, default: Date.now},
+                valor:{type: String, required: false} 
+        }],
+
+
+        muchaHambre: [{ 
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }],
+
+        piesYmanos: [{
             seHinchan: [{ type: String, required: false, default: 'No' }], //consultamos este para ver si se hinchan llenar lo demas y si no, nada
             aQuehora: [{ type: String, required: false }],
             frecuencia: [{ type: String, required: false }],
             horasSentado: [{ type: String, required: false }],
             horasParado: [{ type: String, required: false }],
-        },
-        nariz: {
+            fecha:{ type:Date, default: Date.now},
+                valor:{type: String, required: false}
+        }],
+
+        nariz: [{
             sangradoDe: [{ type: String, required: false, default: 'No' }],
             frecuenciaDe: [{ type: String, required: false, default: 'N/A' }],
-        },
-        piel: {
+        }],
+
+        piel: [{
             manchasRojasMoretes: [
                 { type: String, required: false, default: 'No' },
             ],
             frecuenciaDeEllo: [
                 { type: String, required: false, default: 'N/A' },
             ],
-        },
-        unas: {
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }],
+
+        unas: [{
             //uñas
             quebradizas: [{ type: String, required: false, default: 'No' }],
             frecuencia: [{ type: String, required: false, default: 'N/A' }],
-        },
-        cabello: {
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }],
+
+        cabello: [{
             caidaDeCabello: [{ type: String, required: false, default: 'No' }],
             cabelloQuebradizo: [
                 { type: String, required: false, default: 'No' },
@@ -46,8 +78,11 @@ const estadoGeneralSchema = new Schema(
                 required: false,
                 default: 'No',
             },
-        },
-        boca: {
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }],
+
+        boca: [{
             cortadurasEnComisuras: [
                 { type: String, required: false, default: 'No' },
             ],
@@ -62,8 +97,14 @@ const estadoGeneralSchema = new Schema(
             frecuenciaDeIE: [{ type: String, required: false }],
             sangradoEncias: [{ type: String, required: false, default: 'No' }],
             frecuenciaDeSE: [{ type: String, required: false }],
-        },
-        tipoDeNacimiento: { type: String, required: false }, //cesarea, parto vaginal
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }],
+
+        tipoDeNacimiento: [{
+            fecha:{ type:Date, default: Date.now},
+            valor:{type: String, required: false}
+        }], //cesarea, parto vaginal
     },
     {
         timestamps: true,

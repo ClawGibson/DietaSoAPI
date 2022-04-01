@@ -11,24 +11,32 @@ const gastroiSchema = new Schema(
             {
                 estado: { type: String, required: false, default: 'No' },
                 frecuencia: { type: String, required: false },
+                fecha:{ type:Date, default: Date.now},
+                valor:{type: String, required: false}
             },
         ],
         diarrea: [
             {
                 estado: { type: String, required: false, default: 'No' }, //consultamos este para ver si se hinchan llenar lo demas y si no, nada
                 frecuencia: { type: String, required: false }, //para respuestas secundarias
+                fecha:{ type:Date, default: Date.now},
+                valor:{type: String, required: false}
             },
         ],
         estreñimiento: [
             {
                 estado: { type: String, required: false, default: 'No' },
                 frecuencia: { type: String, required: false },
+                fecha:{ type:Date, default: Date.now},
+                valor:{type: String, required: false}
             },
         ],
         reflujo: [
             {
                 estado: { type: String, required: false, default: 'No' },
                 frecuencia: { type: String, required: false },
+                fecha:{ type:Date, default: Date.now},
+                valor:{type: String, required: false}
             },
         ],
     },

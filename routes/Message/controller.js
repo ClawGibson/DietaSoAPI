@@ -25,7 +25,12 @@ const addMessage = async (req, res = response) => {
 const getMessages = async (req, res) => {
     try {
         const chat = req.params.id;
-        const allChat = await Message.find({ chat })/*.populate({ path: "chat", select: "users" })*/;
+
+        const allChat = await Message.find()
+
+        /*.populate({ path: "chat", select: "users" })*/;
+
+
         res.status(200).json({ msg: allChat })
     } catch (error) {
         res.status(204).json({ error });
