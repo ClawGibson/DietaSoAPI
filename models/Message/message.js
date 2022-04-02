@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const messageModel = new Schema({
     chat: {
@@ -19,4 +20,5 @@ const messageModel = new Schema({
     file: String,
 });
 
+messageModel.plugin(mongoosePaginate);
 module.exports = model("Message", messageModel);

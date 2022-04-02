@@ -124,10 +124,12 @@ router.patch('/individual', async (req, res) => {
             editarInformacionS = await Gastrointestinales.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
                 {
-                    inflamacionAbdominal: req.body.inflamacionAbdominal,
-                    diarrea: req.body.diarrea,
-                    estreñimiento: req.body.estreñimiento,
-                    reflujo: req.body.reflujo,
+                    $push:{
+                        inflamacionAbdominal: req.body.inflamacionAbdominal,
+                        diarrea: req.body.diarrea,
+                        estreñimiento: req.body.estreñimiento,
+                        reflujo: req.body.reflujo,
+                    }
                 }
             );
 

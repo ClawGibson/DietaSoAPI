@@ -25,8 +25,11 @@ const addMessage = async (req, res = response) => {
 const getMessages = async (req, res) => {
     try {
         const chat = req.params.id;
-        const allChat = await Message.find({ chat })/*.populate({ path: "chat", select: "users" })*/;
-        res.status(200).json({ msg: allChat })
+        const { page, limit } = req.query;
+
+        const messages = await Message.paginate({chat}, {sort:{ date:'desc' }, page, limit});
+
+        res.status(200).json({ messages })
     } catch (error) {
         res.status(204).json({ error });
     }

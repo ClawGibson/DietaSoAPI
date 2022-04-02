@@ -7,12 +7,42 @@ const lactanciaSchema = new Schema(
             ref: 'Usuarios',
             required: true,
         },
-        maternaExclusiva: [{ type: String, required: false }],
-        artificial: [{ type: String, required: false }],
-        mixta: [{ type: String, required: false }],
-        maternaContemplada: [{ type: String, required: false }],
-        mixtaContemplada: [{ type: String, required: false }],
-        artificialContemplada: [{ type: String, required: false }],
+        maternaExclusiva: [
+            {
+                fecha:{ type:Date, default: Date.now}, 
+                valor:{type: String, required: false} 
+            }
+        ],
+        artificial: [
+            {
+                fecha:{ type:Date, default: Date.now},
+                 valor:{type: String, required: false}
+            }
+        ],
+        mixta: [
+            {
+                fecha:{ type:Date, default: Date.now}, 
+                valor:{type: String, required: false} 
+            }
+        ],
+        maternaContemplada: [
+            { 
+                fecha:{ type:Date, default: Date.now},
+                valor:{type: String, required: false} 
+            }
+        ],
+        mixtaContemplada: [
+            {
+                fecha:{ type:Date, default: Date.now}, 
+                valor:{type: String, required: false} 
+            }
+        ],
+        artificialContemplada: [
+            {
+                fecha:{ type:Date, default: Date.now}, 
+                valor:{type: String, required: false} 
+            }
+        ],
     },
     {
         timestamps: true,

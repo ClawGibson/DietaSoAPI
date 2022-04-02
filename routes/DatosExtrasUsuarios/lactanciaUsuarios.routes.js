@@ -105,10 +105,12 @@ router.patch('/individual', async (req, res) => {
             editarInformacionS = await LactanciaUsuarios.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
                 {
-                    horasDeSueño: req.body.horasDeSueño,
-                    estadoDeDescanso: req.body.estadoDeDescanso,
-                    despiertaPorLaNoche: req.body.despiertaPorLaNoche,
-                    frecuencia: req.body.frecuencia,
+                    $push:{
+                        horasDeSueño: req.body.horasDeSueño,
+                        estadoDeDescanso: req.body.estadoDeDescanso,
+                        despiertaPorLaNoche: req.body.despiertaPorLaNoche,
+                        frecuencia: req.body.frecuencia,
+                    }
                 }
             );
 

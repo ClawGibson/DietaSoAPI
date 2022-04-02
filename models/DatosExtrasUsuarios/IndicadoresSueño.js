@@ -7,10 +7,30 @@ const iSueñoSchema = new Schema(
             ref: 'Usuarios',
             required: true,
         },
-        horasDeSueño: [{ type: String, required: false }],
-        estadoDeDescanso: [{ type: String, required: false }],
-        despiertaPorLaNoche: [{ type: String, default: false, default: 'No' }],
-        frecuencia: [{ type: String, default: false }],
+        horasDeSueño: [
+            { 
+                fecha:{ type:Date, default: Date.now},
+                valor:{type: String, required: false} 
+            }
+        ],
+        estadoDeDescanso: [
+            { 
+                fecha:{ type:Date, default: Date.now},
+                valor: {type: String, required: false} 
+            }
+        ],
+        despiertaPorLaNoche: [
+            { 
+                fecha:{ type:Date, default: Date.now},
+                valor:{type: String, default: false, default: 'No'} 
+            }
+        ],
+        frecuencia: [
+            {
+                fecha:{ type:Date, default: Date.now}, 
+                valor:{type: String, default: false} 
+            }
+        ],
     },
     {
         timestamps: true,
