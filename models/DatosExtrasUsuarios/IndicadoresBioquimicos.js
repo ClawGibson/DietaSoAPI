@@ -16,7 +16,6 @@ const iBioquimicosSchema = new Schema(
         glucosaDespues: [
             {
                 fecha: { type: Date, default: Date.now },
-                valor: { type: String, required: false, default: '' },
                 minutos: { type: String, required: false, default: '' },
             },
         ],

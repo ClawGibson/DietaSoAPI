@@ -107,8 +107,10 @@ router.patch('/individual', async (req, res) => {
             editarInformacionS = await IndicadoresClinicos.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
                 {
-                    presionArterial: req.body.presionArterial,
-                    acantosisNigricans: req.body.acantosisNigricans,
+                    $push:{
+                        presionArterial: req.body.presionArterial,
+                        acantosisNigricans: req.body.acantosisNigricans
+                    },
                 }
             );
 

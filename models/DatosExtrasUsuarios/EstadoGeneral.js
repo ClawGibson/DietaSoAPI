@@ -25,7 +25,7 @@ const estadoGeneralSchema = new Schema(
 
         muchasGanasDeOrinar: [{ 
             fecha:{ type:Date, default: Date.now},
-                valor:{type: String, required: false} 
+            valor:{type: String, required: false} 
         }],
 
 
@@ -35,76 +35,52 @@ const estadoGeneralSchema = new Schema(
         }],
 
         piesYmanos: [{
-            seHinchan: [{ type: String, required: false, default: 'No' }], //consultamos este para ver si se hinchan llenar lo demas y si no, nada
-            aQuehora: [{ type: String, required: false }],
-            frecuencia: [{ type: String, required: false }],
-            horasSentado: [{ type: String, required: false }],
-            horasParado: [{ type: String, required: false }],
+            seHinchan: { type: String, required: false, default: 'No' }, //consultamos este para ver si se hinchan llenar lo demas y si no, nada
+            aQuehora: { type: String, required: false },
+            frecuencia: { type: String, required: false },
+            horasSentado: { type: String, required: false },
+            horasParado: { type: String, required: false },
             fecha:{ type:Date, default: Date.now},
-                valor:{type: String, required: false}
         }],
 
         nariz: [{
-            sangradoDe: [{ type: String, required: false, default: 'No' }],
-            frecuenciaDe: [{ type: String, required: false, default: 'N/A' }],
+            sangradoDe: { type: String, required: false, default: 'No' },
+            frecuenciaDe: { type: String, required: false, default: 'N/A' },
         }],
 
         piel: [{
-            manchasRojasMoretes: [
-                { type: String, required: false, default: 'No' },
-            ],
-            frecuenciaDeEllo: [
-                { type: String, required: false, default: 'N/A' },
-            ],
+            manchasRojasMoretes: { type: String, required: false, default: 'No' },
+            frecuenciaDeEllo: { type: String, required: false, default: 'N/A' },
             fecha:{ type:Date, default: Date.now},
-            valor:{type: String, required: false}
         }],
 
         unas: [{
             //uñas
-            quebradizas: [{ type: String, required: false, default: 'No' }],
-            frecuencia: [{ type: String, required: false, default: 'N/A' }],
+            quebradizas: { type: String, required: false, default: 'No' },
+            frecuencia: { type: String, required: false, default: 'N/A' },
             fecha:{ type:Date, default: Date.now},
-            valor:{type: String, required: false}
         }],
 
         cabello: [{
-            caidaDeCabello: [{ type: String, required: false, default: 'No' }],
-            cabelloQuebradizo: [
-                { type: String, required: false, default: 'No' },
-            ],
-            cabelloTenidoOTratamiento: {
-                type: String,
-                required: false,
-                default: 'No',
-            },
+            caidaDeCabello: { type: String, required: false, default: 'No' },
+            cabelloQuebradizo:{ type: String, required: false, default: 'No' },
+            cabelloTenidoOTratamiento: { type: String, required: false, default: 'No' },
             fecha:{ type:Date, default: Date.now},
-            valor:{type: String, required: false}
         }],
 
         boca: [{
-            cortadurasEnComisuras: [
-                { type: String, required: false, default: 'No' },
-            ],
-            frecuencia: [{ type: String, required: false }],
-            inflamacionDeLengua: [
-                { type: String, required: false, default: 'No' },
-            ],
-            frecuenciaDe: [{ type: String, required: false }],
-            inflamacionEncias: [
-                { type: String, required: false, default: 'No' },
-            ],
-            frecuenciaDeIE: [{ type: String, required: false }],
-            sangradoEncias: [{ type: String, required: false, default: 'No' }],
-            frecuenciaDeSE: [{ type: String, required: false }],
+            cortadurasEnComisuras: { type: String, required: false, default: 'No' },
+            frecuencia: { type: String, required: false },
+            inflamacionDeLengua: { type: String, required: false, default: 'No' },
+            frecuenciaDe: { type: String, required: false },
+            inflamacionEncias: { type: String, required: false, default: 'No' },
+            frecuenciaDeIE: { type: String, required: false },
+            sangradoEncias: { type: String, required: false, default: 'No' },
+            frecuenciaDeSE: { type: String, required: false },
             fecha:{ type:Date, default: Date.now},
-            valor:{type: String, required: false}
         }],
 
-        tipoDeNacimiento: [{
-            fecha:{ type:Date, default: Date.now},
-            valor:{type: String, required: false}
-        }], //cesarea, parto vaginal
+        tipoDeNacimiento: { type: String, required: false }, //cesarea, parto vaginal
     },
     {
         timestamps: true,
