@@ -5,8 +5,8 @@ const recetasSchema = new Schema({
     titulo: { type: String, required: true },
     categoria: { type: String, required: true },
     destacado: { type: Boolean, required: true, default: false },
-    foto: { type: String, required: true },
-    descripcion: { type: String, required: false },
+    foto: { type: String, required: false },
+    descripcion: { type: String, required: false, default: '' },
 });
 
 recetasSchema.virtual('id').get(function () {
