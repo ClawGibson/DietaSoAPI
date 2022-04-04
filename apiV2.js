@@ -51,6 +51,7 @@ const {
     piramide,
     opcionesEdicion,
     comentarios,
+    usoAplicacion,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -107,6 +108,7 @@ router.use(`${API_URL}/sueno`, suenoRoutes);
 router.use(`${API_URL}/lactancia`, lactanciaRoutes);
 router.use(`${API_URL}/piramide`, piramide);
 router.use(`${API_URL}/opcionesEdicion`, opcionesEdicion);
+router.use(`${API_URL}/usoAplicacion`, usoAplicacion);
 
 module.exports = {
     router,
