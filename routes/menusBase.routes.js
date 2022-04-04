@@ -43,7 +43,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
         const menuBaseEditar = await MenusBase.findOneAndUpdate(
             req.params.id,
@@ -54,7 +54,7 @@ router.put('/:id', async (req, res) => {
                 new: true,
             }
         );
-
+        console.log('->', menuBaseEditar);
         if (!menuBaseEditar)
             return res.status(204).send({
                 succes: false,

@@ -7,6 +7,9 @@ const mongoose = require('mongoose');
 const { router } = require('./apiV2');
 const { socketController } = require('./sockets/socket.controller');
 
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 
@@ -31,26 +34,23 @@ app.use(trim_all);
 // routes
 app.use(router);
 console.log(`PORT================${process.env.PORT}`);
-
-////Sockets
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
 mongoose
-    .connect(MONGODB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        dbName: DBNAME,
-        useFindAndModify: false,
-    })
-    .then(() => {
+.connect(MONGODB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: DBNAME,
+    useFindAndModify: false,
+})
+.then(() => {
+
+        //Sockets
+        io.on('connection', socketController);
+            
         console.log(`Succefully connected to database ${DBNAME}`);
+        server.listen(process.env.PORT || 4000, () => {
+            console.log(`Server running at ${process.env.PORT || 4000}`);
+        });
     })
     .catch((err) => {
         console.log(err);
     });
-
-io.on('connection', socketController);
-
-server.listen(process.env.PORT || 4000, () => {
-    console.log(`Server running at ${process.env.PORT || 4000}`);
-});
