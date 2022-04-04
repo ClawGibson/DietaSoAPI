@@ -26,7 +26,11 @@ router.get('/individual', async (req, res) => {
         const { usuario } = req.query;
 
         const registros = await UsoApp.find({ usuario: usuario }).populate(
-            'usuario'
+            'usuario',
+            {
+                nombre: 1,
+                apellidoPaterno: 1,
+            }
         );
 
         if (!registros)

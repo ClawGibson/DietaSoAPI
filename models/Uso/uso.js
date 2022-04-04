@@ -6,8 +6,7 @@ const usoAppModel = new Schema({
         ref: 'InformacionUsuarios',
         required: true,
     },
-    fechaInicial: { type: Date, required: true, default: Date.now },
-    fechaFinal: { type: Date, required: true, default: Date.now },
+    fecha: { type: Date, required: true, default: Date.now },
     estado: { type: String, required: true },
 });
 
