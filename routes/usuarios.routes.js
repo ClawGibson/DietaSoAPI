@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const buscarUsuario = require('../constants');
+const { sendEmail } = require('../config/mail.config');
 
 router.get('/', async(req, res) => {
     let listaUsuarios;
@@ -134,6 +135,74 @@ router.post('/register', async(req, res) => {
     }
 });
 
+router.post('/register/admin', async(req, res) => {
+    const { name, email, contrasena } = req.body;
+    try {
+        const usuario = await Usuarios.findOne({ email: req.body.email });
+        console.log('Buscando', usuario);
+        if (usuario)
+            return res
+                .status(302)
+                .send({ success: false, message: 'Usuario ya creado' });
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: 'Ocurrió un error al buscar el usuario',
+        });
+    }
+
+    let registrarUsuario = new Usuarios({
+        usuario: req.body.usuario,
+        email: req.body.email,
+        contrasena: bcrypt.hashSync(req.body.contrasena, 10),
+    });
+    console.log('Nuevo usuario -> ', registrarUsuario);
+    try {
+        registrarUsuario = await registrarUsuario.save();
+        if (!registrarUsuario)
+            return res.status(400).send('No se pudo agregar al usuario');
+        const buscarIdUsuario = await Usuarios.find({
+            email: req.body.email,
+        });
+        console.log('Buscando 2:', buscarIdUsuario);
+        registrarUsuario.usuario = buscarIdUsuario[0].id;
+
+        registrarUsuario = await registrarUsuario.save();
+        console.log('3: ', registrarUsuario);
+        if (!registrarUsuario)
+            return res.status(400).send('No se pudo agregar al usuario');
+
+        /**Envio del correo de verificacion */
+        await sendEmail(name, email, registrarUsuario.usuario, "Este es un email de prueba");
+
+        res.send(registrarUsuario); // Antes de hacer este send, enviar la confirmacion del correo
+    } catch (err) {
+        console.log('Ocurrió un error al guardar usuario - ', err);
+        return res.status(500).send({
+            message: 'Ocurrió un error al registrar el usuario',
+            error: err,
+        });
+    }
+
+});
+
+/**Metodo get para obtener la verificacion */
+router.get('/verificar-email', async(req, res) => {
+    /**Obtenemos el token de URL */
+    const token = req.query.token
+    console.log(token);
+    const user = await Usuarios.findOne({ usuario: token })
+    if (user) {
+        user.isAdmin = true;
+        await user.save();
+        res.send("Ahora es admin");
+    } else {
+        res.send("Hubo un error");
+    }
+    console.log('Correo verificado');
+    res.status(200).send({ Mensaje: "OK" });
+});
+
 router.put('/individual', async(req, res) => {
     try {
         const usuario = await Usuarios.findOne({ usuario: req.query.usuario });
@@ -162,4 +231,5 @@ router.put('/individual', async(req, res) => {
         });
     }
 });
+
 module.exports = router;
