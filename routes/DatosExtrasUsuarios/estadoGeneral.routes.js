@@ -39,50 +39,8 @@ router.get('/individual', async (req, res) => {
 });
 
 router.post('/individual', async (req, res) => {
-    try {
-        const usuarioCreado = await Usuarios.findOne({
-            usuario: req.query.usuario,
-        });
-        if (usuarioCreado) {
-            const infoUsuario = await EstadoGeneral.findOne({
-                usuario: req.query.usuario,
-            });
-            try {
-                if (infoUsuario)
-                    return res.status(500).json({
-                        success: false,
-                        message:
-                            'Datos de estado general de Usuario ya registrados',
-                    });
-            } catch (err) {
-                return res.status(500).json({
-                    success: false,
-                    message:
-                        'Ocurrió un error al buscar los datos de estado general del usuario',
-                });
-            }
-        } else console.log('El usuario no existe');
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: 'Ocurrió un error al buscar al usuario',
-        });
-    }
-
     let dEstadoGeneral = new EstadoGeneral({
-        usuario: req.query.usuario,
-        muchoCansancio: req.body.muchoCansancio,
-        mareos: req.body.mareos,
-        muchaSed: req.body.muchaSed,
-        muchasGanasDeOrinar: req.body.muchasGanasDeOrinar,
-        muchaHambre: req.body.muchaHambre,
-        piesYmanos: req.body.piesYmanos,
-        nariz: req.body.nariz,
-        piel: req.body.piel,
-        unas: req.body.unas,
-        cabello: req.body.cabello,
-        boca: req.body.boca,
-        tipoDeNacimiento: req.body.tipoDeNacimiento,
+        ...req.body,
     });
 
     try {
@@ -94,6 +52,7 @@ router.post('/individual', async (req, res) => {
                 .send('No se pudieron agregar datos de estado general');
         res.send(dEstadoGeneral);
     } catch (err) {
+        conole.log('errror', err);
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al guardar los datos de estado general',
