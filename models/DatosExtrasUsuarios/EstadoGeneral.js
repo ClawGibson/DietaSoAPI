@@ -58,6 +58,7 @@ const estadoGeneralSchema = new Schema(
             {
                 sangradoDe: { type: String, required: false, default: 'No' },
                 frecuenciaDe: { type: String, required: false, default: 'N/A' },
+                fecha: { type: Date, default: Date.now },
             },
         ],
 
