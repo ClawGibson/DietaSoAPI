@@ -39,11 +39,11 @@ router.get('/individual', async (req, res) => {
 });
 
 router.post('/individual', async (req, res) => {
-    let dEstadoGeneral = new EstadoGeneral({
-        ...req.body,
-    });
-
     try {
+        let dEstadoGeneral = new EstadoGeneral({
+            ...req.body,
+        });
+
         dEstadoGeneral = await dEstadoGeneral.save();
 
         if (!dEstadoGeneral)
