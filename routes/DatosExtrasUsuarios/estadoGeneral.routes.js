@@ -52,7 +52,7 @@ router.post('/individual', async (req, res) => {
                 .send('No se pudieron agregar datos de estado general');
         res.send(dEstadoGeneral);
     } catch (err) {
-        conole.log('errror', err);
+        console.log('errror', err);
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al guardar los datos de estado general',
