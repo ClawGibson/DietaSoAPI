@@ -41,19 +41,7 @@ router.get('/individual', async (req, res) => {
 router.post('/individual', async (req, res) => {
     try {
         let dEstadoGeneral = new EstadoGeneral({
-            usuario: [req.query.usuario],
-            muchoCansancio: [req.body.muchoCansancio],
-            mareos: [req.body.mareos],
-            muchaSed: [req.body.muchaSed],
-            muchasGanasDeOrinar: [req.body.muchasGanasDeOrinar],
-            muchaHambre: [req.body.muchaHambre],
-            piesYmanos: [req.body.piesYmanos],
-            nariz: [req.body.nariz],
-            piel: [req.body.piel],
-            unas: [req.body.unas],
-            cabello: [req.body.cabello],
-            boca: [req.body.boca],
-            tipoDeNacimiento: req.body.tipoDeNacimiento,
+            ...req.body,
         });
         // Modifcar el post para agregar el objeto en forma de array.
         dEstadoGeneral = await dEstadoGeneral.save();
