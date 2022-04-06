@@ -41,9 +41,9 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.get('/sku', async (req, res) => {
+router.get('/obtenerUltimo/valor', async (req, res) => {
     try {
-        const sku = await Alimentos.find().sort({ nombreAlimento: 1 }).limit(1);
+        const sku = await Alimentos.find().count();
 
         if (!sku) {
             return res.status(204).send({
@@ -51,7 +51,7 @@ router.get('/sku', async (req, res) => {
             });
         }
 
-        res.status(200).send(sku);
+        res.status(200).send({ sku: sku });
     } catch (error) {
         console.log('Error al obtener el sku máximo');
         res.status(500).send({
