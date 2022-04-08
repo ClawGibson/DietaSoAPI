@@ -22,19 +22,16 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/individual', async (req, res) => {
-    //const usuario = await buscarUsuario(req.params.id);
-    //constantes.buscarUsuario(req.params.id);
+    const { usuario } = req.query;
 
     try {
-        const usuario = await Usuarios.findById(req.query.usuario).select(
-            '-contrasena'
-        );
-        //console.log(usuario);
-        if (!usuario)
+        const user = await Usuarios.findById(usuario).select('-contrasena');
+
+        if (!user)
             return res
                 .status(500)
                 .json({ success: false, message: 'Usuario no encontrado' });
-        res.send(usuario);
+        res.status(200).send(user);
     } catch (err) {
         return res
             .status(500)

@@ -29,15 +29,10 @@ router.get('/', async (req, res) => {
 
 router.get('/individual', async (req, res) => {
     try {
-        const { _id } = await buscarUsuario(req.query.usuario);
-
-        if (!_id)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el usuario proporcionado' });
+        const { usuario } = req.query;
 
         const listaInfoUsuarios = await InformacionUsuarios.find({
-            usuario: mongoose.Types.ObjectId(_id),
+            usuario: mongoose.Types.ObjectId(usuario),
         });
 
         if (!listaInfoUsuarios || listaInfoUsuarios.length === 0)
