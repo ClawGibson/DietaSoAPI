@@ -90,16 +90,23 @@ router.get('/buscarNombre', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const alimentos = await Alimentos.find().select(
-            'nombreAlimento imagen grupoAlimento'
-        );
+        const { page, limit = 15 } = req.query;
 
+        const options = {
+            page,
+            limit,
+            select: 'nombreAlimento imagen grupoAlimento',
+            sort: { nombreAlimento: 'asc' },
+        };
+
+        const alimentos = await Alimentos.paginate({}, options);
+        console.log({ alimentos });
         if (!alimentos)
             res.status(204).json({
                 message: 'No hay alimentos todavía :c',
             });
 
-        res.status(200).send(alimentos);
+        res.status(200).send(alimentos.docs);
     } catch (error) {
         console.log('Error al otener los alimentos', error);
         return res.status(500).send({
