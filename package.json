@@ -37,6 +37,7 @@
     },
     "devDependencies": {
         "mpath": ">=0.8.4",
-        "validator": ">=13.7.0"
+        "validator": ">=13.7.0",
+        "minimist": ">=1.2.6"
     }
 }
