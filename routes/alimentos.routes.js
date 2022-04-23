@@ -100,7 +100,7 @@ router.get('/', async (req, res) => {
         };
 
         const alimentos = await Alimentos.paginate({}, options);
-        console.log({ alimentos });
+
         if (!alimentos)
             res.status(204).json({
                 message: 'No hay alimentos todavía :c',
@@ -111,6 +111,36 @@ router.get('/', async (req, res) => {
         console.log('Error al otener los alimentos', error);
         return res.status(500).send({
             message: 'Error al otener los alimentos',
+            error: error,
+        });
+    }
+});
+
+router.get('/grupo/nombreGrupo', async (req, res) => {
+    try {
+        const { nombreGrupo } = req.query;
+
+        const options = {
+            limit: 999,
+            select: 'nombreAlimento imagen grupoAlimento',
+            sort: { nombreAlimento: 'asc' },
+        };
+
+        const alimentos = await Alimentos.paginate(
+            { grupoAlimento: nombreGrupo },
+            options
+        );
+
+        if (!alimentos)
+            return res.status(204).send({
+                message: 'No existe ese grupo :/',
+            });
+
+        res.status(200).send(alimentos.docs);
+    } catch (error) {
+        console.log('Error al otener el grupo de alimentos', error);
+        return res.status(500).send({
+            message: 'Error al otener el grupo de alimentos',
             error: error,
         });
     }

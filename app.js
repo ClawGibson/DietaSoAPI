@@ -33,19 +33,18 @@ app.use(trim_all);
 
 // routes
 app.use(router);
-console.log(`PORT================${process.env.PORT}`);
-mongoose
-.connect(MONGODB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: DBNAME,
-    useFindAndModify: false,
-})
-.then(() => {
 
+mongoose
+    .connect(MONGODB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        dbName: DBNAME,
+        useFindAndModify: false,
+    })
+    .then(() => {
         //Sockets
         io.on('connection', socketController);
-            
+
         console.log(`Succefully connected to database ${DBNAME}`);
         server.listen(process.env.PORT || 4000, () => {
             console.log(`Server running at ${process.env.PORT || 4000}`);

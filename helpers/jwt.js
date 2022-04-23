@@ -65,6 +65,7 @@ function authJwt() {
             `${process.env.API_URL}/usoAplicacion`,
             `${process.env.API_URL}/usoAplicacion/`,
             `${process.env.API_URL}/usoAplicacion/individual`,
+            `${process.env.API_URL}/alimentos/grupo/nombreGrupo`,
             { url: `${process.env.API_URL}/alimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/grupoAlimentos`, methods: ['GET'] },
             { url: `${process.env.API_URL}/recetas`, methods: ['GET'] },

@@ -41,14 +41,17 @@ const socketController = (socket) => {
             chat = new Chat({ users });
             await chat.save();
         } else {
-            messages = await Message.paginate({chat: chat._id}, {sort:{ date:'desc' }, page, limit});
+            messages = await Message.paginate(
+                { chat: chat._id },
+                { sort: { date: 'desc' }, page, limit }
+            );
         }
         socket.join(String(chat._id));
         socket.emit('getMessages', {
             chatId: chat._id,
             messages: messages.docs,
             page,
-            limi
+            limit,
         });
     });
 
