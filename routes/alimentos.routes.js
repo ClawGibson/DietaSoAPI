@@ -90,7 +90,7 @@ router.get('/buscarNombre', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const { page, limit = 15 } = req.query;
+        const { page, limit = 16 } = req.query;
 
         const options = {
             page,
