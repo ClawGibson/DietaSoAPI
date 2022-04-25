@@ -76,6 +76,7 @@ const getSingleReminder = async (req, res = response) => {
 const updateRemindersAddUsersToConfirm = async (req, res = response) => {
     const { id } = req.body;
     const { usuario } = req.body;
+    console.log('Actualizando recordatorio', { id, usuario });
     try {
         const update = await Recordatorio.findOne({
             $and: [{ _id: id }, { usuariosConfirmados: usuario }],
