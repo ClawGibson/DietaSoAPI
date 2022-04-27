@@ -46,11 +46,7 @@ router.patch('/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
-        const nivel = await Piramide.findByIdAndUpdate(
-            id,
-            { ...req.body },
-            { new: true }
-        );
+        const nivel = await Piramide.findByIdAndUpdate(id, { $push: { url: req.body.url } }, { new: true });
 
         if (!nivel)
             return res.status(400).send({
@@ -71,9 +67,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
-        let nivel = await Piramide.findByIdAndDelete(
-            mongoose.Types.ObjectId(id)
-        );
+        let nivel = await Piramide.findByIdAndDelete(mongoose.Types.ObjectId(id));
 
         if (!nivel)
             return res.status(400).send({
