@@ -70,7 +70,17 @@ router.patch('/editarImagenes', async (req, res) => {
     try {
         const { id, url } = req.query;
 
-        const nivel = await Piramide.findByIdAndUpdate(id, { $pull: { url: url } }, { new: true });
+        const nivel = await Piramide.findByIdAndUpdate(
+            id,
+            {
+                $pull: {
+                    $elemMatch: {
+                        url: url,
+                    },
+                },
+            },
+            { new: true }
+        );
 
         if (!nivel)
             return res.status(400).send({
