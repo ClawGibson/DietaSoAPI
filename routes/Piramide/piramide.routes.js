@@ -48,7 +48,11 @@ router.patch('/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
-        const nivel = await Piramide.findByIdAndUpdate(id, { $push: { url: req.body.url } }, { new: true });
+        const nivel = await Piramide.findByIdAndUpdate(
+            mongoose.Types.ObjectId(id),
+            { $push: { url: req.body.url } },
+            { new: true }
+        );
 
         if (!nivel)
             return res.status(400).send({
@@ -72,7 +76,7 @@ router.patch('/editarImagenes', async (req, res) => {
         const { id, url } = req.query;
 
         const nivel = await Piramide.findByIdAndUpdate(
-            id,
+            mongoose.Types.ObjectId(id),
             {
                 $pull: {
                     $elemMatch: {
