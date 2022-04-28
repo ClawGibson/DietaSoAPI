@@ -56,6 +56,7 @@ router.patch('/:id', async (req, res) => {
 
         res.status(200).send(nivel);
     } catch (err) {
+        console.log('error', err);
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al editar la piramide',
