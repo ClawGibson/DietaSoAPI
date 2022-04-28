@@ -71,20 +71,15 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-router.patch('/editarImagenes', async (req, res) => {
+router.patch('/editarImagenes/url', async (req, res) => {
     try {
         const { id, url } = req.query;
 
-        console.log('ID', id);
-        console.log('URL', url);
-
         const nivel = await Piramide.findByIdAndUpdate(
-            mongoose.Types.ObjectId(id),
+            id,
             {
                 $pull: {
-                    $elemMatch: {
-                        url: url,
-                    },
+                    url: url,
                 },
             },
             { new: true }
