@@ -64,9 +64,9 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-router.patch('/:id/:url', async (req, res) => {
+router.patch('/editarImagenes', async (req, res) => {
     try {
-        const { id, url } = req.params;
+        const { id, url } = req.query;
 
         const nivel = await Piramide.findByIdAndUpdate(id, { $pull: { url: url } }, { new: true });
 
