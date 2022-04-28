@@ -60,6 +60,8 @@ router.patch('/:id', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al editar la piramide',
+            error,
+            err,
         });
     }
 });
@@ -82,6 +84,8 @@ router.patch('/editarImagenes', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al editar la piramide',
+            error,
+            err,
         });
     }
 });
