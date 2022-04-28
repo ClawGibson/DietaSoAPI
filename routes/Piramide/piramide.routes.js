@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al las imágenes por niveles',
+            error: err,
         });
     }
 });
@@ -38,6 +39,7 @@ router.post('/', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al crear la piramide',
+            error: err,
         });
     }
 });
@@ -60,8 +62,7 @@ router.patch('/:id', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al editar la piramide',
-            error,
-            err,
+            error: err,
         });
     }
 });
@@ -94,8 +95,7 @@ router.patch('/editarImagenes', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al editar la piramide',
-            error,
-            err,
+            error: err,
         });
     }
 });
@@ -117,6 +117,7 @@ router.delete('/:id', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al eliminar la piramide',
+            error: err,
         });
     }
 });
