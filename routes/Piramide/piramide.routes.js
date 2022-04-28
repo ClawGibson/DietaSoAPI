@@ -64,6 +64,28 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
+router.patch('/:id/:url', async (req, res) => {
+    try {
+        const { id, url } = req.params;
+
+        const nivel = await Piramide.findByIdAndUpdate(id, { $pull: { url: url } }, { new: true });
+
+        if (!nivel)
+            return res.status(400).send({
+                success: false,
+                message: 'No se pudo actualizar el nivel',
+            });
+
+        res.status(200).send(nivel);
+    } catch (err) {
+        console.log('error', err);
+        return res.status(500).json({
+            success: false,
+            message: 'Ocurrió un error al editar la piramide',
+        });
+    }
+});
+
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
