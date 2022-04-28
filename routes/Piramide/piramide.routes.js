@@ -75,6 +75,9 @@ router.patch('/editarImagenes', async (req, res) => {
     try {
         const { id, url } = req.query;
 
+        console.log('ID', id);
+        console.log('URL', url);
+
         const nivel = await Piramide.findByIdAndUpdate(
             mongoose.Types.ObjectId(id),
             {
