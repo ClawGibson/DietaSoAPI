@@ -60,43 +60,30 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     try {
-        const existeUsuario = await buscarUsuario(req.query.usuario);
-        let editarInformacionS;
-        if (!existeUsuario) return res.status(500).json({ success: false, message: 'El usuario no existe.' });
+        const { usuario } = req.query;
+        let editarInformacionS = await LactanciaUsuarios.findOneAndUpdate(
+            { usuario },
+            {
+                $push: {
+                    ...req.body,
+                },
+            }
+        );
 
-        try {
-            editarInformacionS = await LactanciaUsuarios.findOneAndUpdate(
-                { usuario: existeUsuario.usuario },
-                {
-                    $push: {
-                        horasDeSueño: req.body.horasDeSueño,
-                        estadoDeDescanso: req.body.estadoDeDescanso,
-                        despiertaPorLaNoche: req.body.despiertaPorLaNoche,
-                        frecuencia: req.body.frecuencia,
-                    },
-                }
+        editarInformacionS = editarInformacionS
+            .save()
+            .then((response) => res.status(200).json({ message: 'ok' }))
+            .catch((err) =>
+                res.status(500).json({
+                    success: false,
+                    message: 'No se pudo guardar - ',
+                    err,
+                })
             );
-
-            editarInformacionS = editarInformacionS
-                .save()
-                .then((response) => res.status(200).json({ message: 'ok' }))
-                .catch((err) =>
-                    res.status(500).json({
-                        success: false,
-                        message: 'No se pudo guardar - ',
-                        err,
-                    })
-                );
-        } catch (err) {
-            res.status(500).json({
-                success: false,
-                message: ' Ocurrió un error al actualizar los datos de lactancia- ',
-            });
-        }
     } catch (err) {
         res.status(500).json({
             success: false,
-            message: ' Ocurrió un error al buscar el usuario- ',
+            message: ' Ocurrió un error al actualizar los datos de lactancia- ',
         });
     }
 });
