@@ -70,6 +70,7 @@ router.patch('/individual', async (req, res) => {
         if (req.body.mixtaContemplada) fieldsToPush.mixtaContemplada = req.body.mixtaContemplada;
         if (req.body.maternaContemplada) fieldsToPush.maternaContemplada = req.body.maternaContemplada;
         if (req.body.artificialContemplada) fieldsToPush.artificialContemplada = req.body.artificialContemplada;
+        if (req.body.tiempoLactancia) fieldsToPush.tiempoLactancia = req.body.tiempoLactancia;
 
         let lactancia = await LactanciaUsuarios.findOneAndUpdate(
             { usuario },

@@ -9,39 +9,45 @@ const lactanciaSchema = new Schema(
         },
         maternaExclusiva: [
             {
-                fecha:{ type:Date, default: Date.now}, 
-                valor:{type: String, required: false} 
-            }
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false },
+            },
         ],
         artificial: [
             {
-                fecha:{ type:Date, default: Date.now},
-                 valor:{type: String, required: false}
-            }
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false },
+            },
         ],
         mixta: [
             {
-                fecha:{ type:Date, default: Date.now}, 
-                valor:{type: String, required: false} 
-            }
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false },
+            },
         ],
         maternaContemplada: [
-            { 
-                fecha:{ type:Date, default: Date.now},
-                valor:{type: String, required: false} 
-            }
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false },
+            },
         ],
         mixtaContemplada: [
             {
-                fecha:{ type:Date, default: Date.now}, 
-                valor:{type: String, required: false} 
-            }
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false },
+            },
         ],
         artificialContemplada: [
             {
-                fecha:{ type:Date, default: Date.now}, 
-                valor:{type: String, required: false} 
-            }
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false },
+            },
+        ],
+        tiempoLactancia: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false },
+            },
         ],
     },
     {
