@@ -61,30 +61,29 @@ router.post('/individual', async (req, res) => {
 router.patch('/individual', async (req, res) => {
     try {
         const { usuario } = req.query;
-        let editarInformacionS = await LactanciaUsuarios.findByIdAndUpdate(
-            { usuario: usuario },
+
+        let fieldsToPush = {};
+
+        if (req.body.maternaExclusiva) fieldsToPush.maternaExclusiva = req.body.maternaExclusiva;
+        if (req.body.artificial) fieldsToPush.artificial = req.body.artificial;
+        if (req.body.mixta) fieldsToPush.mixta = req.body.mixta;
+        if (req.body.mixtaContemplada) fieldsToPush.mixtaContemplada = req.body.mixtaContemplada;
+        if (req.body.maternaContemplada) fieldsToPush.maternaContemplada = req.body.maternaContemplada;
+        if (req.body.artificialContemplada) fieldsToPush.artificialContemplada = req.body.artificialContemplada;
+
+        let lactancia = await LactanciaUsuarios.findOneAndUpdate(
+            { usuario },
             {
-                $push: {
-                    maternaExclusiva: req.body.maternaExclusiva,
-                    artificial: req.body.artificial,
-                    mixta: req.body.mixta,
-                    maternaContemplada: req.body.maternaContemplada,
-                    mixtaContemplada: req.body.mixtaContemplada,
-                    artificialContemplada: req.body.artificialContemplada,
-                },
+                $push: fieldsToPush,
             }
         );
 
-        editarInformacionS = editarInformacionS
-            .save()
-            .then((response) => res.status(200).json(response))
-            .catch((err) =>
-                res.status(500).json({
-                    success: false,
-                    message: 'No se pudo guardar - ',
-                    err,
-                })
-            );
+        lactancia = await lactancia.save();
+
+        if (!lactancia) return res.status(400).send('No se pudieron agregar datos de lactancia');
+
+        res.status(200).send(lactancia);
+        return res.status(200).send({ ok: 'ok' });
     } catch (err) {
         console.log(err);
         res.status(500).json({
