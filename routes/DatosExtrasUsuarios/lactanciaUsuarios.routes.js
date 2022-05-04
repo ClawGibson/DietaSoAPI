@@ -61,18 +61,23 @@ router.post('/individual', async (req, res) => {
 router.patch('/individual', async (req, res) => {
     try {
         const { usuario } = req.query;
-        let editarInformacionS = await LactanciaUsuarios.findOneAndUpdate(
-            { usuario },
+        let editarInformacionS = await LactanciaUsuarios.findByIdAndUpdate(
+            { usuario: usuario },
             {
                 $push: {
-                    ...req.body,
+                    maternaExclusiva: req.body.maternaExclusiva,
+                    artificial: req.body.artificial,
+                    mixta: req.body.mixta,
+                    maternaContemplada: req.body.maternaContemplada,
+                    mixtaContemplada: req.body.mixtaContemplada,
+                    artificialContemplada: req.body.artificialContemplada,
                 },
             }
         );
 
         editarInformacionS = editarInformacionS
             .save()
-            .then((response) => res.status(200).json({ message: 'ok' }))
+            .then((response) => res.status(200).json(response))
             .catch((err) =>
                 res.status(500).json({
                     success: false,
@@ -81,9 +86,11 @@ router.patch('/individual', async (req, res) => {
                 })
             );
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             success: false,
             message: ' Ocurrió un error al actualizar los datos de lactancia- ',
+            err,
         });
     }
 });
