@@ -1,9 +1,6 @@
-const Usuarios = require('../../models/Usuarios');
 const LactanciaUsuarios = require('../../models/DatosExtrasUsuarios/LactanciaUsuarios');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const { buscarUsuario } = require('../../constants/index');
 
 router.get('/', async (req, res) => {
     const listaDSUsuarios = await LactanciaUsuarios.find();
@@ -13,7 +10,7 @@ router.get('/', async (req, res) => {
             success: false,
             message: 'No se encontro ninguna información de lactancia de los usuarios',
         });
-    res.send(listaDSUsuarios);
+    res.status(200).send(listaDSUsuarios);
 });
 
 router.get('/individual', async (req, res) => {
@@ -28,10 +25,11 @@ router.get('/individual', async (req, res) => {
                 message: 'El usuario no tiene datos de lactancia todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
+            error: err,
             message: 'Ocurrio un error al guardar los datos de lactancia',
         });
     }
@@ -49,10 +47,11 @@ router.post('/individual', async (req, res) => {
         dLactancia = await dLactancia.save();
 
         if (!dLactancia) return res.status(400).send('No se pudieron agregar datos de lactancia');
-        res.send(dLactancia);
+        res.status(200).send(dLactancia);
     } catch (err) {
         return res.status(500).json({
             success: false,
+            error: err,
             message: 'Ocurrió un error al guardar los datos de lactancia',
         });
     }

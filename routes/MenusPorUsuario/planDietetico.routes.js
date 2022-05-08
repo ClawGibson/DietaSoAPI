@@ -4,9 +4,7 @@ const router = require('express').Router();
 
 const buscarMenuExistente = (plan, dia, categoria) => {
     try {
-        const filtered = plan.filter(
-            (menu) => menu.dia === dia && menu.categoria === categoria
-        );
+        const filtered = plan.filter((menu) => menu.dia === dia && menu.categoria === categoria);
 
         if (filtered.length > 0) return filtered[0];
 
@@ -42,20 +40,12 @@ router.get('/busquedaPorDia', async (req, res) => {
             path: 'plan',
         });
         console.log('Poblado: ', planDietetico);
-        if (!planDietetico)
-            return res
-                .status(204)
-                .send({ message: 'No se encontraron planes dietéticos' });
+        if (!planDietetico) return res.status(204).send({ message: 'No se encontraron planes dietéticos' });
 
-        const filtered = buscarMenuExistente(
-            planDietetico[0].plan,
-            dia,
-            categoria
-        );
+        const filtered = buscarMenuExistente(planDietetico[0].plan, dia, categoria);
 
         res.status(200).send(filtered);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,
@@ -82,7 +72,6 @@ router.get('/:id', async (req, res) => {
 
         res.status(200).send(menus);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,
@@ -99,14 +88,10 @@ router.get('/', async (req, res) => {
             },
         });
 
-        if (!menus)
-            return res
-                .status(204)
-                .send({ message: 'No se encontraron planes dietéticos' });
+        if (!menus) return res.status(204).send({ message: 'No se encontraron planes dietéticos' });
 
         res.status(200).send(menus);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,
@@ -132,7 +117,6 @@ router.post('/', async (req, res) => {
 
         res.status(200).send(menu);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,
@@ -155,9 +139,7 @@ router.patch('/:id', async (req, res) => {
                 { usuario: req.params.id },
                 {
                     plan: [
-                        ...populated.plan.filter(
-                            (menu) => menu.id !== filtered.id
-                        ),
+                        ...populated.plan.filter((menu) => menu.id !== filtered.id),
                         {
                             ...filtered,
                             menu: menu,
@@ -192,7 +174,6 @@ router.patch('/:id', async (req, res) => {
             res.status(200).send(newMenu);
         }
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,

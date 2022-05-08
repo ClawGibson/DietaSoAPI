@@ -16,9 +16,7 @@ router.get('/', async (req, res) => {
 
         return res.status(status).send(data);
     } catch (e) {
-        return res
-            .status(500)
-            .send('Error inesperado al obtener las estadisticas Consumo - ', e);
+        return res.status(500).send('Error inesperado al obtener las estadisticas Consumo - ', e);
     }
 });
 
@@ -38,9 +36,7 @@ router.get('/:id', async (req, res) => {
 
         return res.status(status).send(data);
     } catch (e) {
-        return res
-            .status(500)
-            .send('Error inesperado al obtener la estadistica Consumo - ', e);
+        return res.status(500).send('Error inesperado al obtener la estadistica Consumo - ', e);
     }
 });
 
@@ -63,9 +59,7 @@ router.post('/', async (req, res) => {
 
         return res.status(status).send(data);
     } catch (e) {
-        return res
-            .status(500)
-            .send('Error inesperado al crear la estadistica Consumo - ', e);
+        return res.status(500).send('Error inesperado al crear la estadistica Consumo - ', e);
     }
 });
 
@@ -93,12 +87,7 @@ router.patch('/:id', async (req, res) => {
 
         return res.status(200).send(estadisticaConsumo);
     } catch (e) {
-        return res
-            .status(500)
-            .send(
-                'Error inesperado al actualizar la estadistica Consumo - ',
-                e
-            );
+        return res.status(500).send('Error inesperado al actualizar la estadistica Consumo - ', e);
     }
 });
 

@@ -1,84 +1,66 @@
 const express = require('express');
 const router = express.Router();
-const EstadisticasHuella = require("../../models/Estadisticas/EstadisticasHuella");
+const EstadisticasHuella = require('../../models/Estadisticas/EstadisticasHuella');
 
 router.get('/', async (req, res) => {
-
-    try{
+    try {
         const response = await EstadisticasHuella.find();
 
         let status = 200;
         let data = response;
 
-        if (response.length === 0){
+        if (response.length === 0) {
             status = 404;
             data = { success: false, message: 'No se encontraron datos' };
         }
-  
-      return res.status(status).send(data);
 
-    } catch(e){
-        return res
-            .status(500)
-            .send('Error inesperado al obtener las estadisticas Huella - ', e);
+        return res.status(status).send(data);
+    } catch (e) {
+        return res.status(500).send('Error inesperado al obtener las estadisticas Huella - ', e);
     }
-
 });
 
 router.get('/:id', async (req, res) => {
-
-    try{
+    try {
         const response = await EstadisticasHuella.find({ usuario: req.params.id });
 
         let status = 200;
         let data = response;
 
-        if (!response){
+        if (!response) {
             status = 400;
             data = { success: false, message: 'No se encontraron datos' };
         }
-          
+
         return res.status(status).send(data);
-
-    } catch(e){
-        return res
-           .status(500)
-           .send('Error inesperado al obtener la estadistica Huella - ', e);
+    } catch (e) {
+        return res.status(500).send('Error inesperado al obtener la estadistica Huella - ', e);
     }
-
 });
 
 router.post('/', async (req, res) => {
-
     let estadisitcaHuella = new EstadisticasHuella({ ...req.body });
-    
-    try{
-        
+
+    try {
         estadisitcaHuella = await estadisticaHuella.save();
 
         let status = 201;
         let data = estadisitcaHuella;
 
-        if (!estadisitcaHuella){
+        if (!estadisitcaHuella) {
             status = 500;
-            data = { success: false, message: 'Error al querer guardar la estadistica Huella'}
+            data = { success: false, message: 'Error al querer guardar la estadistica Huella' };
         }
-            
+
         return res.status(status).send(data);
-
-    } catch(e){
-        return res
-            .status(500)
-            .send('Error inesperado al crear la estadistica Huella - ', e);
+    } catch (e) {
+        return res.status(500).send('Error inesperado al crear la estadistica Huella - ', e);
     }
-
 });
 
 router.patch('/:id', async (req, res) => {
-
-    try{
-
-        let estadisticaHuella = await EstadisticasHuella.find({usuario: req.params.id});
+    try {
+        let estadisticaHuella = await EstadisticasHuella.find({ usuario: req.params.id });
 
         if (estadisticaHuella.length <= 0)
             return res.status(404).send({
@@ -90,20 +72,16 @@ router.patch('/:id', async (req, res) => {
 
         estadisitcaHuella = await estadisiticaHuella.save();
 
-        if(!estadisticaHuella)
+        if (!estadisticaHuella)
             return res.status(500).send({
                 success: false,
                 message: 'Error al querer guardar la estadistica Huella',
             });
-       
+
         return res.status(200).send(estadisticaHuella);
-
-    } catch(e){
-        return res
-            .status(500)
-            .send('Error inesperado al actualizar la estadistica Huella - ', e);
+    } catch (e) {
+        return res.status(500).send('Error inesperado al actualizar la estadistica Huella - ', e);
     }
-
 });
 
 module.exports = router;

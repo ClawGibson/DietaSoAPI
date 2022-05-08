@@ -2,26 +2,7 @@ const Usuarios = require('../../models/Usuarios');
 const Gastrointestinales = require('../../models/DatosExtrasUsuarios/Gastrointestinales');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const { buscarUsuario } = require('../../constants/index');
-
-const buscarUsuarioo = async (id) => {
-    try {
-        const buscarUsuarioo = await Usuarios.find({
-            usuario: id,
-        });
-
-        if (!buscarUsuarioo)
-            return res.status(404).send({
-                Error: 'No se encontró el registro de informacion de usuario',
-            });
-        return buscarUsuarioo;
-    } catch (error) {
-        return res.status(500).json({
-            error: `Error al buscar informacion de usuario - ${error}`,
-        });
-    }
-};
 
 router.get('/', async (req, res) => {
     const listaDSUsuarios = await Gastrointestinales.find();
@@ -29,10 +10,9 @@ router.get('/', async (req, res) => {
     if (listaDSUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message:
-                'No se encontro ninguna información gastrointestinal de los usuarios',
+            message: 'No se encontro ninguna información gastrointestinal de los usuarios',
         });
-    res.send(listaDSUsuarios);
+    res.status(200).send(listaDSUsuarios);
 });
 
 router.get('/individual', async (req, res) => {
@@ -47,10 +27,11 @@ router.get('/individual', async (req, res) => {
                 message: 'El usuario no tiene datos gastrointestinales todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
+            error: err,
             message: 'Ocurrio un error al guardar los datos gastrointestinales',
         });
     }
@@ -69,20 +50,19 @@ router.post('/individual', async (req, res) => {
                 if (infoUsuario)
                     return res.status(500).json({
                         success: false,
-                        message:
-                            'Datos gastrointestinales de Usuario ya registrados',
+                        message: 'Datos gastrointestinales de Usuario ya registrados',
                     });
             } catch (err) {
                 return res.status(500).json({
                     success: false,
-                    message:
-                        'Ocurrió un error al buscar los datos gastrointestinales del usuario',
+                    message: 'Ocurrió un error al buscar los datos gastrointestinales del usuario',
                 });
             }
         } else console.log('El usuario no existe');
     } catch (err) {
         return res.status(500).json({
             success: false,
+            error: err,
             message: 'Ocurrió un error al buscar al usuario',
         });
     }
@@ -98,14 +78,12 @@ router.post('/individual', async (req, res) => {
     try {
         dGastrointestinales = await dGastrointestinales.save();
 
-        if (!dGastrointestinales)
-            return res
-                .status(400)
-                .send('No se pudieron agregar datos gastrointestinales');
-        res.send(dGastrointestinales);
+        if (!dGastrointestinales) return res.status(400).send('No se pudieron agregar datos gastrointestinales');
+        res.status(200).send(dGastrointestinales);
     } catch (err) {
         return res.status(500).json({
             success: false,
+            error: err,
             message: 'Ocurrió un error al guardar los datos gastrointestinales',
         });
     }
@@ -115,21 +93,18 @@ router.patch('/individual', async (req, res) => {
     try {
         const existeUsuario = await buscarUsuario(req.query.usuario);
         let editarInformacionS;
-        if (!existeUsuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe.' });
+        if (!existeUsuario) return res.status(500).json({ success: false, message: 'El usuario no existe.' });
 
         try {
             editarInformacionS = await Gastrointestinales.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
                 {
-                    $push:{
+                    $push: {
                         inflamacionAbdominal: req.body.inflamacionAbdominal,
                         diarrea: req.body.diarrea,
                         estreñimiento: req.body.estreñimiento,
                         reflujo: req.body.reflujo,
-                    }
+                    },
                 }
             );
 
@@ -146,13 +121,13 @@ router.patch('/individual', async (req, res) => {
         } catch (err) {
             res.status(500).json({
                 success: false,
-                message:
-                    ' Ocurrió un error al actualizar los datos gastrointestinales- ',
+                message: ' Ocurrió un error al actualizar los datos gastrointestinales- ',
             });
         }
     } catch (err) {
         res.status(500).json({
             success: false,
+            error: err,
             message: ' Ocurrió un error al buscar el usuario- ',
         });
     }

@@ -11,10 +11,9 @@ router.get('/', async (req, res) => {
     if (listaDSUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message:
-                'No se encontro ninguna información de exposicion solar de los usuarios',
+            message: 'No se encontro ninguna información de exposicion solar de los usuarios',
         });
-    res.send(listaDSUsuarios);
+    res.status(200).send(listaDSUsuarios);
 });
 
 router.get('/individual', async (req, res) => {
@@ -26,16 +25,15 @@ router.get('/individual', async (req, res) => {
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
-                message:
-                    'El usuario no tiene datos de exposicion solar todavia',
+                message: 'El usuario no tiene datos de exposicion solar todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
-            message:
-                'Ocurrio un error al guardar los datos de exposicion solar',
+            error: err,
+            message: 'Ocurrio un error al guardar los datos de exposicion solar',
         });
     }
 });
@@ -53,20 +51,19 @@ router.post('/individual', async (req, res) => {
                 if (infoUsuario)
                     return res.status(500).json({
                         success: false,
-                        message:
-                            'Datos de exposicion solar de Usuario ya registrados',
+                        message: 'Datos de exposicion solar de Usuario ya registrados',
                     });
             } catch (err) {
                 return res.status(500).json({
                     success: false,
-                    message:
-                        'Ocurrió un error al buscar los datos de exposicion solar del usuario',
+                    message: 'Ocurrió un error al buscar los datos de exposicion solar del usuario',
                 });
             }
         } else console.log('El usuario no existe');
     } catch (err) {
         return res.status(500).json({
             success: false,
+            error: err,
             message: 'Ocurrió un error al buscar al usuario',
         });
     }
@@ -82,16 +79,13 @@ router.post('/individual', async (req, res) => {
     try {
         dExposicionSolar = await dExposicionSolar.save();
 
-        if (!dExposicionSolar)
-            return res
-                .status(400)
-                .send('No se pudieron agregar datos de exposición solar');
-        res.send(dExposicionSolar);
+        if (!dExposicionSolar) return res.status(400).send('No se pudieron agregar datos de exposición solar');
+        res.status(200).send(dExposicionSolar);
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message:
-                'Ocurrió un error al guardar los datos de exposición solar',
+            error: err,
+            message: 'Ocurrió un error al guardar los datos de exposición solar',
         });
     }
 });
@@ -100,10 +94,7 @@ router.patch('/individual', async (req, res) => {
     try {
         const existeUsuario = await buscarUsuario(req.query.usuario);
         let editarInformacionS;
-        if (!existeUsuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe.' });
+        if (!existeUsuario) return res.status(500).json({ success: false, message: 'El usuario no existe.' });
 
         try {
             editarInformacionS = await ExposicionSolar.findOneAndUpdate(
@@ -129,13 +120,13 @@ router.patch('/individual', async (req, res) => {
         } catch (err) {
             res.status(500).json({
                 success: false,
-                message:
-                    ' Ocurrió un error al actualizar los datos de exposición solar- ',
+                message: ' Ocurrió un error al actualizar los datos de exposición solar- ',
             });
         }
     } catch (err) {
         res.status(500).json({
             success: false,
+            error: err,
             message: ' Ocurrió un error al buscar el usuario- ',
         });
     }

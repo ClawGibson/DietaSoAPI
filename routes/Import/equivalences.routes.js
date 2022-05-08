@@ -6,10 +6,7 @@ const { buscarAlimentoPorNombre } = require('../../constants');
 
 router.post('/', async (req, res) => {
     try {
-        const { _id, nombreAlimento } = await buscarAlimentoPorNombre(
-            req.body.alimento
-        );
-        //console.log('[ID] - ', _id, ' - [Nombre] - ', nombreAlimento);
+        const { _id, nombreAlimento } = await buscarAlimentoPorNombre(req.body.alimento);
 
         if (!_id) {
             return res.status(404).send({
@@ -29,17 +26,13 @@ router.post('/', async (req, res) => {
         nuevaEquivalencia = await nuevaEquivalencia.save();
 
         if (!nuevaEquivalencia) {
-            return res
-                .status(400)
-                .send('Error al guardar la nueva equivalencia');
+            return res.status(400).send('Error al guardar la nueva equivalencia');
         }
 
         return res.status(200).send(nuevaEquivalencia);
     } catch (err) {
         console.log('Error al crear la equivalencia', err);
-        return res
-            .status(500)
-            .send({ message: 'Error al crear la equivalencia', error: err });
+        return res.status(500).send({ message: 'Error al crear la equivalencia', error: err });
     }
 });
 
@@ -47,9 +40,7 @@ router.get('/', async (req, res) => {
     try {
         const listaEquivalencias = await Equivalencias.find();
         if (!listaEquivalencias) {
-            return res
-                .status(500)
-                .send('Error al obtener la lista de equivalencias');
+            return res.status(500).send('Error al obtener la lista de equivalencias');
         }
         return res.status(200).send(listaEquivalencias);
     } catch (err) {
@@ -61,15 +52,13 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/grupoAlimento', async (req, res) => {
-    console.log('query: ', req.query);
     try {
         const { grupoAlimento } = req.query;
         const buscarEquivalencias = await Equivalencias.find({
             grupoAlimento: grupoAlimento,
         });
 
-        if (!buscarEquivalencias)
-            return res.status(204).send('No se encontraron resultados');
+        if (!buscarEquivalencias) return res.status(204).send('No se encontraron resultados');
 
         return res.status(200).send(buscarEquivalencias);
     } catch (error) {

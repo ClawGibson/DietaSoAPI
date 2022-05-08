@@ -11,10 +11,9 @@ router.get('/', async (req, res) => {
     if (listaDSUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message:
-                'No se encontro ninguna información de indicadores bioquimicos de los usuarios',
+            message: 'No se encontro ninguna información de indicadores bioquimicos de los usuarios',
         });
-    res.send(listaDSUsuarios);
+    res.status(200).send(listaDSUsuarios);
 });
 
 router.get('/individual', async (req, res) => {
@@ -26,16 +25,15 @@ router.get('/individual', async (req, res) => {
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
-                message:
-                    'El usuario no tiene datos de indicadores bioquimicos todavia',
+                message: 'El usuario no tiene datos de indicadores bioquimicos todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
-            message:
-                'Ocurrio un error al guardar los datos de indicadores bioquimicos',
+            error: err,
+            message: 'Ocurrio un error al guardar los datos de indicadores bioquimicos',
         });
     }
 });
@@ -55,20 +53,14 @@ router.post('/individual', async (req, res) => {
 
         dIndicadoresB = await dIndicadoresB.save();
 
-        if (!dIndicadoresB)
-            return res
-                .status(400)
-                .send(
-                    'No se pudieron agregar datos de indicadores bioquimicos'
-                );
+        if (!dIndicadoresB) return res.status(400).send('No se pudieron agregar datos de indicadores bioquimicos');
 
         res.status(200).send(dIndicadoresB);
     } catch (err) {
         return res.status(500).json({
             success: false,
             error: err,
-            message:
-                'Ocurrió un error al guardar los datos de indicadores bioquimicos',
+            message: 'Ocurrió un error al guardar los datos de indicadores bioquimicos',
         });
     }
 });
@@ -104,8 +96,7 @@ router.patch('/individual', async (req, res) => {
         res.status(500).json({
             success: false,
             error: err,
-            message:
-                ' Ocurrió un error al actualizar los datos de indicadores bioquimicos- ',
+            message: ' Ocurrió un error al actualizar los datos de indicadores bioquimicos- ',
         });
     }
 });

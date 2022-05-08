@@ -21,7 +21,6 @@ router.get('/', async (req, res) => {
 
         res.status(200).send(registro);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             success: false,
             message: 'Ocurrió un error inesperado',
@@ -32,9 +31,7 @@ router.get('/', async (req, res) => {
 
 router.get('/all', async (req, res) => {
     try {
-        const menusPorUsuario = await MenusPorUsuario.find()
-            .populate('menu usuario')
-            .select('-contrasena');
+        const menusPorUsuario = await MenusPorUsuario.find().populate('menu usuario').select('-contrasena');
 
         if (!menusPorUsuario || menusPorUsuario.length === 0)
             return res.status(204).send({
@@ -43,7 +40,6 @@ router.get('/all', async (req, res) => {
 
         res.status(200).send(menusPorUsuario);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             success: false,
             message: 'Ocurrió un error inesperado',
@@ -69,7 +65,6 @@ router.get('/:id', async (req, res) => {
 
         res.status(200).send(registro);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             success: false,
             message: 'Ocurrió un error inesperado',
@@ -99,7 +94,6 @@ router.post('/', async (req, res) => {
 
         res.status(200).send(menusPorUsuario);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             success: false,
             message: 'Ocurrió un error inesperado',
@@ -124,7 +118,6 @@ router.put('/:id', async (req, res) => {
 
         res.status(200).send(registro);
     } catch (error) {
-        console.error(error);
         return res.status(500).send({
             success: false,
             message: 'Ocurrió un error inesperado',

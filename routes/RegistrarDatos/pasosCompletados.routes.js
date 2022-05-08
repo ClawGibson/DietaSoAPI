@@ -15,7 +15,6 @@ router.get('/:id', async (req, res) => {
 
         res.status(200).send(pasos);
     } catch (error) {
-        console.log('Eror al obtener los pasos completados', error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,
@@ -36,7 +35,6 @@ router.post('/', async (req, res) => {
 
         res.status(200).send(pasos);
     } catch (error) {
-        console.log('Eror al crear los pasos completados', error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,
@@ -69,7 +67,6 @@ router.patch('/', async (req, res) => {
 
         res.status(200).send(pasos);
     } catch (error) {
-        console.log('Eror al actualizar los completados', error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,

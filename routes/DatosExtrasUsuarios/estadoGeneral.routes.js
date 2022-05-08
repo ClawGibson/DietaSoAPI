@@ -11,10 +11,9 @@ router.get('/', async (req, res) => {
     if (listaDSUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message:
-                'No se encontro ninguna información de estado general de los usuarios',
+            message: 'No se encontro ninguna información de estado general de los usuarios',
         });
-    res.send(listaDSUsuarios);
+    res.status(200).send(listaDSUsuarios);
 });
 
 router.get('/individual', async (req, res) => {
@@ -29,10 +28,11 @@ router.get('/individual', async (req, res) => {
                 message: 'El usuario no tiene datos de estado general todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
+            error: err,
             message: 'Ocurrio un error al guardar los datos de estado general',
         });
     }
@@ -46,15 +46,13 @@ router.post('/individual', async (req, res) => {
         // Modifcar el post para agregar el objeto en forma de array.
         dEstadoGeneral = await dEstadoGeneral.save();
 
-        if (!dEstadoGeneral)
-            return res
-                .status(400)
-                .send('No se pudieron agregar datos de estado general');
-        res.send(dEstadoGeneral);
+        if (!dEstadoGeneral) return res.status(400).send('No se pudieron agregar datos de estado general');
+        res.status(200).send(dEstadoGeneral);
     } catch (err) {
         console.log('errror', err);
         return res.status(500).json({
             success: false,
+            error: err,
             message: 'Ocurrió un error al guardar los datos de estado general',
         });
     }
@@ -88,19 +86,14 @@ router.patch('/individual', async (req, res) => {
 
         editarInformacionS = await editarInformacionS.save();
 
-        if (!editarInformacionS)
-            return res.status(400).send('No se pudo actualizar');
+        if (!editarInformacionS) return res.status(400).send('No se pudo actualizar');
 
         res.status(200).send(editarInformacionS);
     } catch (err) {
-        console.log(
-            'Ocurrió un error al actualizar los datos de estado general',
-            err
-        );
         res.status(500).json({
             success: false,
-            message:
-                ' Ocurrió un error al actualizar los datos de estado general- ',
+            error: err,
+            message: ' Ocurrió un error al actualizar los datos de estado general- ',
         });
     }
 });
