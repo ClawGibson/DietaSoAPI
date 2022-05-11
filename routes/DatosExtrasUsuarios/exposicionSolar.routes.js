@@ -92,42 +92,33 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     try {
-        const existeUsuario = await buscarUsuario(req.query.usuario);
-        let editarInformacionS;
-        if (!existeUsuario) return res.status(500).json({ success: false, message: 'El usuario no existe.' });
+        const { usuarios } = req.query;
 
-        try {
-            editarInformacionS = await ExposicionSolar.findOneAndUpdate(
-                { usuario: existeUsuario.usuario },
-                {
+        let editarInformacionS = await ExposicionSolar.findOneAndUpdate(
+            { usuario: usuario },
+            {
+                $push: {
                     minutosAlSol: req.body.minutosAlSol,
                     cubresTuPiel: req.body.cubresTuPiel,
                     bloqueadorSolar: req.body.bloqueadorSolar,
                     diasXsemana: req.body.diasXsemana,
-                }
-            );
+                },
+            }
+        );
 
-            editarInformacionS = editarInformacionS
-                .save()
-                .then((response) => res.status(200).json({ message: 'ok' }))
-                .catch((err) =>
-                    res.status(500).json({
-                        success: false,
-                        message: 'No se pudo guardar - ',
-                        err,
-                    })
-                );
-        } catch (err) {
-            res.status(500).json({
+        editarInformacionS = await editarInformacionS.save();
+
+        if (!editarInformacionS)
+            return res.status(500).json({
                 success: false,
-                message: ' Ocurrió un error al actualizar los datos de exposición solar- ',
+                message: 'No se pudo actualizar los datos de exposicion solar',
             });
-        }
+
+        res.status(200).send(editarInformacionS);
     } catch (err) {
         res.status(500).json({
             success: false,
-            error: err,
-            message: ' Ocurrió un error al buscar el usuario- ',
+            message: ' Ocurrió un error al actualizar los datos de exposición solar- ',
         });
     }
 });
