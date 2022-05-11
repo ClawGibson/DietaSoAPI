@@ -92,7 +92,7 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     try {
-        const { usuarios } = req.query;
+        const { usuario } = req.query;
 
         let editarInformacionS = await ExposicionSolar.findOneAndUpdate(
             { usuario: usuario },
