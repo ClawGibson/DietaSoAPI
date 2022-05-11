@@ -118,6 +118,7 @@ router.patch('/individual', async (req, res) => {
     } catch (err) {
         res.status(500).json({
             success: false,
+            error: err,
             message: ' Ocurrió un error al actualizar los datos de exposición solar- ',
         });
     }
