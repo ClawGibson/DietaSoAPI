@@ -19,7 +19,7 @@ const publicationModel = new Schema({
     likes: [{
         type: Schema.Types.ObjectId,
         ref: "InformacionUsuarios",
-    }]
+    }],
 });
 
 module.exports = model("Publication", publicationModel);

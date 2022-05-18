@@ -9,9 +9,8 @@ router.get('/', async (req, res) => {
 
         if (listaDSUsuarios.length <= 0) return res.status(204).json([]);
 
-        res.send(listaDSUsuarios);
+        res.status(200).send(listaDSUsuarios);
     } catch (err) {
-        console.log('Error al buscar los datos extras del usuario', err);
         return res.status(500).send({
             msg: 'Error al buscar los datos extras del usuario',
             error: err,
@@ -33,11 +32,12 @@ router.get('/individual', async (req, res) => {
                 message: 'El usuario no tiene datos de circunferencias todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
             message: 'Ocurrio un error al guardar los datos de circunferencias',
+            error: err,
         });
     }
 });
@@ -54,10 +54,7 @@ router.post('/individual', async (req, res) => {
 
         dCircunferencias = await dCircunferencias.save();
 
-        if (!dCircunferencias)
-            return res
-                .status(400)
-                .send('No se pudieron agregar datos de circunferencias');
+        if (!dCircunferencias) return res.status(400).send('No se pudieron agregar datos de circunferencias');
 
         res.status(200).send(dCircunferencias);
     } catch (err) {
@@ -86,17 +83,12 @@ router.patch('/individual', async (req, res) => {
         );
         editarInformacionS = await editarInformacionS.save();
 
-        if (!editarInformacionS)
-            return res
-                .status(400)
-                .send('No se pudieron agregar datos de circunferencias');
+        if (!editarInformacionS) return res.status(400).send('No se pudieron agregar datos de circunferencias');
 
         res.status(200).send(editarInformacionS);
     } catch (err) {
-        console.log('Error al editar los datos de circunferencias', err);
         res.status(500).send({
-            message:
-                ' Ocurrió un error al actualizar los datos de circunferencias- ',
+            message: ' Ocurrió un error al actualizar los datos de circunferencias- ',
             error: err,
         });
     }

@@ -17,6 +17,7 @@ router.get('/', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al las imágenes por niveles',
+            error: err,
         });
     }
 });
@@ -38,6 +39,7 @@ router.post('/', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al crear la piramide',
+            error: err,
         });
     }
 });
@@ -47,8 +49,8 @@ router.patch('/:id', async (req, res) => {
         const { id } = req.params;
 
         const nivel = await Piramide.findByIdAndUpdate(
-            id,
-            { ...req.body },
+            mongoose.Types.ObjectId(id),
+            { $push: { url: req.body.url } },
             { new: true }
         );
 
@@ -63,6 +65,37 @@ router.patch('/:id', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al editar la piramide',
+            error: err,
+        });
+    }
+});
+
+router.patch('/editarImagenes/url', async (req, res) => {
+    try {
+        const { id, url } = req.query;
+
+        const nivel = await Piramide.findByIdAndUpdate(
+            id,
+            {
+                $pull: {
+                    url: url,
+                },
+            },
+            { new: true }
+        );
+
+        if (!nivel)
+            return res.status(400).send({
+                success: false,
+                message: 'No se pudo actualizar el nivel',
+            });
+
+        res.status(200).send(nivel);
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: 'Ocurrió un error al editar la piramide',
+            error: err,
         });
     }
 });
@@ -71,9 +104,7 @@ router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
 
-        let nivel = await Piramide.findByIdAndDelete(
-            mongoose.Types.ObjectId(id)
-        );
+        let nivel = await Piramide.findByIdAndDelete(mongoose.Types.ObjectId(id));
 
         if (!nivel)
             return res.status(400).send({
@@ -86,6 +117,7 @@ router.delete('/:id', async (req, res) => {
         return res.status(500).json({
             success: false,
             message: 'Ocurrió un error al eliminar la piramide',
+            error: err,
         });
     }
 });

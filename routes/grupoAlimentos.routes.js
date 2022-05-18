@@ -83,7 +83,9 @@ router.delete('/:id', async (req, res) => {
                 .status(400)
                 .send('El ID del grupo de alimento a eliminar no es válido.');
 
-        const nuevoGrupo = await GrupoAlimentos.findByIdAndRemove(req.params.id);
+        const nuevoGrupo = await GrupoAlimentos.findByIdAndRemove(
+            req.params.id
+        );
 
         if (!nuevoGrupo)
             return res

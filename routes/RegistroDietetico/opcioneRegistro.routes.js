@@ -13,7 +13,6 @@ router.get('/', async (req, res) => {
 
         res.status(200).send(opciones);
     } catch (error) {
-        console.log('Error al obtener las opciones de registro', error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,
@@ -36,7 +35,6 @@ router.post('/', async (req, res) => {
 
         res.status(200).send(opciones);
     } catch (error) {
-        console.log('Error al agregar las opciones de registro', error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,
@@ -46,11 +44,7 @@ router.post('/', async (req, res) => {
 
 router.patch('/', async (req, res) => {
     try {
-        const opciones = await OpcionesRegistro.findOneAndUpdate(
-            {},
-            { ...req.body },
-            { new: true }
-        );
+        const opciones = await OpcionesRegistro.findOneAndUpdate({}, { ...req.body }, { new: true });
 
         if (!opciones)
             return res.status(204).send({
@@ -59,7 +53,6 @@ router.patch('/', async (req, res) => {
 
         res.status(200).send(opciones);
     } catch (error) {
-        console.log('Error al guardar las opciones de registro', error);
         return res.status(500).send({
             message: 'Ocurrió un error inesperado',
             error: error,

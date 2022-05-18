@@ -5,26 +5,25 @@ const {
     addReminder,
     getReminders,
     updateReminder,
-    updateRemindersAddUsers,
     deleteReminder,
     getRemindersByUser,
     updateRemindersAddUsersToConfirm,
+    getSingleReminder,
 } = require('./controller');
 
 router.post('/', addReminder);
 
 router.get('/', getReminders);
 
-router.get('/usuario', getRemindersByUser);
+router.get('/usuario/:id', getRemindersByUser);
+
+router.get('/:id', getSingleReminder);
 
 //update
-// router.patch("/", updateRemindersAddUsers);
 router.patch('/', updateRemindersAddUsersToConfirm);
 
 router.patch('/:id', updateReminder);
 
 router.delete('/:id', deleteReminder);
-
-//router.patch("/",);
 
 module.exports = router;

@@ -14,32 +14,21 @@ router.get('/', async(req, res) => {
         console.log(error);
     }
 
-    if (!listaUsuarios)
-        return res
-            .status(500)
-            .json({ success: false, message: 'No se encontraron usuarios' });
+    if (!listaUsuarios) return res.status(500).json({ success: false, message: 'No se encontraron usuarios' });
 
     res.send(listaUsuarios);
 });
 
 router.get('/individual', async(req, res) => {
-    //const usuario = await buscarUsuario(req.params.id);
-    //constantes.buscarUsuario(req.params.id);
+    const { usuario } = req.query;
 
     try {
-        const usuario = await Usuarios.findById(req.query.usuario).select(
-            '-contrasena'
-        );
-        //console.log(usuario);
-        if (!usuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'Usuario no encontrado' });
-        res.send(usuario);
+        const user = await Usuarios.findById(usuario).select('-contrasena');
+
+        if (!user) return res.status(500).json({ success: false, message: 'Usuario no encontrado' });
+        res.status(200).send(user);
     } catch (err) {
-        return res
-            .status(500)
-            .json({ success: false, message: 'Error al buscar el usuario ' });
+        return res.status(500).json({ success: false, message: 'Error al buscar el usuario ' });
     }
 });
 
@@ -53,13 +42,13 @@ router.post('/', async(req, res) => {
     crearUsuario = await crearUsuario.save();
     console.log('2 usuario -> ', crearUsuario);
 
-    if (!crearUsuario)
-        return res.status(400).send('No se pudo crear el usuario :c');
+    if (!crearUsuario) return res.status(400).send('No se pudo crear el usuario :c');
 
     res.send(crearUsuario);
 });
 
 router.post('/login', async(req, res) => {
+    console.log('1 usuario -> ', req.body);
     const usuario = await Usuarios.findOne({ email: req.body.email });
     const SECRET = process.env.SECRET;
 
@@ -67,10 +56,7 @@ router.post('/login', async(req, res) => {
         return res.status(404).json('Usuario no registrado :c');
     }
 
-    if (
-        usuario &&
-        bcrypt.compareSync(req.body.contrasena, usuario.contrasena)
-    ) {
+    if (usuario && bcrypt.compareSync(req.body.contrasena, usuario.contrasena)) {
         const token = jwt.sign({
                 userId: usuario.id,
                 isAdmin: usuario.esAdmin,
@@ -92,11 +78,8 @@ router.post('/login', async(req, res) => {
 router.post('/register', async(req, res) => {
     try {
         const usuario = await Usuarios.findOne({ email: req.body.email });
-        console.log('Buscando', usuario);
-        if (usuario)
-            return res
-                .status(302)
-                .send({ success: false, message: 'Usuario ya creado' });
+
+        if (usuario) return res.status(302).send({ success: false, message: 'Usuario ya creado' });
     } catch (err) {
         return res.status(500).json({
             success: false,
@@ -104,16 +87,15 @@ router.post('/register', async(req, res) => {
         });
     }
 
-    let registrarUsuario = new Usuarios({
-        usuario: req.body.usuario,
-        email: req.body.email,
-        contrasena: bcrypt.hashSync(req.body.contrasena, 10),
-    });
-    console.log('Nuevo usuario -> ', registrarUsuario);
     try {
+        let registrarUsuario = new Usuarios({
+            email: req.body.email,
+            contrasena: bcrypt.hashSync(req.body.contrasena, 10),
+        });
+        console.log('Nuevo usuario -> ', registrarUsuario);
         registrarUsuario = await registrarUsuario.save();
-        if (!registrarUsuario)
-            return res.status(400).send('No se pudo agregar al usuario');
+        if (!registrarUsuario) return res.status(400).send('No se pudo agregar al usuario');
+
         const buscarIdUsuario = await Usuarios.find({
             email: req.body.email,
         });
@@ -122,10 +104,10 @@ router.post('/register', async(req, res) => {
 
         registrarUsuario = await registrarUsuario.save();
         console.log('3: ', registrarUsuario);
-        if (!registrarUsuario)
-            return res.status(400).send('No se pudo agregar al usuario');
 
-        res.send(registrarUsuario); // Antes de hacer este send, enviar la confirmacion del correo
+        if (!registrarUsuario) return res.status(400).send('No se pudo agregar al usuario');
+
+        res.status(200).send(registrarUsuario); // Antes de hacer este send, enviar la confirmacion del correo
     } catch (err) {
         console.log('Ocurrió un error al guardar usuario - ', err);
         return res.status(500).send({
@@ -203,14 +185,12 @@ router.get('/verificar-email', async(req, res) => {
     res.status(200).send({ Mensaje: "OK" });
 });
 
+
 router.put('/individual', async(req, res) => {
     try {
         const usuario = await Usuarios.findOne({ usuario: req.query.usuario });
 
-        if (!usuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'Usuario no existe' });
+        if (!usuario) return res.status(500).json({ success: false, message: 'Usuario no existe' });
 
         console.log(usuario);
         let editarUsuario = await Usuarios.findOneAndUpdate({ usuario: usuario.usuario }, {
@@ -220,8 +200,7 @@ router.put('/individual', async(req, res) => {
         console.log(editarUsuario);
         editarUsuario = await editarUsuario.save();
 
-        if (!editarUsuario)
-            return res.status(400).send('No se pudo editar el usuario :c');
+        if (!editarUsuario) return res.status(400).send('No se pudo editar el usuario :c');
 
         res.send('ok');
     } catch (err) {
@@ -231,5 +210,4 @@ router.put('/individual', async(req, res) => {
         });
     }
 });
-
 module.exports = router;

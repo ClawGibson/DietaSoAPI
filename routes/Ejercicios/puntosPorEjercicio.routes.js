@@ -13,7 +13,6 @@ router.get('/all', async (req, res) => {
 
         res.status(200).send(registros);
     } catch (error) {
-        console.log('Error al obtener los puntos por ejercicio');
         return res.status(500).send({
             success: false,
             message: 'Error al obtener los puntos por ejercicio',
@@ -43,7 +42,6 @@ router.get('/', async (req, res) => {
 
         res.status(200).send(puntosPorEjercicio);
     } catch (error) {
-        console.log('Error al obtener los puntos por ejercicio');
         return res.status(500).send({
             success: false,
             message: 'Error al obtener los puntos por ejercicio',
@@ -66,7 +64,6 @@ router.post('/', async (req, res) => {
 
         res.status(200).send(puntos);
     } catch (error) {
-        console.log('Error al crear un registro en puntos por ejercicio');
         return res.status(500).send({
             success: false,
             message: 'Error al crear un registro en puntos por ejercicio',
@@ -91,7 +88,6 @@ router.patch('/:id', async (req, res) => {
 
         res.status(200).send(puntos);
     } catch (error) {
-        console.log('Error al actualizar los puntos por ejercicio');
         return res.status(500).send({
             success: false,
             message: 'Error al actualizar los puntos por ejercicio',
@@ -114,7 +110,6 @@ router.delete('/:id', async (req, res) => {
 
         res.status(200).send(puntos);
     } catch (error) {
-        console.log('Error al eliminar los puntos por ejercicio');
         return res.status(500).send({
             success: false,
             message: 'Error al eliminar los puntos por ejercicio',

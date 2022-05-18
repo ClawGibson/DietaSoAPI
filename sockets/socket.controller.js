@@ -34,28 +34,24 @@ const socketController = (socket) => {
         }
 
         let messages = [];
+        const page = 1;
+        const limit = 15;
 
         if (!chat) {
             chat = new Chat({ users });
             await chat.save();
         } else {
-            const tempMessages = await Message.find({ chat: chat._id })
-                .sort({ date: 'desc' })
-                .limit(15)
-                .skip(1);
-            console.log('HOLAS', tempMessages);
-            messages = await Message.find({
-                chat: chat._id,
-            });
-            /* .sort({ date: 'desc' })
-                .limit(15)
-                .skip(1); */
+            messages = await Message.paginate(
+                { chat: chat._id },
+                { sort: { date: 'desc' }, page, limit }
+            );
         }
-        console.log('CHAT:', chat, 'MESSAGES:', messages);
         socket.join(String(chat._id));
         socket.emit('getMessages', {
             chatId: chat._id,
-            messages,
+            messages: messages.docs,
+            page,
+            limit,
         });
     });
 

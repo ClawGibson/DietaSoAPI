@@ -7,8 +7,18 @@ const indicadoresCliSchema = new Schema(
             ref: 'Usuarios',
             required: true,
         },
-        presionArterial: [{ type: String, required: false }],
-        acantosisNigricans: [{ type: String, required: false }],
+        presionArterial: [
+            { 
+                fecha:{ type:Date, default: Date.now},
+                valor: {type: String, required: false} 
+            }
+        ],
+        acantosisNigricans: [
+            { 
+                fecha:{ type:Date, default: Date.now},
+                valor: {type: String, required: false} 
+            }
+        ],
     },
     {
         timestamps: true,

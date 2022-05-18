@@ -39,9 +39,12 @@ const getReminders = async (req, res = response) => {
 };
 const getRemindersByUser = async (req, res = response) => {
     try {
+        const { id } = req.params;
+
         const recordatorios = await Recordatorio.find({
-            usuarios: req.query.id,
+            usuarios: id,
         });
+
         if (recordatorios.length === 0) {
             return res.status(204).json({ msg: 'No hay recordatorios' });
         }
@@ -51,26 +54,29 @@ const getRemindersByUser = async (req, res = response) => {
         res.status(500).json(error);
     }
 };
-// Permitir la edición del recordatorio, no solo para agregar nuevos usuarios.
-const updateRemindersAddUsers = async (req, res = response) => {
-    const { titulo } = req.query;
-    const { usuario } = req.body;
 
+const getSingleReminder = async (req, res = response) => {
     try {
-        const update = await Recordatorio.findOneAndUpdate(
-            { titulo },
-            { $push: { usuario } }
-        );
+        const { id } = req.params;
 
-        res.send(update);
-    } catch (error) {
-        res.send(error);
+        const reminder = await Recordatorio.findById(id);
+
+        if (!reminder)
+            return res.status(204).send({
+                message: 'No se encontro el recordatorio',
+            });
+
+        res.status(200).send(reminder);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send({ error: err });
     }
 };
 
 const updateRemindersAddUsersToConfirm = async (req, res = response) => {
     const { id } = req.body;
     const { usuario } = req.body;
+    console.log('Actualizando recordatorio', { id, usuario });
     try {
         const update = await Recordatorio.findOne({
             $and: [{ _id: id }, { usuariosConfirmados: usuario }],
@@ -138,9 +144,9 @@ const deleteReminder = async (req, res = response) => {
 module.exports = {
     addReminder,
     getReminders,
-    updateRemindersAddUsers,
     deleteReminder,
+    updateReminder,
+    getSingleReminder,
     getRemindersByUser,
     updateRemindersAddUsersToConfirm,
-    updateReminder,
 };

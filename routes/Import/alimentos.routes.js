@@ -20,16 +20,12 @@ router.post('/', async (req, res, next) => {
 
                 return res.status(200).send(nuevoAlimento);
             } catch (error) {
-                return res
-                    .status(500)
-                    .send(`Ocurrió un error al guardar los alimentos ${error}`);
+                return res.status(500).send(`Ocurrió un error al guardar los alimentos ${error}`);
             }
         }
         return res.status(200).json({ message: 'El alimento ya existe' });
     } catch (error) {
-        return res
-            .status(500)
-            .json(`Error inesperado al importar los alimentos - ${error}`);
+        return res.status(500).json(`Error inesperado al importar los alimentos - ${error}`);
     }
 });
 
@@ -67,9 +63,7 @@ router.patch('/', async (req, res) => {
 
         alimento = alimento
             .save()
-            .then((response) =>
-                res.status(200).json({ message: 'Alimento actualizado' })
-            )
+            .then((response) => res.status(200).json({ message: 'Alimento actualizado' }))
             .catch((err) =>
                 res.status(500).json({
                     success: false,

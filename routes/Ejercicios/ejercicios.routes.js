@@ -9,9 +9,8 @@ router.get('/', async (req, res) => {
             return res.status(404).send('No hay ejercicios');
         }
 
-        res.send(ejercicios);
+        res.status(200).send(ejercicios);
     } catch (error) {
-        console.log('Error al obtener los ejercicios.');
         return res.status(500).send({
             success: false,
             message: 'Error al obtener los ejercicios.',
@@ -32,9 +31,8 @@ router.get('/:ejercicio', async (req, res) => {
             return res.status(404).send('No hay ejercicio');
         }
 
-        res.send(ejercicioEncontrado);
+        res.status(200).send(ejercicioEncontrado);
     } catch (error) {
-        console.log('Error al obtener el ejercicio buscado');
         return res.status(500).send({
             success: false,
             message: 'Error al obtener el ejercicio buscado',
@@ -48,9 +46,8 @@ router.post('/', async (req, res) => {
         let ejercicio = new Ejercicios(req.body);
         ejercicio = await ejercicio.save();
 
-        res.send(ejercicio);
+        res.status(200).send(ejercicio);
     } catch (error) {
-        console.log('Error al crear un ejercicio.');
         return res.status(500).send({
             success: false,
             message: 'Error al crear un ejercicio.',
@@ -61,21 +58,16 @@ router.post('/', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
     try {
-        const ejercicio = await Ejercicios.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            {
-                new: true,
-            }
-        );
+        const ejercicio = await Ejercicios.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        });
 
         if (!ejercicio) {
             return res.status(404).send('No se encontró el ejercicio');
         }
 
-        res.send(ejercicio);
+        res.status(200).send(ejercicio);
     } catch (error) {
-        console.log('Error al actualizar un ejercicio.');
         return res.status(500).send({
             success: false,
             message: 'Error al actualizar un ejercicio.',
@@ -94,7 +86,6 @@ router.delete('/:id', async (req, res) => {
 
         res.status(200).send({ success: true, message: 'Ejercicio eliminado' });
     } catch (error) {
-        console.log('Error al eliminar un ejercicio.');
         return res.status(500).send({
             success: false,
             message: 'Error al eliminar un ejercicio.',

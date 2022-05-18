@@ -7,13 +7,49 @@ const iBioquimicosSchema = new Schema(
             ref: 'Usuarios',
             required: true,
         },
-        glucosaAyuno: [{ type: String, required: false }],
-        glucosaDespues: [{ type: String, required: false }],
-        trigliceridos: [{ type: String, required: false }],
-        colesterolTotal: [{ type: String, required: false }],
-        colesterolLDL: [{ type: String, required: false }],
-        colesterolHDL: [{ type: String, required: false }],
-        microbiotaIntestinal: [{ type: String, required: false }],
+        glucosaAyuno: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        glucosaDespues: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+                minutos: { type: String, required: false, default: '' },
+            },
+        ],
+        trigliceridos: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        colesterolTotal: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        colesterolLDL: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        colesterolHDL: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
+        microbiotaIntestinal: [
+            {
+                fecha: { type: Date, default: Date.now },
+                valor: { type: String, required: false, default: '' },
+            },
+        ],
     },
     {
         timestamps: true,

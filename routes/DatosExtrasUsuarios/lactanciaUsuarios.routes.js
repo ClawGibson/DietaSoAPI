@@ -1,9 +1,6 @@
-const Usuarios = require('../../models/Usuarios');
 const LactanciaUsuarios = require('../../models/DatosExtrasUsuarios/LactanciaUsuarios');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const { buscarUsuario } = require('../../constants/index');
 
 router.get('/', async (req, res) => {
     const listaDSUsuarios = await LactanciaUsuarios.find();
@@ -11,10 +8,9 @@ router.get('/', async (req, res) => {
     if (listaDSUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message:
-                'No se encontro ninguna información de lactancia de los usuarios',
+            message: 'No se encontro ninguna información de lactancia de los usuarios',
         });
-    res.send(listaDSUsuarios);
+    res.status(200).send(listaDSUsuarios);
 });
 
 router.get('/individual', async (req, res) => {
@@ -29,10 +25,11 @@ router.get('/individual', async (req, res) => {
                 message: 'El usuario no tiene datos de lactancia todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
+            error: err,
             message: 'Ocurrio un error al guardar los datos de lactancia',
         });
     }
@@ -40,53 +37,21 @@ router.get('/individual', async (req, res) => {
 
 router.post('/individual', async (req, res) => {
     try {
-        const usuarioCreado = await Usuarios.findOne({
-            usuario: req.query.usuario,
-        });
-        if (usuarioCreado) {
-            const infoUsuario = await LactanciaUsuarios.findOne({
-                usuario: req.query.usuario,
-            });
-            try {
-                if (infoUsuario)
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Datos de lactancia de Usuario ya registrados',
-                    });
-            } catch (err) {
-                return res.status(500).json({
-                    success: false,
-                    message:
-                        'Ocurrió un error al buscar los datos de lactancia del usuario',
-                });
-            }
-        } else console.log('El usuario no existe');
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: 'Ocurrió un error al buscar al usuario',
-        });
-    }
+        const { usuario } = req.query;
 
-    let dLactancia = new LactanciaUsuarios({
-        usuario: req.query.usuario,
-        horasDeSueño: req.body.horasDeSueño,
-        estadoDeDescanso: req.body.estadoDeDescanso,
-        despiertaPorLaNoche: req.body.despiertaPorLaNoche,
-        frecuencia: req.body.frecuencia,
-    });
+        let dLactancia = new LactanciaUsuarios({
+            usuario,
+            ...req.body,
+        });
 
-    try {
         dLactancia = await dLactancia.save();
 
-        if (!dLactancia)
-            return res
-                .status(400)
-                .send('No se pudieron agregar datos de lactancia');
-        res.send(dLactancia);
+        if (!dLactancia) return res.status(400).send('No se pudieron agregar datos de lactancia');
+        res.status(200).send(dLactancia);
     } catch (err) {
         return res.status(500).json({
             success: false,
+            error: err,
             message: 'Ocurrió un error al guardar los datos de lactancia',
         });
     }
@@ -94,45 +59,37 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     try {
-        const existeUsuario = await buscarUsuario(req.query.usuario);
-        let editarInformacionS;
-        if (!existeUsuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe.' });
+        const { usuario } = req.query;
 
-        try {
-            editarInformacionS = await LactanciaUsuarios.findOneAndUpdate(
-                { usuario: existeUsuario.usuario },
-                {
-                    horasDeSueño: req.body.horasDeSueño,
-                    estadoDeDescanso: req.body.estadoDeDescanso,
-                    despiertaPorLaNoche: req.body.despiertaPorLaNoche,
-                    frecuencia: req.body.frecuencia,
-                }
-            );
+        let fieldsToPush = {};
 
-            editarInformacionS = editarInformacionS
-                .save()
-                .then((response) => res.status(200).json({ message: 'ok' }))
-                .catch((err) =>
-                    res.status(500).json({
-                        success: false,
-                        message: 'No se pudo guardar - ',
-                        err,
-                    })
-                );
-        } catch (err) {
-            res.status(500).json({
-                success: false,
-                message:
-                    ' Ocurrió un error al actualizar los datos de lactancia- ',
-            });
-        }
+        if (req.body.maternaExclusiva) fieldsToPush.maternaExclusiva = req.body.maternaExclusiva;
+        if (req.body.artificial) fieldsToPush.artificial = req.body.artificial;
+        if (req.body.mixta) fieldsToPush.mixta = req.body.mixta;
+        if (req.body.mixtaContemplada) fieldsToPush.mixtaContemplada = req.body.mixtaContemplada;
+        if (req.body.maternaContemplada) fieldsToPush.maternaContemplada = req.body.maternaContemplada;
+        if (req.body.artificialContemplada) fieldsToPush.artificialContemplada = req.body.artificialContemplada;
+        if (req.body.tiempoLactancia) fieldsToPush.tiempoLactancia = req.body.tiempoLactancia;
+
+        let lactancia = await LactanciaUsuarios.findOneAndUpdate(
+            { usuario },
+            {
+                $push: fieldsToPush,
+            }
+        );
+
+        lactancia = await lactancia.save();
+
+        if (!lactancia) return res.status(400).send('No se pudieron agregar datos de lactancia');
+
+        res.status(200).send(lactancia);
+        return res.status(200).send({ ok: 'ok' });
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             success: false,
-            message: ' Ocurrió un error al buscar el usuario- ',
+            message: ' Ocurrió un error al actualizar los datos de lactancia- ',
+            err,
         });
     }
 });

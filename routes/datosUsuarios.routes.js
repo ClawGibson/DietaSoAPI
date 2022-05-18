@@ -31,7 +31,7 @@ router.get('/individual', async (req, res) => {
     try {
         const datosDeUsuario = await DatosUsuarios.find({
             usuario: req.query.usuario,
-        }).select('peso altura actividadFisica');
+        }).select('peso altura actividadFisica registroPeso');
         console.log(datosDeUsuario);
         if (!datosDeUsuario)
             return res.status(204).json({
@@ -55,6 +55,7 @@ router.post('/individual', async (req, res) => {
         actividadFisica: req.body.actividadFisica,
         peso: req.body.peso,
         altura: req.body.altura,
+        registroPeso: [Date.now()],
     });
 
     try {
@@ -84,6 +85,7 @@ router.patch('/individual', async (req, res) => {
             {
                 $push: {
                     peso: Number(req.body.peso),
+                    registroPeso: Date.now(),
                 },
                 altura: req.body.altura,
                 actividadFisica: req.body.actividadFisica,

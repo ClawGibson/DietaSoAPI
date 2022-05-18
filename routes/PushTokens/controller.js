@@ -17,7 +17,6 @@ const createNewPushToken = async (req, res = response) => {
         }
         res.status(200).send({ token: newPushToken.token });
     } catch (error) {
-        console.log(error);
         return res.status(500).send({ error });
     }
 };
@@ -46,17 +45,13 @@ const actualizarPushToken = async (req, res = response) => {
         const { usuario } = req.body;
         const { token } = req.body;
         console.log('Usuario:', usuario, '\nToken: ', token);
-        let remplazado = await PushToken.findOneAndUpdate(
-            { usuario: usuario },
-            { token: token }
-        );
+        let remplazado = await PushToken.findOneAndUpdate({ usuario: usuario }, { token: token });
         console.log('Reemplazado: ', remplazado);
         if (!remplazado) {
             return res.status(400).send({ msg: 'Ha ocurrido un error' });
         }
         return res.status(200).send({ msg: 'Se ha actualizado' });
     } catch (error) {
-        console.log('Ocurrió un error al actualizar el token', error);
         res.status(500).json(error);
     }
 };

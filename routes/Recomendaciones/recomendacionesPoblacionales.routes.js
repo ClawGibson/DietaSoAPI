@@ -10,13 +10,12 @@ router.post('/', async (req, res) => {
 
         recomendacion = await recomendacion.save();
 
-        res.send(recomendacion);
-
+        res.status(200).send(recomendacion);
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message:
-                'Ocurrió un error al importar las recomendaciones poblacionales',
+            error: error,
+            message: 'Ocurrió un error al importar las recomendaciones poblacionales',
         });
     }
 });

@@ -41,9 +41,9 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.get('/sku', async (req, res) => {
+router.get('/obtenerUltimo/valor', async (req, res) => {
     try {
-        const sku = await Alimentos.find().sort({ nombreAlimento: 1 }).limit(1);
+        const sku = await Alimentos.find().count();
 
         if (!sku) {
             return res.status(204).send({
@@ -51,7 +51,7 @@ router.get('/sku', async (req, res) => {
             });
         }
 
-        res.status(200).send(sku);
+        res.status(200).send({ sku: sku });
     } catch (error) {
         console.log('Error al obtener el sku máximo');
         res.status(500).send({
@@ -90,20 +90,57 @@ router.get('/buscarNombre', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const alimentos = await Alimentos.find().select(
-            'nombreAlimento imagen grupoAlimento'
-        );
+        const { page, limit = 16 } = req.query;
+
+        const options = {
+            page,
+            limit,
+            select: 'nombreAlimento imagen grupoAlimento',
+            sort: { nombreAlimento: 'asc' },
+        };
+
+        const alimentos = await Alimentos.paginate({}, options);
 
         if (!alimentos)
             res.status(204).json({
                 message: 'No hay alimentos todavía :c',
             });
 
-        res.status(200).send(alimentos);
+        res.status(200).send(alimentos.docs);
     } catch (error) {
         console.log('Error al otener los alimentos', error);
         return res.status(500).send({
             message: 'Error al otener los alimentos',
+            error: error,
+        });
+    }
+});
+
+router.get('/grupo/nombreGrupo', async (req, res) => {
+    try {
+        const { nombreGrupo } = req.query;
+
+        const options = {
+            limit: 999,
+            select: 'nombreAlimento imagen grupoAlimento',
+            sort: { nombreAlimento: 'asc' },
+        };
+
+        const alimentos = await Alimentos.paginate(
+            { grupoAlimento: nombreGrupo },
+            options
+        );
+
+        if (!alimentos)
+            return res.status(204).send({
+                message: 'No existe ese grupo :/',
+            });
+
+        res.status(200).send(alimentos.docs);
+    } catch (error) {
+        console.log('Error al otener el grupo de alimentos', error);
+        return res.status(500).send({
+            message: 'Error al otener el grupo de alimentos',
             error: error,
         });
     }

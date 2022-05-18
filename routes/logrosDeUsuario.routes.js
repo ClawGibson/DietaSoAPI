@@ -5,162 +5,164 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const listaLogros = await LogrosDeUsuario.find();
+    const listaLogros = await LogrosDeUsuario.find();
 
-  if (listaLogros.length > 0 || !listaLogros)
-    return res.status(500).json({
-      success: false,
-      message: 'No se encontraron logros de usuario',
-    });
-  res.send(listaLogros);
+    if (listaLogros.length > 0 || !listaLogros)
+        return res.status(500).json({
+            success: false,
+            message: 'No se encontraron logros de usuario',
+        });
+    res.send(listaLogros);
 });
 
 router.get('/:id', async (req, res) => {
-  try {
-    const usuarioExiste = await Usuarios.findById(req.params.id);
+    try {
+        const usuarioExiste = await Usuarios.findById(req.params.id);
 
-    if (!usuarioExiste)
-      return res
-        .status(500)
-        .json({ success: false, message: 'El usuario no existe.' });
-  } catch (err) {
-    console.log('Error al buscar el usuario - ', err);
-  }
+        if (!usuarioExiste)
+            return res
+                .status(500)
+                .json({ success: false, message: 'El usuario no existe.' });
+    } catch (err) {
+        console.log('Error al buscar el usuario - ', err);
+    }
 
-  try {
-    const listaLogros = await LogrosDeUsuario.find({
-      usuario: req.params.id,
-    })
-      .populate('usuario logro', { nombre: 1, logro: 1 })
-      .select('nombre logro');
+    try {
+        const listaLogros = await LogrosDeUsuario.find({
+            usuario: req.params.id,
+        })
+            .populate('usuario logro', { nombre: 1, logro: 1 })
+            .select('nombre logro');
 
-    if (!listaLogros.length > 0)
-      return res.status(500).json({
-        success: true,
-        message: 'El usuario no tiene logros todavía',
-      });
+        if (!listaLogros.length > 0)
+            return res.status(500).json({
+                success: true,
+                message: 'El usuario no tiene logros todavía',
+            });
 
-    res.send(listaLogros);
-  } catch (err) {
-    console.log('Error al obtener los logros del usuario', err);
-  }
+        res.send(listaLogros);
+    } catch (err) {
+        console.log('Error al obtener los logros del usuario', err);
+    }
 });
 
 router.post('/', async (req, res) => {
-  let logroExiste;
+    let logroExiste;
 
-  try {
-    logroExiste = await Logros.findById(req.body.logro);
+    try {
+        logroExiste = await Logros.findById(req.body.logro);
 
-    if (!logroExiste)
-      return res
-        .status(500)
-        .json({ succes: false, message: 'Este logro no existe' });
-  } catch (err) {
-    console.log('Ocurrió un error al buscar el logro', err);
-  }
+        if (!logroExiste)
+            return res
+                .status(500)
+                .json({ succes: false, message: 'Este logro no existe' });
+    } catch (err) {
+        console.log('Ocurrió un error al buscar el logro', err);
+    }
 
-  let usuarioExiste;
+    let usuarioExiste;
 
-  try {
-    usuarioExiste = await Usuarios.findById(req.body.usuario);
+    try {
+        usuarioExiste = await Usuarios.findById(req.body.usuario);
 
-    if (!usuarioExiste)
-      return res
-        .status(500)
-        .json({ success: false, message: 'El usuario no existe' });
-  } catch (err) {
-    console.log('Ocurrió un error al buscar el usuario', err);
-  }
+        if (!usuarioExiste)
+            return res
+                .status(500)
+                .json({ success: false, message: 'El usuario no existe' });
+    } catch (err) {
+        console.log('Ocurrió un error al buscar el usuario', err);
+    }
 
-  let logroDeUsuario = new LogrosDeUsuario({
-    logro: req.body.logro,
-    usuario: req.body.usuario,
-  });
+    let logroDeUsuario = new LogrosDeUsuario({
+        logro: req.body.logro,
+        usuario: req.body.usuario,
+    });
 
-  try {
-    logroDeUsuario = await logroDeUsuario.save();
+    try {
+        logroDeUsuario = await logroDeUsuario.save();
 
-    if (!logroDeUsuario)
-      return res.status(400).send('No se pudo agregar el logro al usuario');
-  } catch (err) {
-    console.log('Ocurrió un error al guadar', err);
-  }
+        if (!logroDeUsuario)
+            return res
+                .status(400)
+                .send('No se pudo agregar el logro al usuario');
+    } catch (err) {
+        console.log('Ocurrió un error al guadar', err);
+    }
 
-  res.send(logroDeUsuario);
+    res.send(logroDeUsuario);
 });
 
 router.put('/:id', async (req, res) => {
-  let logroExiste;
+    let logroExiste;
 
-  try {
-    logroExiste = await Logros.findById(req.body.logro);
+    try {
+        logroExiste = await Logros.findById(req.body.logro);
 
-    if (!logroExiste)
-      return res
-        .status(500)
-        .json({ succes: false, message: 'Este logro no existe' });
-  } catch (err) {
-    console.log('Ocurrió un error al buscar el logro', err);
-  }
+        if (!logroExiste)
+            return res
+                .status(500)
+                .json({ succes: false, message: 'Este logro no existe' });
+    } catch (err) {
+        console.log('Ocurrió un error al buscar el logro', err);
+    }
 
-  const { logro } = req.body;
+    const { logro } = req.body;
 
-  let listaLogros;
+    let listaLogros;
 
-  try {
-    listaLogros = await LogrosDeUsuario.find({
-      usuario: req.params.id,
-    });
-    listaLogros[0].logro.push(logro);
-  } catch (err) {
-    console.log('Error al actualizar los logros del usuario', err);
-  }
+    try {
+        listaLogros = await LogrosDeUsuario.find({
+            usuario: req.params.id,
+        });
+        listaLogros[0].logro.push(logro);
+    } catch (err) {
+        console.log('Error al actualizar los logros del usuario', err);
+    }
 
-  try {
-    listaLogros = await listaLogros[0].save();
-    res.send(listaLogros);
-  } catch (err) {
-    console.log('Error al guardar - ', err);
-  }
+    try {
+        listaLogros = await listaLogros[0].save();
+        res.send(listaLogros);
+    } catch (err) {
+        console.log('Error al guardar - ', err);
+    }
 });
 
 router.put('/delete/:id', async (req, res) => {
-  let logroExiste;
+    let logroExiste;
 
-  try {
-    logroExiste = await Logros.findById(req.body.logro);
+    try {
+        logroExiste = await Logros.findById(req.body.logro);
 
-    if (!logroExiste)
-      return res
-        .status(500)
-        .json({ succes: false, message: 'Este logro no existe' });
-  } catch (err) {
-    console.log('Ocurrió un error al buscar el logro', err);
-  }
+        if (!logroExiste)
+            return res
+                .status(500)
+                .json({ succes: false, message: 'Este logro no existe' });
+    } catch (err) {
+        console.log('Ocurrió un error al buscar el logro', err);
+    }
 
-  const { logro } = req.body;
+    const { logro } = req.body;
 
-  let listaLogros;
+    let listaLogros;
 
-  try {
-    listaLogros = await LogrosDeUsuario.find({
-      usuario: req.params.id,
-    });
+    try {
+        listaLogros = await LogrosDeUsuario.find({
+            usuario: req.params.id,
+        });
 
-    listaLogros[0].logro = listaLogros[0].logro.filter(
-      (index) => index != logro
-    );
-  } catch (err) {
-    console.log('Error al actualizar los logros del usuario', err);
-  }
+        listaLogros[0].logro = listaLogros[0].logro.filter(
+            (index) => index != logro
+        );
+    } catch (err) {
+        console.log('Error al actualizar los logros del usuario', err);
+    }
 
-  try {
-    listaLogros = await listaLogros[0].save();
-    res.send(listaLogros);
-  } catch (err) {
-    console.log('Error al guardar - ', err);
-  }
+    try {
+        listaLogros = await listaLogros[0].save();
+        res.send(listaLogros);
+    } catch (err) {
+        console.log('Error al guardar - ', err);
+    }
 });
 
 module.exports = router;

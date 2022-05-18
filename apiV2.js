@@ -49,7 +49,9 @@ const {
     suenoRoutes,
     lactanciaRoutes,
     piramide,
-    opcionesEdicion
+    opcionesEdicion,
+    comentarios,
+    usoAplicacion,
 } = require('./routes/index');
 
 const { API_URL } = process.env;
@@ -86,6 +88,7 @@ router.use(`${API_URL}/recordatorios`, recordatorios);
 router.use(`${API_URL}/mensajes`, mensajes);
 router.use(`${API_URL}/chat`, chat);
 router.use(`${API_URL}/foro`, foro);
+router.use(`${API_URL}/foro/comentarios`, comentarios);
 router.use(`${API_URL}/images`, imagesRoute);
 router.use(`${API_URL}/ejercicios`, ejerciciosRoute);
 router.use(`${API_URL}/puntosPorEjercicio`, puntosPorEjercicioRoute);
@@ -105,6 +108,7 @@ router.use(`${API_URL}/sueno`, suenoRoutes);
 router.use(`${API_URL}/lactancia`, lactanciaRoutes);
 router.use(`${API_URL}/piramide`, piramide);
 router.use(`${API_URL}/opcionesEdicion`, opcionesEdicion);
+router.use(`${API_URL}/usoAplicacion`, usoAplicacion);
 
 module.exports = {
     router,

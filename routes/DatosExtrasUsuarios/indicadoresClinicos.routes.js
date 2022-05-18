@@ -11,10 +11,9 @@ router.get('/', async (req, res) => {
     if (listaDSUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message:
-                'No se encontro ninguna información de indicadores clinicos de los usuarios',
+            message: 'No se encontro ninguna información de indicadores clinicos de los usuarios',
         });
-    res.send(listaDSUsuarios);
+    res.status(200).send(listaDSUsuarios);
 });
 
 router.get('/individual', async (req, res) => {
@@ -22,20 +21,19 @@ router.get('/individual', async (req, res) => {
         const datosDeUsuario = await IndicadoresClinicos.find({
             usuario: req.query.usuario,
         });
-        console.log(datosDeUsuario);
+
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
-                message:
-                    'El usuario no tiene datos de indicadores clinicos todavia',
+                message: 'El usuario no tiene datos de indicadores clinicos todavia',
             });
 
-        res.send(datosDeUsuario);
+        res.status(200).send(datosDeUsuario);
     } catch (err) {
         return res.status(500).json({
             success: true,
-            message:
-                'Ocurrio un error al guardar los datos de indicadores clinicos',
+            error: err,
+            message: 'Ocurrio un error al guardar los datos de indicadores clinicos',
         });
     }
 });
@@ -53,20 +51,19 @@ router.post('/individual', async (req, res) => {
                 if (infoUsuario)
                     return res.status(500).json({
                         success: false,
-                        message:
-                            'Datos de indicadores clinicos de Usuario ya registrados',
+                        message: 'Datos de indicadores clinicos de Usuario ya registrados',
                     });
             } catch (err) {
                 return res.status(500).json({
                     success: false,
-                    message:
-                        'Ocurrió un error al buscar los datos de indicadores clinicos del usuario',
+                    message: 'Ocurrió un error al buscar los datos de indicadores clinicos del usuario',
                 });
             }
         } else console.log('El usuario no existe');
     } catch (err) {
         return res.status(500).json({
             success: false,
+            error: err,
             message: 'Ocurrió un error al buscar al usuario',
         });
     }
@@ -80,16 +77,13 @@ router.post('/individual', async (req, res) => {
     try {
         dIndicadoresC = await dIndicadoresC.save();
 
-        if (!dIndicadoresC)
-            return res
-                .status(400)
-                .send('No se pudieron agregar datos de indicadores clinicos');
-        res.send(dIndicadoresC);
+        if (!dIndicadoresC) return res.status(400).send('No se pudieron agregar datos de indicadores clinicos');
+        res.status(200).send(dIndicadoresC);
     } catch (err) {
         return res.status(500).json({
             success: false,
-            message:
-                'Ocurrió un error al guardar los datos de indicadores clinicos',
+            error: err,
+            message: 'Ocurrió un error al guardar los datos de indicadores clinicos',
         });
     }
 });
@@ -98,17 +92,16 @@ router.patch('/individual', async (req, res) => {
     try {
         const existeUsuario = await buscarUsuario(req.query.usuario);
         let editarInformacionS;
-        if (!existeUsuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe.' });
+        if (!existeUsuario) return res.status(500).json({ success: false, message: 'El usuario no existe.' });
 
         try {
             editarInformacionS = await IndicadoresClinicos.findOneAndUpdate(
                 { usuario: existeUsuario.usuario },
                 {
-                    presionArterial: req.body.presionArterial,
-                    acantosisNigricans: req.body.acantosisNigricans,
+                    $push: {
+                        presionArterial: req.body.presionArterial,
+                        acantosisNigricans: req.body.acantosisNigricans,
+                    },
                 }
             );
 
@@ -125,13 +118,13 @@ router.patch('/individual', async (req, res) => {
         } catch (err) {
             res.status(500).json({
                 success: false,
-                message:
-                    ' Ocurrió un error al actualizar los datos de indicadores clinicos- ',
+                message: ' Ocurrió un error al actualizar los datos de indicadores clinicos- ',
             });
         }
     } catch (err) {
         res.status(500).json({
             success: false,
+            error: err,
             message: ' Ocurrió un error al buscar el usuario- ',
         });
     }
