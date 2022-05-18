@@ -1,0 +1,39 @@
+{
+    "get": {
+        "tags": [
+            "Alimentos"
+        ],
+        "summary": "Muestra el sku maximo del alimento",
+        "parameters": [{
+            "in": "query",
+            "name": "sku",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Alimentos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontraron sku"
+            },
+            "500": {
+                "description": "Error al obtener el sku máximo"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

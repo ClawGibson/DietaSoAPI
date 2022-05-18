@@ -4,28 +4,26 @@
             "Alimentación de Usuarios"
         ],
         "summary": "Obtener comidas favoritas del usuario.",
-        "parameters": [
-            {
-                "in": "query",
-                "name": "usuario",
-                "schema": {
-                    "type": "string"
-                },
-                "required": true
-            }
-        ],
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
         "responses": {
             "200": {
                 "content": {
                     "application/json": {
                         "schema": {
-                            "type":"object",
-                            "properties":{
-                                "comidaFavorita":{
+                            "type": "object",
+                            "properties": {
+                                "comidaFavorita": {
                                     "type": "array",
-                                        "items":{
-                                            "type": "string"
-                                        }
+                                    "items": {
+                                        "type": "string"
+                                    }
                                 }
                             }
                         }
@@ -39,39 +37,35 @@
                 "description": "El usuario no tiene informacion de su alimentacion | Ocurrió un error al obtener la informacion de alimentacionn"
             }
         },
-        "security": [
-            {
-                "bearer": []
-            }
-        ]
+        "security": [{
+            "bearer": []
+        }]
     },
     "post": {
         "tags": [
             "Alimentación de Usuarios"
         ],
         "summary": "Agregar una comida favoria al usuario.",
-        "parameters": [
-            {
-                "in": "query",
-                "name": "usuario",
-                "schema": {
-                    "type": "string"
-                },
-                "required": true
-            }
-        ],
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
         "requestBody": {
             "required": true,
             "content": {
                 "application/json": {
                     "schema": {
-                        "type":"object",
-                        "properties":{
-                            "comidaFavorita":{
+                        "type": "object",
+                        "properties": {
+                            "comidaFavorita": {
                                 "type": "array",
-                                    "items":{
-                                        "type": "string"
-                                    }
+                                "items": {
+                                    "type": "string"
+                                }
                             }
                         }
                     }
@@ -85,43 +79,39 @@
             "401": {
                 "description": "Acceso no autorizado."
             },
-            "500":{
+            "500": {
                 "description": "Esa comida ya esta registrada | Ocurrió un error al buscar la comida | Ocurrió un error al buscar el usuario | Comida ya esta registrada"
             }
         },
-        "security": [
-            {
-                "bearer": []
-            }
-        ]
+        "security": [{
+            "bearer": []
+        }]
     },
     "delete": {
         "tags": [
             "Alimentación de Usuarios"
         ],
         "summary": "Elimina una comida favoria del usuario.",
-        "parameters": [
-            {
-                "in": "query",
-                "name": "usuario",
-                "schema": {
-                    "type": "string"
-                },
-                "required": true
-            }
-        ],
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
         "requestBody": {
             "required": true,
             "content": {
                 "application/json": {
                     "schema": {
-                        "type":"object",
-                        "properties":{
-                            "comidaFavorita":{
+                        "type": "object",
+                        "properties": {
+                            "comidaFavorita": {
                                 "type": "array",
-                                    "items":{
-                                        "type": "string"
-                                    }
+                                "items": {
+                                    "type": "string"
+                                }
                             }
                         }
                     }
@@ -135,14 +125,51 @@
             "401": {
                 "description": "Acceso no autorizado."
             },
-            "500":{
+            "500": {
                 "description": "Esa comida no existe | Ocurrió un error al buscar la comida | Ocurrió un error al buscar el usuario | error al eliminar la comida"
             }
         },
-        "security": [
-            {
-                "bearer": []
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "patch": {
+        "tags": [
+            "Alimentación de Usuarios"
+        ],
+        "summary": "Actualiza la comida favorita del usuario usuario.",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/AlimentacionUsuarios.json"
+                    }
+                }
             }
-        ]
+        },
+        "responses": {
+            "200": {
+                "description": "ok"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "El usuario no existe. | Ocurrió un error al buscar la comida | Esa comida ya esta registrada | No se pudo guardar la alimentación | Ocurrió un error al buscar el usuario"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
     }
 }

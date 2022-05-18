@@ -1,0 +1,29 @@
+{
+    "get": {
+        "tags": [
+            "Circunferencias usuarios"
+        ],
+        "summary": "Muestra los datos extras del usuario",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/CircunferenciaUsuario.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error al buscar los datos extras del usuario"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+
+}

@@ -1,0 +1,29 @@
+{
+    "get": {
+        "tags": [
+            "Compos Corp usuarios"
+        ],
+        "summary": "Muestra los Compos Corp del usuario",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/ComposCorpUsuario.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ninguna información de composición corporal de los usuarios"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+
+}

@@ -1,0 +1,123 @@
+{
+    "get": {
+        "tags": [
+            "Circunferencias usuarios"
+        ],
+        "summary": "Muestra los datos de circunferencia del usuario",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/CircunferenciaUsuario.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "El usuario no tiene datos de circunferencias todavia"
+            },
+            "500": {
+                "description": "Ocurrio un error al guardar los datos de circunferencias"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "post": {
+        "tags": [
+            "Circunferencias usuarios"
+        ],
+        "summary": "Agrega una nueva circunferencia al usuario",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../../../schemas/CircunferenciaUsuario.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Creado correctamente"
+            },
+            "401": {
+                "description": "Acceso no autorizado. | Son necesarios los usuarios"
+            },
+            "400": {
+                "description": "No se pudieron agregar datos de circunferencias"
+            },
+            "500": {
+                "description": "Ocurrió un error al guardar los datos de circunferencias"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "patch": {
+        "tags": [
+            "Circunferencias usuarios"
+        ],
+        "summary": "Actualiza la circunferencia del usuario",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../../../schemas/CircunferenciaUsuario.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "ok"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudieron agregar datos de circunferencias"
+            },
+            "500": {
+                "description": "El usuario no existe. | No se pudo guardar la alimentación | Ocurrió un error al buscar el usuario"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

@@ -1,0 +1,120 @@
+{
+    "get": {
+        "tags": [
+            "Compos Corp usuarios"
+        ],
+        "summary": "Muestra Compos Corp al usuario",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/ComposCorpUsuario.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "El usuario no tiene datos de composición corporal todavia"
+            },
+            "500": {
+                "description": "Ocurrio un error al guardar los datos de composición corporal"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "post": {
+        "tags": [
+            "Compos Corp usuarios"
+        ],
+        "summary": "Agrega una nuevo Compos Corp del usuario",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../../../schemas/ComposCorpUsuario.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "Creado correctamente"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudieron agregar datos de composición corporal"
+            },
+            "500": {
+                "description": "Datos de composición corporal de Usuario ya registrados | Ocurrió un error al buscar los datos de composición corporal del usuario | Ocurrió un error al buscar al usuario | Ocurrió un error al guardar los datos de composición corporal"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "patch": {
+        "tags": [
+            "Compos Corp usuarios"
+        ],
+        "summary": "Actualiza el Compos Corp del usuario",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../../../schemas/ComposCorpUsuario.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "description": "ok"
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "El usuario no existe. | No se pudo guardar | Ocurrió un error al actualizar los datos de composición corporal- |  Ocurrió un error al buscar el usuario- "
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

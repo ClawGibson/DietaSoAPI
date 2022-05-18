@@ -1,0 +1,46 @@
+{
+    "get": {
+        "tags": [
+            "Chat"
+        ],
+        "summary": "Obtener chat",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }, {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Chat.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se ha encontrado el chat seleccionado"
+            },
+            "500": {
+                "description": "El usuario no tiene informacion de su alimentacion | Ocurrió un error al obtener la informacion de alimentacionn"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}
