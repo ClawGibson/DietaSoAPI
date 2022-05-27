@@ -1,0 +1,82 @@
+{
+    "get": {
+        "tags": [
+            "Verificar email"
+        ],
+        "summary": "Muestra el menu del usuario",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Usuarios.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No se logro verificar el email"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "post": {
+        "tags": [
+            "Enviar verificador"
+        ],
+        "summary": "Enviar correo verificador",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Usuarios.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Usuarios.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado"
+            },
+            "302": {
+                "description": "Usuario ya creado"
+            },
+            "400": {
+                "description": "No se pudo agregar al usuario"
+            },
+            "500": {
+                "description": "Ocurrió un error al registrar el usuario | Ocurrió un error al buscar el usuario"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}
