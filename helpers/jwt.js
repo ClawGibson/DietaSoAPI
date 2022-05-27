@@ -72,6 +72,7 @@ function authJwt() {
             `${API_URL}/recordatorios/usuario`,
             `${API_URL}/recordatorios/usuario/`,
             `${API_URL}/recordatorios/usuario/:id`,
+            `${API_URL}/piramide`,
             { url: `${API_URL}/alimentos`, methods: ['GET'] },
             { url: `${API_URL}/grupoAlimentos`, methods: ['GET'] },
             { url: `${API_URL}/recetas`, methods: ['GET'] },
