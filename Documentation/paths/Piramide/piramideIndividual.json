@@ -1,0 +1,86 @@
+{
+    "patch": {
+        "tags": [
+            "Piramide"
+        ],
+        "summary": "Actualiza los niveles de la piramide",
+        "parameters": [{
+            "in": "params",
+            "name": "id",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Piramide.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo actualizar el nivel"
+            },
+            "500": {
+                "description": "Ocurrió un error al editar la piramide"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "delete": {
+        "tags": [
+            "Piramide"
+        ],
+        "summary": "Elimina un nivel de la piramide",
+        "parameters": [{
+            "in": "params",
+            "name": "id",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Piramide.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/EstadoGeneral.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo eliminar el nivel"
+            },
+            "500": {
+                "description": "Ocurrió un error al eliminar la piramide"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

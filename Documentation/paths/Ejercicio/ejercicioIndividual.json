@@ -1,0 +1,86 @@
+{
+    "patch": {
+        "tags": [
+            "Ejercicio"
+        ],
+        "summary": "Actualiza el ejercicio",
+        "parameters": [{
+            "in": "params",
+            "name": "ejercicio",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Ejercicio.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Ejercicio.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontró el ejercicio"
+            },
+            "500": {
+                "description": "Error al actualizar un ejercicio."
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "delete": {
+        "tags": [
+            "Ejercicio"
+        ],
+        "summary": "Actualiza el ejercicio",
+        "parameters": [{
+            "in": "params",
+            "name": "ejercicio",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Ejercicio.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontró el ejercicio"
+            },
+            "500": {
+                "description": "Error al eliminar un ejercicio."
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

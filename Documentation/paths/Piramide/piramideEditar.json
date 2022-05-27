@@ -1,0 +1,46 @@
+{
+    "patch": {
+        "tags": [
+            "Piramide"
+        ],
+        "summary": "Actualiza los niveles de la piramide",
+        "parameters": [{
+            "in": "query",
+            "name": "id",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }, {
+            "in": "query",
+            "name": "url",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Piramide.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo actualizar el nivel"
+            },
+            "500": {
+                "description": "Ocurrió un error al editar la piramide"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

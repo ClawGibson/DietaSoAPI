@@ -1,0 +1,29 @@
+{
+    "get": {
+        "tags": [
+            "lactancia Usuarios"
+        ],
+        "summary": "Muestra la lactancia de los usuarios",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/LactanciaUsuarios.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ninguna información de lactancia de los usuarios"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+
+}

@@ -1,0 +1,70 @@
+{
+    "get": {
+        "tags": [
+            "RecetasURL"
+        ],
+        "summary": "Obtiene las recetas",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/RecetasURL.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No se encontraron videos"
+            },
+            "500": {
+                "description": "Ocurrió un error al obtener los videos"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "post": {
+        "tags": [
+            "RecertasURL"
+        ],
+        "summary": "Guarda un video",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/RecetasURL.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/RecetasURL.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo guardar el video"
+            },
+            "500": {
+                "description": "Ocurrió un error al crear un video"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

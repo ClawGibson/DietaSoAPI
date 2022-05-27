@@ -1,0 +1,37 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "paso1": {
+            "type": "Boolean",
+            "default": false
+        },
+        "paso2": {
+            "type": "Boolean",
+            "default": false
+        },
+        "paso3": {
+            "type": "Boolean",
+            "default": false
+        },
+        "paso4": {
+            "type": "Boolean",
+            "default": false
+        },
+        "paso5": {
+            "type": "Boolean",
+            "default": false
+        }
+    },
+    "required": [
+        "usuario",
+        "paso1",
+        "paso2",
+        "paso3",
+        "paso4",
+        "paso5"
+    ]
+}

@@ -1,0 +1,96 @@
+{
+    "get": {
+        "tags": [
+            "Menu por usuario"
+        ],
+        "summary": "Muestra el menu del usuario",
+        "parameters": [{
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            },
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            },
+            {
+                "in": "query",
+                "name": "usuario",
+                "schema": {
+                    "type": "string"
+                },
+                "required": true
+            }
+        ],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/MenuPorUsuario.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No se encontró el registro"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "post": {
+        "tags": [
+            "Menu por usuario"
+        ],
+        "summary": "Se creo un nuevo menu por usuario",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/MenuPorUsuario.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/MenuPorUsuario.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado"
+            },
+            "204": {
+                "description": "No se pudo crear el menu por usuario"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

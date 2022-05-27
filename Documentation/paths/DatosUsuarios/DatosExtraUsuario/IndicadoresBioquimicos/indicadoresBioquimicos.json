@@ -1,0 +1,29 @@
+{
+    "get": {
+        "tags": [
+            "indicadoresBioquimicos"
+        ],
+        "summary": "Muestra los indicadores Bioquimicos de los usuarios",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/IndicadoresBioquimicos.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ninguna información de indicadores bioquimicos de los usuarios"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+
+}

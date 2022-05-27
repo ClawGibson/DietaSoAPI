@@ -1,0 +1,52 @@
+{
+    "type": "object",
+    "properties": {
+        "informacionPersonal": {
+            "type": "Boolean",
+            "default": false
+        },
+        "circunferencia": {
+            "type": "Boolean",
+            "default": false
+        },
+        "camposCorporales": {
+            "type": "Boolean",
+            "default": false
+        },
+        "estadoGeneral": {
+            "type": "Boolean",
+            "default": false
+        },
+        "exposicionSolar": {
+            "type": "Boolean",
+            "default": false
+        },
+        "gastroIntestinal": {
+            "type": "Boolean",
+            "default": false
+        },
+        "bioquimicos": {
+            "type": "Boolean",
+            "default": false
+        },
+        "clinicos": {
+            "type": "Boolean",
+            "default": false
+        },
+        "sueno": {
+            "type": "Boolean",
+            "default": false
+        }
+    },
+    "required": [
+        "informacionPersonal",
+        "circunferencia",
+        "camposCorporales",
+        "estadoGeneral",
+        "exposicionSolar",
+        "gastroIntestinal",
+        "bioquimicos",
+        "clinicos",
+        "sueno"
+    ]
+}

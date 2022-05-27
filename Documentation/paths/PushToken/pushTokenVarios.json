@@ -1,0 +1,39 @@
+{
+    "get": {
+        "tags": [
+            "PushToken"
+        ],
+        "summary": "Obtiene el pushtoken de varios",
+        "parameters": [{
+            "in": "query",
+            "name": "seleccionado",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/PushTokens.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No hay datos"
+            },
+            "500": {
+                "description": "Error al obtener varios datos de PushToken"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "properties": {
+        "user": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "publicacion": {
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "required": [
+        "user",
+        "publicacion"
+    ]
+}

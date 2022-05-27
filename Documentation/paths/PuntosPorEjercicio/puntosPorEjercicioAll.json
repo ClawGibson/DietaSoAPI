@@ -1,0 +1,31 @@
+{
+    "get": {
+        "tags": [
+            "Puntos por ejercicio"
+        ],
+        "summary": "Muestra los puntos por ejercicio de todos",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/PuntosPorEjercicio.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontraron puntos por ejercicio"
+            },
+            "500": {
+                "description": "Error al obtener los puntos por ejercicio"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

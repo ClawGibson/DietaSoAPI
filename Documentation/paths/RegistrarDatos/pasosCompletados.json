@@ -1,0 +1,80 @@
+{
+    "post": {
+        "tags": [
+            "Pasos completados"
+        ],
+        "summary": "Agregar pasos",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/PasosCompletados.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/PasosCompletados.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No se pudo agregar los pasos"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "patch": {
+        "tags": [
+            "Pasos completados"
+        ],
+        "summary": "Guardar pasos",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/PasosCompletados.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/PasosCompletados.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No se pudo guardar los pasos"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

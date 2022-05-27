@@ -1,0 +1,87 @@
+{
+    "get": {
+        "tags": [
+            "Comments"
+        ],
+        "summary": "Obtenemos el comentario de un usuario",
+        "parameters": [{
+            "in": "params",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Comment.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "El usuario no tiene comentarios"
+            },
+            "500": {
+                "description": "No se pudo obtener los comentarios del usuario"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "post": {
+        "tags": [
+            "Comments"
+        ],
+        "summary": "Agrega un nuevo comentario",
+        "parameters": [{
+            "in": "params",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Comment.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Comment.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado"
+            },
+            "400": {
+                "description": "No se logro guardar un nuevo comentario"
+            },
+            "500": {
+                "description": "Error al guardar un comentario nuevo"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

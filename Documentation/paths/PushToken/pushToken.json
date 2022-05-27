@@ -1,0 +1,70 @@
+{
+    "post": {
+        "tags": [
+            "PushToken"
+        ],
+        "summary": "Crea un nuevo PushToken",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/PushTokens.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "../../schemas/PushTokens.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "es necesario mandar información en la petición"
+            },
+            "500": {
+                "description": "Ocurrio un error al crear el PushToken"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "get": {
+        "tags": [
+            "PushToken"
+        ],
+        "summary": "Obtiene el PushToken",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/PushTokens.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Ocurrió un error al obtener el PushToken"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

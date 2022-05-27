@@ -1,0 +1,71 @@
+{
+    "get": {
+        "tags": [
+            "Uso"
+        ],
+        "summary": "Obtener el uso de aplicacion",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Uso.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No hay registros"
+            },
+            "500": {
+                "description": "Ocurrió un error al obtener los registros de uso de la aplicación"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "post": {
+        "tags": [
+            "Uso"
+        ],
+        "summary": "Agregar un nuevo registro de uso de apliacion",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Uso.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Uso.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado"
+            },
+            "400": {
+                "description": "No se pudo guardar el registro"
+            },
+            "500": {
+                "description": "Ocurrió un error al crear los registros de uso de la aplicación"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "type": "object",
+    "properties": {
+        "ejercicio": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "grupo": {
+            "type": "string"
+        },
+        "duracion": {
+            "type": "string"
+        },
+        "intensidad": {
+            "type": "string"
+        },
+        "puntos": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "ejercicio",
+        "grupo",
+        "duracion",
+        "intensidad",
+        "puntos"
+    ]
+}

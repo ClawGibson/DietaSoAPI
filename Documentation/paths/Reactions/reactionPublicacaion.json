@@ -1,0 +1,78 @@
+{
+    "get": {
+        "tags": [
+            "Reaction"
+        ],
+        "summary": "Obtiene las reacciones por publicacion",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Reaction.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error en el servidor"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "delete": {
+        "tags": [
+            "Menu por usuario"
+        ],
+        "summary": "Actualizar el registro",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }, {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Reaction.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

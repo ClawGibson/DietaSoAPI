@@ -1,0 +1,109 @@
+{
+    "get": {
+        "tags": [
+            "Opciones registro"
+        ],
+        "summary": "Muestra las opciones registro",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../schemas/OpcionesRegistro.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No se encontraron opciones de registro"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "post": {
+        "tags": [
+            "Opciones registro"
+        ],
+        "summary": "Se creo una nueva opcion registro",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../../schemas/OpcionesRegistro.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../schemas/OpcionesRegistro.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado"
+            },
+            "204": {
+                "description": "No se pudo agregar las opciones de registro"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "patch": {
+        "tags": [
+            "Opciones registro"
+        ],
+        "summary": "Modificar la opcion registro",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../../schemas/OpcionesRegistro.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../schemas/OpcionesRegistro.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado"
+            },
+            "204": {
+                "description": "No se pudo guardar las opciones de registro"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

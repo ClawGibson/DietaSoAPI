@@ -1,0 +1,29 @@
+{
+    "get": {
+        "tags": [
+            "indicadores Sueño"
+        ],
+        "summary": "Muestra los indicadores de Sueño de los usuarios",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/IndicadoresSeño.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ninguna información de los indicadores de Sueño de los usuarios"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+
+}

@@ -1,9 +1,9 @@
 {
     "get": {
         "tags": [
-            "Compos Corp usuarios"
+            "Estado general"
         ],
-        "summary": "Muestra Compos Corp al usuario",
+        "summary": "Muestra el estado general del usuario",
         "parameters": [{
             "in": "query",
             "name": "usuario",
@@ -17,7 +17,7 @@
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "../../../../schemas/ComposCorpUsuario.json"
+                            "$ref": "../../../../schemas/EstadoGeneral.json"
                         }
                     }
                 }
@@ -26,10 +26,10 @@
                 "description": "Acceso no autorizado."
             },
             "204": {
-                "description": "El usuario no tiene datos de composición corporal todavia"
+                "description": "El usuario no tiene datos de estado general todavia"
             },
             "500": {
-                "description": "Ocurrio un error al guardar los datos de composición corporal"
+                "description": "Ocurrio un error al guardar los datos de estado general"
             }
         },
         "security": [{
@@ -39,9 +39,9 @@
 
     "post": {
         "tags": [
-            "Compos Corp usuarios"
+            "Estado general"
         ],
-        "summary": "Agrega una nuevo Compos Corp del usuario",
+        "summary": "Agrega nuevos datos generales al usuario",
         "parameters": [{
             "in": "query",
             "name": "usuario",
@@ -55,23 +55,29 @@
             "content": {
                 "application/json": {
                     "schema": {
-                        "$ref": "../../../../schemas/ComposCorpUsuario.json"
+                        "$ref": "../../../../schemas/EstadoGeneral.json"
                     }
                 }
             }
         },
         "responses": {
             "200": {
-                "description": "Creado correctamente"
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/EstadoGeneral.json"
+                        }
+                    }
+                }
             },
             "401": {
                 "description": "Acceso no autorizado."
             },
             "400": {
-                "description": "No se pudieron agregar datos de composición corporal"
+                "description": "No se pudieron agregar datos de estado general"
             },
             "500": {
-                "description": "Datos de composición corporal de Usuario ya registrados | Ocurrió un error al buscar los datos de composición corporal del usuario | Ocurrió un error al buscar al usuario | Ocurrió un error al guardar los datos de composición corporal"
+                "description": "Ocurrió un error al guardar los datos de estado general"
             }
         },
         "security": [{
@@ -81,7 +87,7 @@
 
     "patch": {
         "tags": [
-            "Compos Corp usuarios"
+            "Estado general"
         ],
         "summary": "Actualiza el Compos Corp del usuario",
         "parameters": [{
@@ -97,7 +103,7 @@
             "content": {
                 "application/json": {
                     "schema": {
-                        "$ref": "../../../../schemas/ComposCorpUsuario.json"
+                        "$ref": "../../../../schemas/EstadoGeneral.json"
                     }
                 }
             }
@@ -107,7 +113,7 @@
                 "content": {
                     "application/json": {
                         "schema": {
-                            "$ref": "../../../../schemas/ComposCorpUsuario.json.json"
+                            "$ref": "../../../../schemas/EstadoGeneral.json"
                         }
                     }
                 }
@@ -115,8 +121,11 @@
             "401": {
                 "description": "Acceso no autorizado."
             },
+            "400": {
+                "description": "No se pudo actualizar"
+            },
             "500": {
-                "description": "El usuario no existe. | No se pudo guardar | Ocurrió un error al actualizar los datos de composición corporal- |  Ocurrió un error al buscar el usuario- "
+                "description": "Ocurrió un error al actualizar los datos de estado general-"
             }
         },
         "security": [{

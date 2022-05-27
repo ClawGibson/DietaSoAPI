@@ -1,0 +1,68 @@
+{
+    "get": {
+        "tags": [
+            "Ejercicio"
+        ],
+        "summary": "Muestra los ejercicio de los usuarios",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Ejercicio.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No hay ejercicios"
+            },
+            "500": {
+                "description": "Error al obtener los ejercicios"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "post": {
+        "tags": [
+            "Ejercicio"
+        ],
+        "summary": "Crea un nuevo ejercicio",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Ejercicio.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Ejercicio.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado. | Son necesarios los usuarios"
+            },
+            "500": {
+                "description": "Error al crear un ejercicio"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+
+}

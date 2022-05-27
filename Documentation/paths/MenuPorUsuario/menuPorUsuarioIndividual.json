@@ -1,0 +1,87 @@
+{
+    "get": {
+        "tags": [
+            "Menu por usuario"
+        ],
+        "summary": "Muestra el menu del usuario",
+        "parameters": [{
+            "in": "params",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/MenuPorUsuario.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No se encontró el registro"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+
+    "put": {
+        "tags": [
+            "Menu por usuario"
+        ],
+        "summary": "Actualizar el registro",
+        "parameters": [{
+            "in": "params",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/MenuPorUsuario.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/MenuPorUsuario.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado"
+            },
+            "400": {
+                "description": "No se pudo actualizar el registro"
+            },
+            "500": {
+                "description": "Ocurrió un error inesperado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

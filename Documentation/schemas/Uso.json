@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "fecha": {
+            "type": "Date",
+            "default": "Date.now()"
+        },
+        "estado": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usuario",
+        "fecha",
+        "estado"
+    ]
+}

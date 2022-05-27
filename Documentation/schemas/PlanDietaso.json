@@ -1,0 +1,17 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "plan": {
+            "type": "string",
+            "format": "uuid"
+        }
+    },
+    "required": [
+        "usuario",
+        "plan"
+    ]
+}

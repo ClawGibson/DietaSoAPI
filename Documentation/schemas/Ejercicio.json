@@ -1,0 +1,19 @@
+{
+    "type": "object",
+    "properties": {
+        "nombre": {
+            "type": "string"
+        },
+        "categoria": {
+            "type": "string"
+        },
+        "imagen": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "nombre",
+        "categoria",
+        "imagen"
+    ]
+}

@@ -1,0 +1,86 @@
+{
+    "patch": {
+        "tags": [
+            "RecetasURL"
+        ],
+        "summary": "Modifica las recetas",
+        "parameters": [{
+            "in": "params",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/RecetasURL.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/RecetasURL.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo actualizar el video"
+            },
+            "500": {
+                "description": "Ocurrió un error al actualizar un video"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "delete": {
+        "tags": [
+            "RecertasURL"
+        ],
+        "summary": "Elimina un video",
+        "parameters": [{
+            "in": "params",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/RecetasURL.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo eliminar el video"
+            },
+            "500": {
+                "description": "Ocurrió un error al eliminar un video"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

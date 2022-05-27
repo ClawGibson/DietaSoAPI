@@ -1,0 +1,73 @@
+{
+    "get": {
+        "tags": [
+            "Piramide"
+        ],
+        "summary": "Obtiene los niveles de la piramide",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "../../schemas/Piramide.json"
+                            }
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No hay niveles"
+            },
+            "500": {
+                "description": "Ocurrió un error al las imágenes por niveles"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "post": {
+        "tags": [
+            "Piramide"
+        ],
+        "summary": "Agrega un nivel a la piramide",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/Piramide.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Piramide.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "No se pudo agregar el nivel"
+            },
+            "500": {
+                "description": "Ocurrió un error al crear la piramide"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

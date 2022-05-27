@@ -1,0 +1,29 @@
+{
+    "type": "object",
+    "properties": {
+        "usuario": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "menu": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "categoria": {
+            "type": "string"
+        },
+        "hora": {
+            "type": "string"
+        },
+        "dia": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "usuario",
+        "menu",
+        "categoria",
+        "hora",
+        "dia"
+    ]
+}

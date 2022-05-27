@@ -1,0 +1,29 @@
+{
+    "get": {
+        "tags": [
+            "Gastro intestinales"
+        ],
+        "summary": "Muestra los Gastro intestinales de los usuarios",
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/Gastrointestinales.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "No se encontro ninguna información gastrointestinal de los usuarios"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+
+}

@@ -1,0 +1,41 @@
+{
+    "patch": {
+        "tags": [
+            "PushToken"
+        ],
+        "summary": "Actualiza el pushToken",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/PushTokens.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/PushTokens.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "400": {
+                "description": "Ha ocurrido un error"
+            },
+            "500": {
+                "description": "Ocurrio un error al actualizar el PushToken"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

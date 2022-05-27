@@ -62,7 +62,13 @@
         },
         "responses": {
             "200": {
-                "description": "Creado correctamente"
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../../../schemas/CircunferenciaUsuario.json"
+                        }
+                    }
+                }
             },
             "401": {
                 "description": "Acceso no autorizado. | Son necesarios los usuarios"

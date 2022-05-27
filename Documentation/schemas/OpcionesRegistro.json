@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "properties": {
+        "registroLibre": {
+            "type": "Boolean",
+            "default": false
+        }
+    },
+    "required": [
+        "registroLibre"
+
+    ]
+}

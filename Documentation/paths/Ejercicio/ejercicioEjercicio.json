@@ -1,0 +1,39 @@
+{
+    "get": {
+        "tags": [
+            "Ejercicio"
+        ],
+        "summary": "Obtener el ejercicio",
+        "parameters": [{
+            "in": "params",
+            "name": "ejercicio",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Ejercicio.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No hay ejercicio"
+            },
+            "500": {
+                "description": "Error al obtener el ejercicio buscado"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

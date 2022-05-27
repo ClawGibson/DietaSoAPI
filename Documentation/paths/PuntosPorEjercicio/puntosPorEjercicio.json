@@ -1,0 +1,96 @@
+{
+    "get": {
+        "tags": [
+            "Puntos por ejercicio"
+        ],
+        "summary": "Muestra los puntos por ejercicio",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }, {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }, {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }, {
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/PuntosPorEjercicio.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "404": {
+                "description": "No se encontraron puntos del ejercicio proporcionado"
+            },
+            "500": {
+                "description": "Error al obtener los puntos por ejercicio"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    },
+    "post": {
+        "tags": [
+            "Puntos por ejercicio"
+        ],
+        "summary": "Muestra los puntos por ejercicio",
+        "requestBody": {
+            "required": true,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../../schemas/PuntosPorEjercicio.json"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/PuntosPorEjercicio.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "500": {
+                "description": "Error al crear un registro en puntos por ejercicio | No se pudo guardar los puntos por ejercicio"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

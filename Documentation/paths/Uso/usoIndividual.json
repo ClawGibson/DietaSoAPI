@@ -1,0 +1,39 @@
+{
+    "get": {
+        "tags": [
+            "Uso"
+        ],
+        "summary": "Obtener el uso de aplicacion de un usuario",
+        "parameters": [{
+            "in": "query",
+            "name": "usuario",
+            "schema": {
+                "type": "string"
+            },
+            "required": true
+        }],
+        "responses": {
+            "200": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "../../schemas/Uso.json"
+                        }
+                    }
+                }
+            },
+            "401": {
+                "description": "Acceso no autorizado."
+            },
+            "204": {
+                "description": "No hay registros"
+            },
+            "500": {
+                "description": "Ocurrió un error al obtener los registros de uso de la aplicación de un usuario"
+            }
+        },
+        "security": [{
+            "bearer": []
+        }]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "type": "object",
+    "properties": {
+        "url": {
+            "type": "string"
+        },
+        "titulo": {
+            "type": "string"
+        },
+        "categoria": {
+            "type": "string"
+        },
+        "destacado": {
+            "type": "string"
+        },
+        "foto": {
+            "type": "string"
+        },
+        "descripcion": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "url",
+        "titulo",
+        "categoria",
+        "destacado",
+        "foto",
+        "descripcion"
+    ]
+}
