@@ -39,46 +39,19 @@ router.get('/individual', async (req, res) => {
 
 router.post('/individual', async (req, res) => {
     try {
-        const usuarioCreado = await Usuarios.findOne({
+        let dGastrointestinales = new Gastrointestinales({
             usuario: req.query.usuario,
+            inflamacionAbdominal: req.body.inflamacionAbdominal,
+            diarrea: req.body.diarrea,
+            estreñimiento: req.body.estreñimiento,
+            reflujo: req.body.reflujo,
         });
-        if (usuarioCreado) {
-            const infoUsuario = await Gastrointestinales.findOne({
-                usuario: req.query.usuario,
-            });
-            try {
-                if (infoUsuario)
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Datos gastrointestinales de Usuario ya registrados',
-                    });
-            } catch (err) {
-                return res.status(500).json({
-                    success: false,
-                    message: 'Ocurrió un error al buscar los datos gastrointestinales del usuario',
-                });
-            }
-        } else console.log('El usuario no existe');
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            error: err,
-            message: 'Ocurrió un error al buscar al usuario',
-        });
-    }
 
-    let dGastrointestinales = new Gastrointestinales({
-        usuario: req.query.usuario,
-        inflamacionAbdominal: req.body.inflamacionAbdominal,
-        diarrea: req.body.diarrea,
-        estreñimiento: req.body.estreñimiento,
-        reflujo: req.body.reflujo,
-    });
-
-    try {
         dGastrointestinales = await dGastrointestinales.save();
 
-        if (!dGastrointestinales) return res.status(400).send('No se pudieron agregar datos gastrointestinales');
+        if (!dGastrointestinales)
+            return res.status(400).send('No se pudieron agregar datos gastrointestinales');
+
         res.status(200).send(dGastrointestinales);
     } catch (err) {
         return res.status(500).json({
@@ -90,45 +63,31 @@ router.post('/individual', async (req, res) => {
 });
 
 router.patch('/individual', async (req, res) => {
+    const { usuario } = req.query;
+    let editarInformacionS;
     try {
-        const existeUsuario = await buscarUsuario(req.query.usuario);
-        let editarInformacionS;
-        if (!existeUsuario) return res.status(500).json({ success: false, message: 'El usuario no existe.' });
+        editarInformacionS = await Gastrointestinales.findOneAndUpdate(
+            { usuario: usuario },
+            {
+                $push: {
+                    inflamacionAbdominal: req.body.inflamacionAbdominal,
+                    diarrea: req.body.diarrea,
+                    estreñimiento: req.body.estreñimiento,
+                    reflujo: req.body.reflujo,
+                },
+            }
+        );
 
-        try {
-            editarInformacionS = await Gastrointestinales.findOneAndUpdate(
-                { usuario: existeUsuario.usuario },
-                {
-                    $push: {
-                        inflamacionAbdominal: req.body.inflamacionAbdominal,
-                        diarrea: req.body.diarrea,
-                        estreñimiento: req.body.estreñimiento,
-                        reflujo: req.body.reflujo,
-                    },
-                }
-            );
+        editarInformacionS = await editarInformacionS.save();
 
-            editarInformacionS = editarInformacionS
-                .save()
-                .then((response) => res.status(200).json({ message: 'ok' }))
-                .catch((err) =>
-                    res.status(500).json({
-                        success: false,
-                        message: 'No se pudo guardar - ',
-                        err,
-                    })
-                );
-        } catch (err) {
-            res.status(500).json({
-                success: false,
-                message: ' Ocurrió un error al actualizar los datos gastrointestinales- ',
-            });
-        }
+        if (!editarInformacionS)
+            return res.status(500).send('No se pudo editar la información');
+
+        res.status(200).send(editarInformacionS);
     } catch (err) {
         res.status(500).json({
             success: false,
-            error: err,
-            message: ' Ocurrió un error al buscar el usuario- ',
+            message: ' Ocurrió un error al actualizar los datos gastrointestinales- ',
         });
     }
 });

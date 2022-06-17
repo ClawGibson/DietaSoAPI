@@ -46,7 +46,9 @@ router.post('/individual', async (req, res) => {
         // Modifcar el post para agregar el objeto en forma de array.
         dEstadoGeneral = await dEstadoGeneral.save();
 
-        if (!dEstadoGeneral) return res.status(400).send('No se pudieron agregar datos de estado general');
+        if (!dEstadoGeneral)
+            return res.status(400).send('No se pudieron agregar datos de estado general');
+
         res.status(200).send(dEstadoGeneral);
     } catch (err) {
         console.log('errror', err);

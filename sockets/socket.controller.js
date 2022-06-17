@@ -3,17 +3,20 @@ const Usuario = require('../models/Usuarios');
 const Message = require('../models/Message/message');
 const InformacionUsuarios = require('../models/InformacionUsuarios');
 
+const page = 1;
+const limit = 15;
+
 const socketController = (socket) => {
     socket.on('get-chat', async ({ id, isAdmin, patientId }) => {
+        const users = [];
         let userPatientId;
+        let messages = [];
 
         if (patientId) {
             userPatientId = await InformacionUsuarios.findOne({
                 _id: patientId,
             });
         }
-
-        const users = [];
 
         //Get User chat
         let chat = await Chat.findOne({
@@ -32,10 +35,6 @@ const socketController = (socket) => {
             console.log('EL administrador creo el chat');
             users.push(id, userPatientId.usuario);
         }
-
-        let messages = [];
-        const page = 1;
-        const limit = 15;
 
         if (!chat) {
             chat = new Chat({ users });
