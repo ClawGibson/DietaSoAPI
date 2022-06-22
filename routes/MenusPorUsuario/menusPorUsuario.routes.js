@@ -31,7 +31,9 @@ router.get('/', async (req, res) => {
 
 router.get('/all', async (req, res) => {
     try {
-        const menusPorUsuario = await MenusPorUsuario.find().populate('menu usuario').select('-contrasena');
+        const menusPorUsuario = await MenusPorUsuario.find()
+            .populate('menu usuario')
+            .select('-contrasena');
 
         if (!menusPorUsuario || menusPorUsuario.length === 0)
             return res.status(204).send({
@@ -75,11 +77,12 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { usuario, menus, dia, hora, categoria } = req.body;
+        const { usuario, menus, dia, hora, categoria, ingredientes } = req.body;
 
         let menusPorUsuario = new MenusPorUsuario({
             usuario: mongoose.Types.ObjectId(usuario),
             menu: mongoose.Types.ObjectId(menus),
+            ingredientes: ingredientes,
             categoria: categoria,
             hora: hora,
             dia: dia,
