@@ -77,13 +77,14 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { usuario, menus, dia, hora, categoria, ingredientes } = req.body;
+        const { usuario, menus, dia, hora, categoria, ingredientes, titulo } = req.body;
 
         let menusPorUsuario = new MenusPorUsuario({
             usuario: mongoose.Types.ObjectId(usuario),
             menu: mongoose.Types.ObjectId(menus),
             ingredientes: ingredientes,
             categoria: categoria,
+            titulo: titulo,
             hora: hora,
             dia: dia,
         });
