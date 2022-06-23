@@ -11,6 +11,7 @@ const menusPorUsuarioSchema = new Schema({
             unidad: { type: String },
         },
     ],
+    titulo: { type: String },
     categoria: { type: String, required: true },
     hora: { type: String, required: true },
     dia: { type: String, required: true },
