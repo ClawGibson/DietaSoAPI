@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 router.get('/all/', async (req, res) => {
     try {
         const alimentosLista = await Alimentos.find().select(
-            'id nombreAlimento'
+            'id nombreAlimento imagen grupoAlimento'
         );
 
         if (!alimentosLista) return res.status(500).json({ success: false });
@@ -126,10 +126,7 @@ router.get('/grupo/nombreGrupo', async (req, res) => {
             sort: { nombreAlimento: 'asc' },
         };
 
-        const alimentos = await Alimentos.paginate(
-            { grupoAlimento: nombreGrupo },
-            options
-        );
+        const alimentos = await Alimentos.paginate({ grupoAlimento: nombreGrupo }, options);
 
         if (!alimentos)
             return res.status(204).send({
@@ -152,8 +149,7 @@ router.post('/', async (req, res) => {
             grupoDeAlimento: req.body.grupoAlimento,
         });
 
-        if (!grupoAlimento)
-            return res.status(400).send('Grupo de alimento inválido');
+        if (!grupoAlimento) return res.status(400).send('Grupo de alimento inválido');
 
         let alimento = new Alimentos({
             nombreAlimento: req.body.nombreAlimento,
@@ -182,8 +178,7 @@ router.post('/', async (req, res) => {
 
         alimento = await alimento.save();
 
-        if (!alimento)
-            return res.status(400).send('No se pudo crear el alimento :c');
+        if (!alimento) return res.status(400).send('No se pudo crear el alimento :c');
 
         res.send(alimento);
     } catch (error) {
@@ -229,16 +224,12 @@ router.patch('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         if (!mongoose.isValidObjectId(req.params.id))
-            return res
-                .status(204)
-                .send({ message: 'El ID del alimento no es válido.' });
+            return res.status(204).send({ message: 'El ID del alimento no es válido.' });
 
         const alimento = await Alimentos.findByIdAndRemove(req.params.id);
 
         if (!alimento)
-            return res
-                .status(404)
-                .send('No se encontró el alimento a eliminar :c');
+            return res.status(404).send('No se encontró el alimento a eliminar :c');
 
         res.status(200).send('Alimento eliminado :D!');
     } catch (error) {
