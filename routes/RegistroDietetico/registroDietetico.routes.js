@@ -38,14 +38,30 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/exports', async (req, res) => {
+    try {
+        const buscarRegistros = await RegistroDietetico.find().populate({
+            path: 'alimentos',
+            populate: { path: 'id' },
+        });
+
+        if (!buscarRegistros)
+            return res.status(404).send({
+                succes: false,
+                message: 'No se encontraron registros',
+            });
+        res.send(buscarRegistros);
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
+
 router.get('/detalles', async (req, res) => {
     try {
         const usuario = await buscarUsuario(req.query.usuario);
 
         if (!usuario)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el usuario proporcionado' });
+            return res.status(404).send({ Error: 'No se encontró el usuario proporcionado' });
 
         const registrosDeUsuario = await RegistroDietetico.find({
             usuario: mongoose.Types.ObjectId(req.query.usuario),
@@ -77,9 +93,7 @@ router.post('/', async (req, res) => {
         nuevoRegistroDietetico = nuevoRegistroDietetico.save();
 
         if (!nuevoRegistroDietetico)
-            return res
-                .status(500)
-                .json({ error: 'Error al guardar el registro' });
+            return res.status(500).json({ error: 'Error al guardar el registro' });
         res.status(200).send(nuevoRegistroDietetico);
     } catch (error) {
         return res.status(500).json({ error: error.message });
@@ -91,9 +105,7 @@ router.patch('/modificarRegistro', async (req, res) => {
         const usuario = await buscarUsuario(req.query.usuario);
 
         if (!usuario)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el usuario proporcionado' });
+            return res.status(404).send({ Error: 'No se encontró el usuario proporcionado' });
 
         const existeAlimento = await buscarAlimento(req.body.idAlimento);
 
@@ -126,9 +138,7 @@ router.patch('/modificarRegistro', async (req, res) => {
             registro = registro[0].save();
 
             if (!registro)
-                return res
-                    .status(500)
-                    .json({ error: 'Error al guardar el registro' });
+                return res.status(500).json({ error: 'Error al guardar el registro' });
             res.status(200).send('Actualizado');
         } else {
             registro[0].alimentos = [
@@ -147,15 +157,11 @@ router.patch('/modificarRegistro', async (req, res) => {
             registro = registro[0].save();
 
             if (!registro)
-                return res
-                    .status(500)
-                    .json({ error: 'Error al guardar el registro' });
+                return res.status(500).json({ error: 'Error al guardar el registro' });
             res.status(200).send('Registro creado');
         }
     } catch (error) {
-        return res
-            .status(500)
-            .json({ message: 'Algo salió mal', error: error.message });
+        return res.status(500).json({ message: 'Algo salió mal', error: error.message });
     }
 });
 
@@ -164,9 +170,7 @@ router.patch('/eliminarAlimentoDeRegistro', async (req, res) => {
         const usuario = await buscarUsuario(req.query.usuario);
 
         if (!usuario)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el usuario proporcionado' });
+            return res.status(404).send({ Error: 'No se encontró el usuario proporcionado' });
 
         const existeAlimento = await buscarAlimento(req.body.idAlimento);
 
