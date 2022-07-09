@@ -9,7 +9,11 @@ const alimentosSchema = new Schema(
         grupoExportable: { type: String, required: false, default: '' },
         subGrupoExportable: { type: String, required: false, default: '' },
         clasificacionExportable: { type: String, required: false, default: '' },
+        subGrupoAdecuada: { type: String, required: false, default: '' },
         grupoAlimento: { type: String, required: true },
+        opcionesPreparacion: [String],
+        marca: { type: String, required: false, default: '' },
+        nivelPiramide: { type: Number, required: false },
         mensaje: {
             nutricional: { type: String, required: false, default: '' },
             ambiental: { type: String, required: false, default: '' },
@@ -34,7 +38,6 @@ const alimentosSchema = new Schema(
                 default: '',
             },
         },
-        opcionesPreparacion: [String],
         cantidadAlimento: {
             cantidadSugerida: { Number, required: false, default: 0 },
             unidad: { type: String, required: false, default: '' },
@@ -217,7 +220,6 @@ const alimentosSchema = new Schema(
                 },
             },
         ],
-        marca: { type: String, required: false, default: '' },
     },
     {
         timestamps: true,
