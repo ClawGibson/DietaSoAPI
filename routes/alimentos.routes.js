@@ -151,36 +151,13 @@ router.post('/', async (req, res) => {
 
         if (!grupoAlimento) return res.status(400).send('Grupo de alimento inválido');
 
-        let alimento = new Alimentos({
-            nombreAlimento: req.body.nombreAlimento,
-            sku: req.body.sku,
-            imagen: req.body.imagen,
-            grupoExportable: req.body.grupoExportable,
-            subGrupoExportable: req.body.subGrupoExportable,
-            clasificacionExportable: req.body.clasificacionExportable,
-            grupoAlimento: req.body.grupoAlimento,
-            mensaje: req.body.mensaje,
-            icono: req.body.icono,
-            opcionesPreparacion: req.body.opcionesPreparacion,
-            cantidadAlimento: req.body.cantidadAlimento,
-            caloriasMacronutrientes: req.body.caloriasMacronutrientes,
-            vitaminas: req.body.vitaminas,
-            minerales: req.body.minerales,
-            aspectoGlucemico: req.body.aspectoGlucemico,
-            aspectoMedioambiental: req.body.aspectoMedioambiental,
-            aspectoEconomico: req.body.aspectoEconomico,
-            componentesBioactivos: req.body.componentesBioactivos,
-            aditivosAlimentarios: req.body.aditivosAlimentarios,
-            atributosAdicionales: req.body.atributosAdicionales,
-            marca: req.body.marca,
-            puntos: req.body.puntos,
-        });
+        let alimento = new Alimentos({ ...req.body });
 
         alimento = await alimento.save();
 
         if (!alimento) return res.status(400).send('No se pudo crear el alimento :c');
 
-        res.send(alimento);
+        res.status(200).send(alimento);
     } catch (error) {
         console.log('Error al crear el alimento', error);
         res.status(500).send({
@@ -193,19 +170,13 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     const ID = req.params.id;
 
-    console.log('ID', ID);
-
     try {
         const alimentoEditar = await Alimentos.findByIdAndUpdate(
             ID,
-            {
-                ...req.body,
-            },
-            {
-                new: true, // Return the new product.
-            }
+            { ...req.body },
+            { new: true }
         );
-        console.log('alimentoEditar', alimentoEditar);
+
         if (!alimentoEditar)
             return res.status(204).send({
                 message: 'El producto no se encontró o no se pudo editar :c',
