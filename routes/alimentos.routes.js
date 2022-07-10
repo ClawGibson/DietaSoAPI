@@ -88,26 +88,6 @@ router.get('/buscarNombre', async (req, res) => {
     }
 });
 
-router.get('/piramide/nivel', async (req, res) => {
-    try {
-        const { nivel } = req.query;
-
-        const food = Alimentos.find({ nivelPiramide: nivel }).select(
-            'id nombreAlimento imagen nivelPiramide'
-        );
-
-        if (!food) return res.status(500).json({ success: false });
-
-        res.status(200).send(food);
-    } catch (error) {
-        console.log('Error al otener los alimentos', error);
-        return res.status(500).send({
-            message: 'Error al otener los alimentos',
-            error: error,
-        });
-    }
-});
-
 router.get('/', async (req, res) => {
     try {
         const { page, limit = 16 } = req.query;
@@ -127,6 +107,26 @@ router.get('/', async (req, res) => {
             });
 
         res.status(200).send(alimentos.docs);
+    } catch (error) {
+        console.log('Error al otener los alimentos', error);
+        return res.status(500).send({
+            message: 'Error al otener los alimentos',
+            error: error,
+        });
+    }
+});
+
+router.get('/piramide/nivel', async (req, res) => {
+    try {
+        const { nivel } = req.query;
+
+        const food = await Alimentos.find({ nivelPiramide: nivel }).select(
+            'id nombreAlimento imagen'
+        );
+
+        if (!food) return res.status(500).json({ success: false });
+
+        res.status(200).send(food);
     } catch (error) {
         console.log('Error al otener los alimentos', error);
         return res.status(500).send({
