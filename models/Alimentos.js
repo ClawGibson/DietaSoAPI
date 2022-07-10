@@ -13,7 +13,7 @@ const alimentosSchema = new Schema(
         grupoAlimento: { type: String, required: true },
         opcionesPreparacion: [String],
         marca: { type: String, required: false, default: '' },
-        nivelPiramide: { type: Number, required: false },
+        nivelPiramide: { type: String, required: false, default: '' },
         mensaje: {
             nutricional: { type: String, required: false, default: '' },
             ambiental: { type: String, required: false, default: '' },

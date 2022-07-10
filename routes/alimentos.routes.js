@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 router.get('/all/', async (req, res) => {
     try {
         const alimentosLista = await Alimentos.find().select(
-            'id nombreAlimento imagen grupoAlimento'
+            'id nombreAlimento imagen grupoAlimento nivelPiramide'
         );
 
         if (!alimentosLista) return res.status(500).json({ success: false });
@@ -88,6 +88,26 @@ router.get('/buscarNombre', async (req, res) => {
     }
 });
 
+router.get('/piramide/nivel', async (req, res) => {
+    try {
+        const { nivel } = req.query;
+
+        const food = Alimentos.find({ nivelPiramide: nivel }).select(
+            'id nombreAlimento imagen nivelPiramide'
+        );
+
+        if (!food) return res.status(500).json({ success: false });
+
+        res.status(200).send(food);
+    } catch (error) {
+        console.log('Error al otener los alimentos', error);
+        return res.status(500).send({
+            message: 'Error al otener los alimentos',
+            error: error,
+        });
+    }
+});
+
 router.get('/', async (req, res) => {
     try {
         const { page, limit = 16 } = req.query;
@@ -95,7 +115,7 @@ router.get('/', async (req, res) => {
         const options = {
             page,
             limit,
-            select: 'nombreAlimento imagen grupoAlimento',
+            select: 'nombreAlimento imagen grupoAlimento nivelPiramide',
             sort: { nombreAlimento: 'asc' },
         };
 
