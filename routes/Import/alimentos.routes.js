@@ -20,7 +20,9 @@ router.post('/', async (req, res, next) => {
 
                 return res.status(200).send(nuevoAlimento);
             } catch (error) {
-                return res.status(500).send(`Ocurrió un error al guardar los alimentos ${error}`);
+                return res
+                    .status(500)
+                    .send(`Ocurrió un error al guardar los alimentos ${error}`);
             }
         }
         return res.status(200).json({ message: 'El alimento ya existe' });
@@ -33,32 +35,8 @@ router.patch('/', async (req, res) => {
     let alimento;
     try {
         alimento = await Alimentos.findOneAndUpdate(
-            {
-                sku: req.body.sku.toString(),
-            },
-            {
-                nombreAlimento: req.body.nombreAlimento,
-                imagen: req.body.imagen,
-                grupoExportable: req.body.grupoExportable,
-                subGrupoExportable: req.body.subGrupoExportable,
-                clasificacionExportable: req.body.clasificacionExportable,
-                grupoAlimento: req.body.grupoAlimento,
-                mensaje: req.body.mensaje,
-                icono: req.body.icono,
-                opcionesPreparacion: req.body.opcionesPreparacion,
-                cantidadAlimento: req.body.cantidadAlimento,
-                caloriasMacronutrientes: req.body.caloriasMacronutrientes,
-                vitaminas: req.body.vitaminas,
-                minerales: req.body.minerales,
-                aspectoGlucemico: req.body.aspectoGlucemico,
-                aspectoMedioambiental: req.body.aspectoMedioambiental,
-                aspectoEconomico: req.body.aspectoEconomico,
-                componentesBioactivos: req.body.componentesBioactivos,
-                aditivosAlimentarios: req.body.aditivosAlimentarios,
-                atributosAdicionales: req.body.atributosAdicionales,
-                marca: req.body.marca,
-                puntos: req.body.puntos,
-            }
+            { sku: req.body.sku.toString() },
+            { ...req.body }
         );
 
         alimento = alimento
