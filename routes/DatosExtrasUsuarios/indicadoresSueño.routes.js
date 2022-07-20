@@ -11,7 +11,8 @@ router.get('/', async (req, res) => {
     if (listaDSUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message: 'No se encontro ninguna información de indicadores de sueño de los usuarios',
+            message:
+                'No se encontro ninguna información de indicadores de sueño de los usuarios',
         });
     res.status(200).send(listaDSUsuarios);
 });
@@ -21,7 +22,7 @@ router.get('/individual', async (req, res) => {
         const datosDeUsuario = await IndicadoresSueño.find({
             usuario: req.query.usuario,
         });
-        console.log(datosDeUsuario);
+
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
@@ -39,47 +40,41 @@ router.get('/individual', async (req, res) => {
 });
 
 router.post('/individual', async (req, res) => {
+    const { usuario } = req.query;
+
     try {
-        const usuarioCreado = await Usuarios.findOne({
-            usuario: req.query.usuario,
+        const infoUsuario = await IndicadoresSueño.findOne({
+            usuario: usuario,
         });
-        if (usuarioCreado) {
-            const infoUsuario = await IndicadoresSueño.findOne({
-                usuario: req.query.usuario,
+        if (infoUsuario)
+            return res.status(500).json({
+                success: false,
+                message: 'Datos de indicadores de sueño de Usuario ya registrados',
             });
-            try {
-                if (infoUsuario)
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Datos de indicadores de sueño de Usuario ya registrados',
-                    });
-            } catch (err) {
-                return res.status(500).json({
-                    success: false,
-                    message: 'Ocurrió un error al buscar los datos de indicadores de sueño del usuario',
-                });
-            }
-        } else console.log('El usuario no existe');
     } catch (err) {
         return res.status(500).json({
             success: false,
-            error: err,
-            message: 'Ocurrió un error al buscar al usuario',
+            message:
+                'Ocurrió un error al buscar los datos de indicadores de sueño del usuario',
         });
     }
 
-    let dIndicadoresS = new IndicadoresSueño({
-        usuario: req.query.usuario,
-        horasDeSueño: req.body.horasDeSueño,
-        estadoDeDescanso: req.body.estadoDeDescanso,
-        despiertaPorLaNoche: req.body.despiertaPorLaNoche,
-        frecuencia: req.body.frecuencia,
-    });
-
     try {
+        let dIndicadoresS = new IndicadoresSueño({
+            usuario: usuario,
+            horasDeSueño: req.body.horasDeSueño,
+            estadoDeDescanso: req.body.estadoDeDescanso,
+            despiertaPorLaNoche: req.body.despiertaPorLaNoche,
+            frecuencia: req.body.frecuencia,
+        });
+
         dIndicadoresS = await dIndicadoresS.save();
 
-        if (!dIndicadoresS) return res.status(400).send('No se pudieron agregar datos de indicadores de sueño');
+        if (!dIndicadoresS)
+            return res
+                .status(400)
+                .send('No se pudieron agregar datos de indicadores de sueño');
+
         res.status(200).send(dIndicadoresS);
     } catch (err) {
         return res.status(500).json({
@@ -94,7 +89,8 @@ router.patch('/individual', async (req, res) => {
     try {
         const existeUsuario = await buscarUsuario(req.query.usuario);
         let editarInformacionS;
-        if (!existeUsuario) return res.status(500).json({ success: false, message: 'El usuario no existe.' });
+        if (!existeUsuario)
+            return res.status(500).json({ success: false, message: 'El usuario no existe.' });
 
         try {
             editarInformacionS = await IndicadoresSueño.findOneAndUpdate(
@@ -122,7 +118,8 @@ router.patch('/individual', async (req, res) => {
         } catch (err) {
             res.status(500).json({
                 success: false,
-                message: ' Ocurrió un error al actualizar los datos de indicadores de sueño- ',
+                message:
+                    ' Ocurrió un error al actualizar los datos de indicadores de sueño- ',
             });
         }
     } catch (err) {

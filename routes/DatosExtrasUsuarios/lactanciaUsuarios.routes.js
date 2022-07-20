@@ -18,7 +18,7 @@ router.get('/individual', async (req, res) => {
         const datosDeUsuario = await LactanciaUsuarios.findOne({
             usuario: req.query.usuario,
         });
-        console.log(datosDeUsuario);
+
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
@@ -46,7 +46,9 @@ router.post('/individual', async (req, res) => {
 
         dLactancia = await dLactancia.save();
 
-        if (!dLactancia) return res.status(400).send('No se pudieron agregar datos de lactancia');
+        if (!dLactancia)
+            return res.status(400).send('No se pudieron agregar datos de lactancia');
+
         res.status(200).send(dLactancia);
     } catch (err) {
         return res.status(500).json({
@@ -63,12 +65,16 @@ router.patch('/individual', async (req, res) => {
 
         let fieldsToPush = {};
 
-        if (req.body.maternaExclusiva) fieldsToPush.maternaExclusiva = req.body.maternaExclusiva;
+        if (req.body.maternaExclusiva)
+            fieldsToPush.maternaExclusiva = req.body.maternaExclusiva;
         if (req.body.artificial) fieldsToPush.artificial = req.body.artificial;
         if (req.body.mixta) fieldsToPush.mixta = req.body.mixta;
-        if (req.body.mixtaContemplada) fieldsToPush.mixtaContemplada = req.body.mixtaContemplada;
-        if (req.body.maternaContemplada) fieldsToPush.maternaContemplada = req.body.maternaContemplada;
-        if (req.body.artificialContemplada) fieldsToPush.artificialContemplada = req.body.artificialContemplada;
+        if (req.body.mixtaContemplada)
+            fieldsToPush.mixtaContemplada = req.body.mixtaContemplada;
+        if (req.body.maternaContemplada)
+            fieldsToPush.maternaContemplada = req.body.maternaContemplada;
+        if (req.body.artificialContemplada)
+            fieldsToPush.artificialContemplada = req.body.artificialContemplada;
         if (req.body.tiempoLactancia) fieldsToPush.tiempoLactancia = req.body.tiempoLactancia;
 
         let lactancia = await LactanciaUsuarios.findOneAndUpdate(
@@ -80,12 +86,12 @@ router.patch('/individual', async (req, res) => {
 
         lactancia = await lactancia.save();
 
-        if (!lactancia) return res.status(400).send('No se pudieron agregar datos de lactancia');
+        if (!lactancia)
+            return res.status(400).send('No se pudieron agregar datos de lactancia');
 
         res.status(200).send(lactancia);
         return res.status(200).send({ ok: 'ok' });
     } catch (err) {
-        console.log(err);
         res.status(500).json({
             success: false,
             message: ' Ocurrió un error al actualizar los datos de lactancia- ',

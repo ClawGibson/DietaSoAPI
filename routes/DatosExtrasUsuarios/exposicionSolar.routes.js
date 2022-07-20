@@ -37,37 +37,27 @@ router.get('/individual', async (req, res) => {
 });
 
 router.post('/individual', async (req, res) => {
+    const { usuario } = req.query;
+
     try {
-        const usuarioCreado = await Usuarios.findOne({
-            usuario: req.query.usuario,
+        const infoUsuario = await ExposicionSolar.findOne({
+            usuario: usuario,
         });
-        if (usuarioCreado) {
-            const infoUsuario = await ExposicionSolar.findOne({
-                usuario: req.query.usuario,
+
+        if (infoUsuario)
+            return res.status(500).json({
+                success: false,
+                message: 'Datos de exposicion solar de Usuario ya registrados',
             });
-            try {
-                if (infoUsuario)
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Datos de exposicion solar de Usuario ya registrados',
-                    });
-            } catch (err) {
-                return res.status(500).json({
-                    success: false,
-                    message: 'Ocurrió un error al buscar los datos de exposicion solar del usuario',
-                });
-            }
-        } else console.log('El usuario no existe');
     } catch (err) {
         return res.status(500).json({
             success: false,
-            error: err,
-            message: 'Ocurrió un error al buscar al usuario',
+            message: 'Ocurrió un error al buscar los datos de exposicion solar del usuario',
         });
     }
 
     let dExposicionSolar = new ExposicionSolar({
-        usuario: req.query.usuario,
+        usuario: usuario,
         minutosAlSol: req.body.minutosAlSol,
         cubresTuPiel: req.body.cubresTuPiel,
         bloqueadorSolar: req.body.bloqueadorSolar,
@@ -77,7 +67,8 @@ router.post('/individual', async (req, res) => {
     try {
         dExposicionSolar = await dExposicionSolar.save();
 
-        if (!dExposicionSolar) return res.status(400).send('No se pudieron agregar datos de exposición solar');
+        if (!dExposicionSolar)
+            return res.status(400).send('No se pudieron agregar datos de exposición solar');
         res.status(200).send(dExposicionSolar);
     } catch (err) {
         return res.status(500).json({

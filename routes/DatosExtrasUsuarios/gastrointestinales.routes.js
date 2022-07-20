@@ -63,10 +63,10 @@ router.post('/individual', async (req, res) => {
 });
 
 router.patch('/individual', async (req, res) => {
-    const { usuario } = req.query;
-    let editarInformacionS;
     try {
-        editarInformacionS = await Gastrointestinales.findOneAndUpdate(
+        const { usuario } = req.query;
+
+        let editarInformacionS = await Gastrointestinales.findOneAndUpdate(
             { usuario: usuario },
             {
                 $push: {

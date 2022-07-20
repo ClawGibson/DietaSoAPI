@@ -61,12 +61,10 @@ router.post('/individual', async (req, res) => {
 });
 
 router.patch('/individual', async (req, res) => {
-    const { usuario } = req.query;
-
-    let editarInformacionS;
-
     try {
-        editarInformacionS = await EstadoGeneral.findOneAndUpdate(
+        const { usuario } = req.query;
+
+        let editarInformacionS = await EstadoGeneral.findOneAndUpdate(
             { usuario: usuario },
             {
                 $push: {

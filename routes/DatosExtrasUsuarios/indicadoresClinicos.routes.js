@@ -2,24 +2,19 @@ const Usuarios = require('../../models/Usuarios');
 const IndicadoresClinicos = require('../../models/DatosExtrasUsuarios/IndicadoresClinicos');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const { buscarUsuario } = require('../../constants/index');
 
 router.get('/', async (req, res) => {
     const listaDSUsuarios = await IndicadoresClinicos.find();
 
-    if (listaDSUsuarios.length <= 0)
-        return res.status(500).json({
-            success: false,
-            message: 'No se encontro ninguna información de indicadores clinicos de los usuarios',
-        });
     res.status(200).send(listaDSUsuarios);
 });
 
 router.get('/individual', async (req, res) => {
     try {
+        const { usuario } = req.query;
+
         const datosDeUsuario = await IndicadoresClinicos.find({
-            usuario: req.query.usuario,
+            usuario: usuario,
         });
 
         if (!datosDeUsuario)
@@ -56,7 +51,8 @@ router.post('/individual', async (req, res) => {
             } catch (err) {
                 return res.status(500).json({
                     success: false,
-                    message: 'Ocurrió un error al buscar los datos de indicadores clinicos del usuario',
+                    message:
+                        'Ocurrió un error al buscar los datos de indicadores clinicos del usuario',
                 });
             }
         } else console.log('El usuario no existe');
@@ -68,16 +64,15 @@ router.post('/individual', async (req, res) => {
         });
     }
 
-    let dIndicadoresC = new IndicadoresClinicos({
-        usuario: req.query.usuario,
-        presionArterial: req.body.presionArterial,
-        acantosisNigricans: req.body.acantosisNigricans,
-    });
+    let dIndicadoresC = new IndicadoresClinicos({ ...req.body });
 
     try {
         dIndicadoresC = await dIndicadoresC.save();
 
-        if (!dIndicadoresC) return res.status(400).send('No se pudieron agregar datos de indicadores clinicos');
+        if (!dIndicadoresC)
+            return res
+                .status(400)
+                .send('No se pudieron agregar datos de indicadores clinicos');
         res.status(200).send(dIndicadoresC);
     } catch (err) {
         return res.status(500).json({
@@ -90,42 +85,39 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     try {
-        const existeUsuario = await buscarUsuario(req.query.usuario);
-        let editarInformacionS;
-        if (!existeUsuario) return res.status(500).json({ success: false, message: 'El usuario no existe.' });
+        const {
+            usuario,
+            presionArterialSistolica,
+            presionArterialDiastolica,
+            acantosisNigricans,
+        } = req.body;
 
-        try {
-            editarInformacionS = await IndicadoresClinicos.findOneAndUpdate(
-                { usuario: existeUsuario.usuario },
-                {
-                    $push: {
-                        presionArterial: req.body.presionArterial,
-                        acantosisNigricans: req.body.acantosisNigricans,
-                    },
-                }
-            );
+        let clinicos = await IndicadoresClinicos.findOneAndUpdate(
+            { usuario: usuario },
+            {
+                $push: {
+                    presionArterialSistolica: presionArterialSistolica,
+                    presionArterialDiastolica: presionArterialDiastolica,
+                    acantosisNigricans: acantosisNigricans,
+                },
+            }
+        );
 
-            editarInformacionS = editarInformacionS
-                .save()
-                .then((response) => res.status(200).json({ message: 'ok' }))
-                .catch((err) =>
-                    res.status(500).json({
-                        success: false,
-                        message: 'No se pudo guardar - ',
-                        err,
-                    })
-                );
-        } catch (err) {
-            res.status(500).json({
+        clinicos = await clinicos.save();
+
+        if (!clinicos) {
+            return res.status(500).send({
                 success: false,
-                message: ' Ocurrió un error al actualizar los datos de indicadores clinicos- ',
+                message: 'No se pudo guardar los datos de indicadores clinicos',
+                err,
             });
         }
+
+        res.status(200).send(clinicos);
     } catch (err) {
         res.status(500).json({
             success: false,
-            error: err,
-            message: ' Ocurrió un error al buscar el usuario- ',
+            message: ' Ocurrió un error al actualizar los datos de indicadores clinicos- ',
         });
     }
 });

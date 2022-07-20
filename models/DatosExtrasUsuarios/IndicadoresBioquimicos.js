@@ -48,6 +48,7 @@ const iBioquimicosSchema = new Schema(
             {
                 fecha: { type: Date, default: Date.now },
                 valor: { type: String, required: false, default: '' },
+                numero: { type: Number, required: false },
             },
         ],
     },

@@ -8,7 +8,8 @@ router.get('/', async (req, res) => {
     if (listaDSUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message: 'No se encontro ninguna información de composición corporal de los usuarios',
+            message:
+                'No se encontro ninguna información de composición corporal de los usuarios',
         });
     res.send(listaDSUsuarios);
 });
@@ -50,7 +51,10 @@ router.post('/individual', async (req, res) => {
 
         dComposCorp = await dComposCorp.save();
 
-        if (!dComposCorp) return res.status(400).send('No se pudieron agregar datos de composición corporal');
+        if (!dComposCorp)
+            return res
+                .status(400)
+                .send('No se pudieron agregar datos de composición corporal');
         res.status(200).send(dComposCorp);
     } catch (err) {
         return res.status(500).json({
@@ -63,7 +67,7 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     try {
-        editarInformacionS = await ComposCorpUsuarios.findOneAndUpdate(
+        let editarInformacionS = await ComposCorpUsuarios.findOneAndUpdate(
             { usuario: req.query.usuario },
             {
                 $push: {
@@ -78,16 +82,15 @@ router.patch('/individual', async (req, res) => {
             }
         );
 
-        editarInformacionS = editarInformacionS
-            .save()
-            .then((response) => res.status(200).json({ message: 'ok' }))
-            .catch((err) =>
-                res.status(500).json({
-                    success: false,
-                    message: 'No se pudo guardar - ',
-                    err,
-                })
-            );
+        editarInformacionS = await editarInformacionS.save();
+
+        if (!editarInformacionS)
+            return res.status(500).json({
+                success: false,
+                message: 'No se pudo guardar',
+            });
+
+        res.status(200).send(editarInformacionS);
     } catch (err) {
         res.status(500).json({
             success: false,
