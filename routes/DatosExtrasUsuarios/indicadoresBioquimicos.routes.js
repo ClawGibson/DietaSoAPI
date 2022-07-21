@@ -2,8 +2,6 @@ const Usuarios = require('../../models/Usuarios');
 const IndicadoresBioquimicos = require('../../models/DatosExtrasUsuarios/IndicadoresBioquimicos');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const { buscarUsuario } = require('../../constants/index');
 
 router.get('/', async (req, res) => {
     const listaDSUsuarios = await IndicadoresBioquimicos.find();
@@ -22,7 +20,7 @@ router.get('/individual', async (req, res) => {
         const datosDeUsuario = await IndicadoresBioquimicos.find({
             usuario: req.query.usuario,
         });
-        console.log(datosDeUsuario);
+
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
