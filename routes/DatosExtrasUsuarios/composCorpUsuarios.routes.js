@@ -19,7 +19,7 @@ router.get('/individual', async (req, res) => {
         const datosDeUsuario = await ComposCorpUsuarios.find({
             usuario: req.query.usuario,
         });
-        console.log(datosDeUsuario);
+
         if (!datosDeUsuario)
             return res.status(204).send({
                 success: true,

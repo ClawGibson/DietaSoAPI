@@ -21,7 +21,7 @@ router.get('/individual', async (req, res) => {
         const datosDeUsuario = await EstadoGeneral.find({
             usuario: req.query.usuario,
         });
-        console.log(datosDeUsuario);
+
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
@@ -43,7 +43,7 @@ router.post('/individual', async (req, res) => {
         let dEstadoGeneral = new EstadoGeneral({
             ...req.body,
         });
-        // Modifcar el post para agregar el objeto en forma de array.
+
         dEstadoGeneral = await dEstadoGeneral.save();
 
         if (!dEstadoGeneral)

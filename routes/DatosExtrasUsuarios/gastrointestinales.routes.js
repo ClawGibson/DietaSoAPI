@@ -2,7 +2,6 @@ const Usuarios = require('../../models/Usuarios');
 const Gastrointestinales = require('../../models/DatosExtrasUsuarios/Gastrointestinales');
 const express = require('express');
 const router = express.Router();
-const { buscarUsuario } = require('../../constants/index');
 
 router.get('/', async (req, res) => {
     const listaDSUsuarios = await Gastrointestinales.find();
@@ -20,7 +19,7 @@ router.get('/individual', async (req, res) => {
         const datosDeUsuario = await Gastrointestinales.find({
             usuario: req.query.usuario,
         });
-        console.log(datosDeUsuario);
+
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
