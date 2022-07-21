@@ -21,7 +21,6 @@ router.get('/', async (req, res) => {
 router.get('/individual', async (req, res) => {
     try {
         const usuarioCreado = await buscarUsuario(req.query.usuario);
-        console.log(usuarioCreado);
 
         if (!usuarioCreado) {
             return res.status(500).json({
@@ -38,16 +37,14 @@ router.get('/individual', async (req, res) => {
             if (!datosDeUsuario)
                 return res.status(204).json({
                     success: true,
-                    message:
-                        'El usuario no tiene datos socioeconomicos todavia',
+                    message: 'El usuario no tiene datos socioeconomicos todavia',
                 });
 
             res.send(datosDeUsuario);
         } catch (err) {
             return res.status(500).json({
                 success: true,
-                message:
-                    'Ocurrio un error al guardar los datos socioeconomicos',
+                message: 'Ocurrio un error al guardar los datos socioeconomicos',
             });
         }
     } catch (err) {
@@ -71,8 +68,7 @@ router.post('/individual', async (req, res) => {
                 if (infoUsuario)
                     return res.status(500).json({
                         success: false,
-                        message:
-                            'Datos socioeconomicos de Usuario ya registrados',
+                        message: 'Datos socioeconomicos de Usuario ya registrados',
                     });
             } catch (err) {
                 return res.status(500).json({
@@ -98,9 +94,7 @@ router.post('/individual', async (req, res) => {
         dSocioeconomicos = await dSocioeconomicos.save();
 
         if (!dSocioeconomicos)
-            return res
-                .status(400)
-                .send('No se pudieron agregar datos socioeconomicos');
+            return res.status(400).send('No se pudieron agregar datos socioeconomicos');
         res.send(dSocioeconomicos);
     } catch (err) {
         return res.status(500).json({
@@ -114,11 +108,9 @@ router.patch('/individual', async (req, res) => {
     try {
         const existeUsuario = await buscarUsuario(req.query.usuario);
         let editarInformacionS;
-        console.log(existeUsuario);
+
         if (!existeUsuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe.' });
+            return res.status(500).json({ success: false, message: 'El usuario no existe.' });
 
         try {
             editarInformacionS = await DatosSocioeconomicos.findOneAndUpdate(
@@ -141,8 +133,7 @@ router.patch('/individual', async (req, res) => {
         } catch (err) {
             res.status(500).json({
                 success: false,
-                message:
-                    'Ocurrió un error al actualizar los datos socioeconomicos-',
+                message: 'Ocurrió un error al actualizar los datos socioeconomicos-',
             });
         }
     } catch (err) {

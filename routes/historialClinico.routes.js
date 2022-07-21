@@ -39,40 +39,6 @@ router.get('/individual', async (req, res) => {
 });
 
 router.post('/individual', async (req, res) => {
-    /* const usuarioCreado = await Usuarios.findOne({
-        usuario: req.query.usuario,
-    });
-    try {
-        if (usuarioCreado) {
-            const infoUsuario = await HistorialClinico.findOne({
-                usuario: req.query.usuario,
-            });
-            try {
-                if (infoUsuario)
-                    return res.status(500).json({
-                        success: false,
-                        message: 'Historial clinico de Usuario ya creado',
-                    });
-            } catch (err) {
-                //console.log("Ocurrió un error al buscar el historial clinico del usuario usuario - ", err);
-                return res.status(500).json({
-                    success: false,
-                    message:
-                        'Ocurrió un error al buscar el historial clinico del usuario usuario',
-                });
-            }
-        } else
-            return res.status(500).json({
-                success: false,
-                message: 'El usuario no existe',
-            });
-    } catch (err) {
-        return res.status(500).json({
-            success: false,
-            message: 'Ocurrio un error al buscar al usuario',
-        });
-    } */
-
     let informacionCli = new HistorialClinico({
         usuario: req.query.usuario,
         historiaClinica: req.body.historiaClinica,
@@ -96,11 +62,9 @@ router.patch('/individual', async (req, res) => {
     try {
         const existeUsuario = await buscarUsuario(req.query.usuario);
         let editarInformacionCli;
-        console.log(existeUsuario);
+
         if (!existeUsuario)
-            return res
-                .status(500)
-                .json({ success: false, message: 'El usuario no existe.' });
+            return res.status(500).json({ success: false, message: 'El usuario no existe.' });
 
         try {
             editarInformacionCli = await HistorialClinico.findOneAndUpdate(
@@ -123,8 +87,7 @@ router.patch('/individual', async (req, res) => {
         } catch (err) {
             res.status(500).json({
                 success: false,
-                message:
-                    'Ocurrió un error al actualizar el historial clinico - ',
+                message: 'Ocurrió un error al actualizar el historial clinico - ',
             });
         }
     } catch (err) {

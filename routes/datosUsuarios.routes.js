@@ -3,8 +3,6 @@ const DatosUsuarios = require('../models/DatosUsuarios');
 const PuntosDeUsuario = require('../models/PuntosDeUsuario');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const { buscarUsuario } = require('../constants/index');
 
 router.get('/', async (req, res) => {
     try {
@@ -21,8 +19,7 @@ router.get('/', async (req, res) => {
         console.log('Error', err);
         return res.status(500).json({
             success: true,
-            message:
-                'Ocurrio un error al obtener la información de los usuarios',
+            message: 'Ocurrio un error al obtener la información de los usuarios',
         });
     }
 });
@@ -32,7 +29,7 @@ router.get('/individual', async (req, res) => {
         const datosDeUsuario = await DatosUsuarios.find({
             usuario: req.query.usuario,
         }).select('peso altura actividadFisica registroPeso');
-        console.log(datosDeUsuario);
+
         if (!datosDeUsuario)
             return res.status(204).json({
                 success: true,
@@ -62,9 +59,7 @@ router.post('/individual', async (req, res) => {
         datos = await datos.save();
 
         if (!datos)
-            return res
-                .status(400)
-                .send('No se pudieron agregar los datos del usuario');
+            return res.status(400).send('No se pudieron agregar los datos del usuario');
         res.send(datos);
     } catch (err) {
         console.log('ERROR -> ', err);

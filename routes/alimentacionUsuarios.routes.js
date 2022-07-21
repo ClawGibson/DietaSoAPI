@@ -11,8 +11,7 @@ router.get('/', async (req, res) => {
     if (listaAUsuarios.length <= 0)
         return res.status(500).json({
             success: false,
-            message:
-                'No se encontro ningun registro de la alimentacion de usuarios',
+            message: 'No se encontro ningun registro de la alimentacion de usuarios',
         });
     res.send(listaAUsuarios);
 });
@@ -20,12 +19,9 @@ router.get('/', async (req, res) => {
 router.get('/individual', async (req, res) => {
     try {
         const usuario = await buscarUsuario(req.query.usuario);
-        console.log(usuario);
 
         if (!usuario)
-            return res
-                .status(404)
-                .send({ Error: 'No se encontró el usuario proporcionado' });
+            return res.status(404).send({ Error: 'No se encontró el usuario proporcionado' });
 
         try {
             const comidaFavorita = await AlimentacionUsuarios.findOne({
@@ -36,16 +32,14 @@ router.get('/individual', async (req, res) => {
             console.log(comidaFavorita);
             if (!comidaFavorita)
                 return res.status(204).send({
-                    message:
-                        'El usuario no tiene información de alimentación registrada',
+                    message: 'El usuario no tiene información de alimentación registrada',
                 });
 
             res.send(comidaFavorita);
         } catch (err) {
             return res.status(500).json({
                 success: false,
-                message:
-                    'Ocurrió un error al buscar la informacion de alimentacion',
+                message: 'Ocurrió un error al buscar la informacion de alimentacion',
             });
         }
     } catch (err) {
@@ -71,14 +65,10 @@ router.post('/individual', async (req, res) => {
                         message: 'Alimentacion de Usuario ya registrada',
                     });
             } catch (err) {
-                console.log(
-                    'Ocurrió un error al buscar la alimentación de usuarios - ',
-                    err
-                );
+                console.log('Ocurrió un error al buscar la alimentación de usuarios - ', err);
                 return res.status(204).json({
                     success: false,
-                    message:
-                        'Ocurrió un error al buscar la alimentación del usuario',
+                    message: 'Ocurrió un error al buscar la alimentación del usuario',
                 });
             }
         } else console.log('El usuario no existe');
@@ -100,19 +90,13 @@ router.post('/individual', async (req, res) => {
         if (!aUsuarios)
             return res
                 .status(400)
-                .send(
-                    'No se pudo agregar los datos de alimentacion de usuarios'
-                );
+                .send('No se pudo agregar los datos de alimentacion de usuarios');
         res.send(aUsuarios);
     } catch (err) {
-        console.log(
-            'Ocurrió un error al guardar los datos de alimentacion - ',
-            err
-        );
+        console.log('Ocurrió un error al guardar los datos de alimentacion - ', err);
         return res.status(500).json({
             success: false,
-            message:
-                'Ocurrió un error al guardar los datos de alimentacion de usuarios -',
+            message: 'Ocurrió un error al guardar los datos de alimentacion de usuarios -',
         });
     }
 });
@@ -132,17 +116,6 @@ router.patch('/individual', async (req, res) => {
             });
 
         res.status(200).send(editarInformacionA);
-
-        /* editarInformacionA = editarInformacionA
-            .save()
-            .then((response) => res.status(200).json({ message: 'ok' }))
-            .catch((err) =>
-                res.status(500).json({
-                    success: false,
-                    message: 'No se pudo guardar la alimentación - ',
-                    err,
-                })
-            ); */
     } catch (err) {
         console.log('Error: ', err);
         res.status(500).json({
@@ -163,9 +136,8 @@ router.patch('/comidaFav/', async (req, res) => {
                 usuario: req.query.usuario,
                 comidaFavorita: req.body.comidaFavorita,
             });
-            //console.log(usuarioCreado);
+
             try {
-                console.log(comidaFav); //devuelve null si no existe
                 if (comidaFav)
                     return res.status(500).json({
                         success: false,
@@ -185,8 +157,8 @@ router.patch('/comidaFav/', async (req, res) => {
         });
     }
 
-    var nuevaComidaFav = { comidaFavorita: req.body.comidaFavorita };
-    console.log(nuevaComidaFav.comidaFavorita);
+    let nuevaComidaFav = { comidaFavorita: req.body.comidaFavorita };
+
     AlimentacionUsuarios.findOneAndUpdate(
         { usuario: req.query.usuario },
         { $push: { comidaFavorita: nuevaComidaFav.comidaFavorita } },
@@ -198,7 +170,6 @@ router.patch('/comidaFav/', async (req, res) => {
                     message: 'Comida ya esta registrada',
                 });
             } else {
-                //console.log(success);
                 res.send('ok');
             }
         }
@@ -221,8 +192,7 @@ router.get('/comidaFav/', async (req, res) => {
     } catch (err) {
         return res.status(500).json({
             success: true,
-            message:
-                'Ocurrió un error al obtener la informacion de alimentacionn',
+            message: 'Ocurrió un error al obtener la informacion de alimentacionn',
         });
     }
 });
@@ -237,9 +207,7 @@ router.delete('/comidaFav/', async (req, res) => {
                 usuario: req.query.usuario,
                 comidaFavorita: req.body.comidaFavorita,
             });
-            //console.log(usuarioCreado);
             try {
-                //console.log(comidaFav);
                 if (!comidaFav)
                     return res.status(500).json({
                         success: false,
@@ -259,8 +227,8 @@ router.delete('/comidaFav/', async (req, res) => {
         });
     }
 
-    var nuevaComidaFav = { comidaFavorita: req.body.comidaFavorita };
-    //console.log(nuevaComidaFav.comidaFavorita);
+    let nuevaComidaFav = { comidaFavorita: req.body.comidaFavorita };
+
     AlimentacionUsuarios.findOneAndUpdate(
         { usuario: req.query.usuario },
         { $pull: { comidaFavorita: nuevaComidaFav.comidaFavorita } },
