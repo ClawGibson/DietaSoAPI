@@ -85,12 +85,9 @@ router.post('/individual', async (req, res) => {
 
 router.patch('/individual', async (req, res) => {
     try {
-        const {
-            usuario,
-            presionArterialSistolica,
-            presionArterialDiastolica,
-            acantosisNigricans,
-        } = req.body;
+        const { usuario } = req.query;
+        const { presionArterialSistolica, presionArterialDiastolica, acantosisNigricans } =
+            req.body;
 
         let clinicos = await IndicadoresClinicos.findOneAndUpdate(
             { usuario: usuario },
