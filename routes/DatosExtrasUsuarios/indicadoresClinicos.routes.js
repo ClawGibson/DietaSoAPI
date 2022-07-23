@@ -86,16 +86,14 @@ router.post('/individual', async (req, res) => {
 router.patch('/individual', async (req, res) => {
     try {
         const { usuario } = req.query;
-        const { presionArterialSistolica, presionArterialDiastolica, acantosisNigricans } =
-            req.body;
 
         let clinicos = await IndicadoresClinicos.findOneAndUpdate(
             { usuario: usuario },
             {
                 $push: {
-                    presionArterialSistolica: presionArterialSistolica,
-                    presionArterialDiastolica: presionArterialDiastolica,
-                    acantosisNigricans: acantosisNigricans,
+                    presionArterialSistolica: req.body.presionArterialSistolica,
+                    presionArterialDiastolica: req.body.presionArterialDiastolica,
+                    acantosisNigricans: req.body.acantosisNigricans,
                 },
             }
         );
