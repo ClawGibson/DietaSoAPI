@@ -70,27 +70,18 @@ router.post('/individual', async (req, res) => {
 router.patch('/individual', async (req, res) => {
     try {
         const { usuario } = req.query;
-        const {
-            glucosaAyuno,
-            glucosaDespues,
-            trigliceridos,
-            colesterolHDL,
-            colesterolLDL,
-            colesterolTotal,
-            microbiotaIntestinal,
-        } = req.body;
 
         let editarInformacionS = await IndicadoresBioquimicos.findOneAndUpdate(
             { usuario: usuario },
             {
                 $push: {
-                    glucosaAyuno: glucosaAyuno,
-                    glucosaDespues: glucosaDespues,
-                    trigliceridos: trigliceridos,
-                    colesterolTotal: colesterolTotal,
-                    colesterolLDL: colesterolLDL,
-                    colesterolHDL: colesterolHDL,
-                    microbiotaIntestinal: microbiotaIntestinal,
+                    glucosaAyuno: req.body.glucosaAyuno,
+                    glucosaDespues: req.body.glucosaDespues,
+                    trigliceridos: req.body.trigliceridos,
+                    colesterolTotal: req.body.colesterolTotal,
+                    colesterolLDL: req.body.colesterolLDL,
+                    colesterolHDL: req.body.colesterolHDL,
+                    microbiotaIntestinal: req.body.microbiotaIntestinal,
                 },
             }
         );
