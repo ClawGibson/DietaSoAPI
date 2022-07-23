@@ -109,7 +109,6 @@ router.patch('/individual', async (req, res) => {
             return res.status(500).send({
                 success: false,
                 message: 'No se pudo guardar los datos de indicadores clinicos',
-                err,
             });
         }
 
@@ -118,6 +117,7 @@ router.patch('/individual', async (req, res) => {
         res.status(500).json({
             success: false,
             message: ' Ocurrió un error al actualizar los datos de indicadores clinicos- ',
+            err,
         });
     }
 });
