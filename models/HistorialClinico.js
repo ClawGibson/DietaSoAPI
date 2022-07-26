@@ -1,26 +1,27 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose');
 
 const historialClinicoSchema = new Schema(
-  {
-    usuario: { type: Schema.Types.ObjectId, ref: "Usuarios", required: true },
-    historiaClinica: {
-      antecedentesPatologicos: [String],
-      antecedentesHeredoFamiliares: [{ familiar: String, enfermedad: String }],
-      medicamentos: [String],
-      suplementos: [{ suplemento: String, marca: String }],
+    {
+        usuario: { type: Schema.Types.ObjectId, ref: 'Usuarios', required: true },
+        historiaClinica: {
+            antecedentesPatologicos: [String],
+            antecedentesHeredoFamiliares: [{ familiar: String, enfermedad: String }],
+            medicamentos: [String],
+            suplementos: [{ suplemento: String, marca: String }],
+            comentarios: { type: String, required: false },
+        },
     },
-  },
-  {
-    timestamps: true,
-  }
+    {
+        timestamps: true,
+    }
 );
 
-historialClinicoSchema.virtual("id").get(function () {
-  return this._id.toHexString();
+historialClinicoSchema.virtual('id').get(function () {
+    return this._id.toHexString();
 });
 
-historialClinicoSchema.set("toJSON", {
-  virtuals: true,
+historialClinicoSchema.set('toJSON', {
+    virtuals: true,
 });
 
-module.exports = model("HistorialClinico", historialClinicoSchema);
+module.exports = model('HistorialClinico', historialClinicoSchema);
