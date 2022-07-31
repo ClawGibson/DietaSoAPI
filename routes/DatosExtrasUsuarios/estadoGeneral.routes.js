@@ -1,9 +1,6 @@
-const Usuarios = require('../../models/Usuarios');
 const EstadoGeneral = require('../../models/DatosExtrasUsuarios/EstadoGeneral');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const { buscarUsuario } = require('../../constants/index');
 
 router.get('/', async (req, res) => {
     const listaDSUsuarios = await EstadoGeneral.find();
