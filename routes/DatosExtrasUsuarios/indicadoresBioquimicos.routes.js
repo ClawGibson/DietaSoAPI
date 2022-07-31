@@ -1,4 +1,3 @@
-const Usuarios = require('../../models/Usuarios');
 const IndicadoresBioquimicos = require('../../models/DatosExtrasUsuarios/IndicadoresBioquimicos');
 const express = require('express');
 const router = express.Router();
